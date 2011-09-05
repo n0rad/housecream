@@ -1,0 +1,10 @@
+%!: /header.html
+<h1>HTTP Files</h1>
+<table>
+    %! file-stats
+</table>
+
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,132 @@
+   1               		.file	"timer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	timer_reset
+  18               	timer_reset:
+  19               	.LFB3:
+  20               	.LM1:
+  21               	.LVL0:
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0000 FC01      		movw r30,r24
+  25               	.LM2:
+  26 0002 8081      		ld r24,Z
+  27 0004 9181      		ldd r25,Z+1
+  28               	.LVL1:
+  29 0006 2281      		ldd r18,Z+2
+  30 0008 3381      		ldd r19,Z+3
+  31 000a 820F      		add r24,r18
+  32 000c 931F      		adc r25,r19
+  33 000e 9183      		std Z+1,r25
+  34 0010 8083      		st Z,r24
+  35               	/* epilogue start */
+  36               	.LM3:
+  37 0012 0895      		ret
+  38               	.LFE3:
+  40               	.global	timer_expired
+  42               	timer_expired:
+  43               	.LFB5:
+  44               	.LM4:
+  45               	.LVL2:
+  46 0014 0F93      		push r16
+  47 0016 1F93      		push r17
+  48               	/* prologue: function */
+  49               	/* frame size = 0 */
+  50 0018 8C01      		movw r16,r24
+  51               	.LM5:
+  52 001a 0E94 0000 		call clock_time
+  53               	.LVL3:
+  54 001e 40E0      		ldi r20,lo8(0)
+  55 0020 50E0      		ldi r21,hi8(0)
+  56 0022 F801      		movw r30,r16
+  57 0024 2081      		ld r18,Z
+  58 0026 3181      		ldd r19,Z+1
+  59 0028 821B      		sub r24,r18
+  60 002a 930B      		sbc r25,r19
+  61 002c 2281      		ldd r18,Z+2
+  62 002e 3381      		ldd r19,Z+3
+  63 0030 8217      		cp r24,r18
+  64 0032 9307      		cpc r25,r19
+  65 0034 04F0      		brlt .L4
+  66 0036 41E0      		ldi r20,lo8(1)
+  67 0038 50E0      		ldi r21,hi8(1)
+  68               	.L4:
+  69               	.LM6:
+  70 003a CA01      		movw r24,r20
+  71               	/* epilogue start */
+  72 003c 1F91      		pop r17
+  73 003e 0F91      		pop r16
+  74               	.LVL4:
+  75 0040 0895      		ret
+  76               	.LFE5:
+  78               	.global	timer_restart
+  80               	timer_restart:
+  81               	.LFB4:
+  82               	.LM7:
+  83               	.LVL5:
+  84 0042 0F93      		push r16
+  85 0044 1F93      		push r17
+  86               	/* prologue: function */
+  87               	/* frame size = 0 */
+  88 0046 8C01      		movw r16,r24
+  89               	.LM8:
+  90 0048 0E94 0000 		call clock_time
+  91               	.LVL6:
+  92 004c F801      		movw r30,r16
+  93 004e 9183      		std Z+1,r25
+  94 0050 8083      		st Z,r24
+  95               	/* epilogue start */
+  96               	.LM9:
+  97 0052 1F91      		pop r17
+  98 0054 0F91      		pop r16
+  99               	.LVL7:
+ 100 0056 0895      		ret
+ 101               	.LFE4:
+ 103               	.global	timer_set
+ 105               	timer_set:
+ 106               	.LFB2:
+ 107               	.LM10:
+ 108               	.LVL8:
+ 109 0058 0F93      		push r16
+ 110 005a 1F93      		push r17
+ 111               	/* prologue: function */
+ 112               	/* frame size = 0 */
+ 113 005c 8C01      		movw r16,r24
+ 114               	.LM11:
+ 115 005e FC01      		movw r30,r24
+ 116 0060 7383      		std Z+3,r23
+ 117 0062 6283      		std Z+2,r22
+ 118               	.LM12:
+ 119 0064 0E94 0000 		call clock_time
+ 120               	.LVL9:
+ 121 0068 F801      		movw r30,r16
+ 122 006a 9183      		std Z+1,r25
+ 123 006c 8083      		st Z,r24
+ 124               	/* epilogue start */
+ 125               	.LM13:
+ 126 006e 1F91      		pop r17
+ 127 0070 0F91      		pop r16
+ 128               	.LVL10:
+ 129 0072 0895      		ret
+ 130               	.LFE2:
+ 180               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 timer.c
+     /tmp/ccJih0Ha.s:2      *ABS*:000000000000003f __SREG__
+     /tmp/ccJih0Ha.s:3      *ABS*:000000000000003e __SP_H__
+     /tmp/ccJih0Ha.s:4      *ABS*:000000000000003d __SP_L__
+     /tmp/ccJih0Ha.s:5      *ABS*:0000000000000034 __CCP__
+     /tmp/ccJih0Ha.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccJih0Ha.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccJih0Ha.s:18     .text:0000000000000000 timer_reset
+     /tmp/ccJih0Ha.s:42     .text:0000000000000014 timer_expired
+     /tmp/ccJih0Ha.s:80     .text:0000000000000042 timer_restart
+     /tmp/ccJih0Ha.s:105    .text:0000000000000058 timer_set
+
+UNDEFINED SYMBOLS
+clock_time

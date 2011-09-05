@@ -1,0 +1,13 @@
+
+
+- boitier qui va contenir l'arduino ?
+- ou mettre l'arduino ? (dans le mur ou dans un boitier extern ?, faut plafond ?)
+- comment placer les capteurs par rapport a l'arduino (quel type de cable et ou les faire passer ?, pour chaque perif)
+
+
+
+
+communication arduino - serveur
+- echange de donnée entre les 2 en birectionnel (envoyer directement l'appui sur un bouton au serveur ?)
+- transformation des valeurs mesuré sur l'arduino ou le faire coté serveur ?
+

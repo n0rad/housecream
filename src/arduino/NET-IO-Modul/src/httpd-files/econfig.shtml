@@ -1,0 +1,89 @@
+%!: /header.html
+
+<h1>eMail Application</h1>
+
+The eMail application monitors the pins of Port D and sends an eMail when a
+pin changes from Low to High. Only SMTP servers without authentication or 
+with AUTH LOGIN authentication are supported.
+
+<p>
+<table>
+  <tr>
+    <td>IP-Address of SMTP server:</td>
+    <td>
+      <form method="get" action="econfig.shtml">
+        <input type="text" name="smtpIp" value="%! smtpIp" size="16" maxlength="16">
+        <input type="submit" value="Ok">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>SMTP username:</td>
+    <td>
+      <form method="get" action="econfig.shtml">
+        <input type="text" name="smtpUser" value="%! smtpUser" size="30" maxlength="30">
+        <input type="submit" value="Ok">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>SMTP password:</td>
+    <td>
+      <form method="get" action="econfig.shtml">
+        <input type="text" name="smtpPw" value="%! smtpPw" size="30" maxlength="30">
+        <input type="submit" value="Ok">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>From:</td>
+    <td>
+      <form method="get" action="econfig.shtml">
+        <input type="text" name="from" value="%! from" size="30" maxlength="80">
+        <input type="submit" value="Ok">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>To:</td>
+    <td>
+      <form method="get" action="econfig.shtml">
+        <input type="text" name="to" value="%! to" size="30" maxlength="80">
+        <input type="submit" value="Ok">
+      </form>
+    </td>
+  </tr>
+</table>
+<p>
+Messages sent as subject:
+<p>
+<form method="get" action="econfig.shtml">
+  PD0: <input type="text" name="text0" value="%! text0" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD1: <input type="text" name="text1" value="%! text1" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD2: <input type="text" name="text2" value="%! text2" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD3: <input type="text" name="text3" value="%! text3" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD4: <input type="text" name="text4" value="%! text4" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD5: <input type="text" name="text5" value="%! text5" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD6: <input type="text" name="text6" value="%! text6" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<form method="get" action="econfig.shtml">
+  PD7: <input type="text" name="text7" value="%! text7" size="60" maxlength="80"><input type="submit" value="Ok">
+</form>
+<p>
+Note: Depending on the hardware layout, some PIN's of port D could be reserved for special functions 
+
+    </div>
+  </body>
+</html>

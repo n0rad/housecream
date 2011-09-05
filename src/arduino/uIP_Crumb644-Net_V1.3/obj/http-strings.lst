@@ -1,0 +1,709 @@
+   1               		.file	"http-strings.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	http_http
+  17               		.section	.progmem.data,"a",@progbits
+  20               	http_http:
+  21 0000 68        		.byte	104
+  22 0001 74        		.byte	116
+  23 0002 74        		.byte	116
+  24 0003 70        		.byte	112
+  25 0004 3A        		.byte	58
+  26 0005 2F        		.byte	47
+  27 0006 2F        		.byte	47
+  28 0007 00        		.skip 1,0
+  29               	.global	http_200
+  32               	http_200:
+  33 0008 32        		.byte	50
+  34 0009 30        		.byte	48
+  35 000a 30        		.byte	48
+  36 000b 20        		.byte	32
+  37 000c 00        		.skip 1,0
+  38               	.global	http_301
+  41               	http_301:
+  42 000d 33        		.byte	51
+  43 000e 30        		.byte	48
+  44 000f 31        		.byte	49
+  45 0010 20        		.byte	32
+  46 0011 00        		.skip 1,0
+  47               	.global	http_302
+  50               	http_302:
+  51 0012 33        		.byte	51
+  52 0013 30        		.byte	48
+  53 0014 32        		.byte	50
+  54 0015 20        		.byte	32
+  55 0016 00        		.skip 1,0
+  56               	.global	http_get
+  59               	http_get:
+  60 0017 47        		.byte	71
+  61 0018 45        		.byte	69
+  62 0019 54        		.byte	84
+  63 001a 20        		.byte	32
+  64 001b 00        		.skip 1,0
+  65               	.global	http_10
+  68               	http_10:
+  69 001c 48        		.byte	72
+  70 001d 54        		.byte	84
+  71 001e 54        		.byte	84
+  72 001f 50        		.byte	80
+  73 0020 2F        		.byte	47
+  74 0021 31        		.byte	49
+  75 0022 2E        		.byte	46
+  76 0023 30        		.byte	48
+  77 0024 00        		.skip 1,0
+  78               	.global	http_11
+  81               	http_11:
+  82 0025 48        		.byte	72
+  83 0026 54        		.byte	84
+  84 0027 54        		.byte	84
+  85 0028 50        		.byte	80
+  86 0029 2F        		.byte	47
+  87 002a 31        		.byte	49
+  88 002b 2E        		.byte	46
+  89 002c 31        		.byte	49
+  90 002d 00        		.skip 1,0
+  91               	.global	http_content_type
+  94               	http_content_type:
+  95 002e 63        		.byte	99
+  96 002f 6F        		.byte	111
+  97 0030 6E        		.byte	110
+  98 0031 74        		.byte	116
+  99 0032 65        		.byte	101
+ 100 0033 6E        		.byte	110
+ 101 0034 74        		.byte	116
+ 102 0035 2D        		.byte	45
+ 103 0036 74        		.byte	116
+ 104 0037 79        		.byte	121
+ 105 0038 70        		.byte	112
+ 106 0039 65        		.byte	101
+ 107 003a 3A        		.byte	58
+ 108 003b 20        		.byte	32
+ 109 003c 00        		.skip 1,0
+ 110               	.global	http_texthtml
+ 113               	http_texthtml:
+ 114 003d 74        		.byte	116
+ 115 003e 65        		.byte	101
+ 116 003f 78        		.byte	120
+ 117 0040 74        		.byte	116
+ 118 0041 2F        		.byte	47
+ 119 0042 68        		.byte	104
+ 120 0043 74        		.byte	116
+ 121 0044 6D        		.byte	109
+ 122 0045 6C        		.byte	108
+ 123 0046 00        		.skip 1,0
+ 124               	.global	http_location
+ 127               	http_location:
+ 128 0047 6C        		.byte	108
+ 129 0048 6F        		.byte	111
+ 130 0049 63        		.byte	99
+ 131 004a 61        		.byte	97
+ 132 004b 74        		.byte	116
+ 133 004c 69        		.byte	105
+ 134 004d 6F        		.byte	111
+ 135 004e 6E        		.byte	110
+ 136 004f 3A        		.byte	58
+ 137 0050 20        		.byte	32
+ 138 0051 00        		.skip 1,0
+ 139               	.global	http_host
+ 142               	http_host:
+ 143 0052 68        		.byte	104
+ 144 0053 6F        		.byte	111
+ 145 0054 73        		.byte	115
+ 146 0055 74        		.byte	116
+ 147 0056 3A        		.byte	58
+ 148 0057 20        		.byte	32
+ 149 0058 00        		.skip 1,0
+ 150               	.global	http_crnl
+ 153               	http_crnl:
+ 154 0059 0D        		.byte	13
+ 155 005a 0A        		.byte	10
+ 156 005b 00        		.skip 1,0
+ 157               	.global	http_index_html
+ 160               	http_index_html:
+ 161 005c 2F        		.byte	47
+ 162 005d 69        		.byte	105
+ 163 005e 6E        		.byte	110
+ 164 005f 64        		.byte	100
+ 165 0060 65        		.byte	101
+ 166 0061 78        		.byte	120
+ 167 0062 2E        		.byte	46
+ 168 0063 68        		.byte	104
+ 169 0064 74        		.byte	116
+ 170 0065 6D        		.byte	109
+ 171 0066 6C        		.byte	108
+ 172 0067 00        		.skip 1,0
+ 173               	.global	http_404_html
+ 176               	http_404_html:
+ 177 0068 2F        		.byte	47
+ 178 0069 34        		.byte	52
+ 179 006a 30        		.byte	48
+ 180 006b 34        		.byte	52
+ 181 006c 2E        		.byte	46
+ 182 006d 68        		.byte	104
+ 183 006e 74        		.byte	116
+ 184 006f 6D        		.byte	109
+ 185 0070 6C        		.byte	108
+ 186 0071 00        		.skip 1,0
+ 187               	.global	http_referer
+ 190               	http_referer:
+ 191 0072 52        		.byte	82
+ 192 0073 65        		.byte	101
+ 193 0074 66        		.byte	102
+ 194 0075 65        		.byte	101
+ 195 0076 72        		.byte	114
+ 196 0077 65        		.byte	101
+ 197 0078 72        		.byte	114
+ 198 0079 3A        		.byte	58
+ 199 007a 00        		.skip 1,0
+ 200               	.global	http_header_200
+ 203               	http_header_200:
+ 204 007b 48        		.byte	72
+ 205 007c 54        		.byte	84
+ 206 007d 54        		.byte	84
+ 207 007e 50        		.byte	80
+ 208 007f 2F        		.byte	47
+ 209 0080 31        		.byte	49
+ 210 0081 2E        		.byte	46
+ 211 0082 30        		.byte	48
+ 212 0083 20        		.byte	32
+ 213 0084 32        		.byte	50
+ 214 0085 30        		.byte	48
+ 215 0086 30        		.byte	48
+ 216 0087 20        		.byte	32
+ 217 0088 4F        		.byte	79
+ 218 0089 4B        		.byte	75
+ 219 008a 0D        		.byte	13
+ 220 008b 0A        		.byte	10
+ 221 008c 53        		.byte	83
+ 222 008d 65        		.byte	101
+ 223 008e 72        		.byte	114
+ 224 008f 76        		.byte	118
+ 225 0090 65        		.byte	101
+ 226 0091 72        		.byte	114
+ 227 0092 3A        		.byte	58
+ 228 0093 20        		.byte	32
+ 229 0094 75        		.byte	117
+ 230 0095 49        		.byte	73
+ 231 0096 50        		.byte	80
+ 232 0097 2F        		.byte	47
+ 233 0098 31        		.byte	49
+ 234 0099 2E        		.byte	46
+ 235 009a 30        		.byte	48
+ 236 009b 20        		.byte	32
+ 237 009c 68        		.byte	104
+ 238 009d 74        		.byte	116
+ 239 009e 74        		.byte	116
+ 240 009f 70        		.byte	112
+ 241 00a0 3A        		.byte	58
+ 242 00a1 2F        		.byte	47
+ 243 00a2 2F        		.byte	47
+ 244 00a3 77        		.byte	119
+ 245 00a4 77        		.byte	119
+ 246 00a5 77        		.byte	119
+ 247 00a6 2E        		.byte	46
+ 248 00a7 73        		.byte	115
+ 249 00a8 69        		.byte	105
+ 250 00a9 63        		.byte	99
+ 251 00aa 73        		.byte	115
+ 252 00ab 2E        		.byte	46
+ 253 00ac 73        		.byte	115
+ 254 00ad 65        		.byte	101
+ 255 00ae 2F        		.byte	47
+ 256 00af 7E        		.byte	126
+ 257 00b0 61        		.byte	97
+ 258 00b1 64        		.byte	100
+ 259 00b2 61        		.byte	97
+ 260 00b3 6D        		.byte	109
+ 261 00b4 2F        		.byte	47
+ 262 00b5 75        		.byte	117
+ 263 00b6 69        		.byte	105
+ 264 00b7 70        		.byte	112
+ 265 00b8 2F        		.byte	47
+ 266 00b9 0D        		.byte	13
+ 267 00ba 0A        		.byte	10
+ 268 00bb 43        		.byte	67
+ 269 00bc 6F        		.byte	111
+ 270 00bd 6E        		.byte	110
+ 271 00be 6E        		.byte	110
+ 272 00bf 65        		.byte	101
+ 273 00c0 63        		.byte	99
+ 274 00c1 74        		.byte	116
+ 275 00c2 69        		.byte	105
+ 276 00c3 6F        		.byte	111
+ 277 00c4 6E        		.byte	110
+ 278 00c5 3A        		.byte	58
+ 279 00c6 20        		.byte	32
+ 280 00c7 63        		.byte	99
+ 281 00c8 6C        		.byte	108
+ 282 00c9 6F        		.byte	111
+ 283 00ca 73        		.byte	115
+ 284 00cb 65        		.byte	101
+ 285 00cc 0D        		.byte	13
+ 286 00cd 0A        		.byte	10
+ 287 00ce 00        		.skip 1,0
+ 288               	.global	http_header_404
+ 291               	http_header_404:
+ 292 00cf 48        		.byte	72
+ 293 00d0 54        		.byte	84
+ 294 00d1 54        		.byte	84
+ 295 00d2 50        		.byte	80
+ 296 00d3 2F        		.byte	47
+ 297 00d4 31        		.byte	49
+ 298 00d5 2E        		.byte	46
+ 299 00d6 30        		.byte	48
+ 300 00d7 20        		.byte	32
+ 301 00d8 34        		.byte	52
+ 302 00d9 30        		.byte	48
+ 303 00da 34        		.byte	52
+ 304 00db 20        		.byte	32
+ 305 00dc 4E        		.byte	78
+ 306 00dd 6F        		.byte	111
+ 307 00de 74        		.byte	116
+ 308 00df 20        		.byte	32
+ 309 00e0 66        		.byte	102
+ 310 00e1 6F        		.byte	111
+ 311 00e2 75        		.byte	117
+ 312 00e3 6E        		.byte	110
+ 313 00e4 64        		.byte	100
+ 314 00e5 0D        		.byte	13
+ 315 00e6 0A        		.byte	10
+ 316 00e7 53        		.byte	83
+ 317 00e8 65        		.byte	101
+ 318 00e9 72        		.byte	114
+ 319 00ea 76        		.byte	118
+ 320 00eb 65        		.byte	101
+ 321 00ec 72        		.byte	114
+ 322 00ed 3A        		.byte	58
+ 323 00ee 20        		.byte	32
+ 324 00ef 75        		.byte	117
+ 325 00f0 49        		.byte	73
+ 326 00f1 50        		.byte	80
+ 327 00f2 2F        		.byte	47
+ 328 00f3 31        		.byte	49
+ 329 00f4 2E        		.byte	46
+ 330 00f5 30        		.byte	48
+ 331 00f6 20        		.byte	32
+ 332 00f7 68        		.byte	104
+ 333 00f8 74        		.byte	116
+ 334 00f9 74        		.byte	116
+ 335 00fa 70        		.byte	112
+ 336 00fb 3A        		.byte	58
+ 337 00fc 2F        		.byte	47
+ 338 00fd 2F        		.byte	47
+ 339 00fe 77        		.byte	119
+ 340 00ff 77        		.byte	119
+ 341 0100 77        		.byte	119
+ 342 0101 2E        		.byte	46
+ 343 0102 73        		.byte	115
+ 344 0103 69        		.byte	105
+ 345 0104 63        		.byte	99
+ 346 0105 73        		.byte	115
+ 347 0106 2E        		.byte	46
+ 348 0107 73        		.byte	115
+ 349 0108 65        		.byte	101
+ 350 0109 2F        		.byte	47
+ 351 010a 7E        		.byte	126
+ 352 010b 61        		.byte	97
+ 353 010c 64        		.byte	100
+ 354 010d 61        		.byte	97
+ 355 010e 6D        		.byte	109
+ 356 010f 2F        		.byte	47
+ 357 0110 75        		.byte	117
+ 358 0111 69        		.byte	105
+ 359 0112 70        		.byte	112
+ 360 0113 2F        		.byte	47
+ 361 0114 0D        		.byte	13
+ 362 0115 0A        		.byte	10
+ 363 0116 43        		.byte	67
+ 364 0117 6F        		.byte	111
+ 365 0118 6E        		.byte	110
+ 366 0119 6E        		.byte	110
+ 367 011a 65        		.byte	101
+ 368 011b 63        		.byte	99
+ 369 011c 74        		.byte	116
+ 370 011d 69        		.byte	105
+ 371 011e 6F        		.byte	111
+ 372 011f 6E        		.byte	110
+ 373 0120 3A        		.byte	58
+ 374 0121 20        		.byte	32
+ 375 0122 63        		.byte	99
+ 376 0123 6C        		.byte	108
+ 377 0124 6F        		.byte	111
+ 378 0125 73        		.byte	115
+ 379 0126 65        		.byte	101
+ 380 0127 0D        		.byte	13
+ 381 0128 0A        		.byte	10
+ 382 0129 00        		.skip 1,0
+ 383               	.global	http_content_type_plain
+ 386               	http_content_type_plain:
+ 387 012a 43        		.byte	67
+ 388 012b 6F        		.byte	111
+ 389 012c 6E        		.byte	110
+ 390 012d 74        		.byte	116
+ 391 012e 65        		.byte	101
+ 392 012f 6E        		.byte	110
+ 393 0130 74        		.byte	116
+ 394 0131 2D        		.byte	45
+ 395 0132 74        		.byte	116
+ 396 0133 79        		.byte	121
+ 397 0134 70        		.byte	112
+ 398 0135 65        		.byte	101
+ 399 0136 3A        		.byte	58
+ 400 0137 20        		.byte	32
+ 401 0138 74        		.byte	116
+ 402 0139 65        		.byte	101
+ 403 013a 78        		.byte	120
+ 404 013b 74        		.byte	116
+ 405 013c 2F        		.byte	47
+ 406 013d 70        		.byte	112
+ 407 013e 6C        		.byte	108
+ 408 013f 61        		.byte	97
+ 409 0140 69        		.byte	105
+ 410 0141 6E        		.byte	110
+ 411 0142 0D        		.byte	13
+ 412 0143 0A        		.byte	10
+ 413 0144 0D        		.byte	13
+ 414 0145 0A        		.byte	10
+ 415 0146 00        		.skip 1,0
+ 416               	.global	http_content_type_html
+ 419               	http_content_type_html:
+ 420 0147 43        		.byte	67
+ 421 0148 6F        		.byte	111
+ 422 0149 6E        		.byte	110
+ 423 014a 74        		.byte	116
+ 424 014b 65        		.byte	101
+ 425 014c 6E        		.byte	110
+ 426 014d 74        		.byte	116
+ 427 014e 2D        		.byte	45
+ 428 014f 74        		.byte	116
+ 429 0150 79        		.byte	121
+ 430 0151 70        		.byte	112
+ 431 0152 65        		.byte	101
+ 432 0153 3A        		.byte	58
+ 433 0154 20        		.byte	32
+ 434 0155 74        		.byte	116
+ 435 0156 65        		.byte	101
+ 436 0157 78        		.byte	120
+ 437 0158 74        		.byte	116
+ 438 0159 2F        		.byte	47
+ 439 015a 68        		.byte	104
+ 440 015b 74        		.byte	116
+ 441 015c 6D        		.byte	109
+ 442 015d 6C        		.byte	108
+ 443 015e 0D        		.byte	13
+ 444 015f 0A        		.byte	10
+ 445 0160 0D        		.byte	13
+ 446 0161 0A        		.byte	10
+ 447 0162 00        		.skip 1,0
+ 448               	.global	http_content_type_css
+ 451               	http_content_type_css:
+ 452 0163 43        		.byte	67
+ 453 0164 6F        		.byte	111
+ 454 0165 6E        		.byte	110
+ 455 0166 74        		.byte	116
+ 456 0167 65        		.byte	101
+ 457 0168 6E        		.byte	110
+ 458 0169 74        		.byte	116
+ 459 016a 2D        		.byte	45
+ 460 016b 74        		.byte	116
+ 461 016c 79        		.byte	121
+ 462 016d 70        		.byte	112
+ 463 016e 65        		.byte	101
+ 464 016f 3A        		.byte	58
+ 465 0170 20        		.byte	32
+ 466 0171 74        		.byte	116
+ 467 0172 65        		.byte	101
+ 468 0173 78        		.byte	120
+ 469 0174 74        		.byte	116
+ 470 0175 2F        		.byte	47
+ 471 0176 63        		.byte	99
+ 472 0177 73        		.byte	115
+ 473 0178 73        		.byte	115
+ 474 0179 0D        		.byte	13
+ 475 017a 0A        		.byte	10
+ 476 017b 0D        		.byte	13
+ 477 017c 0A        		.byte	10
+ 478 017d 00        		.skip 1,0
+ 479               	.global	http_content_type_text
+ 482               	http_content_type_text:
+ 483 017e 43        		.byte	67
+ 484 017f 6F        		.byte	111
+ 485 0180 6E        		.byte	110
+ 486 0181 74        		.byte	116
+ 487 0182 65        		.byte	101
+ 488 0183 6E        		.byte	110
+ 489 0184 74        		.byte	116
+ 490 0185 2D        		.byte	45
+ 491 0186 74        		.byte	116
+ 492 0187 79        		.byte	121
+ 493 0188 70        		.byte	112
+ 494 0189 65        		.byte	101
+ 495 018a 3A        		.byte	58
+ 496 018b 20        		.byte	32
+ 497 018c 74        		.byte	116
+ 498 018d 65        		.byte	101
+ 499 018e 78        		.byte	120
+ 500 018f 74        		.byte	116
+ 501 0190 2F        		.byte	47
+ 502 0191 74        		.byte	116
+ 503 0192 65        		.byte	101
+ 504 0193 78        		.byte	120
+ 505 0194 74        		.byte	116
+ 506 0195 0D        		.byte	13
+ 507 0196 0A        		.byte	10
+ 508 0197 0D        		.byte	13
+ 509 0198 0A        		.byte	10
+ 510 0199 00        		.skip 1,0
+ 511               	.global	http_content_type_png
+ 514               	http_content_type_png:
+ 515 019a 43        		.byte	67
+ 516 019b 6F        		.byte	111
+ 517 019c 6E        		.byte	110
+ 518 019d 74        		.byte	116
+ 519 019e 65        		.byte	101
+ 520 019f 6E        		.byte	110
+ 521 01a0 74        		.byte	116
+ 522 01a1 2D        		.byte	45
+ 523 01a2 74        		.byte	116
+ 524 01a3 79        		.byte	121
+ 525 01a4 70        		.byte	112
+ 526 01a5 65        		.byte	101
+ 527 01a6 3A        		.byte	58
+ 528 01a7 20        		.byte	32
+ 529 01a8 69        		.byte	105
+ 530 01a9 6D        		.byte	109
+ 531 01aa 61        		.byte	97
+ 532 01ab 67        		.byte	103
+ 533 01ac 65        		.byte	101
+ 534 01ad 2F        		.byte	47
+ 535 01ae 70        		.byte	112
+ 536 01af 6E        		.byte	110
+ 537 01b0 67        		.byte	103
+ 538 01b1 0D        		.byte	13
+ 539 01b2 0A        		.byte	10
+ 540 01b3 0D        		.byte	13
+ 541 01b4 0A        		.byte	10
+ 542 01b5 00        		.skip 1,0
+ 543               	.global	http_content_type_gif
+ 546               	http_content_type_gif:
+ 547 01b6 43        		.byte	67
+ 548 01b7 6F        		.byte	111
+ 549 01b8 6E        		.byte	110
+ 550 01b9 74        		.byte	116
+ 551 01ba 65        		.byte	101
+ 552 01bb 6E        		.byte	110
+ 553 01bc 74        		.byte	116
+ 554 01bd 2D        		.byte	45
+ 555 01be 74        		.byte	116
+ 556 01bf 79        		.byte	121
+ 557 01c0 70        		.byte	112
+ 558 01c1 65        		.byte	101
+ 559 01c2 3A        		.byte	58
+ 560 01c3 20        		.byte	32
+ 561 01c4 69        		.byte	105
+ 562 01c5 6D        		.byte	109
+ 563 01c6 61        		.byte	97
+ 564 01c7 67        		.byte	103
+ 565 01c8 65        		.byte	101
+ 566 01c9 2F        		.byte	47
+ 567 01ca 67        		.byte	103
+ 568 01cb 69        		.byte	105
+ 569 01cc 66        		.byte	102
+ 570 01cd 0D        		.byte	13
+ 571 01ce 0A        		.byte	10
+ 572 01cf 0D        		.byte	13
+ 573 01d0 0A        		.byte	10
+ 574 01d1 00        		.skip 1,0
+ 575               	.global	http_content_type_jpg
+ 578               	http_content_type_jpg:
+ 579 01d2 43        		.byte	67
+ 580 01d3 6F        		.byte	111
+ 581 01d4 6E        		.byte	110
+ 582 01d5 74        		.byte	116
+ 583 01d6 65        		.byte	101
+ 584 01d7 6E        		.byte	110
+ 585 01d8 74        		.byte	116
+ 586 01d9 2D        		.byte	45
+ 587 01da 74        		.byte	116
+ 588 01db 79        		.byte	121
+ 589 01dc 70        		.byte	112
+ 590 01dd 65        		.byte	101
+ 591 01de 3A        		.byte	58
+ 592 01df 20        		.byte	32
+ 593 01e0 69        		.byte	105
+ 594 01e1 6D        		.byte	109
+ 595 01e2 61        		.byte	97
+ 596 01e3 67        		.byte	103
+ 597 01e4 65        		.byte	101
+ 598 01e5 2F        		.byte	47
+ 599 01e6 6A        		.byte	106
+ 600 01e7 70        		.byte	112
+ 601 01e8 65        		.byte	101
+ 602 01e9 67        		.byte	103
+ 603 01ea 0D        		.byte	13
+ 604 01eb 0A        		.byte	10
+ 605 01ec 0D        		.byte	13
+ 606 01ed 0A        		.byte	10
+ 607 01ee 00        		.skip 1,0
+ 608               	.global	http_content_type_binary
+ 611               	http_content_type_binary:
+ 612 01ef 43        		.byte	67
+ 613 01f0 6F        		.byte	111
+ 614 01f1 6E        		.byte	110
+ 615 01f2 74        		.byte	116
+ 616 01f3 65        		.byte	101
+ 617 01f4 6E        		.byte	110
+ 618 01f5 74        		.byte	116
+ 619 01f6 2D        		.byte	45
+ 620 01f7 74        		.byte	116
+ 621 01f8 79        		.byte	121
+ 622 01f9 70        		.byte	112
+ 623 01fa 65        		.byte	101
+ 624 01fb 3A        		.byte	58
+ 625 01fc 20        		.byte	32
+ 626 01fd 61        		.byte	97
+ 627 01fe 70        		.byte	112
+ 628 01ff 70        		.byte	112
+ 629 0200 6C        		.byte	108
+ 630 0201 69        		.byte	105
+ 631 0202 63        		.byte	99
+ 632 0203 61        		.byte	97
+ 633 0204 74        		.byte	116
+ 634 0205 69        		.byte	105
+ 635 0206 6F        		.byte	111
+ 636 0207 6E        		.byte	110
+ 637 0208 2F        		.byte	47
+ 638 0209 6F        		.byte	111
+ 639 020a 63        		.byte	99
+ 640 020b 74        		.byte	116
+ 641 020c 65        		.byte	101
+ 642 020d 74        		.byte	116
+ 643 020e 2D        		.byte	45
+ 644 020f 73        		.byte	115
+ 645 0210 74        		.byte	116
+ 646 0211 72        		.byte	114
+ 647 0212 65        		.byte	101
+ 648 0213 61        		.byte	97
+ 649 0214 6D        		.byte	109
+ 650 0215 0D        		.byte	13
+ 651 0216 0A        		.byte	10
+ 652 0217 0D        		.byte	13
+ 653 0218 0A        		.byte	10
+ 654 0219 00        		.skip 1,0
+ 655               	.global	http_html
+ 658               	http_html:
+ 659 021a 2E        		.byte	46
+ 660 021b 68        		.byte	104
+ 661 021c 74        		.byte	116
+ 662 021d 6D        		.byte	109
+ 663 021e 6C        		.byte	108
+ 664 021f 00        		.skip 1,0
+ 665               	.global	http_shtml
+ 668               	http_shtml:
+ 669 0220 2E        		.byte	46
+ 670 0221 73        		.byte	115
+ 671 0222 68        		.byte	104
+ 672 0223 74        		.byte	116
+ 673 0224 6D        		.byte	109
+ 674 0225 6C        		.byte	108
+ 675 0226 00        		.skip 1,0
+ 676               	.global	http_htm
+ 679               	http_htm:
+ 680 0227 2E        		.byte	46
+ 681 0228 68        		.byte	104
+ 682 0229 74        		.byte	116
+ 683 022a 6D        		.byte	109
+ 684 022b 00        		.skip 1,0
+ 685               	.global	http_css
+ 688               	http_css:
+ 689 022c 2E        		.byte	46
+ 690 022d 63        		.byte	99
+ 691 022e 73        		.byte	115
+ 692 022f 73        		.byte	115
+ 693 0230 00        		.skip 1,0
+ 694               	.global	http_png
+ 697               	http_png:
+ 698 0231 2E        		.byte	46
+ 699 0232 70        		.byte	112
+ 700 0233 6E        		.byte	110
+ 701 0234 67        		.byte	103
+ 702 0235 00        		.skip 1,0
+ 703               	.global	http_gif
+ 706               	http_gif:
+ 707 0236 2E        		.byte	46
+ 708 0237 67        		.byte	103
+ 709 0238 69        		.byte	105
+ 710 0239 66        		.byte	102
+ 711 023a 00        		.skip 1,0
+ 712               	.global	http_jpg
+ 715               	http_jpg:
+ 716 023b 2E        		.byte	46
+ 717 023c 6A        		.byte	106
+ 718 023d 70        		.byte	112
+ 719 023e 67        		.byte	103
+ 720 023f 00        		.skip 1,0
+ 721               	.global	http_text
+ 724               	http_text:
+ 725 0240 2E        		.byte	46
+ 726 0241 74        		.byte	116
+ 727 0242 78        		.byte	120
+ 728 0243 74        		.byte	116
+ 729 0244 00        		.skip 1,0
+ 730               	.global	http_txt
+ 733               	http_txt:
+ 734 0245 2E        		.byte	46
+ 735 0246 74        		.byte	116
+ 736 0247 78        		.byte	120
+ 737 0248 74        		.byte	116
+ 738 0249 00        		.skip 1,0
+ 739               		.text
+ 740               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 http-strings.c
+     /tmp/ccdjeq0B.s:2      *ABS*:000000000000003f __SREG__
+     /tmp/ccdjeq0B.s:3      *ABS*:000000000000003e __SP_H__
+     /tmp/ccdjeq0B.s:4      *ABS*:000000000000003d __SP_L__
+     /tmp/ccdjeq0B.s:5      *ABS*:0000000000000034 __CCP__
+     /tmp/ccdjeq0B.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccdjeq0B.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccdjeq0B.s:20     .progmem.data:0000000000000000 http_http
+     /tmp/ccdjeq0B.s:32     .progmem.data:0000000000000008 http_200
+     /tmp/ccdjeq0B.s:41     .progmem.data:000000000000000d http_301
+     /tmp/ccdjeq0B.s:50     .progmem.data:0000000000000012 http_302
+     /tmp/ccdjeq0B.s:59     .progmem.data:0000000000000017 http_get
+     /tmp/ccdjeq0B.s:68     .progmem.data:000000000000001c http_10
+     /tmp/ccdjeq0B.s:81     .progmem.data:0000000000000025 http_11
+     /tmp/ccdjeq0B.s:94     .progmem.data:000000000000002e http_content_type
+     /tmp/ccdjeq0B.s:113    .progmem.data:000000000000003d http_texthtml
+     /tmp/ccdjeq0B.s:127    .progmem.data:0000000000000047 http_location
+     /tmp/ccdjeq0B.s:142    .progmem.data:0000000000000052 http_host
+     /tmp/ccdjeq0B.s:153    .progmem.data:0000000000000059 http_crnl
+     /tmp/ccdjeq0B.s:160    .progmem.data:000000000000005c http_index_html
+     /tmp/ccdjeq0B.s:176    .progmem.data:0000000000000068 http_404_html
+     /tmp/ccdjeq0B.s:190    .progmem.data:0000000000000072 http_referer
+     /tmp/ccdjeq0B.s:203    .progmem.data:000000000000007b http_header_200
+     /tmp/ccdjeq0B.s:291    .progmem.data:00000000000000cf http_header_404
+     /tmp/ccdjeq0B.s:386    .progmem.data:000000000000012a http_content_type_plain
+     /tmp/ccdjeq0B.s:419    .progmem.data:0000000000000147 http_content_type_html
+     /tmp/ccdjeq0B.s:451    .progmem.data:0000000000000163 http_content_type_css
+     /tmp/ccdjeq0B.s:482    .progmem.data:000000000000017e http_content_type_text
+     /tmp/ccdjeq0B.s:514    .progmem.data:000000000000019a http_content_type_png
+     /tmp/ccdjeq0B.s:546    .progmem.data:00000000000001b6 http_content_type_gif
+     /tmp/ccdjeq0B.s:578    .progmem.data:00000000000001d2 http_content_type_jpg
+     /tmp/ccdjeq0B.s:611    .progmem.data:00000000000001ef http_content_type_binary
+     /tmp/ccdjeq0B.s:658    .progmem.data:000000000000021a http_html
+     /tmp/ccdjeq0B.s:668    .progmem.data:0000000000000220 http_shtml
+     /tmp/ccdjeq0B.s:679    .progmem.data:0000000000000227 http_htm
+     /tmp/ccdjeq0B.s:688    .progmem.data:000000000000022c http_css
+     /tmp/ccdjeq0B.s:697    .progmem.data:0000000000000231 http_png
+     /tmp/ccdjeq0B.s:706    .progmem.data:0000000000000236 http_gif
+     /tmp/ccdjeq0B.s:715    .progmem.data:000000000000023b http_jpg
+     /tmp/ccdjeq0B.s:724    .progmem.data:0000000000000240 http_text
+     /tmp/ccdjeq0B.s:733    .progmem.data:0000000000000245 http_txt
+
+NO UNDEFINED SYMBOLS

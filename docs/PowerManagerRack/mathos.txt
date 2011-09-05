@@ -1,0 +1,6 @@
+- connecteur IEC C19/C20
+- diode de control d'activation du triac
+- optocoupleur
+- fusible 16A
+- capteur de courant a effet hall
+- rallonge IEC C19/C20
