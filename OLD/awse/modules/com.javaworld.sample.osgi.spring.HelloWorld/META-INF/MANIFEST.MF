@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HelloWorld Plug-in
+Bundle-SymbolicName: com.javaworld.sample.osgi.spring.HelloWorld
+Bundle-Version: 1.0.0
+Bundle-Vendor: JAVAWORLD
+Bundle-Localization: plugin
+Import-Package: com.javaworld.sample.osgi.spring.contact

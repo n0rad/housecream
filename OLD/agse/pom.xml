@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.awired.agse</groupId>
+	<artifactId>agse</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<tycho-version>0.9.0</tycho-version>	
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>com.springsource.org.apache.tiles</artifactId>
+			<version>2.0.5</version>
+			<scope>runtime</scope>
+		</dependency>	
+	</dependencies>
+	
+	<modules>
+		<module>modules/user.web</module>
+	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+	<profiles>
+		<profile>
+			<id>tycho</id>
+			<repositories>
+				<repository>
+					<id>galileo</id>
+					<layout>p2</layout>
+					<url>http://download.eclipse.org/releases/galileo/</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+</project>

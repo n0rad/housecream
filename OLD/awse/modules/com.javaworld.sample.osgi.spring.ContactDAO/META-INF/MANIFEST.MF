@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ContactDAO Plug-in
+Bundle-SymbolicName: com.javaworld.sample.osgi.spring.ContactDAO
+Bundle-Version: 1.0.0
+Bundle-Vendor: JAVAWORLD
+Bundle-Localization: plugin
+Export-Package: com.javaworld.sample.osgi.spring.contact
+Bundle-ClassPath: jars/derbyclient.jar,
+ .

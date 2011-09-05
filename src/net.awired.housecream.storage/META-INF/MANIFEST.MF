@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Export-Package: net.awired.housecream.storage.entity;uses:="javax.pers
+ istence";version="0.0.1.SNAPSHOT",net.awired.housecream.storage.dao;u
+ ses:="net.awired.housecream.storage.entity";version="0.0.1.SNAPSHOT"
+Implementation-Title: net.awired.housecream.storage
+Built-By: n0
+Tool: Bnd-1.43.0
+Project-Creator: Awired Network
+Implementation-Vendor: Awired Network
+Implementation-Vendor-Id: net.awired.housecream
+Project-Version: 0.0.1-SNAPSHOT
+Specification-Title: net.awired.housecream.storage
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: net.awired.housecream.net.awired.housecream.stora
+ ge
+Implementation-Version: 0.0.1-SNAPSHOT
+Specification-Vendor: Awired Network
+Bundle-Name: net.awired.housecream.storage
+Created-By: Apache Maven Bundle Plugin
+Project-Name: ${project.name}
+Copyright: Awired Network
+Bundle-Vendor: Awired Network
+Bundle-Version: 0.0.1.SNAPSHOT
+Build-Jdk: 1.6.0_26
+Bnd-LastModified: 1313664094901
+Bundle-ManifestVersion: 2
+Project-CreatorId: net.awired.housecream
+Bundle-Description: The Awired Bundle Java Parent Project
+Specification-Version: 0.0.1-SNAPSHOT
+Bundle-DocURL: http://awired.net/
+Import-Package: javax.persistence,net.awired.housecream.storage.dao,ne
+ t.awired.housecream.storage.entity,org.springframework.stereotype;ver
+ sion="[3.0,4)"
+Project-Website: http://housecream.awired.net/net.awired.housecream.st
+ orage
+

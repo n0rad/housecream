@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.awired</groupId>
+	<artifactId>acse</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>Awired Common Software Engine</name>
+	<url>http://acse.awired.net</url>
+	<description>This is a Common Software Engine</description>
+	<inceptionYear>2008</inceptionYear>
+
+	<parent>
+		<groupId>net.awired</groupId>
+		<artifactId>commons-java-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<acjp.dev.directory>../../../dev</acjp.dev.directory>
+	</properties>
+	
+	
+	<developers>
+		<developer>
+			<name>Arnaud LEMAIRE</name>
+			<id>n0rad</id>
+			<email>n0rad@awired.net</email>
+			<roles>
+				<role>manager</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.awired</groupId>
+			<artifactId>ajsl</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.awired</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- executable jar -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Main-Class>net.awired.bootstrap.Bootstrap</Main-Class>
+							<Real-Main>net.awired.acse.kernel.Kernel</Real-Main>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<!-- plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					< appendAssemblyId>false</appendAssemblyId >
+
+					<archive>
+						<manifest>
+							<mainClass>net.awired.bootstrap.Bootstrap</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Real-Main>net.awired.acse.kernel.Kernel</Real-Main>
+						</manifestEntries>
+					</archive>
+					<descriptors>
+						<descriptor>src/external/bootstrap/assembly/bootstrap.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>assembly</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin -->
+
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.awired.housecream</groupId>
+	<artifactId>net.awired.housecream</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<url>http://housecream.awired.net</url>
+
+	<properties>
+		<ajsl.version>0.3-SNAPSHOT</ajsl.version>
+	
+		<spring.version>3.0.5.RELEASE</spring.version>
+	</properties>
+
+	<modules>
+		<module>net.awired.housecream.storage</module>
+		<module>net.awired.housecream.core</module>
+		<module>net.awired.housecream.resource</module>
+		<module>net.awired.housecream.web</module>
+	</modules>
+
+	<parent>
+		<groupId>net.awired.parent.parent-java</groupId>
+		<artifactId>parent-java-bundle</artifactId>
+		<version>1.12-SNAPSHOT</version>
+	</parent>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.awired.housecream</groupId>
+				<artifactId>net.awired.housecream.storage</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>
+
+

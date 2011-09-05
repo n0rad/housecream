@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+	default-autowire="byName">
+
+	<context:component-scan base-package="net.awired.housecream" />
+
+
+
+
+<!-- 	<bean id="databaseLauncher" -->
+<!-- 		class="com.notehive.osgi.hibernate_samples.db.DatabaseLauncher"  -->
+<!-- 		init-method="startDatabase" /> -->
+
+<!-- 	<bean id="z2Dao" -->
+<!-- 		class="com.notehive.osgi.hibernate_samples.dao.z.Z2Dao"> -->
+<!-- 		<property name="sessionFactory" ref="dynamicSessionFactory" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean -->
+<!-- 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+<!-- 		<property name="locations"> -->
+<!-- 			<value>classpath:META-INF/spring/database.properties</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+<!-- 	Database Properties -->
+<!-- 	<bean id="hibernateProperties" -->
+<!-- 		class="org.springframework.beans.factory.config.PropertiesFactoryBean"> -->
+<!-- 		<property name="properties"> -->
+<!-- 			<props> -->
+
+<!-- 				<prop key="hibernate.dialect"> -->
+<!-- 					${hibernate.dialect} -->
+<!-- 				</prop> -->
+<!-- 				Note: Hibernate is unable to 'validate' the schema when tables are -->
+<!-- 				      really synonyms (metadata problem)                           -->
+<!-- 				use 'update' to autogenerate tables -->
+<!-- 				<prop key="hibernate.hbm2ddl.auto">update</prop> -->
+<!-- 				<prop key="hibernate.query.substitutions"> -->
+<!-- 					true 'T', false 'F' -->
+<!-- 				</prop> -->
+<!-- 				<prop key="hibernate.show_sql">false</prop> -->
+<!-- 				<prop key="hibernate.jdbc.batch_size">50</prop> -->
+<!-- 				<prop key="hibernate.connection.release_mode"> -->
+<!-- 					auto -->
+<!-- 				</prop> -->
+<!-- 				<prop key="hibernate.c3p0.testConnectionOnCheckout"> -->
+<!-- 					false -->
+<!-- 				</prop> -->
+<!-- 				<prop key="hibernate.hbm2ddl.auto">update</prop> -->
+<!-- 				<prop key="connection.autocommit">false</prop> -->
+<!-- 				<prop key="hibernate.connection.driver_class">${driver.classname}</prop> -->
+<!-- 				<prop key="hibernate.connection.url">${database.url}</prop> -->
+<!-- 				<prop key="hibernate.connection.username">${database.username}</prop> -->
+<!-- 				<prop key="hibernate.connection.password">${database.password}</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="transactionManager" -->
+<!-- 		class="org.springframework.orm.hibernate3.HibernateTransactionManager"> -->
+<!-- 		<property name="sessionFactory" ref="dynamicSessionFactory" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="z1Dao" -->
+<!-- 		class="com.notehive.osgi.hibernate_samples.dao.z.Z1Dao"> -->
+<!-- 		<property name="sessionFactory" ref="dynamicSessionFactory" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="dynamicConfiguration" -->
+<!-- 		class="com.notehive.osgi.hibernate_samples.session.DynamicConfiguration" -->
+<!-- 		depends-on="databaseLauncher"> -->
+<!-- 			Need to create a proxy because of, I guess, some mysterious circular -->
+<!-- 			dependency which requires this bean to exist before it can be initialized.  -->
+<!-- 		<aop:scoped-proxy/> -->
+<!-- 		<property name="annotatedClasses"> -->
+<!-- 			<list> -->
+<!-- 				<value> -->
+<!-- 					com.notehive.osgi.hibernate_samples.model.z.Z1 -->
+<!-- 				</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 		<property name="hibernateProperties" ref="hibernateProperties" /> -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="dynamicSessionFactory" -->
+<!-- 		class="com.notehive.osgi.hibernate_samples.session.DynamicSessionFactory" -->
+<!-- 		depends-on="dynamicConfiguration"> -->
+<!-- 		<property name="configuration" ref="dynamicConfiguration"/> -->
+<!-- 	</bean> -->
+	
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager" -->
+<!-- 		proxy-target-class="true" /> -->
+
+</beans>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- Maps requests to flows in the flowRegistry; e.g. a path of /foo/bar looks for a flow with id "foo/bar" -->
+	<bean id="flowMappings" class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+		<property name="order" value="0" />
+		<property name="flowRegistry" ref="flowRegistry" />
+	</bean>
+
+	<!-- Enables explicit @RequestMapping("path") annotations -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="order" value="1"/>
+	</bean>
+	
+	<!-- Enables /[resource] to [Resource]Controller class mapping -->
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+		<property name="order" value="2" />
+	</bean>
+
+	<!-- Spring MVC request HandlerAdapters must be explicitly registered now that we are now overriding the defaults to plug-in the FlowHandlerAdapter -->
+	
+	<!-- Dispatches requests mapped to POJO @Controllers implementations -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- Dispatches requests mapped to flows to FlowHandler implementations -->
+	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+		<property name="flowExecutor" ref="flowExecutor"/>
+	</bean>	
+	
+	<!-- Resolves view names to Tiles 2 definitions -->
+	<bean id="tilesViewResolver" class="org.springframework.js.ajax.AjaxUrlBasedViewResolver">
+		<property name="requestContextAttribute" value="requestContext"/>	
+		<property name="viewClass" value="org.springframework.webflow.mvc.view.FlowAjaxTilesView"/>
+	</bean>
+
+	<!-- Configures Tiles 2 -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Resolves messages to support internationalization -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/messages/global</value>
+			</list>
+		 </property>
+	</bean>
+			
+</beans>
