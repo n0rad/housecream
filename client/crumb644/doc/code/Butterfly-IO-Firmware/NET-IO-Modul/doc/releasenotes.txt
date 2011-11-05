@@ -1,0 +1,242 @@
+2.8.5
+2010-11-28
+- Removed forgotten "x" characters from debugging that disable HTTP 
+  authentication.
+
+2.8.4
+2010-05-08
+- Removed unwanted "FF" prefix to the output of the i command.
+
+2.8.3
+2010-04-28
+- Changed initial source port for outgoing connections to 4096 (was 1024).
+- Fixed useless padding byte at the end of each IP packet.
+
+2.8.2
+2009-12-17
+- Added support for Port J, K and L to i/o commands.
+
+2.8.1
+2009-12-13
+- Improved parameter validation of I/O commands.
+- If EXT_AREF is not specified, displaying voltage values gets disabled
+  and the floating-point library is not compiled-in anymore.
+- Added configurable write-protection to I/O pins. 
+
+2.8.0
+2009-12-10
+- Fixed sending wrong eMail subject when multiple triggers become active 
+  simultaneously.
+- Added support for configurable hardware layout.
+- The green LED flashes now two times during power-on and then it can be 
+  controlled using io-commands. The old DEBUG mode has been removed.
+- Fixed random characters in HTML document after clicking on any "Ok"
+  button in econfig.shtml.
+- Added display of stored settings in config.shtml.
+- Added support for AVR with more than 20Mhz.
+- Removed the LED-toggle links in the IO Status page.
+- Added support for port E, F, G and H
+- Fixed missing error message in i/o commands d,p and o with wrong port
+
+2.7.2
+2009-11-13
+- Reset jumper is now detected before ethernet initialisation.
+
+2.7.1
+2009-10-07
+- Added From: and To: fields to eMail envelope.
+- Added eMail statistics counters, which might be helpful for troubleshooting.
+- Changed line-feed in SMTP from \n to \r\n.
+
+2.7.0
+2009-10-03
+- Added authentication to httpd and socketd.
+- Added smtp client.
+- Added port D monitor with eMail notification.
+
+2.6.0
+2009-09-10
+- Added display of voltage for the analog inputs on the I/O status website.
+- New web form to execute I/O commands via JavaScript (AJAX).
+- Removed user_functions.c, it did never contain any useful function.
+
+2.5.3
+2009-09-05
+- Separated a part from httpd to a new inetd.
+- Fixed non-working call to the "dummy" function in socketd.
+- Added feature to change the IP-Address via arp/ping.
+
+2.5.2
+2009-09-03
+Stefan Frings
+- Fixed compiler warnings.
+- Fixed non-working backspace key in socket server.
+- Fixed writing copies of comand responses to the wrong socket connection,
+  which was introduced in version 2.5.1
+
+2.5.1
+2009-09-01
+Stefan Frings
+- Reversed the change of 2.4.2, because it caused too quick re-transmission 
+  timeouts.
+- Applied other fix to improve performance of socket connection
+- Fixed non-working statistics counter for bad ACK's
+- Cleaned up CP2200.c and added some more waitstates
+- Added debug status monitor on the LED's
+
+2.5.0
+2009-08-30
+Stefan Frings
+- Added serial port (USB) daemon
+- Added compatibility to Crumb-NET v2.0 and v2.1
+- Changed physical ethernet initialisation to repeat in a loop until success.
+
+2.4.3
+2009-07-10
+Stefan Frings
+- Changed initial data direction of LED Pins PC0 and PC1 to input.
+
+2.4.2
+2009-06-13
+Stefan Frings
+- Changed periodic timer from 250ms to 1ms to reduce dead time after executing
+  a command in telnetd.
+
+2.4.1
+2009-04-20
+Stefan Frings
+- Added missing initial default IP-Address 192.168.0.123.
+- Added function that resets the configuration when a jumper connects pin 3+4 of
+  the ISP connector during power-on.
+
+2.4.0
+2009-04-18
+Stefan Frings
+- Added telnet server for faster i/o commands.
+
+
+2.3.0
+2009-04-17
+Stefan Frings
+
+- Added the same commands as my USB firmware supports, through the URL
+  http://address/io?command, see io_help.shtml for the list of commands.
+
+
+2.2.0
+2009-04-16
+Stefan Frings
+
+- Merged style sheet, javascript and navigation menu into header.html
+  to reduce the number of small IP packets.
+- Added some preprocessor directives to allow compiling with UDP disabled
+- Removed ethernet auto-negotiation because uIP  requires full duplex.
+- Added status display for port B and D.
+- Added display for the analog inputs.
+- Fixed wrong length of TCP options in SYN-ACK, however this did
+  not affect the function at all.
+- Merged output of net statistics counters into a single function to get
+  all values from exactly the same timepoint.
+
+
+2.1.0
+2009-04-14
+Stefan Frings
+
+- Added DHCP client
+- Added configuration page for IP-Address and DHCP
+- Changed style of web sites
+- Added function to display the own MAC address
+- Added UDP protocol and statistics
+- Added DHCP refresh to the original code of Adam Dunkels
+
+
+2.0.0
+2009-04-11
+Stefan Frings
+
+This release is based on uIP_Crumb644-NET_V1.3.
+
+IP-Address is still hardcoded to 192.168.0.14 in CP2200.c.
+
+Major parts have been rewritten to fix errors, implement new functions
+and add missing documentation. There are so many changes, I cant list them
+all here. But these are the highlights:
+
+- Much better performance sending file >1.4kB. The crumb644 photo is 3.3kb
+  small and sending it to a Linux PC took 3 seconds! Now it takes less
+  than 0.1 seconds. The trick was to insert the TCP option NODELAY into
+  the uIP code.
+  
+- File statistics are working now and the list of filenames is generated
+  automatically.
+  
+- Network statistics display now correct values. Some of them were swapped
+  obviously.
+  
+- The old firmware did not deliver files (images and css) sometimes, and 
+  sometimes the whole progfram crashed. This has been resolved.
+  
+- The ethernet controller did not start-up properly when the power supply
+  starts slowly. I had trouble with a 5.2V power supply from an old 
+  cellphone. This has been resolved by replacing the soft reset by a
+  hard reset with enough delay time.
+  
+- A lot of checks have been added to prevent crashes caused by unexpected
+  HTTP requests.
+  
+- All code that was not related to Crumb644-NET has been removed, specially
+  access to I/O lines.
+  
+- The LED IO page has been enhanced to support both LED's and display
+  the current LED status. Of course, the toggle buttons do still exist. 
+  This is the only function that acceses any external I/O line.
+  
+- The red LED does not blink anymore, so you can use it for whatever 
+  else you like.
+
+- The makefile has been rewritten. I handle file dependencies now 
+  correctly. It also converts the html files automatically to char 
+  arrays, so there is no need anymore for any other external hex 
+  converter.
+
+- The perl script for file-to-char array conversion has been fixed to
+  produce correct code.
+  
+- The text file with string constants has been replaced by inline strings
+  directly in the related source code files.
+  
+- Some string constants have been moved from RAM to program memory (flash),
+  to free up some bytes of memory.
+
+- Some string variables have been replaced by pointers to already 
+  existing data, to save about 40 bytes memory per connection.
+  
+- uIP has been modified to skip sending empty packages, they caused
+  an immediate crash before.
+  
+- A content-type header for XML files has been added.
+
+- A lot of suspicious pointer arithmetic has been replaced by better
+  human readable code.
+  
+- The whole cgi scripting stuff has been replaced code that is smaller,
+  much better readable and with more functions. Indeed, the name 
+  was quite misleading, because cgi scripts are a totally different thing.
+  The new names are httpd_functions.c and user_functions.c.
+  
+- The new function concept allows calling functions by tags in .shtml 
+  files (as before) plus calling them by URL. In addition, functions
+  can now be called with parameters, which was not possible before.
+
+- function calls and include files in *.shtml can now be terminated
+  by line break, file-end or space. Previously, only line break was
+  supported.
+  
+- The source code has been structured with sub-directories to give
+  better overview what files belong together. Some unused files and
+  files that are not used anymore have been removed.
+
+- The almost not existing documentation has been added. The whole source
+  of the webserver should be self-explaining now. I highly recommend
+  to read the uIP manual chapters about Protothreads and then Protosockets.

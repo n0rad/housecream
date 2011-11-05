@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Butterfly I/O Firmware 2.8.4</title>
+    <meta name="author" content="Stefan Frings">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <style type="text/css">
+        
+body {
+  color:black;
+  background-image:url(raster.png);
+  position:absolute;
+  left:0;
+  top:0;
+  padding:0;
+  margin:0;
+}
+
+table {
+  background-color:white;
+  border-collapse:collapse;
+  border-style:dotted;
+  border-width:1px;
+  border-color:black;
+}
+
+td {
+  padding:0.5em;
+  border-style:dotted;
+  border-width:1px;
+  border-color:black;
+}
+
+div.links {
+  padding-top:1em;
+  padding-left:0.5em;
+  padding-right:0.5em;
+  padding-bottom:0.5em;
+  margin:0;
+  position:fixed;
+  width:10em;
+  float:left;
+}
+
+div.rechts {
+  width:10em;
+  float:right;
+  margin:0;
+  padding:0.5em;
+}
+
+div.inhalt {
+  color:navy;
+  margin-left:11em;
+  margin-right:11em;
+  margin-top:0;
+  margin-bottom:0;
+  padding:0.5em;
+  min-width:20em;
+  max-width:60em;
+}
+
+h1 {
+  font-size:140%;
+}
+
+h2 {
+  font-size:120%;
+}
+
+div.navigation {
+  background-color:#C0C0C0;
+  padding:0.2em;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+  font-weight:bold;
+}
+
+div.navigation a {
+  display: block;
+  text-decoration:none;
+  color:black;
+  border-style:none;
+  outline-style:none;
+}
+
+div.navigation a.active {
+  font-weight:bold;
+  color:red;
+}
+
+div.navigation a:hover {
+  background-color:#808080;
+}
+
+
+div.navigation ul {
+  background-color:#F0F0F0;
+  list-style:none;
+  padding-left:1em;
+  padding-right:0;
+  padding-top:1em;
+  padding-bottom:1em;
+  margin:0;
+  font-weight:normal;
+  font-size:80%;
+}
+
+div.navigation ul ul {
+  padding-top:0;
+  padding-bottom:0;
+  font-size:99%;
+}
+
+div.navigation ul.hidden {
+  display:none;
+}
+
+div.navigation ul.visible {
+  display:block;
+}
+
+div.navigation li {
+  margin-top:0.4em;
+  margin-bottom:0.4em;
+  list-style: none;
+}
+
+</style>
+<script>
+
+/* Activate the current document in the navigation div */
+function navi_activate_current(id) {
+  var destination=document.getElementById(id);
+  var requester=document.location.href;
+  var alleListen=destination.getElementsByTagName("ul");
+  for (j=0; j<alleListen.length; j++) {
+    var liste=alleListen[j];
+    var alleEintraege=liste.getElementsByTagName("li");
+    for (k=0; k<alleEintraege.length; k++) {
+      var eintrag=alleEintraege[k];
+      var alleLinks=eintrag.getElementsByTagName("a");
+      for (i=0; i<alleLinks.length; i++) {
+        var link=alleLinks[i];
+        if (link.href==requester) {
+          // found the link and the parent list item and the parent list
+          link.className="active";
+          liste.className="visible";
+          // find the direct sub-lists and make them active
+          var alleKinder=eintrag.childNodes;
+          for (l=0; l<alleKinder.length; l++) {
+            var kind=alleKinder[l];
+            if (kind.tagName!=null && kind.tagName.toLowerCase()=="ul") {
+              kind.className="visible";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* handle klick events on a folder in the navigation div*/
+function navi_klick_folder(id) {
+  var liste=document.getElementById(id);
+  if (liste.className=="hidden")
+    liste.className="visible";
+  else
+    liste.className="hidden";
+}
+
+</script>
+
+</head>
+<body onload="navi_activate_current('navigation')">
+
+<div class="links">
+  <div class="navigation" id="navigation">
+      Navigation
+      <ul>
+        <li><a href="index.shtml">Front page</a></li>
+        <li><a href="config.shtml">IP Configuration</a></li>
+        <li><a href="econfig.shtml">eMail App</a></li>
+        <li><a href="javascript:navi_klick_folder('stats')">Statistics</a><ul id="stats" class="hidden">
+            <li><a href="stats.shtml">IP Traffic</a></li>
+            <li><a href="tcp.shtml">TCP Connections</a></li>
+            <li><a href="files.shtml">HTTP File</a></li>
+            <li><a href="smtpstats.shtml">SMTP Counters</a></li>
+          </ul>
+        </li>
+        <li><a href="io.shtml">I/O Status</a></li>
+        <li><a href="io_help.shtml">I/O Commands</a></li>
+      </ul>
+    </div>
+</div>
+
+<div class="rechts">
+    <img src="crumb644net.jpg">
+</div>
+
+<div class="inhalt">

@@ -1,0 +1,12 @@
+%!: /header.html
+<h1>TCP connections</h1>
+<p>
+  <table>
+  <tr bgcolor="lightgrey"><td>Local</td><td>Remote</td><td>State</td><td>Retransmissions</td><td>Timer</td><td>Flags</td></tr>
+%! tcp-conn
+  </table>
+</p>
+
+    </div>
+  </body>
+</html>

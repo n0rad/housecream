@@ -1,0 +1,50 @@
+%!: /header.html
+<h1>IP Traffic</h1>
+<p>
+  <table>
+    <tr>
+      <td>
+        <pre>IP          Packets received
+            Packets sent
+            Packets dropped
+            
+IP errors   IP version/header length
+            IP length, high byte
+            IP length, low byte
+            IP fragments
+            Header checksum
+            Wrong protocol
+            Wrong host address
+
+ICMP        Packets received
+            Packets sent
+            Packets dropped
+            Type errors
+
+TCP         Packets received
+            Packets sent
+            Packets dropped
+
+TCP errors  Checksum errors
+            ACK with wrong sequence number
+            Resets
+            Retransmissions
+            No connection avaliable
+            Conn. attempts to closed ports
+
+UDP         Packets received
+            Packets sent
+            Packets dropped
+            Checksum errors
+            Wrong connection</pre>
+      </td>
+      <td>
+        <pre>%! net-stats </pre>
+      </td>
+    </tr>
+  </table>
+</p>
+
+    </div>
+  </body>
+</html>

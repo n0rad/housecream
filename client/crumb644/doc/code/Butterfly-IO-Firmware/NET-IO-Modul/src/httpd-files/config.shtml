@@ -1,0 +1,43 @@
+%!: /header.html
+
+<h1>IP Configuration</h1>
+
+<form method="get" action="config.shtml">
+  <p>
+    DHCP Client
+    <select name="dhcp">
+      <option value="0">disabled</option>
+      <option value="1" %! dhcpsel >enabled</option>
+    </select>
+  </p>
+  <p>
+    <table>
+      <tr>
+        <td>IP-Address</td>
+        <td><input type="text" name="ip" value="%! currentip" size="16" maxlength="16"></td>
+      </tr>
+      <tr>
+        <td>Netmask</td>
+        <td><input type="text" name="mask" value="%! currentmask" size="16" maxlength="16"></td>
+      </tr>
+      <tr>
+        <td>Gateway</td>
+        <td><input type="text" name="gw" value="%! currentgw" size="16" maxlength="16"></td>
+      </tr>
+    </table>
+  </p>
+  <p style="%! canauth ">
+      Authentication <input type="text" name="auth" value="%! getauth" size="20" maxlength="20"><br>
+      (in format username:password)
+  </p>
+  <p>
+    <input type="submit">
+  </p>
+</form>
+<p>
+  Stored settings:<br>
+  IP address: %! getip / %! getmask , gateway %! getgw
+
+    </div>
+  </body>
+</html>
