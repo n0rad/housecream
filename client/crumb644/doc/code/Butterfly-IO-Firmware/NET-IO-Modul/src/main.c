@@ -28,10 +28,10 @@
 
 // Set hardcoded default IP settings
 void set_defaults(void) {
-    config.dhcpenable=1;
-    uip_ipaddr(config.ipaddr, 192,168,0,123);
+    config.dhcpenable=0;
+    uip_ipaddr(config.ipaddr, 192,168,42,42);
     uip_ipaddr(config.netmask, 255,255,255,0);
-    uip_ipaddr(config.gateway, 192,168,0,1);
+    uip_ipaddr(config.gateway, 192,168,42,2);
     // clear password
     config.authentication[0]=0; 
     writeFlashConfig();
