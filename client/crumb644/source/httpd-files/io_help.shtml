@@ -1,0 +1,53 @@
+%!: /header.html
+
+<h1>I/O commands</h1>
+<p>
+  The I/O commands configure the I/O lines, query the status
+  of inputs and set the value of outputs.
+</p>
+<p>
+  Call the io commands via socket connection on port 23 (telnet) or via
+  URL: http://ip-address/io?<b>command</b>.
+</p>
+<p><pre>
+Commands that affect all port pins:
+d,DDCCBBAA  Set direction of all port pins, high=output, low=input
+p,DDCCBBAA  Configure pull-up resistors, high=on, low=off
+o,DDCCBBAA  Output data on all port pins
+i           Read from all port pins
+
+Commands that affect one port:
+dPB,xx      Set direction of port B
+pPB,xx      Configure pull-up resistors of port B
+oPB,xx      Output data on port B
+iPB         Read from port B
+
+Commands that affect a single port pin:
+dPB0,i      Set direction of port B pin 0 to input (0 or i=input, 1 or o=output)
+pPB0,e      Enable pull-up resistors of port B pin 0 (0 or d=disabled, 1 or e=enabled)
+oPB0,h      Output high on port B pin 0 (0 or l=low, 1 or h=high)
+iPB0        Read from port B pin 0
+
+Analog inputs:
+rVCC        Use VCC as reference (5V)
+r1.1V       Use internal 1.1V reference
+r2.56V      Use internal 2.56V reference
+rEXT        Use external reference
+a3          Read from analog pin 3
+
+xx and DDCCBBAA are hexadecimal numbers.
+On modules with more than 4 ports, you can also use 64 bit numbers
+in format HHGGFFEEDDCCBBAA.
+
+Binary and hexadecimal digits can be given in upper and lower case.
+Instead of "," you can also enter "=".;
+</pre></p>
+<p>
+  For example, <a href="io?oPC0,0">oPC0,0</a> switches the green LED on if this pin
+  if configured for output direction.
+</p>
+
+    </div>
+  </body>
+</html>
+

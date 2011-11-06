@@ -1,0 +1,84 @@
+%!: /header.html
+
+<script>
+
+function ajax_request(url) {
+  try {
+    var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("MSXML2.XMLHTTP.3.0");
+    request.open("GET", url, false);
+    request.send(null);
+    return request.responseText;
+  }
+  catch (e) {
+    alert("AJAX request failed:\n"+e);
+    return "";
+  }
+}
+
+function execute() {
+  var inputfield=document.getElementById("inputfield");
+  var outputfield=document.getElementById("outputfield");
+  var result=ajax_request("io?"+inputfield.value);
+  outputfield.value=result;
+}
+
+</script>
+
+<h1>I/O Status</h1>
+<p>
+  Port A is %! portstatus?A
+  <br>
+  Port B is %! portstatus?B
+  <br>
+  Port C is %! portstatus?C
+  <br>
+  Port D is %! portstatus?D
+  <br>
+  Port E is %! portstatus?E
+  <br>
+  Port F is %! portstatus?F
+  <br>
+  Port G is %! portstatus?G
+  <br>
+  Port H is %! portstatus?H
+</p>
+<p>
+  ADC 0 is %! adcstatus?0
+  <br>
+  ADC 1 is %! adcstatus?1
+  <br>
+  ADC 2 is %! adcstatus?2
+  <br>
+  ADC 3 is %! adcstatus?3
+  <br>
+  ADC 4 is %! adcstatus?4
+  <br>
+  ADC 5 is %! adcstatus?5
+  <br>
+  ADC 6 is %! adcstatus?6
+  <br>
+  ADC 7 is %! adcstatus?7
+</p>
+<p>
+  The following form executes I/O commands via JavaScript:
+  <form action="javascript:execute()">
+    <table>
+      <tr>
+        <td>Command:</td>
+        <td><input id="inputfield" type="text" size="20"><input type="submit" value="Ok"></td>
+      </tr>
+      <tr>
+        <td>Result:</td>
+        <td><input id="outputfield" type="text" size="20" readonly></td>
+      </tr>
+    </table>
+  </form>
+</p>
+<p>
+  The status display above refreshes only when you click on the reload button.
+</p>
+
+    </div>
+  </body>
+</html>
+

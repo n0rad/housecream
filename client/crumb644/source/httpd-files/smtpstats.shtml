@@ -1,0 +1,24 @@
+%!: /header.html
+<h1>SMTP Counters</h1>
+<p>
+  <table>
+    <tr>
+      <td>
+        <pre>Emails sent
+Timeout
+EHLO command failed
+authentication failed
+sender rejected
+recipient rejected
+content rejected</pre>
+      </td>
+      <td>
+        <pre>%! smtp-stats </pre>
+      </td>
+    </tr>
+  </table>
+</p>
+
+    </div>
+  </body>
+</html>

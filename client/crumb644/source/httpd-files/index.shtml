@@ -1,0 +1,33 @@
+%!: /header.html
+<p>
+  These pages are served by a small embedded webserver with AVR-RISC processor.
+</p>
+<p>
+  <table>
+    <tr><td>
+      Hardware: Crumb644-NET from <a href="http://www.chip45.com">www.chip45.com</a>
+    </td></tr>
+    <tr><td>
+      Ethernet driver: Stefan Perzborn <a href="http://www.perzborn.net/">www.perzborn.net</a>
+    </td></tr>
+    <tr><td>
+      TCP/IP stack: Adam Dunkels <a href="http://www.sics.se/~adam/uip/">uIP TCP/IP stack</a>
+    </td></tr>
+    <tr><td>
+      All other parts: Stefan Frings <a href="http://meinemullemaus.de">meinemullemaus.de</a>
+    </td></tr>
+  </table>
+</p>
+<p>
+  Largest free memory block: %! freemem bytes
+  <br>
+  DHCP Status: %! dhcp-status
+  <br>
+  MAC address: %! getmac
+  <br>
+  IP address: %! currentip / %! currentmask , gateway %! currentgw
+</p>
+
+    </div>
+  </body>
+</html>

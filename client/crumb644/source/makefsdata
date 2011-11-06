@@ -1,0 +1,77 @@
+open(OUTPUT, "> httpd/httpd-fsdata.c");
+print(OUTPUT "// This file is auto-generated. Do not edit it.\n");
+print(OUTPUT "// Edit http-strings.txt instead.\n\n");
+
+chdir("httpd-files");
+opendir(DIR, ".");
+@filenames =  grep { !/^\./ && !/(CVS|~)/ } readdir(DIR);
+closedir(DIR);
+
+foreach $filename (@filenames) {   
+    if(-d $filename && $filename !~ /^\./) {
+	print "Processing directory $filename\n";
+	opendir(DIR, $filename);
+	@newfiles =  grep { !/^\./ && !/(CVS|~)/ } readdir(DIR);
+	closedir(DIR);
+	printf "Adding files @newfiles\n";
+	@filenames = (@filenames, map { $_ = "$filename/$_" } @newfiles);
+	next;
+    }
+}
+
+foreach $filename (@filenames) {
+    if(-f $filename) {
+	print "Adding file $filename\n";
+	open(FILE, $filename) || die "Could not open file $filename\n";
+	$filename =~ s-^-/-;
+	$varname = $filename;
+	$varname =~ s-/-_-g;
+	$varname =~ s-\.-_-g;
+	# for AVR, add PROGMEM here
+	print(OUTPUT "prog_char data".$varname."[] = {\n");
+	print(OUTPUT "\t/* $filename */\n\t");
+	for($j = 0; $j < length($filename); $j++) {
+	    printf(OUTPUT "%#02x, ", unpack("C", substr($filename, $j, 1)));
+	}
+	printf(OUTPUT "0,\n");
+	print(OUTPUT "\t/* file data */\n");
+	$i = 0;
+	$filesize=0;
+	while(read(FILE, $data, 1)) {
+	    $filesize++;
+	    if($i == 0) {
+		print(OUTPUT "\t");
+	    }
+	    printf(OUTPUT "%#02x, ", unpack("C", $data));
+	    $i++;
+	    if($i == 10) {
+		print(OUTPUT "\n");
+		$i = 0;
+	    }
+	}
+	print(OUTPUT "\n\t/* additional end marker */\n\t");
+	print(OUTPUT "0};\n\n");
+	close(FILE);
+	push(@varnames, $varname);
+	push(@fnames, $filename);
+	push(@fsizes, $filesize);
+    }
+}
+
+for($i = 0; $i < @fnames; $i++) {
+    $filename = $fnames[$i];
+    $varname = $varnames[$i];
+    $filesize = $fsizes[$i];
+    if($i == 0) {
+        $prevfile = "0";
+    } else {
+        $prevfile = "file" . $varnames[$i - 1];
+    }
+    print(OUTPUT "struct httpd_fsdata_file file".$varname."[] = {{$prevfile, data$varname, ");
+    print(OUTPUT "data$varname + ". (length($filename)+1) .", ");
+    print(OUTPUT "$filesize}};\n\n");
+}
+
+print(OUTPUT "#define HTTPD_FS_ROOT file$varnames[$i - 1]\n\n");
+print(OUTPUT "#define HTTPD_FS_NUMFILES $i\n");
+close(OUTPUT);
