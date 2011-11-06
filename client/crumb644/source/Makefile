@@ -15,7 +15,7 @@
 # Paramneters for ISP programmer avrdude
 # Linux:   /dev/ttyUSB0 is the first virtual serial port 
 # Windows: //./COM20    is the virtual port COM20
-AVRDUDE_HW = -c avr910 -P /dev/ttyUSB0 -b 115200 
+AVRDUDE_HW = -c stk500v2 -P /dev/ttyUSB0 -b 115200 
 
 
 # Select one of the predefined hardware layouts.
@@ -33,7 +33,7 @@ BAUD = 115200
 # Enable eMail application, which sends an eMail if
 # a PIN on Port PD0 - PD7 changes its status.
 # Needs about 30 bytes RAM.
-EMAIL_APP = no
+EMAIL_APP = yes
 
 # Enable username/password authentication in HTTP and socket server
 # Needs about 410 bytes RAM.
@@ -113,7 +113,7 @@ PERL    = perl
 
 
 # Name of the program without extension
-PRG = NET-IO-Modul
+PRG = hcrumb
 
 # Do we need to write Eeprom? (yes/no)
 EEPROM = no
