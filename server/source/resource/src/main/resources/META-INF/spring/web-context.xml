@@ -13,15 +13,17 @@
 		<jaxrs:serviceBeans>
 			<ref bean="eventResource" />
 		</jaxrs:serviceBeans>
-<!-- 		<jaxrs:extensionMappings> -->
-<!-- 			<entry key="xml" value="application/xml" /> -->
-<!-- 			<entry key="json" value="application/json" /> -->
-<!-- 		</jaxrs:extensionMappings> -->
+		<jaxrs:extensionMappings>
+			<entry key="xml" value="application/xml" />
+			<entry key="json" value="application/json" />
+		</jaxrs:extensionMappings>
+		<jaxrs:providers>
+			<ref bean="jaxbProvider" />
+			<ref bean="jsonProvider" />
+		</jaxrs:providers>
 	</jaxrs:server>
+	
+	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
+	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.JSONProvider" />
 
-	<!-- <jaxrs:server id="restContainer" address="/"> -->
-	<!-- <jaxrs:serviceBeans> -->
-	<!-- <ref bean="timeService"/> -->
-	<!-- </jaxrs:serviceBeans> -->
-	<!-- </jaxrs:server> -->
 </beans>

@@ -1,8 +1,14 @@
 package net.awired.housecream.server.storage.dao;
 
-import net.awired.ajsl.persistence.dao.AbstractDAO;
+import net.awired.ajsl.persistence.dao.GenericDAOImpl;
 import net.awired.housecream.server.storage.entity.EndPoint;
+import org.springframework.stereotype.Repository;
 
-public interface EndPointDao extends AbstractDAO<EndPoint, Long> {
+@Repository
+public class EndPointDao extends GenericDAOImpl<EndPoint, Long> {
+
+    public EndPointDao() {
+        super(EndPoint.class, Long.class);
+    }
 
 }
