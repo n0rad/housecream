@@ -43,6 +43,7 @@ than the inputbuffer. The inputbuffer size is defined in httpd-h.
 #include <string.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
+#include "../main.h"
 
 #ifdef AUTH
 #include "base64.h"
@@ -431,6 +432,7 @@ static PT_THREAD(handle_input(struct application_state *app_state)) {
     if (app_state->inputbuffer[0] != '/') {
         PSOCK_CLOSE_EXIT(&app_state->sin);
     }
+    DEBUG_PRINTLN(app_state->inputbuffer);
     // if the filename is "/", then replace it by the name of the index file
     if (app_state->inputbuffer[1] == ' ') {
         strcpy_P(app_state->inputbuffer, nameof_index_file);

@@ -11,14 +11,14 @@
 # Programmer hardware settings for avrdude
 # Linux:   /dev/ttyUSB0 is the first virtual serial port 
 # Windows: //./COM20    is the virtual port COM20
-AVRDUDE_HW = -c avr910 -P /dev/ttyUSB0 -b 115200
+AVRDUDE_HW = -c stk500v2 -P /dev/ttyUSB1 -b 115200
 
 # Select one of the predefined hardware layouts.
 # The hardware layouts are defined below.
 #LAYOUT = Crumb8_USB
 #LAYOUT = Crumb128
-LAYOUT = Crumb168_USB
-#LAYOUT = Crumb644
+#LAYOUT = Crumb168_USB
+LAYOUT = Crumb644
 #LAYOUT = Crumb2560
 
 # Clock frequency in Hz

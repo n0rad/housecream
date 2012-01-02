@@ -44,13 +44,24 @@ static void serial_writestr_P(const char* s) {
 }
 
 // Write a string from ram to the serial port
-static void serial_writestr(char* s) {
+void serial_writestr(char* s) {
     while (*s != 0) {
         serial_write(*s);
 	s++;
     }    
 }
 
+void serial_writestrln(char* s) {
+	serial_writestr(s);
+	serial_writestr("\n");
+}
+
+
+void serial_writeDec(int i) {
+	char str[12];
+	snprintf(str, sizeof(str), "%d", i);
+	serial_writestr(str);
+}
 
 // Read a character from serial port
 static int serial_read(void) {

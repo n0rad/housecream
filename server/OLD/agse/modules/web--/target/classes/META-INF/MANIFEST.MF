@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Unversioned-Imports: *
-Bundle-Version: 1.0-SNAPSHOT
-Tool: Bundlor 1.0.0.RELEASE
-Bundle-SymbolicName: web
-

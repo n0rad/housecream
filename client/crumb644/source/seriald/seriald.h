@@ -13,4 +13,8 @@
 // Initialisation
 void seriald_init(void);
 
+void serial_writestr(char* s);
+void serial_writestrln(char* s);
+void serial_writeDec(int i);
+
 #endif /* __SERIALD_H__ */

@@ -15,7 +15,7 @@
 # Paramneters for ISP programmer avrdude
 # Linux:   /dev/ttyUSB0 is the first virtual serial port 
 # Windows: //./COM20    is the virtual port COM20
-AVRDUDE_HW = -c stk500v2 -P /dev/ttyUSB0 -b 115200 
+AVRDUDE_HW = -c stk500v2 -P /dev/ttyUSB1 -b 115200 
 
 
 # Select one of the predefined hardware layouts.
@@ -81,7 +81,7 @@ endif
 # Optional features
 #--------------------
 
-CFLAGS = -D $(LAYOUT)
+CFLAGS = -D $(LAYOUT) -D DEBUG
 
 ifeq ($(SERIAL),yes)
   CFLAGS += -D SERIAL -D BAUD=$(BAUD)

@@ -1,0 +1,62 @@
+
+GET /
+{
+	software=hcrumb
+	version=0.1
+	description=description of the board
+	ip=192.168.42.5
+	mac=HGCFVF
+	port=80
+	hash=true
+	crypt=true
+	notice=http://192.168.42.4/genre/
+	pin = {
+		d0={
+			name=d0
+			direction=NOTUSED ,INPUT,OUTPUT
+			type=analog/pwm
+			startVal=42
+			description=lock sensor of door 3
+			rangeMin=0
+			rangeMax=255
+			rangeStep=42
+			converter=degreeCelsiusToLm35
+			val=42
+			notice=http://192.168.42.4/genre/
+			noticeCond=>0
+		}
+	}
+	updatable=[description,notice,name,ip,port,mac,startVal,noticeCond]
+}
+
+POST /
+{
+	description=new descriptionlong p //? but we will lose info on reprogram 
+}
+
+GET /val
+{
+	d0=42
+	d1=43
+	...
+}
+
+GET /d0/val
+{
+	val=42
+}
+
+POST /d0/val/43
+
+POST /d0
+{
+	val=43
+	description=new description
+}
+
+RESPONSE
+{
+	code=42
+	msg=value out of range
+}
+
