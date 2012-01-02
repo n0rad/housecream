@@ -1,6 +1,7 @@
 package net.awired.housecream.server.storage.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
 
 /**
@@ -10,6 +11,8 @@ import net.awired.ajsl.persistence.entity.IdEntityImpl;
 public class EndPoint extends IdEntityImpl<Long> {
 
     //    private Coordinate position;
+
+    @ManyToOne
     private Device device;
 
     private String name;

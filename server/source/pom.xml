@@ -19,8 +19,8 @@
 		<junit.version>4.8.2</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
 		<jetty.version>6.1.26</jetty.version>
-		<ajsl.version>0.3-SNAPSHOT</ajsl.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
+		<spring.version>3.1.0.RELEASE</spring.version>
 	</properties>
 
 	<modules>

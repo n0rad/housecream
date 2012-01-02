@@ -17,6 +17,12 @@
         <dependent-module archiveName="hcs-api-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/hcs-api/hcs-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="ajsl-persistence-0.4-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ajsl-persistence/ajsl-persistence">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ajsl-core-0.4-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ajsl-core/ajsl-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/net.awired.housecream.resource/target/classes"/>
         <property name="context-root" value="hcs"/>
     </wb-module>

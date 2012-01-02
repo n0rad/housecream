@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogManager;
 import javax.servlet.ServletContextEvent;
 import net.awired.housecream.server.core.application.common.ApplicationHelper;
 import org.fusesource.jansi.AnsiConsole;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.web.context.ContextLoaderListener;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -14,9 +17,24 @@ import com.google.common.io.Files;
 public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
     @Override
+    public void contextDestroyed(ServletContextEvent event) {
+        AnsiConsole.systemUninstall();
+        SLF4JBridgeHandler.uninstall();
+        super.contextDestroyed(event);
+    }
+
+    @Override
     public void contextInitialized(ServletContextEvent event) {
 
         AnsiConsole.systemInstall();
+
+        java.util.logging.Logger rootLogger = LogManager.getLogManager().getLogger("");
+        Handler[] handlers = rootLogger.getHandlers();
+        for (Handler handler : handlers) {
+            rootLogger.removeHandler(handler);
+        }
+        SLF4JBridgeHandler.install();
+
         String home = ApplicationHelper.findHomeDir();
         String version = getVersion(event);
         System.setProperty(ApplicationHelper.HOME_KEY, home);

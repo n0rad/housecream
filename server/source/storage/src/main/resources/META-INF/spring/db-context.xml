@@ -12,36 +12,49 @@
 
 	<context:component-scan base-package="net.awired.housecream" />
 
-	<tx:annotation-driven />
+	<!-- aspectj is needed for transaction aspect of DAO without interfaces -->
+	<tx:annotation-driven mode="aspectj"/>
+	<aop:config proxy-target-class="true"/>
 
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<!-- <property name="showSql" value="true" /> -->
-				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
-			</bean>
-		</property>
-	</bean>
-
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="${database.driverClassName}" />
-		<property name="url" value="${database.url}" />
-		<property name="username" value="${database.username}" />
-		<property name="password" value="${database.password}" />
-	</bean>
 
 	<!-- H2 server -->
 	<bean id="org.h2.tools.Server" class="org.h2.tools.Server"
 		lazy-init="false" factory-method="createTcpServer" init-method="start"
-		destroy-method="stop" depends-on="dataSource">
+		destroy-method="stop" depends-on="entityManagerFactory">
 		<constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,8044" />
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" />
-	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.connection.driver_class">${database.class}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.jdbc.batch_size">0</prop>
+				
+				<prop key="hibernate.connection.url">${database.url}</prop>
+				<prop key="hibernate.connection.username">${database.username}</prop>
+				<prop key="hibernate.connection.password">${database.password}</prop>
+
+				<!-- pool -->
+				<prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+				<prop key="hibernate.c3p0.min_size">5</prop>
+				<prop key="hibernate.c3p0.max_size">20</prop>
+				<prop key="hibernate.c3p0.max_statements">50</prop>
+
+<!-- 				<prop key="hibernate.c3p0.timeout">10</prop> sec -->
+<!-- 				<prop key="c3p0.idle_test_period">5</prop> sec -->
+			</props>
+		</property>
+	</bean>
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+		p:entityManagerFactory-ref="entityManagerFactory" />
 
 </beans>
