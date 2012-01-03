@@ -21,6 +21,8 @@
 		<jetty.version>6.1.26</jetty.version>
 		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
+		<camel.version>2.9.0</camel.version>
+		<cxf.version>2.5.1</cxf.version>
 	</properties>
 
 	<modules>

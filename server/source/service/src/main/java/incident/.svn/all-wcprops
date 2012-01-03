@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1225049/camel/tags/camel-2.9.0/examples/camel-example-cxf-tomcat/src/main/java/org/apache/camel/example/cxf/incident
+END
+InputStatusIncident.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/repos/asf/!svn/ver/1225049/camel/tags/camel-2.9.0/examples/camel-example-cxf-tomcat/src/main/java/org/apache/camel/example/cxf/incident/InputStatusIncident.java
+END
+OutputStatusIncident.java
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/repos/asf/!svn/ver/1225049/camel/tags/camel-2.9.0/examples/camel-example-cxf-tomcat/src/main/java/org/apache/camel/example/cxf/incident/OutputStatusIncident.java
+END
+InputReportIncident.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/repos/asf/!svn/ver/1225049/camel/tags/camel-2.9.0/examples/camel-example-cxf-tomcat/src/main/java/org/apache/camel/example/cxf/incident/InputReportIncident.java
+END
+OutputReportIncident.java
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/repos/asf/!svn/ver/1225049/camel/tags/camel-2.9.0/examples/camel-example-cxf-tomcat/src/main/java/org/apache/camel/example/cxf/incident/OutputReportIncident.java
+END
+IncidentService.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/repos/asf/!svn/ver/1225049/camel/tags/camel-2.9.0/examples/camel-example-cxf-tomcat/src/main/java/org/apache/camel/example/cxf/incident/IncidentService.java
+END
