@@ -1,0 +1,10 @@
+.classpath
+.settings
+.project
+target
+.externalToolBuilders
+maven-eclipse.xml
+.pmd
+.checkstyle
+.metadata
+ucdetector_reports
