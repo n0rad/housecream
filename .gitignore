@@ -1,8 +1,0 @@
-*.o
-*.hex
-*.elf
-*.map
-Debug/
-client/crumb644/source/httpd/httpd-fsdata.c
-target/
-
