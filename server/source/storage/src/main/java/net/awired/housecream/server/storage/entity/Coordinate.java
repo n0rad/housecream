@@ -1,10 +1,12 @@
 package net.awired.housecream.server.storage.entity;
 
+import javax.persistence.Embeddable;
 
+//TODO add z to manage 3D interfaces
+@Embeddable
 public class Coordinate {
     private int x;
     private int y;
-    private int z;
 
     public int getX() {
         return x;
@@ -21,13 +23,4 @@ public class Coordinate {
     public void setY(int y) {
         this.y = y;
     }
-
-    public int getZ() {
-        return z;
-    }
-
-    public void setZ(int z) {
-        this.z = z;
-    }
-
 }

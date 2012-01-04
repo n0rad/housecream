@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>hcs-it</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>net.awired.housecream.server</groupId>
+		<artifactId>hcs</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>net.awired.housecream.server</groupId>
+			<artifactId>hcs-common</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>net.awired.housecream.server</groupId>
+			<artifactId>hcs-webapi</artifactId>
+			<type>war</type>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testSourceDirectory>src/it/java</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/it/resources</directory>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.11</version>
+				<configuration>
+					<excludes>
+						<exclude>**/**IT.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<container>
+						<containerId>jetty8x</containerId>
+						<type>embedded</type>
+						<systemProperties>
+							<dummy>example</dummy>
+						</systemProperties>
+					</container>
+					<configuration>
+						<properties>
+							<cargo.logging>low</cargo.logging>
+						</properties>
+						<deployables>
+							<deployable>
+								<groupId>net.awired.housecream.server</groupId>
+								<artifactId>hcs-webapi</artifactId>
+								<type>war</type>
+								<properties>
+									<context>hcs</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</configuration>
+					<wait>false</wait>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+

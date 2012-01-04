@@ -16,26 +16,39 @@
 	</parent>
 
 	<properties>
+		<bootstrap.version>1.0</bootstrap.version>
+		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
+	
 		<junit.version>4.8.2</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
 		<jetty.version>6.1.26</jetty.version>
-		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
 		<camel.version>2.9.0</camel.version>
 		<cxf.version>2.5.1</cxf.version>
 	</properties>
 
 	<modules>
-		<module>api</module>
-		<module>cli</module>
+		<module>common</module>
+		<module>core</module>
 		<module>storage</module>
 		<module>service</module>
-		<module>core</module>
-		<module>resource</module>
+		<module>cli</module>
+		<module>webapi</module>
+		<module>it</module>		
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>hcs-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>hcs-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
 				<artifactId>hcs-storage</artifactId>
@@ -48,18 +61,9 @@
 			</dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>hcs-api</artifactId>
+				<artifactId>hcs-webapi</artifactId>
 				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>hcs-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>hcs-resource</artifactId>
-				<version>${project.version}</version>
+				<type>war</type>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

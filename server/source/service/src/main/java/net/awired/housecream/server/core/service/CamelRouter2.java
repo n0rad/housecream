@@ -21,6 +21,11 @@ public class CamelRouter2 extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         errorHandler(new NoErrorHandlerBuilder());
+        from(CXF_RS_ENDPOINT_URI).to("cxfrs://bean://rsClient");
+        if (true || true) {
+            return;
+        }
+
         from(CXF_RS_ENDPOINT_URI).process(new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {

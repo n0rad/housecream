@@ -1,5 +1,7 @@
 package net.awired.housecream.server.storage.entity;
 
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
 
@@ -9,6 +11,7 @@ public class Room extends IdEntityImpl<Long> {
     private String name;
     private Floor floor;
 
-    //    private List<Coordinate> coverage;
+    @ElementCollection
+    private List<Coordinate> coverage;
 
 }

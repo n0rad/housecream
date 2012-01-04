@@ -57,14 +57,16 @@ public class ApplicationHelper {
         } catch (IOException e) {
         }
 
-        // tomcat like
-        try {
-            Manifest manifest = new Manifest(manifestIn);
-            String versionManifest = manifest.getMainAttributes().getValue(MANIFEST_VERSION_KEY);
-            if (versionManifest != null) {
-                return versionManifest;
+        if (manifestIn != null) {
+            // tomcat like
+            try {
+                Manifest manifest = new Manifest(manifestIn);
+                String versionManifest = manifest.getMainAttributes().getValue(MANIFEST_VERSION_KEY);
+                if (versionManifest != null) {
+                    return versionManifest;
+                }
+            } catch (IOException e) {
             }
-        } catch (IOException e) {
         }
         return UNKNOW_VERSION;
     }

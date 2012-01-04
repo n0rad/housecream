@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>hcs-webapi</artifactId>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>net.awired.housecream.server</groupId>
+		<artifactId>hcs</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.awired.housecream.server</groupId>
+			<artifactId>hcs-service</artifactId>
+		</dependency>
+
+
+
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Front -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>hcs</finalName>
+		
+				<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>Bootstrap</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Bootstrap-MainClass>net.awired.housecream.server.cli.Main</Bootstrap-MainClass>
+							<Bootstrap-ClassPath>META-INF/lib</Bootstrap-ClassPath>
+							<HousecreamVersion>${project.version}</HousecreamVersion>
+						</manifestEntries>
+					</archive>
+					<webResources>
+						<resource>
+							<directory>../../</directory>
+							<includes>
+								<include>LICENCE.txt</include>
+								<include>README.rst</include>
+								<include>INSTALL.txt</include>
+								<include>CHANGELOG.txt</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>net.awired.bootstrap</groupId>
+									<artifactId>bootstrap-java</artifactId>
+									<version>${bootstrap.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>net.awired.housecream.server</groupId>
+									<artifactId>hcs-cli</artifactId>
+									<version>${project.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF/lib</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.10</version>
+				<configuration>
+					<stopKey>F13</stopKey>
+					<stopPort>8080</stopPort>
+				</configuration>
+			</plugin>
+		</plugins>		
+	</build>
+
+</project>
+
