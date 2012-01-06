@@ -5,9 +5,11 @@
 
 	<groupId>net.awired.housecream.server</groupId>
 	<artifactId>hcs</artifactId>
+	<name>HouseCream Server</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://housecream.awired.net</url>
+	<description></description>
 
 	<parent>
 		<groupId>net.awired.parent.parent-java</groupId>
