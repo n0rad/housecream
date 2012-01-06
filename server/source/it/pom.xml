@@ -101,6 +101,7 @@
 					<container>
 						<containerId>jetty8x</containerId>
 						<type>embedded</type>
+						<cargo.jvmargs>-XX:PermSize=512m -XX:MaxPermSize=1024m -Duser.timezone="GMT" -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/</cargo.jvmargs>
 					</container>
 					<configuration>
 						<properties>
@@ -197,7 +198,7 @@
 						<configuration>
 							<configuration>
 								<properties>
-									<cargo.jvmargs>-javaagent:"${jacoco.agent.path}=destfile=${jacoco.file.path}"</cargo.jvmargs>
+									<cargo.jvmargs>-javaagent:"${jacoco.agent.path}=destfile=${jacoco.file.path}" -XX:PermSize=512m -XX:MaxPermSize=1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/</cargo.jvmargs>
 								</properties>
 							</configuration>
 						</configuration>
