@@ -146,6 +146,7 @@
 			<id>itCoverage</id>
 			<properties>
 				<jacoco.file.path>${project.build.directory}/hcsJacoco.out</jacoco.file.path>
+				<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
 			</properties>
 			<dependencies>
 				<dependency>
