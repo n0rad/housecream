@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.awired.housecream.server</groupId>
+	<artifactId>housecream-server</artifactId>
+	<name>Housecream Server</name>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>net.awired.housecream</groupId>
+		<artifactId>housecream</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<properties>
+		<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
+		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
+	</properties>
+
+	<modules>
+		<module>common</module>
+		<module>camel-hcc</module>
+		<module>core</module>
+		<module>storage</module>
+		<module>service</module>
+		<module>cli</module>
+		<module>webapi</module>
+		<module>it</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-storage</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-webapi</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+</project>
+
+

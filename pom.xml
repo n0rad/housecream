@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.awired.housecream</groupId>
+	<artifactId>housecream</artifactId>
+	<name>Housecream</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<url>http://housecream.awired.net</url>
+	<description></description>
+
+	<parent>
+		<groupId>net.awired.parent.parent-java</groupId>
+		<artifactId>parent-java</artifactId>
+		<version>1.13</version>
+	</parent>
+
+	<modules>
+		<module>client</module>
+		<module>server</module>
+		<module>web</module>
+	</modules>
+
+	<properties>
+		<bootstrap.version>1.0</bootstrap.version>
+		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
+
+		<junit.version>4.8.2</junit.version>
+		<mockito.version>1.9.0-rc1</mockito.version>
+		<jetty.version>6.1.26</jetty.version>
+		<spring.version>3.1.0.RELEASE</spring.version>
+		<camel.version>2.9.0</camel.version>
+		<cxf.version>2.5.1</cxf.version>
+		<jacoco.version>0.5.5.201112152213</jacoco.version>
+	</properties>
+	
+	
+		<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-dependency-plugin
+										</artifactId>
+										<versionRange>
+											[2.3,)
+										</versionRange>
+										<goals>
+											<goal>copy-dependencies</goal>
+											<goal>unpack</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+
+</project>
+
+

@@ -1,7 +1,0 @@
-#Sun Nov 06 22:32:48 CET 2011
-eclipse.preferences.version=1
-environment/project/de.innot.avreclipse.configuration.app.debug.1845242661/AVRDUDEACTIONOPTIONS/delimiter=\:
-environment/project/de.innot.avreclipse.configuration.app.debug.1845242661/AVRDUDEACTIONOPTIONS/operation=replace
-environment/project/de.innot.avreclipse.configuration.app.debug.1845242661/AVRDUDEACTIONOPTIONS/value=-Uflash\:w\:${BuildArtifactFileBaseName}.hex\:i
-environment/project/de.innot.avreclipse.configuration.app.debug.1845242661/append=true
-environment/project/de.innot.avreclipse.configuration.app.debug.1845242661/appendContributed=true

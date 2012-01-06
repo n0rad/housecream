@@ -1,0 +1,12 @@
+*.o
+*.hex
+*.elf
+*.map
+Debug/
+client/crumb/httpd/httpd-fsdata.c
+target/
+.project
+.classpath
+.settings
+.pmd
+.checkstyle
