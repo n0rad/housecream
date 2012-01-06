@@ -188,7 +188,7 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<configuration>
-							<argLine>-javaagent:${jacoco.agent.path}=destfile=${jacoco.file.path}</argLine>
+							<argLine>-javaagent:"${jacoco.agent.path}=destfile=${jacoco.file.path}"</argLine>
 						</configuration>
 					</plugin>
 					<plugin>
