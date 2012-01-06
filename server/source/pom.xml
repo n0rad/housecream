@@ -18,7 +18,7 @@
 	<properties>
 		<bootstrap.version>1.0</bootstrap.version>
 		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
-	
+
 		<junit.version>4.8.2</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
 		<jetty.version>6.1.26</jetty.version>
@@ -34,7 +34,7 @@
 		<module>service</module>
 		<module>cli</module>
 		<module>webapi</module>
-		<module>it</module>		
+		<module>it</module>
 	</modules>
 
 	<dependencyManagement>
@@ -108,6 +108,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>itCoverage</id>
+			<properties>
+				<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
+				<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
 

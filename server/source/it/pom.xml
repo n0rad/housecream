@@ -146,7 +146,7 @@
 		<profile>
 			<id>itCoverage</id>
 			<properties>
-				<jacoco.file.path>${project.build.directory}/hcsJacoco.out</jacoco.file.path>
+				<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
 				<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
 			</properties>
 			<dependencies>
@@ -168,13 +168,12 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>find-jacoco-jar1</id>
+								<id>find-jacoco-jar</id>
 								<phase>pre-integration-test</phase>
 								<configuration>
 									<target>
 										<property name="jacoco.agent.path"
 											value="${maven.dependency.org.jacoco.org.jacoco.agent.runtime.jar.path}" />
-										<echo message="################ ${jacoco.agent.path}" />
 									</target>
 								</configuration>
 								<goals>
@@ -198,7 +197,7 @@
 						<configuration>
 							<configuration>
 								<properties>
-									<cargo.jvmargs>-javaagent:"${jacoco.agent.path}=destfile=${jacoco.file.path}" -XX:PermSize=512m -XX:MaxPermSize=1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/</cargo.jvmargs>
+									<cargo.jvmargs>-javaagent:"${jacoco.agent.path}=destfile=${jacoco.file.path}"</cargo.jvmargs>
 								</properties>
 							</configuration>
 						</configuration>
