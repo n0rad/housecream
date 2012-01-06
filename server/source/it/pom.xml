@@ -106,19 +106,14 @@
 				<version>1.1.4</version>
 				<configuration>
 					<container>
-						<containerId>tomcat6x</containerId>
-						<zipUrlInstaller>
-							<url>http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.33/bin/apache-tomcat-6.0.33.zip</url>
-						</zipUrlInstaller>
-						<systemProperties>
-						</systemProperties>
+						<containerId>jetty8x</containerId>
+						<type>embedded</type>
 					</container>
 					<configuration>
 						<properties>
 							<cargo.servlet.port>34567</cargo.servlet.port>
 							<cargo.logging>low</cargo.logging>
 							<cargo.jvmargs>${cargo.jvm.args}</cargo.jvmargs>
-<!-- 							<home>${project.build.directory}/jetty</home> -->
 						</properties>
 						<deployables>
 							<deployable>
