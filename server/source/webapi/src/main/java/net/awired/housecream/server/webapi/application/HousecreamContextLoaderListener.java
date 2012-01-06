@@ -1,4 +1,4 @@
-package net.awired.housecream.server.application;
+package net.awired.housecream.server.webapi.application;
 
 import java.io.File;
 import java.io.IOException;

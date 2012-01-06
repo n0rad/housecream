@@ -1,4 +1,4 @@
-package net.awired.housecream.server.storage.entity;
+package net.awired.housecream.server.common.domain;
 
 import java.util.List;
 import javax.persistence.ElementCollection;

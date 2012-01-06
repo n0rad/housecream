@@ -19,13 +19,23 @@
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>hcs-common</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>hcs-webapi</artifactId>
 			<type>war</type>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 
@@ -56,6 +66,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<systemProperties>
+						<property>
+							<name>hcs.it.port</name>
+							<value>34567</value>
+						</property>
+					</systemProperties>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -83,12 +101,10 @@
 					<container>
 						<containerId>jetty8x</containerId>
 						<type>embedded</type>
-						<systemProperties>
-							<dummy>example</dummy>
-						</systemProperties>
 					</container>
 					<configuration>
 						<properties>
+							<cargo.servlet.port>34567</cargo.servlet.port>
 							<cargo.logging>low</cargo.logging>
 						</properties>
 						<deployables>
@@ -123,5 +139,72 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+	<profiles>
+		<profile>
+			<id>itCoverage</id>
+			<properties>
+				<jacoco.file.path>${project.build.directory}/hcsJacoco.out</jacoco.file.path>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.jacoco</groupId>
+					<artifactId>org.jacoco.agent</artifactId>
+					<version>0.5.5.201112152213</version>
+					<classifier>runtime</classifier>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<configuration>
+							<exportAntProperties>true</exportAntProperties>
+						</configuration>
+						<executions>
+							<execution>
+								<id>find-jacoco-jar1</id>
+								<phase>pre-integration-test</phase>
+								<configuration>
+									<target>
+										<property name="jacoco.agent.path"
+											value="${maven.dependency.org.jacoco.org.jacoco.agent.runtime.jar.path}" />
+										<echo message="################ ${jacoco.agent.path}" />
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<argLine>-javaagent:${jacoco.agent.path}=destfile=${jacoco.file.path}</argLine>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<configuration>
+							<configuration>
+								<properties>
+									<cargo.jvmargs>-javaagent:${jacoco.agent.path}=destfile=${jacoco.file.path}</cargo.jvmargs>
+								</properties>
+							</configuration>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
 </project>
 

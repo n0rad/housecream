@@ -1,4 +1,4 @@
-package net.awired.housecream.server.resource;
+package net.awired.housecream.server.webapi.resource;
 
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Path("/event")
-public class InEventResource {
+public class InEventResourceImpl {
 
     @Autowired
     private EntryService entryService;

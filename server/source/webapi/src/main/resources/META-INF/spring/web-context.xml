@@ -11,7 +11,8 @@
 
 	<jaxrs:server id="transport" address="/"  staticSubresourceResolution="true">
 		<jaxrs:serviceBeans>
-			<ref bean="inEventResource" />
+			<ref bean="floorResourceImpl" />
+			<ref bean="inEventResourceImpl" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />

@@ -6,5 +6,7 @@
 
 	<persistence-unit name="housecream" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<jar-file>/WEB-INF/lib/hcs-common-*.jar</jar-file>
 	</persistence-unit>
 </persistence>

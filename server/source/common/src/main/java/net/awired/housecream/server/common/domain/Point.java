@@ -1,4 +1,4 @@
-package net.awired.housecream.server.core.domain;
+package net.awired.housecream.server.common.domain;
 
 import java.sql.Date;
 import javax.xml.bind.annotation.XmlAccessType;

@@ -1,11 +1,16 @@
-package net.awired.housecream.server.storage.entity;
+package net.awired.housecream.server.common.domain;
 
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
-import net.awired.ajsl.persistence.entity.OrderedEntity;
 
 @Entity
-public class Floor extends IdEntityImpl<Long> implements OrderedEntity {
+@XmlRootElement(name = "floor")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Floor extends IdEntityImpl<Long> {
 
     private String name;
     private Integer ordering;
@@ -19,13 +24,18 @@ public class Floor extends IdEntityImpl<Long> implements OrderedEntity {
         this.name = name;
     }
 
-    @Override
     public Integer getOrdering() {
         return ordering;
     }
 
-    @Override
     public void setOrdering(Integer ordering) {
         this.ordering = ordering;
     }
+
+    @Override
+    @XmlElement
+    public Long getId() {
+        return super.getId();
+    }
+
 }

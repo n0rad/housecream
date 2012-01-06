@@ -50,8 +50,8 @@
 
 	<build>
 		<finalName>hcs</finalName>
-		
-				<plugins>
+
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -134,7 +134,7 @@
 					<stopPort>8080</stopPort>
 				</configuration>
 			</plugin>
-		</plugins>		
+		</plugins>
 	</build>
 
 </project>
