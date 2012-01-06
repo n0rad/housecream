@@ -197,7 +197,7 @@
 						<configuration>
 							<configuration>
 								<properties>
-									<cargo.jvmargs>-javaagent:${jacoco.agent.path}=destfile=${jacoco.file.path}</cargo.jvmargs>
+									<cargo.jvmargs>-javaagent:"${jacoco.agent.path}=destfile=${jacoco.file.path}"</cargo.jvmargs>
 								</properties>
 							</configuration>
 						</configuration>
