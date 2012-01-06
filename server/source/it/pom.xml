@@ -14,7 +14,8 @@
 	</parent>
 
 	<properties>
-		<cargo.jvm.args>-XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/</cargo.jvm.args>
+		<cargo.jvm.args>-XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError
+			-XX:HeapDumpPath=/tmp/</cargo.jvm.args>
 	</properties>
 
 	<dependencies>
@@ -70,6 +71,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.11</version>
 				<configuration>
 					<systemProperties>
 						<property>
@@ -101,16 +103,22 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.1.4</version>
 				<configuration>
 					<container>
-						<containerId>jetty8x</containerId>
-						<type>embedded</type>
+						<containerId>tomcat6x</containerId>
+						<zipUrlInstaller>
+							<url>http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.33/bin/apache-tomcat-6.0.33.zip</url>
+						</zipUrlInstaller>
+						<systemProperties>
+						</systemProperties>
 					</container>
 					<configuration>
 						<properties>
 							<cargo.servlet.port>34567</cargo.servlet.port>
 							<cargo.logging>low</cargo.logging>
 							<cargo.jvmargs>${cargo.jvm.args}</cargo.jvmargs>
+<!-- 							<home>${project.build.directory}/jetty</home> -->
 						</properties>
 						<deployables>
 							<deployable>
