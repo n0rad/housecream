@@ -16,6 +16,11 @@
 	</parent>
 
 	<properties>
+		<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
+		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
+
+
+
 		<bootstrap.version>1.0</bootstrap.version>
 		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
 
@@ -108,16 +113,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>itCoverage</id>
-			<properties>
-				<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
-				<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
-			</properties>
-		</profile>
-	</profiles>
 
 </project>
 
