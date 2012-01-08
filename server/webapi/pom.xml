@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-webapi</artifactId>
-	<name>Housecream Server - Webapi</name>	
+	<name>Housecream Server - Webapi</name>
 	<packaging>war</packaging>
 
 	<parent>
@@ -42,6 +42,19 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>net.awired.housecream.server</groupId>
+			<artifactId>housecream-server-cli</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.bootstrap</groupId>
+			<artifactId>bootstrap-java</artifactId>
+			<version>${bootstrap.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -110,7 +123,7 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>net.awired.housecream.server</groupId>
-									<artifactId>hcs-cli</artifactId>
+									<artifactId>housecream-server-cli</artifactId>
 									<version>${project.version}</version>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF/lib</outputDirectory>
