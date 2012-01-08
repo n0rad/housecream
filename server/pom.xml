@@ -17,7 +17,6 @@
 
 	<properties>
 		<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
-		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
 	</properties>
 
 	<modules>

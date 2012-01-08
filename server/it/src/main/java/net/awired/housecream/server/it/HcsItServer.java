@@ -7,6 +7,6 @@ public class HcsItServer {
 
     public static String getUrl() {
         String port = System.getProperty(HCS_IT_PORT, DEFAULT_PORT);
-        return "http://localhost:" + port + "/hcs";
+        return "http://localhost:" + port + "/hcs/";
     }
 }

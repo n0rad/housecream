@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-client-it</artifactId>
-	<name>Housecream Client - IT</name>	
+	<name>Housecream Client - IT</name>
 
 	<parent>
 		<groupId>net.awired.housecream.client</groupId>
@@ -14,23 +14,41 @@
 	</parent>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>net.awired.housecream.client</groupId>
 			<artifactId>housecream-client-common</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
-			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>net.awired.housecream.client</groupId>
+			<artifactId>housecream-client-stub</artifactId>
+			<type>war</type>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -49,7 +67,27 @@
 		</testResources>
 
 		<plugins>
-
+		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.11</version>
+				<configuration>
+					<systemProperties>
+						<property>
+							<name>hcc.it.port</name>
+							<value>34567</value>
+						</property>
+					</systemProperties>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.11</version>
@@ -59,6 +97,54 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			
+			
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.1.4</version>
+				<configuration>
+					<container>
+						<containerId>jetty8x</containerId>
+						<type>embedded</type>
+					</container>
+					<configuration>
+						<properties>
+							<cargo.servlet.port>34567</cargo.servlet.port>
+							<cargo.logging>low</cargo.logging>
+							<cargo.jvmargs>${cargo.jvm.args}</cargo.jvmargs>
+						</properties>
+						<deployables>
+							<deployable>
+								<groupId>net.awired.housecream.client</groupId>
+								<artifactId>housecream-client-stub</artifactId>
+								<type>war</type>
+								<properties>
+									<context>hcc</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</configuration>
+					<wait>false</wait>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 	</build>
 

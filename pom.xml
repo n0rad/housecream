@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://housecream.awired.net</url>
-	<description></description>
+	<description>The concrete domotic project</description>
 
 	<parent>
 		<groupId>net.awired.parent.parent-java</groupId>
@@ -24,6 +24,12 @@
 	</modules>
 
 	<properties>
+		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
+		<cargo.jvm.args>-XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError
+			-XX:HeapDumpPath=/tmp/</cargo.jvm.args>
+
+
+
 		<bootstrap.version>1.0</bootstrap.version>
 		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
 
@@ -34,6 +40,7 @@
 		<camel.version>2.9.0</camel.version>
 		<cxf.version>2.5.1</cxf.version>
 		<jacoco.version>0.5.5.201112152213</jacoco.version>
+		<slf4j.version>1.6.4</slf4j.version>
 	</properties>
 	
 	
@@ -75,7 +82,45 @@
 		</pluginManagement>
 	</build>
 	
-
+	
+		<profiles>
+		<profile>
+			<id>itCoverage</id>
+			<properties>
+				<jacoco.args>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${jacoco.file.path}"</jacoco.args>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.jacoco</groupId>
+					<artifactId>org.jacoco.agent</artifactId>
+					<version>0.5.5.201112152213</version>
+					<classifier>runtime</classifier>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<argLine>${jacoco.args}</argLine>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<configuration>
+							<configuration>
+								<properties>
+									<cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
+								</properties>
+							</configuration>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
 
 
