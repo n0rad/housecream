@@ -44,7 +44,56 @@
 	</properties>
 	
 	
-		<build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.awired.housecream.client</groupId>
+				<artifactId>housecream-client-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.client</groupId>
+				<artifactId>housecream-client-stub</artifactId>
+				<type>war</type>
+				<version>${project.version}</version>
+			</dependency>
+			
+			
+			
+			
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-storage</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-webapi</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+			
+			
+		</dependencies>
+	</dependencyManagement>
+	
+	
+	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -83,7 +132,7 @@
 	</build>
 	
 	
-		<profiles>
+	<profiles>
 		<profile>
 			<id>itCoverage</id>
 			<properties>
@@ -102,6 +151,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.11</version>
 						<configuration>
 							<argLine>${jacoco.args}</argLine>
 						</configuration>
@@ -109,6 +159,7 @@
 					<plugin>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.1.4</version>
 						<configuration>
 							<configuration>
 								<properties>

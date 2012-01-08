@@ -25,24 +25,6 @@
 		<jacoco.file.path>/tmp/hccJacoco.out</jacoco.file.path>
 	</properties>
 
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>net.awired.housecream.client</groupId>
-				<artifactId>housecream-client-common</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>net.awired.housecream.client</groupId>
-				<artifactId>housecream-client-stub</artifactId>
-				<type>war</type>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 </project>
 
 

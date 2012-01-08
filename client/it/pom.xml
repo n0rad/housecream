@@ -46,7 +46,6 @@
 			<groupId>net.awired.housecream.client</groupId>
 			<artifactId>housecream-client-stub</artifactId>
 			<type>war</type>
-			<version>${project.version}</version>
 		</dependency>
 
 	</dependencies>
