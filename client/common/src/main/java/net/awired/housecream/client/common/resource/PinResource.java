@@ -1,13 +1,32 @@
 package net.awired.housecream.client.common.resource;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import net.awired.housecream.client.common.domain.HccPin;
+import net.awired.housecream.client.common.domain.HccPinDescription;
+import net.awired.housecream.client.common.domain.HccPinInfo;
 
-@Path("{pinId}")
+@Path("pin/{pinId}")
 public interface PinResource {
 
     @GET
-    HccPin getPin(@PathParam("pinId") int pinId) throws PinNotFoundException;
+    HccPinDescription getPinDescription(@PathParam("pinId") int pinId) throws PinNotFoundException;
+
+    @GET
+    @Path("/info")
+    HccPinInfo getPinInfo(@PathParam("pinId") int pinId) throws PinNotFoundException;
+
+    @PUT
+    @Path("/info")
+    public void setPinInfo(@PathParam("pinId") int pinId, HccPinInfo pin) throws PinNotFoundException,
+            HccUpdateException;
+
+    @GET
+    @Path("/value")
+    Integer getValue(@PathParam("pinId") int pinId) throws PinNotFoundException;
+
+    @PUT
+    @Path("/value")
+    void setValue(@PathParam("pinId") int pinId, Integer value) throws PinNotFoundException, HccUpdateException;
 }

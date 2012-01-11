@@ -10,7 +10,9 @@ public class HccDevice {
 
     private String software;
     private String version;
+    private String hardware;
     private String name; // updatable
+    private String technicalDescription;
     private String description; // updatable
     private String notifyUrl; // updatable
     private String mac;
@@ -92,6 +94,22 @@ public class HccDevice {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setHardware(String hardware) {
+        this.hardware = hardware;
+    }
+
+    public String getHardware() {
+        return hardware;
+    }
+
+    public void setTechnicalDescription(String technicalDescription) {
+        this.technicalDescription = technicalDescription;
+    }
+
+    public String getTechnicalDescription() {
+        return technicalDescription;
     }
 
 }

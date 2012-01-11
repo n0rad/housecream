@@ -1,6 +1,7 @@
 package net.awired.housecream.client.it;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import net.awired.housecream.client.HccTestRule;
 import net.awired.housecream.client.common.domain.HccDevice;
 import net.awired.housecream.client.common.resource.HccUpdateException;
@@ -22,7 +23,7 @@ public class HccResourceIT {
         hcc.reset();
 
         HccDevice deviceInfo2 = hcc.getHccResource().getDeviceInfo();
-        EqualsBuilder.reflectionEquals(deviceInfo2, DefaultTestDomainHelper.buildDefaultDevice());
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo2, DefaultTestDomainHelper.buildDefaultDevice()));
     }
 
     @Test
@@ -30,7 +31,15 @@ public class HccResourceIT {
 
         HccDevice deviceInfo = hcc.getHccResource().getDeviceInfo();
 
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice());
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice()));
+    }
+
+    @Test(expected = HccUpdateException.class)
+    public void should_not_update_technical_description() throws Exception {
+        HccDevice deviceInfo = hcc.getHccResource().getDeviceInfo();
+        deviceInfo.setTechnicalDescription("new Description");
+
+        hcc.getHccResource().updateDevice(deviceInfo);
     }
 
     @Test
@@ -40,10 +49,12 @@ public class HccResourceIT {
 
         HccDevice updateDevice = hcc.getHccResource().updateDevice(deviceInfo);
 
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "description");
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(),
+                "description"));
         assertEquals("new Description", updateDevice.getDescription());
         HccDevice device2 = hcc.getHccResource().getDeviceInfo();
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "description");
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(),
+                "description"));
         assertEquals("new Description", device2.getDescription());
     }
 
@@ -54,10 +65,10 @@ public class HccResourceIT {
 
         HccDevice updateDevice = hcc.getHccResource().updateDevice(deviceInfo);
 
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "name");
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "name"));
         assertEquals("new name", updateDevice.getName());
         HccDevice device2 = hcc.getHccResource().getDeviceInfo();
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "name");
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "name"));
         assertEquals("new name", device2.getName());
     }
 
@@ -68,11 +79,27 @@ public class HccResourceIT {
 
         HccDevice updateDevice = hcc.getHccResource().updateDevice(deviceInfo);
 
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "notifyUrl");
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(),
+                "notifyUrl"));
         assertEquals("http://localhost:5353", updateDevice.getNotifyUrl());
         HccDevice device2 = hcc.getHccResource().getDeviceInfo();
-        EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(), "notifyUrl");
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultTestDomainHelper.buildDefaultDevice(),
+                "notifyUrl"));
         assertEquals("http://localhost:5353", device2.getNotifyUrl());
+    }
+
+    @Test
+    public void should_be_able_to_update_all() throws Exception {
+        HccDevice deviceInfo = hcc.getHccResource().getDeviceInfo();
+        deviceInfo.setNotifyUrl("http://localhost:5353");
+        deviceInfo.setDescription("desc");
+        deviceInfo.setName("GFDSQ");
+
+        HccDevice updateDevice = hcc.getHccResource().updateDevice(deviceInfo);
+
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, updateDevice));
+        HccDevice device2 = hcc.getHccResource().getDeviceInfo();
+        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, device2));
     }
 
     @Test(expected = HccUpdateException.class)
@@ -119,6 +146,22 @@ public class HccResourceIT {
     public void should_not_update_version() throws Exception {
         HccDevice deviceInfo = hcc.getHccResource().getDeviceInfo();
         deviceInfo.setVersion("23456789");
+
+        hcc.getHccResource().updateDevice(deviceInfo);
+    }
+
+    @Test(expected = HccUpdateException.class)
+    public void should_not_set_name_to_null() throws Exception {
+        HccDevice deviceInfo = hcc.getHccResource().getDeviceInfo();
+        deviceInfo.setName(null);
+
+        hcc.getHccResource().updateDevice(deviceInfo);
+    }
+
+    @Test(expected = HccUpdateException.class)
+    public void should_not_set_description_to_null() throws Exception {
+        HccDevice deviceInfo = hcc.getHccResource().getDeviceInfo();
+        deviceInfo.setDescription(null);
 
         hcc.getHccResource().updateDevice(deviceInfo);
     }

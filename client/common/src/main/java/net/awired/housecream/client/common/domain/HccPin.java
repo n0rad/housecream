@@ -2,45 +2,34 @@ package net.awired.housecream.client.common.domain;
 
 public class HccPin {
 
-    private String name; //
-    private String description; //
-    private HccPinDirection direction;
-    private HccPinType type;
+    private HccPinInfo info;
 
-    //    private int rangeMin;
-    //    private int rangeMax;
-    //    private int rangeStep;
+    private Integer value;
 
-    public String getName() {
-        return name;
+    private HccPinDescription description;
+
+    public HccPinInfo getInfo() {
+        return info;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setInfo(HccPinInfo info) {
+        this.info = info;
     }
 
-    public String getDescription() {
+    public HccPinDescription getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(HccPinDescription description) {
         this.description = description;
     }
 
-    public HccPinDirection getDirection() {
-        return direction;
+    public void setValue(Integer value) {
+        this.value = value;
     }
 
-    public void setDirection(HccPinDirection direction) {
-        this.direction = direction;
-    }
-
-    public HccPinType getType() {
-        return type;
-    }
-
-    public void setType(HccPinType type) {
-        this.type = type;
+    public Integer getValue() {
+        return value;
     }
 
 }

@@ -19,7 +19,7 @@ public class HccResourceStub implements HccResource {
 
     @Override
     public HccDevice updateDevice(HccDevice deviceInfo) throws HccUpdateException {
-        context.updateDevice(deviceInfo); //403
+        context.updateDevice(deviceInfo);
         return context.getDevice();
     }
 

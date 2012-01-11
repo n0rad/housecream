@@ -25,6 +25,11 @@
 			<artifactId>ajsl-persistence</artifactId>
 			<version>${ajsl.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.guava</groupId>

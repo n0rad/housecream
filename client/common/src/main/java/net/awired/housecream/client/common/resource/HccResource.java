@@ -8,9 +8,6 @@ import net.awired.housecream.client.common.domain.HccDevice;
 @Path("/")
 public interface HccResource {
 
-    //    @DELETE
-    //    public void resetClient();
-
     @GET
     public HccDevice getDeviceInfo();
 

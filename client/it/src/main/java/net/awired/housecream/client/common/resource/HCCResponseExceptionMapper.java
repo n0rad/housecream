@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import net.awired.housecream.client.common.domain.HccError;
 import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
+import com.google.common.base.Strings;
 
 public class HCCResponseExceptionMapper implements ResponseExceptionMapper<Exception> {
 
@@ -19,7 +20,7 @@ public class HCCResponseExceptionMapper implements ResponseExceptionMapper<Excep
             HccError hccError = (HccError) u.unmarshal((InputStream) r.getEntity());
             Class<?> loadClass = getClass().getClassLoader().loadClass(hccError.getErrorClass());
             Exception newInstance = (Exception) loadClass.getConstructor(String.class).newInstance(
-                    hccError.getMessage());
+                    "From server: " + Strings.nullToEmpty(hccError.getMessage()));
             return newInstance;
         } catch (JAXBException e) {
             // TODO Auto-generated catch block
