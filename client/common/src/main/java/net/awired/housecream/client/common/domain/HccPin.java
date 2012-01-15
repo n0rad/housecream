@@ -4,7 +4,7 @@ public class HccPin {
 
     private HccPinInfo info;
 
-    private Integer value;
+    private Float value;
 
     private HccPinDescription description;
 
@@ -24,11 +24,11 @@ public class HccPin {
         this.description = description;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 
-    public Integer getValue() {
+    public Float getValue() {
         return value;
     }
 

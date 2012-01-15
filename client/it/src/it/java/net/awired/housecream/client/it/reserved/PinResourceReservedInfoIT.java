@@ -52,7 +52,7 @@ public class PinResourceReservedInfoIT {
     @Test(expected = HccUpdateException.class)
     public void should_not_update_start_val() throws Exception {
         HccPinInfo pin = new HccPinInfo();
-        pin.setStartVal(0);
+        pin.setStartVal(0f);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
     }

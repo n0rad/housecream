@@ -3,12 +3,12 @@ package net.awired.housecream.client.common.domain;
 public class HccNotify {
 
     private HccCondition notifyCondition;
-    private int notifyValue;
+    private float notifyValue;
 
     public HccNotify() {
     }
 
-    public HccNotify(HccCondition notifyCondition, int notifyValue) {
+    public HccNotify(HccCondition notifyCondition, float notifyValue) {
         this.notifyCondition = notifyCondition;
         this.notifyValue = notifyValue;
     }
@@ -21,11 +21,11 @@ public class HccNotify {
         this.notifyCondition = notifyCondition;
     }
 
-    public int getNotifyValue() {
+    public float getNotifyValue() {
         return notifyValue;
     }
 
-    public void setNotifyValue(int notifyValue) {
+    public void setNotifyValue(float notifyValue) {
         this.notifyValue = notifyValue;
     }
 
@@ -34,7 +34,7 @@ public class HccNotify {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((notifyCondition == null) ? 0 : notifyCondition.hashCode());
-        result = prime * result + notifyValue;
+        result = prime * result + Float.floatToIntBits(notifyValue);
         return result;
     }
 
@@ -53,7 +53,7 @@ public class HccNotify {
         if (notifyCondition != other.notifyCondition) {
             return false;
         }
-        if (notifyValue != other.notifyValue) {
+        if (Float.floatToIntBits(notifyValue) != Float.floatToIntBits(other.notifyValue)) {
             return false;
         }
         return true;

@@ -12,8 +12,9 @@ public class HccPinDescription {
     private HccPinDirection direction;
     private HccPinType type;
     private Boolean pullUp; // if not reserved/notused
-    private Integer valueMin; // analog only
-    private Integer valueMax; // analog only
+    private Float valueMin;
+    private Float valueMax;
+    private Float valueStep; // output only
 
     public HccPinDirection getDirection() {
         return direction;
@@ -39,19 +40,19 @@ public class HccPinDescription {
         return pullUp;
     }
 
-    public void setValueMin(Integer valueMin) {
+    public void setValueMin(Float valueMin) {
         this.valueMin = valueMin;
     }
 
-    public Integer getValueMin() {
+    public Float getValueMin() {
         return valueMin;
     }
 
-    public void setValueMax(Integer valueMax) {
+    public void setValueMax(Float valueMax) {
         this.valueMax = valueMax;
     }
 
-    public Integer getValueMax() {
+    public Float getValueMax() {
         return valueMax;
     }
 
@@ -61,6 +62,14 @@ public class HccPinDescription {
 
     public String getTechnicalDescription() {
         return technicalDescription;
+    }
+
+    public void setValueStep(Float valueStep) {
+        this.valueStep = valueStep;
+    }
+
+    public Float getValueStep() {
+        return valueStep;
     }
 
 }

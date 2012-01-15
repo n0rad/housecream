@@ -9,7 +9,7 @@ import net.awired.housecream.client.common.domain.HccNotify;
 import net.awired.housecream.client.common.domain.HccPin;
 import net.awired.housecream.client.common.domain.HccPinInfo;
 import net.awired.housecream.client.common.resource.HccUpdateException;
-import net.awired.housecream.client.common.test.DefaultTestDomainHelper;
+import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test
     public void should_update_pin() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setName("name");
         pin.setDescription("desc");
         pin.addNotify(new HccNotify(HccCondition.inf_or_equal, 0));
@@ -35,7 +35,7 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test(expected = HccUpdateException.class)
     public void should_not_null_name() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setName(null);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
@@ -43,7 +43,7 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test(expected = HccUpdateException.class)
     public void should_not_empty_name() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setName("");
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
@@ -51,7 +51,7 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test(expected = HccUpdateException.class)
     public void should_not_null_description() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setDescription(null);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
@@ -59,31 +59,33 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test(expected = HccUpdateException.class)
     public void should_not_empty_description() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setDescription("");
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
     }
 
-    @Test(expected = HccUpdateException.class)
-    public void should_not_empty_start_val() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+    @Test
+    public void should_empty_start_val() throws Exception {
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setStartVal(null);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
+
+        assertNull(hcc.getPinResource().getPinInfo(PIN_ID).getStartVal());
     }
 
     @Test(expected = HccUpdateException.class)
     public void should_not_set_start_val() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
-        pin.setStartVal(0);
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        pin.setStartVal(0f);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
     }
 
     @Test
     public void should_empty_notify() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         pin.setNotifies(null);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
@@ -93,18 +95,18 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test
     public void should_update_notify() throws Exception {
-        HccPinInfo pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID).getInfo();
+        HccPinInfo pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID).getInfo();
         HccNotify notify = new HccNotify(HccCondition.sup_or_equal, 1);
         pin.addNotify(notify);
 
         hcc.getPinResource().setPinInfo(PIN_ID, pin);
 
-        assertEquals(notify, hcc.getPinResource().getPinInfo(PIN_ID).getNotifies());
+        assertEquals(pin.getNotifies(), hcc.getPinResource().getPinInfo(PIN_ID).getNotifies());
     }
 
     @Test(expected = HccUpdateException.class)
     public void should_not_notify_for_overflow() throws Exception {
-        HccPin pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID);
+        HccPin pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID);
         HccPinInfo pinInfo = pin.getInfo();
         HccNotify notify = new HccNotify(HccCondition.inf_or_equal, pin.getDescription().getValueMin() - 1);
         pinInfo.addNotify(notify);
@@ -114,7 +116,7 @@ public class PinResourceInputDigitalInfoIT {
 
     @Test(expected = HccUpdateException.class)
     public void should_not_notify_for_overflow2() throws Exception {
-        HccPin pin = DefaultTestDomainHelper.buildDefaultPin(PIN_ID);
+        HccPin pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID);
         HccPinInfo pinInfo = pin.getInfo();
         HccNotify notify = new HccNotify(HccCondition.sup_or_equal, pin.getDescription().getValueMax() + 1);
         pinInfo.addNotify(notify);

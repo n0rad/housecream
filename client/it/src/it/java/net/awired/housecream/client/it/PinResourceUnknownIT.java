@@ -53,12 +53,12 @@ public class PinResourceUnknownIT {
 
     @Test(expected = PinNotFoundException.class)
     public void should_throw_exception_on_unknown_pin15() throws Exception {
-        hcc.getPinResource().setValue(42, 0);
+        hcc.getPinResource().setValue(42, 0f);
     }
 
     @Test(expected = PinNotFoundException.class)
     public void should_throw_exception_on_unknown_pin16() throws Exception {
-        hcc.getPinResource().setValue(-1, 0);
+        hcc.getPinResource().setValue(-1, 0f);
     }
 
 }

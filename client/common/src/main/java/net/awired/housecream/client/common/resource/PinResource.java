@@ -24,9 +24,9 @@ public interface PinResource {
 
     @GET
     @Path("/value")
-    Integer getValue(@PathParam("pinId") int pinId) throws PinNotFoundException;
+    Float getValue(@PathParam("pinId") int pinId) throws PinNotFoundException;
 
     @PUT
     @Path("/value")
-    void setValue(@PathParam("pinId") int pinId, Integer value) throws PinNotFoundException, HccUpdateException;
+    void setValue(@PathParam("pinId") int pinId, Float value) throws PinNotFoundException, HccUpdateException;
 }

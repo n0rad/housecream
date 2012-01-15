@@ -12,9 +12,9 @@ public class HccDevice {
     private String version;
     private String hardware;
     private String name; // updatable
-    private String technicalDescription;
     private String description; // updatable
     private String notifyUrl; // updatable
+    private String technicalDescription;
     private String mac;
     private String ip;
     private Integer port;

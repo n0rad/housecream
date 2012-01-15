@@ -3,7 +3,7 @@ package net.awired.housecream.client.it.output.digital;
 import static org.junit.Assert.assertTrue;
 import net.awired.housecream.client.HccTestRule;
 import net.awired.housecream.client.common.domain.HccPinDescription;
-import net.awired.housecream.client.common.test.DefaultTestDomainHelper;
+import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class PinResourceOutputDigitalIT {
 
         HccPinDescription pin = hcc.getPinResource().getPinDescription(PIN_ID);
 
-        assertTrue(EqualsBuilder.reflectionEquals(pin, DefaultTestDomainHelper.buildDefaultPin(PIN_ID)
+        assertTrue(EqualsBuilder.reflectionEquals(pin, DefaultITDomainHelper.buildDefaultPin(PIN_ID)
                 .getDescription()));
     }
 }

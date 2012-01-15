@@ -9,7 +9,7 @@ import net.awired.housecream.client.common.domain.HccPinDirection;
 import net.awired.housecream.client.common.domain.HccPinInfo;
 import net.awired.housecream.client.common.domain.HccPinType;
 
-class DefaultDomainHelper {
+class DefaultTestDomainHelper {
 
     public static HccPin buildDefaultPin(int num) {
         switch (num) {
@@ -45,14 +45,14 @@ class DefaultDomainHelper {
                 pinDesc.setDirection(HccPinDirection.INPUT);
                 pinDesc.setType(HccPinType.ANALOG);
                 pinDesc.setPullUp(true);
-                pinDesc.setValueMin(0);
-                pinDesc.setValueMax(1023);
+                pinDesc.setValueMin(0f);
+                pinDesc.setValueMax(1023f);
 
                 pinConf.setName("pin2");
                 pinConf.setDescription("input analog pin");
                 pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 0));
                 pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 42));
-                pin.setValue(952);
+                pin.setValue(952f);
                 return pin;
             }
             case 3: {
@@ -66,13 +66,14 @@ class DefaultDomainHelper {
                 pinDesc.setDirection(HccPinDirection.OUTPUT);
                 pinDesc.setType(HccPinType.ANALOG);
                 pinDesc.setPullUp(true);
-                pinDesc.setValueMin(0);
-                pinDesc.setValueMax(254);
+                pinDesc.setValueMin(0f);
+                pinDesc.setValueMax(254f);
+                pinDesc.setValueStep(2f);
 
                 pinConf.setName("pin3");
                 pinConf.setDescription("output analog pin");
-                pinConf.setStartVal(50);
-                pin.setValue(60);
+                pinConf.setStartVal(50f);
+                pin.setValue(60f);
                 return pin;
             }
             case 4: {
@@ -81,18 +82,19 @@ class DefaultDomainHelper {
                 HccPinInfo pinConf = new HccPinInfo();
                 pin.setDescription(pinDesc);
                 pin.setInfo(pinConf);
-                pinDesc.setValueMin(0);
-                pinDesc.setValueMax(1);
 
                 pinDesc.setTechnicalDescription("out technical desc42");
                 pinDesc.setDirection(HccPinDirection.OUTPUT);
                 pinDesc.setType(HccPinType.DIGITAL);
                 pinDesc.setPullUp(true);
+                pinDesc.setValueMin(0f);
+                pinDesc.setValueMax(1f);
+                pinDesc.setValueStep(1f);
 
                 pinConf.setName("pin4");
                 pinConf.setDescription("output digital pin");
-                pinConf.setStartVal(1);
-                pin.setValue(1);
+                pinConf.setStartVal(1f);
+                pin.setValue(1f);
                 return pin;
             }
             case 5: {
@@ -106,12 +108,14 @@ class DefaultDomainHelper {
                 pinDesc.setDirection(HccPinDirection.INPUT);
                 pinDesc.setType(HccPinType.DIGITAL);
                 pinDesc.setPullUp(true);
+                pinDesc.setValueMin(0f);
+                pinDesc.setValueMax(1f);
 
                 pinConf.setName("pin5");
                 pinConf.setDescription("input digital pin");
                 pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 0));
                 pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 1));
-                pin.setValue(1);
+                pin.setValue(1f);
                 return pin;
             }
             default:
@@ -124,7 +128,7 @@ class DefaultDomainHelper {
         device.setVersion("1.0");
         device.setSoftware("hcc");
         device.setNotifyUrl("http://localhost/4242");
-        device.setNumberOfPin(4);
+        device.setNumberOfPin(6);
         device.setHardware("arduino");
         device.setName("sample board");
         device.setTechnicalDescription("genre");

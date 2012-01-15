@@ -15,17 +15,12 @@ public class PinResourceInputDigitalValueIT {
 
     @Test
     public void should_get_value() throws Exception {
-        assertEquals((Integer) 1, hcc.getPinResource().getValue(PIN_ID));
+        assertEquals((Float) 1f, hcc.getPinResource().getValue(PIN_ID));
     }
 
     @Test(expected = HccUpdateException.class)
     public void should_not_set_value() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, 0);
-    }
-
-    @Test(expected = HccUpdateException.class)
-    public void should_not_set_null_value() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, null);
+        hcc.getPinResource().setValue(PIN_ID, 0f);
     }
 
 }

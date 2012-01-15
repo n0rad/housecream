@@ -30,12 +30,12 @@ public class PinResourceStub implements PinResource {
     }
 
     @Override
-    public Integer getValue(int pinId) throws PinNotFoundException {
+    public Float getValue(int pinId) throws PinNotFoundException {
         return hccContext.getPin(pinId).getValue();
     }
 
     @Override
-    public void setValue(int pinId, Integer value) throws PinNotFoundException, HccUpdateException {
+    public void setValue(int pinId, Float value) throws PinNotFoundException, HccUpdateException {
         hccContext.setPinValue(pinId, value);
     }
 

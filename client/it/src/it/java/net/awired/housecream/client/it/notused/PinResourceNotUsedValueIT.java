@@ -15,19 +15,14 @@ public class PinResourceNotUsedValueIT {
 
     @Test
     public void should_not_get_value() throws Exception {
-        Integer pinValue = hcc.getPinResource().getValue(PIN_ID);
+        Float pinValue = hcc.getPinResource().getValue(PIN_ID);
 
         assertNull(pinValue);
     }
 
     @Test(expected = HccUpdateException.class)
     public void should_not_set_value() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, 0);
-    }
-
-    @Test(expected = HccUpdateException.class)
-    public void should_not_set_null_value() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, null);
+        hcc.getPinResource().setValue(PIN_ID, 0f);
     }
 
 }

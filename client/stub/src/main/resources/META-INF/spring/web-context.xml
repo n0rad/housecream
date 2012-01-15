@@ -13,6 +13,7 @@
 		<jaxrs:serviceBeans>
 			<ref bean="pinResourceStub" />
 			<ref bean="hccResourceStub" />
+			<ref bean="hccDebugResource" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />

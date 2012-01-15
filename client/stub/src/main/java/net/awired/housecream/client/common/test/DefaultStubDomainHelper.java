@@ -1,5 +1,5 @@
 package net.awired.housecream.client.common.test;
 
-public class DefaultStubDomainHelper extends DefaultDomainHelper {
+public class DefaultStubDomainHelper extends DefaultTestDomainHelper {
 
 }
