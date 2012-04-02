@@ -79,12 +79,12 @@ public class HccResourceIT {
 
         HccDevice updateDevice = hcc.getHccResource().updateDevice(deviceInfo);
 
-        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultITDomainHelper.buildDefaultDevice(),
-                "notifyUrl"));
+        assertTrue(EqualsBuilder
+                .reflectionEquals(deviceInfo, DefaultITDomainHelper.buildDefaultDevice(), "notifyUrl"));
         assertEquals("http://localhost:5353", updateDevice.getNotifyUrl());
         HccDevice device2 = hcc.getHccResource().getDeviceInfo();
-        assertTrue(EqualsBuilder.reflectionEquals(deviceInfo, DefaultITDomainHelper.buildDefaultDevice(),
-                "notifyUrl"));
+        assertTrue(EqualsBuilder
+                .reflectionEquals(deviceInfo, DefaultITDomainHelper.buildDefaultDevice(), "notifyUrl"));
         assertEquals("http://localhost:5353", device2.getNotifyUrl());
     }
 

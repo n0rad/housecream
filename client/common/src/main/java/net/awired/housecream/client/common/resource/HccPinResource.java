@@ -8,7 +8,7 @@ import net.awired.housecream.client.common.domain.HccPinDescription;
 import net.awired.housecream.client.common.domain.HccPinInfo;
 
 @Path("pin/{pinId}")
-public interface PinResource {
+public interface HccPinResource {
 
     @GET
     HccPinDescription getPinDescription(@PathParam("pinId") int pinId) throws PinNotFoundException;

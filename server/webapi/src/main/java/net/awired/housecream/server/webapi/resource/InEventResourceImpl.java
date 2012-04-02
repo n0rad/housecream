@@ -15,7 +15,7 @@ public class InEventResourceImpl {
 
     @PUT
     @Path("/{deviceId}/{devicePointId}")
-    public void putEventWithDevicePointId() {
+    public void putEventWithDevicePointId(int deviceId, int devicePointId) {
 
     }
 

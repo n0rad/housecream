@@ -5,8 +5,8 @@ import net.awired.housecream.client.common.domain.HccDevice;
 import net.awired.housecream.client.common.domain.HccPin;
 import net.awired.housecream.client.common.domain.HccPinInfo;
 import net.awired.housecream.client.common.resource.HCCResponseExceptionMapper;
+import net.awired.housecream.client.common.resource.HccPinResource;
 import net.awired.housecream.client.common.resource.HccResource;
-import net.awired.housecream.client.common.resource.PinResource;
 import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import net.awired.housecream.client.common.test.DefaultTestDebugResource;
 import net.awired.housecream.client.it.HccItServer;
@@ -18,13 +18,13 @@ public class HccTestRule extends ExternalResource {
 
     private HccResource hccResource;
 
-    private PinResource pinResource;
+    private HccPinResource pinResource;
 
     private DefaultTestDebugResource debugResource;
 
     public HccTestRule() {
         HCCResponseExceptionMapper exceptionMapper = new HCCResponseExceptionMapper();
-        pinResource = JAXRSClientFactory.create(HccItServer.getUrl(), PinResource.class,
+        pinResource = JAXRSClientFactory.create(HccItServer.getUrl(), HccPinResource.class,
                 Collections.singletonList(exceptionMapper));
         WebClient.client(pinResource).accept("application/xml");
 
@@ -61,12 +61,16 @@ public class HccTestRule extends ExternalResource {
         }
     }
 
-    public PinResource getPinResource() {
+    public HccPinResource getPinResource() {
         return pinResource;
     }
 
     public HccResource getHccResource() {
         return hccResource;
+    }
+
+    public DefaultTestDebugResource getDebugResource() {
+        return debugResource;
     }
 
 }

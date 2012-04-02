@@ -2,16 +2,19 @@ package net.awired.housecream.client.stub;
 
 import java.util.HashMap;
 import java.util.Map;
+import net.awired.housecream.client.common.domain.HccCondition;
 import net.awired.housecream.client.common.domain.HccDevice;
 import net.awired.housecream.client.common.domain.HccNotify;
 import net.awired.housecream.client.common.domain.HccPin;
 import net.awired.housecream.client.common.domain.HccPinDescription;
 import net.awired.housecream.client.common.domain.HccPinDirection;
 import net.awired.housecream.client.common.domain.HccPinInfo;
-import net.awired.housecream.client.common.domain.HccPinType;
+import net.awired.housecream.client.common.domain.HccPinNotify;
 import net.awired.housecream.client.common.resource.HccUpdateException;
 import net.awired.housecream.client.common.resource.PinNotFoundException;
+import net.awired.housecream.client.common.resource.server.HccNotifyResource;
 import net.awired.housecream.client.common.test.DefaultStubDomainHelper;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.springframework.stereotype.Component;
 import com.google.common.base.Strings;
 
@@ -91,12 +94,6 @@ public class HccContext {
 
         //
 
-        if (description.getType() == HccPinType.DIGITAL) {
-            System.out.println();
-        }
-        if (description.getType() == HccPinType.ANALOG) {
-            System.out.println();
-        }
         if (description.getDirection() == HccPinDirection.OUTPUT) {
             if (pinInfo.getStartVal() == null) {
                 throw new HccUpdateException("start value cannot be null");
@@ -171,7 +168,33 @@ public class HccContext {
     }
 
     public void setdebugValue(int pinId, Float value) {
-        this.pins.get(pinId).setValue(value);
+        HccPin hccPin = this.pins.get(pinId);
+        Float currentValue = hccPin.getValue();
+        hccPin.setValue(value);
+        if (!currentValue.equals(value) && hccPin.getInfo().getNotifies() != null) {
+            for (HccNotify notify : hccPin.getInfo().getNotifies()) {
+                if (notify.getNotifyCondition() == HccCondition.inf_or_equal) {
+                    if (currentValue > notify.getNotifyValue() && value <= notify.getNotifyValue()) {
+                        notifyPinModification(pinId, notify, value);
+                    }
+                } else if (notify.getNotifyCondition() == HccCondition.sup_or_equal) {
+                    if (currentValue < notify.getNotifyValue() && value >= notify.getNotifyValue()) {
+                        notifyPinModification(pinId, notify, value);
+                    }
+                }
+            }
+        }
+
     }
 
+    private void notifyPinModification(int pinId, HccNotify notify, Float value) {
+        HccPinNotify pinNotify = new HccPinNotify();
+        pinNotify.setCondition(notify);
+        pinNotify.setPinId(pinId);
+        pinNotify.setValue(value);
+        pinNotify.setAddress(device.getIp());
+
+        HccNotifyResource notifyResource = JAXRSClientFactory.create(device.getNotifyUrl(), HccNotifyResource.class);
+        notifyResource.notify(pinNotify);
+    }
 }

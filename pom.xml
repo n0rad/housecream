@@ -31,7 +31,7 @@
 
 
 		<bootstrap.version>1.0</bootstrap.version>
-		<ajsl.version>0.4-SNAPSHOT</ajsl.version>
+		<ajsl.version>0.5-SNAPSHOT</ajsl.version>
 
 		<junit.version>4.8.2</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>

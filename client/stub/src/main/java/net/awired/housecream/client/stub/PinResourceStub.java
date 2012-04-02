@@ -4,12 +4,12 @@ import net.awired.housecream.client.common.domain.HccPinDescription;
 import net.awired.housecream.client.common.domain.HccPinInfo;
 import net.awired.housecream.client.common.resource.HccUpdateException;
 import net.awired.housecream.client.common.resource.PinNotFoundException;
-import net.awired.housecream.client.common.resource.PinResource;
+import net.awired.housecream.client.common.resource.HccPinResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PinResourceStub implements PinResource {
+public class PinResourceStub implements HccPinResource {
 
     @Autowired
     HccContext hccContext;
