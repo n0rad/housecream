@@ -28,7 +28,7 @@ typedef struct s_pin {
 // DEBUG on if defined
 //#define DEBUG
 
-static uint8_t   mac[6]         = {0x54, 0x55, 0x58, 0x10, 0x00, 0x24}; 
+static uint8_t   mac[6]         = {0x54, 0x55, 0x58, 0x10, 0x00, 0xF4}; 
 static uint8_t   ip[4]          = {192, 168, 42, 245};
 static uint16_t  port           = 80;
 static char      description[]  = "control everything on window1";
@@ -139,15 +139,10 @@ uint16_t rootGet(uint8_t *buf, uint16_t dat_p, uint16_t plen) {
   
   plen = addToBuffer(buf, plen, "\",\"mac\":\"");
   plen = addToBufferHex(buf, plen, mac[0]);
-  plen = addToBuffer(buf, plen, " ");
   plen = addToBufferHex(buf, plen, mac[1]);
-  plen = addToBuffer(buf, plen, " ");
   plen = addToBufferHex(buf, plen, mac[2]);
-  plen = addToBuffer(buf, plen, " ");
   plen = addToBufferHex(buf, plen, mac[3]);
-  plen = addToBuffer(buf, plen, " ");
   plen = addToBufferHex(buf, plen, mac[4]);
-  plen = addToBuffer(buf, plen, " ");
   plen = addToBufferHex(buf, plen, mac[5]);
 
   plen = addToBuffer(buf, plen, "\"}");
@@ -191,7 +186,7 @@ void loop() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define BUFFER_SIZE 600
+#define BUFFER_SIZE 1000
 static uint8_t buf[BUFFER_SIZE + 1];
 #define STR_BUFFER_SIZE 22
 static char strbuf[STR_BUFFER_SIZE + 1];
@@ -338,7 +333,7 @@ uint16_t addToBufferHex(uint8_t *buf, unsigned long pos, long value) {
    static char value_to_add[16];
    int j = 0;
 
-   sprintf(value_to_add, "%X", value);
+   sprintf(value_to_add, "%02X", value);
    while (value_to_add[j]) {
      buf[TCP_CHECKSUM_L_P + 3 + pos] = value_to_add[j++];
      pos++;
