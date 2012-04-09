@@ -25,15 +25,15 @@
 
 #define BUF ((struct uip_eth_hdr *)&uip_buf[0])
 
-
-typedef struct s_device {
-  char		   *software;
-  char
-
-  char         mode; // NOTUSED (-1), INPUT (0) , OUTPUT(1), PWM (2), ANALOG (3), DIGITAL (4)
-  int          startValue; // 0-1 for digital, 0-255 for PWM
-  char         *description;
-} t_device;
+//
+//typedef struct s_device {
+//  char		   *software;
+//  char
+//
+//  char         mode; // NOTUSED (-1), INPUT (0) , OUTPUT(1), PWM (2), ANALOG (3), DIGITAL (4)
+//  int          startValue; // 0-1 for digital, 0-255 for PWM
+//  char         *description;
+//} t_device;
 
 
 
@@ -56,7 +56,7 @@ void set_defaults(void) {
 void IP_config(void) {
 #if UIP_UDP
     // if DHCP is enabled, then initialize via DHCP, else use static settings
-    if (config.dhDEBUG_PRINTDECcpenable) {
+    if (config.dhcpenable) {
         dhcpc_init();
     }
     else {
