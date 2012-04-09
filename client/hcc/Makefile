@@ -52,10 +52,18 @@ SRC = $(ARDUINO)/pins_arduino.c $(ARDUINO)/wiring.c \
 $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c $(ARDUINO)/wiring_shift.c \
 $(ARDUINO)/WInterrupts.c
+
 CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
 $(ARDUINO)/Print.cpp
-FORMAT = ihex
 
+#ETHERNET SHIELD
+ETHERNET_SHIELD_PATH = lib/ethernetShield-enc28j60
+SRC += $(ETHERNET_SHIELD_PATH)/enc28j60.c $(ETHERNET_SHIELD_PATH)/ip_arp_udp_tcp.c  
+CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp
+
+
+
+FORMAT = ihex
 
 # Name of this Makefile (used for "make depend").
 MAKEFILE = Makefile
