@@ -7,6 +7,8 @@ void hccInit(void) {
 
     DEBUG_PRINT_FULL("Starting init");
     configLoad();
+
+//    net
 }
 
 void hccSetup(void) {

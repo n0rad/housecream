@@ -46,10 +46,9 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="hcc.null.1459007577" name="hcc"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/hcc"/>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
 			<target name="upload" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
@@ -61,5 +60,14 @@
 				<runAllBuilders>true</runAllBuilders>
 			</target>
 		</buildTargets>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="de.innot.avreclipse.toolchain.winavr.base.1216688670;de.innot.avreclipse.toolchain.winavr.base.1216688670.2106156408;de.innot.avreclipse.tool.cppcompiler.base.1584197832;de.innot.avreclipse.cppcompiler.input.1865969848">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="de.innot.avreclipse.core.AVRGCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="de.innot.avreclipse.toolchain.winavr.base.1216688670;de.innot.avreclipse.toolchain.winavr.base.1216688670.2106156408;de.innot.avreclipse.tool.compiler.winavr.base.2074273378;de.innot.avreclipse.compiler.winavr.input.1664386380">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="de.innot.avreclipse.core.AVRGCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>

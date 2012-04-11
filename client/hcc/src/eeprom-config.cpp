@@ -1,5 +1,6 @@
 #include <avr/eeprom.h>
 #include "eeprom-config.h"
+#include "config-def.h"
 #include "hcc.h"
 
 
