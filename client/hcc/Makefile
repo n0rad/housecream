@@ -53,7 +53,7 @@ $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c $(ARDUINO)/wiring_shift.c \
 $(ARDUINO)/WInterrupts.c
 
-SRC += src/eeprom-config.c src/hcc.c
+SRC += src/eeprom-config.c src/hcc.c src/main.c
 
 CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
 $(ARDUINO)/Print.cpp
@@ -206,8 +206,8 @@ extcoff: $(TARGET).elf
 	$(NM) -n $< > $@
 
 # Link: create ELF output file from library.
-target/$(TARGET).elf: src/main.c target/core.a 
-	$(CXX) $(ALL_CXXFLAGS) -o $@ src/main.c -L. target/core.a $(LDFLAGS)
+target/$(TARGET).elf: target/core.a 
+	$(CXX) $(ALL_CXXFLAGS) -o $@ -L. target/core.a $(LDFLAGS)
 
 target/core.a: $(OBJ)
 	@for i in $(OBJ); do echo $(AR) rcs target/core.a $$i; $(AR) rcs target/core.a $$i; done

@@ -1,7 +1,7 @@
 #include "hcc.h"
 
 int main(void) {
-    init();
+    hccInit();
 
     setup();
 

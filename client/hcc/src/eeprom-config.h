@@ -1,5 +1,5 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef EEPROM_CONFIG_H
+#define EEPROM_CONFIG_H
 
 void configSave(void);
 void configLoad(void);

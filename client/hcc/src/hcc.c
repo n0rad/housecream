@@ -1,7 +1,8 @@
 #include "hcc.h"
-#include "eeprom-config.h"
 
-void init(void) {
+void hccInit(void) {
+    init(); // load init of arduino
+
     DEBUG_PRINT_FULL("Starting init");
     configLoad();
 }

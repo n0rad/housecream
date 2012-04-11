@@ -3,7 +3,7 @@
 
 #include "debug.h"
 
-void init(void);
+void hccInit(void);
 void setup(void);
 void loop(void);
 
