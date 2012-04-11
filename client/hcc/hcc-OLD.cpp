@@ -4,9 +4,24 @@
  * @author n0rad
  */
 
+using namespace std;
+
 #include "WProgram.h" 
 #include "lib/ethernetShield-enc28j60/etherShield.h"
 
+
+
+extern "C" void __cxa_pure_virtual()
+{
+#ifdef __AVR__
+    asm("cli");
+#endif
+    while (1)
+	;
+}
+
+
+#define DEBUG
 
 #ifdef DEBUG
   #define DEBUG_PRINT(x)      Serial.print(x)
