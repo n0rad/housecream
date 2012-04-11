@@ -1,8 +1,8 @@
 #include <avr/eeprom.h>
 #include "eeprom-config.h"
-#include "config-def.h"
 #include "hcc.h"
 
+extern t_config config;
 
 void configSave(void) {
     DEBUG_PRINT_FULL("Saving full config to eeprom")
@@ -10,6 +10,10 @@ void configSave(void) {
 }
 
 void configLoad(void) {
+    DEBUG_START();
+    DEBUG_PRINT("Configuration size is ");
+    DEBUG_PRINTLN(sizeof(config));
+
     if (//eeprom_read_byte(CONFIG_EEPROM_START + sizeof(config) - 1) == config.version[4] && // this is '\0'
         eeprom_read_byte((uint8_t *)(uint16_t)CONFIG_EEPROM_START + sizeof(config) - 2) == config.version[3] &&
         eeprom_read_byte((uint8_t *)(uint16_t)CONFIG_EEPROM_START + sizeof(config) - 3) == config.version[2] &&

@@ -1,26 +1,16 @@
 #include "hcc.h"
-#include "../lib/arduino/wiring.h"
 #include "eeprom-config.h"
-#include "config-def.h"
-
-extern "C" void __cxa_pure_virtual()
-{
-#ifdef __AVR__
-    asm("cli");
-#endif
-    while (1)
-    ;
-}
 
 void hccInit(void) {
     init(); // load init of arduino
 
-//#ifdef DEBUG
+#ifdef DEBUG
+    delay(3000);
     Serial.begin(9600);
-//#endif
+#endif
 
     DEBUG_PRINT_FULL("Starting init");
- //   configLoad();
+    configLoad();
 
 //    net
 }
@@ -35,5 +25,5 @@ void hccLoop(void) {
     Serial.print("temp: ");
     Serial.println(count);
     count++;
-    delay (1000);
+    delay(1000);
 }

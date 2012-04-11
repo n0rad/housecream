@@ -58,8 +58,7 @@ $(ARDUINO)/WInterrupts.c
 CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp $(ARDUINO)/Print.cpp
 
 # HCC
-HCC_CXXSRC = src/eeprom-config.cpp src/hcc.cpp src/main.cpp
-HCC_SRC = 
+HCC_CXXSRC = src/eeprom-config.cpp src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp config.cpp
 
 # ETHERNET SHIELD
 ETHERNET_SHIELD_PATH = lib/ethernetShield-enc28j60
@@ -125,7 +124,7 @@ REMOVE = rm -f
 MV = mv -f
 
 # Define all object files.
-OBJ = $(SRC:.c=.o) $(CXXSRC:.cpp=.o) $(ASRC:.S=.o) 
+OBJ = $(SRC:.c=.o) $(CXXSRC:.cpp=.o) $(ASRC:.S=.o)  $(HCC_CXXSRC:.cpp=.o)
 
 # Define all listing files.
 LST = $(ASRC:.S=.lst) $(CXXSRC:.cpp=.lst) $(SRC:.c=.lst)
@@ -202,7 +201,7 @@ extcoff: $(TARGET).elf
 
 # Link: create ELF output file from library.
 target/$(TARGET).elf: target/core.a
-	$(CXX) $(ALL_CXXFLAGS) -o $@ $(HCC_SRC) $(HCC_CXXSRC) -L. target/core.a $(LDFLAGS)
+	$(CXX) $(ALL_CXXFLAGS) -o $@ -L. target/core.a $(LDFLAGS)
 
 target/core.a: $(OBJ)
 	@for i in $(OBJ); do echo $(AR) rcs target/core.a $$i; $(AR) rcs target/core.a $$i; done

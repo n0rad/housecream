@@ -3,6 +3,7 @@
 
 #include "WProgram.h" // arduino specific
 #include "debug.h"
+//#include "eeprom-config.h"
 
 
 void hccInit(void);
