@@ -1,5 +1,12 @@
+#include <avr/eeprom.h>
 #include "eeprom-config.h"
 #include "hcc.h"
+
+
+void configSave(void) {
+    DEBUG_PRINT_FULL("Saving full config to eeprom")
+    eeprom_write_block((const void*)&config, (void*)0, sizeof(config));
+}
 
 void configLoad(void) {
     if (//eeprom_read_byte(CONFIG_EEPROM_START + sizeof(config) - 1) == config.version[4] && // this is '\0'
@@ -14,11 +21,4 @@ void configLoad(void) {
         DEBUG_PRINT_FULL("Version not found in eeprom, will load default config");
         configSave();
     }
-}
-
-
-
-void configSaveFull(void) {
-    DEBUG_PRINT_FULL("Saving full config to eeprom")
-    eeprom_write_block((const void*)&config, (void*)0, sizeof(config));
 }

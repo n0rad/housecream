@@ -1,5 +1,5 @@
 
-#define DEBUG
+//#define DEBUG
 
 #define NUMBER_OF_PINS 2
 
