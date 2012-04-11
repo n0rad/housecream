@@ -1,4 +1,6 @@
 #include "hcc.h"
+#include "../lib/arduino/wiring.h"
+#include "eeprom-config.h"
 
 void hccInit(void) {
     init(); // load init of arduino

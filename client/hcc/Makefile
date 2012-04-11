@@ -43,22 +43,25 @@ AVRDUDE_PROGRAMMER = stk500v1
 MCU = atmega328p
 F_CPU = 16000000
 
+#AVR_TOOLS_PATH = /usr/local/bin/
+
 ############################################################################
 # Below here nothing should be changed...
 
+
+# ARDUINO
 ARDUINO = lib/arduino
-AVR_TOOLS_PATH = /usr/local/bin
 SRC = $(ARDUINO)/pins_arduino.c $(ARDUINO)/wiring.c \
 $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c $(ARDUINO)/wiring_shift.c \
 $(ARDUINO)/WInterrupts.c
+CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp $(ARDUINO)/Print.cpp
 
-SRC += src/eeprom-config.c src/hcc.c src/main.c
+# HCC
+CXXSRC += src/eeprom-config.cpp src/hcc.cpp src/main.cpp
 
-CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
-$(ARDUINO)/Print.cpp
 
-#ETHERNET SHIELD
+# ETHERNET SHIELD
 ETHERNET_SHIELD_PATH = lib/ethernetShield-enc28j60
 SRC += $(ETHERNET_SHIELD_PATH)/enc28j60.c $(ETHERNET_SHIELD_PATH)/ip_arp_udp_tcp.c  
 CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp
@@ -110,22 +113,14 @@ AVRDUDE_FLAGS = -V -F -C $(AVRDUDE_CONF) -p $(MCU) -P $(AVRDUDE_PORT) \
 -c $(AVRDUDE_PROGRAMMER) -b $(UPLOAD_RATE)
 
 # Program settings
-#CC = $(AVR_TOOLS_PATH)/avr-gcc
-#CXX = $(AVR_TOOLS_PATH)/avr-g++
-#OBJCOPY = $(AVR_TOOLS_PATH)/avr-objcopy
-#OBJDUMP = $(AVR_TOOLS_PATH)/avr-objdump
-#AR  = $(AVR_TOOLS_PATH)/avr-ar
-#SIZE = $(AVR_TOOLS_PATH)/avr-size
-#NM = $(AVR_TOOLS_PATH)/avr-nm
-#AVRDUDE = $(AVR_TOOLS_PATH)/avrdude
-CC = avr-gcc
-CXX = avr-g++
-OBJCOPY = avr-objcopy
-OBJDUMP = avr-objdump
-AR  = avr-ar
-SIZE = avr-size
-NM = avr-nm
-AVRDUDE = avrdude
+CC = $(AVR_TOOLS_PATH)avr-gcc
+CXX = $(AVR_TOOLS_PATH)avr-g++
+OBJCOPY = $(AVR_TOOLS_PATH)avr-objcopy
+OBJDUMP = $(AVR_TOOLS_PATH)avr-objdump
+AR  = $(AVR_TOOLS_PATH)avr-ar
+SIZE = $(AVR_TOOLS_PATH)avr-size
+NM = $(AVR_TOOLS_PATH)avr-nm
+AVRDUDE = $(AVR_TOOLS_PATH)avrdude
 REMOVE = rm -f
 MV = mv -f
 

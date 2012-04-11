@@ -10,7 +10,6 @@ struct s_boardDescription p_boardDescription = {
 
 struct s_pinDescription	p_pinDescriptions[NUMBER_OF_PINS] = {
     {PIN_INPUT, PIN_ANALOG, "temperature captor for window1"},
- //   {PIN_INPUT, PIN_ANALOG, "temperature captor for window1"},
 };
 
 ////////////////////////////////////////////////////
@@ -25,7 +24,7 @@ struct s_config {
         {192, 168, 42, 245},                        // ip
         80,                                         // port
         "window1 controller",                       // name
-        "192.168.42.86:8080/hcs/ws/event",          // notify url
+        "192.168.42.86:8080/hcs/ws/event",          // notify url (without http://)
     },
     {
         0, "Windowtemp1", {PIN_NOTIFY_OVER_EQ, 1},
