@@ -53,6 +53,8 @@ $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c $(ARDUINO)/wiring_shift.c \
 $(ARDUINO)/WInterrupts.c
 
+SRC += src/eeprom-config.c src/hcc.c
+
 CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
 $(ARDUINO)/Print.cpp
 
@@ -146,7 +148,7 @@ all: target_files build sizeafter
 build: elf hex 
 
 # Here is the "preprocessing".
-target_files: $(TARGET).cpp
+target_files:
 	test -d target || mkdir target
 
 elf: target/$(TARGET).elf
@@ -204,8 +206,8 @@ extcoff: $(TARGET).elf
 	$(NM) -n $< > $@
 
 # Link: create ELF output file from library.
-target/$(TARGET).elf: $(TARGET).cpp target/core.a 
-	$(CXX) $(ALL_CXXFLAGS) -o $@ $(TARGET).cpp -L. target/core.a $(LDFLAGS)
+target/$(TARGET).elf: src/main.c target/core.a 
+	$(CXX) $(ALL_CXXFLAGS) -o $@ src/main.c -L. target/core.a $(LDFLAGS)
 
 target/core.a: $(OBJ)
 	@for i in $(OBJ); do echo $(AR) rcs target/core.a $$i; $(AR) rcs target/core.a $$i; done
