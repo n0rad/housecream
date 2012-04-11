@@ -3,10 +3,10 @@
 int main(void) {
     hccInit();
 
-    setup();
+    hccSetup();
 
     for (;;) {
-        loop();
+        hccLoop();
     }
 
     return 0;

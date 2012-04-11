@@ -7,10 +7,10 @@ void hccInit(void) {
     configLoad();
 }
 
-void setup(void) {
+void hccSetup(void) {
     DEBUG_PRINT_FULL("Starting setup");
 }
 
-void loop(void) {
+void hccLoop(void) {
 
 }

@@ -4,7 +4,7 @@
 #include "debug.h"
 
 void hccInit(void);
-void setup(void);
-void loop(void);
+void hccSetup(void);
+void hccLoop(void);
 
 #endif
