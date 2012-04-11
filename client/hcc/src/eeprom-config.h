@@ -1,6 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+void configSave(void);
+void configLoad(void);
+
+
+
 #include <stdint.h>
 
 #define CONFIG_VERSION "hcc1"
