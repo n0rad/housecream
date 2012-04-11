@@ -2,7 +2,6 @@
 #include "eeprom-config.h"
 #include "hcc.h"
 
-extern t_config config;
 
 void configSave(void) {
     DEBUG_PRINT_FULL("Saving full config to eeprom")

@@ -1,5 +1,4 @@
 #include "hcc.h"
-#include "eeprom-config.h"
 
 void hccInit(void) {
     init(); // load init of arduino
@@ -8,11 +7,13 @@ void hccInit(void) {
     delay(3000);
     Serial.begin(9600);
 #endif
-
+    delay(500);
     DEBUG_PRINT_FULL("Starting init");
     configLoad();
 
-//    net
+    netSetup();
+
+    pinMode(13, OUTPUT);
 }
 
 void hccSetup(void) {
@@ -25,5 +26,8 @@ void hccLoop(void) {
     Serial.print("temp: ");
     Serial.println(count);
     count++;
-    delay(1000);
+    digitalWrite(13, HIGH);   // set the LED on
+    delay(1000);              // wait for a second
+    digitalWrite(13, LOW);    // set the LED off
+    delay(1000);              // wait for a second
 }

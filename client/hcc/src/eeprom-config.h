@@ -70,4 +70,6 @@ typedef struct s_config {
    char version[5];
 } t_config;
 
+extern t_config config;
+
 #endif
