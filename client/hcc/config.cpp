@@ -15,16 +15,16 @@ t_pinDescription p_pinDescriptions[NUMBER_OF_PINS] = {
 // EEPROM stored in configuration
 ////////////////////////////////////////////////////
 
-extern t_config config PROGMEM = {
-    {
-        {192, 168, 42, 245},                        // ip
-        80,                                         // port
-        "window1 controller",                       // name
-        "192.168.42.86:8080/hcs/ws/event",          // notify url (without http://)
-    },
-    {
-        0, "Windowtemp1", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-    },
-    CONFIG_VERSION
-};
+//extern t_config config PROGMEM = {
+//    {
+//        {192, 168, 42, 245},                        // ip
+//        80,                                         // port
+//        "window1 controller",                       // name
+//        "192.168.42.86:8080/hcs/ws/event",          // notify url (without http://)
+//    },
+//    {
+//        0, "Windowtemp1", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//    },
+//    CONFIG_VERSION
+//};

@@ -1,7 +1,9 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-void networkSetup();
+#include <avr/pgmspace.h>
 
+void networkSetup(void);
+void networkManage(void);
 
 #endif

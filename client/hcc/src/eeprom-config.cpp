@@ -3,7 +3,7 @@
 #include "hcc.h"
 #include <avr/pgmspace.h>
 
-extern t_config config = {
+t_config config = {
     {
         {192, 168, 42, 245},                        // ip
         80,                                         // port
@@ -13,29 +13,29 @@ extern t_config config = {
     {
         0, "Windowtemp1", {PIN_NOTIFY_OVER_EQ, 1},
         42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
-        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+//        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
     },
     CONFIG_VERSION
 };
