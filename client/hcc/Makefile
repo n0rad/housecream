@@ -51,7 +51,7 @@ F_CPU = 16000000
 
 # ARDUINO
 ARDUINO = lib/arduino
-SRC = $(ARDUINO)/pins_arduino.c $(ARDUINO)/wiring.c \
+SRC =  $(ARDUINO)/wiring.c \
 $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c $(ARDUINO)/wiring_shift.c \
 $(ARDUINO)/WInterrupts.c

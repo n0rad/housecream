@@ -8,7 +8,7 @@ void hccInit(void) {
     Serial.begin(9600);
 #endif
     delay(500);
-    DEBUG_PRINT_FULL(PSTR("Starting init"));
+//    DEBUG_PRINT_FULL(F("Starting init"));
     configLoad();
 
     networkSetup();

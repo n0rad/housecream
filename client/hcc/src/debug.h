@@ -2,7 +2,7 @@
 #define DEBUGUTILS_H
 
 #ifdef DEBUG
-    #include <WProgram.h>
+    #include "hcc.h"
 
     #define DEBUG_PRINT_FULL(str)    \
         Serial.print(millis());     \
