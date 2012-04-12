@@ -1,10 +1,48 @@
 #include <avr/eeprom.h>
 #include "eeprom-config.h"
 #include "hcc.h"
+#include <avr/pgmspace.h>
+
+extern t_config config = {
+    {
+        {192, 168, 42, 245},                        // ip
+        80,                                         // port
+        "window1 controller",                       // name
+        "192.168.42.86:8080/hcs/ws/event",          // notify url (without http://)
+    },
+    {
+        0, "Windowtemp1", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+        42, "Windowtemp2", {PIN_NOTIFY_OVER_EQ, 1},
+    },
+    CONFIG_VERSION
+};
 
 
 void configSave(void) {
-    DEBUG_PRINT_FULL("Saving full config to eeprom")
+    DEBUG_PRINT_FULL("Saving full config to eeprom");
     eeprom_write_block((const void*)&config, (void*)0, sizeof(config));
 }
 

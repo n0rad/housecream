@@ -1,4 +1,6 @@
 #include "src/eeprom-config.h"
+#include <avr/pgmspace.h>
+
 
 t_boardDescription p_boardDescription = {
     {0x54, 0x55, 0x58, 0x10, 0x00, 0xF4},       // mac
@@ -12,7 +14,8 @@ t_pinDescription p_pinDescriptions[NUMBER_OF_PINS] = {
 ////////////////////////////////////////////////////
 // EEPROM stored in configuration
 ////////////////////////////////////////////////////
-t_config config = {
+
+extern t_config config PROGMEM = {
     {
         {192, 168, 42, 245},                        // ip
         80,                                         // port
