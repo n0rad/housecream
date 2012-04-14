@@ -10,8 +10,7 @@ char* getNotifyUrl(void);
 void getConfigIP(uint8_t ip[4]);
 void getConfigMac(uint8_t ip[6]);
 uint16_t getConfigPort();
-void getBoardName(char name[21]);
-
+uint8_t *getConfigBoardName_e();
 
 #define CONFIG_VERSION "hcc1"
 #define CONFIG_EEPROM_START 0
@@ -19,7 +18,7 @@ void getBoardName(char name[21]);
 /** description stay in program memory and cannot change */
 typedef struct s_boardDescription {
     uint8_t mac[6];
-    char technicaldesc[101];
+    prog_char technicaldesc[101];
 } t_boardDescription;
 
 /** infos are stored in eeprom and can change  */
@@ -38,18 +37,24 @@ typedef struct s_boardData {
 // PIN
 ///////////////////////////////////////////////////////////////
 
-#define PIN_INPUT 1
-#define PIN_OUTPUT 2
-#define PIN_NOTUSED 3
-#define PIN_RESERVED 4
+#define PIN_INPUT 0
+#define PIN_OUTPUT 1
+#define PIN_NOTUSED 2
+#define PIN_RESERVED 3
+extern const char *pinDirection[];
+
 
 #define PIN_ANALOG 1
 #define PIN_DIGITAL 2
+extern const char *pinType[];
 
 #define PIN_NOTIFY_OVER_EQ 1
 #define PIN_NOTIFY_UNDER_EQ 2
 
 #define NOT_SET 0
+
+
+
 
 typedef struct s_notify { // 3 Bytes
     char condition;

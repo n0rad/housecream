@@ -60,7 +60,7 @@ CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp $(ARDUINO)/Print.cpp
 # HCC
 HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
 		src/util/simple_free.cpp config.cpp src/config-manager.cpp \
-		src/net-server/net-server.cpp
+		src/net-server/net-server.cpp src/pin/pin-manager.cpp
 
 # BOARD
 HCC_CXXSRC += src/driver/impl/board-duemilanove.cpp 
