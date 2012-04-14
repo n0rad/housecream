@@ -58,14 +58,17 @@ $(ARDUINO)/WInterrupts.c
 CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp $(ARDUINO)/Print.cpp
 
 # HCC
-HCC_CXXSRC = src/eeprom-config.cpp src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp config.cpp \
-	src/driver/network-enc28j60.cpp
-#	src/net-server/net-server.cpp
+HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
+		src/util/simple_free.cpp config.cpp src/config-manager.cpp \
+		src/net-server/net-server.cpp
+
+# BOARD
+HCC_CXXSRC += src/driver/impl/board-duemilanove.cpp 
 
 # ETHERNET SHIELD
 ETHERNET_SHIELD_PATH = lib/ethernetShield-enc28j60
 SRC += $(ETHERNET_SHIELD_PATH)/enc28j60.c $(ETHERNET_SHIELD_PATH)/ip_arp_udp_tcp.c  
-CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp
+HCC_CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp src/driver/impl/network-enc28j60.cpp
 
 
 

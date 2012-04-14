@@ -3,7 +3,7 @@
 
 
 #define DEBUG
-#define NUMBER_OF_PINS 2
+#define NUMBER_OF_PINS 25
 
 
 #endif

@@ -93,6 +93,7 @@ uint16_t checksum(uint8_t *buf, uint16_t len,uint8_t type){
         return( (uint16_t) sum ^ 0xFFFF);
 }
 
+
 // you must call this function once before you use any of the other functions:
 void init_ip_arp_udp_tcp(uint8_t *mymac,uint8_t *myip,uint8_t wwwp){
         uint8_t i=0;

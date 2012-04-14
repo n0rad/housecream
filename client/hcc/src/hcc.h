@@ -4,12 +4,14 @@
 
 #include "../config.h"
 #include "../lib/arduino/Arduino.h" // arduino specific
-//#include "../lib/arduino/WString.h"
 #include "debug.h"
-#include "eeprom-config.h"
+#include "config-manager.h"
 #include "driver/network.h"
+#include "driver/board.h"
 
-#define F(string_literal) (reinterpret_cast<__FlashStringHelper *>(PSTR(string_literal)))
+
+int availableMemory(void);
+
 
 void hccInit(void);
 void hccSetup(void);

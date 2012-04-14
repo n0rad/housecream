@@ -1,11 +1,16 @@
 #ifndef EEPROM_CONFIG_H
 #define EEPROM_CONFIG_H
 
-#include "config.h"
+#include <avr/pgmspace.h>
+#include "../config.h"
 #include <stdint.h>
 
-void configSave(void);
 void configLoad(void);
+char* getNotifyUrl(void);
+void getConfigIP(uint8_t ip[4]);
+void getConfigMac(uint8_t ip[6]);
+uint16_t getConfigPort();
+void getBoardName(char name[21]);
 
 
 #define CONFIG_VERSION "hcc1"
@@ -22,8 +27,12 @@ typedef struct s_boardInfo {
     uint8_t ip[4];
     uint16_t port;
     char name[21];
-    char notifyurl[51];
 } t_boardInfo;
+
+/** data are stored in eeprom and keep in ram for fast access */
+typedef struct s_boardData {
+    char notifyurl[51];
+} t_boardData;
 
 ///////////////////////////////////////////////////////////////
 // PIN
@@ -58,18 +67,29 @@ typedef struct s_pinDescription {
 
 /** infos are stored in eeprom and can change  */
 typedef struct s_pinInfo { // 35 Bytes
-    uint16_t lastValue; // output only
     char name[21];
-    t_notify notifies[4];
 } t_pinInfo;
 
+/** data are stored in eeprom and keep in ram for fast access */
+typedef struct s_pinData {
+    uint16_t lastValue; // output only
+    t_notify notifies[4];
+} t_pinData;
+
+///////////////////////////////////////////////////////////////
+// STRUCTURE OF EEPROM
+///////////////////////////////////////////////////////////////
 
 typedef struct s_config {
    t_boardInfo boardInfo;
+   t_boardData boardData;
    t_pinInfo pinInfos[NUMBER_OF_PINS];
+   t_pinData pinData[NUMBER_OF_PINS];
    char version[5];
 } t_config;
 
-extern t_config config;
+extern const t_config defaultConfig;
+extern const t_boardDescription boardDescription;
+extern const t_pinDescription pinDescriptions[NUMBER_OF_PINS];
 
 #endif
