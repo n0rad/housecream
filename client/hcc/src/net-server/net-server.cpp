@@ -8,8 +8,8 @@
 t_resource  p_resource[] = {
   {GET, "/pin/", pinGet},
   {GET, "/ ", rootGet},
-//  {PUT, "/ ",  },
-
+  {PUT, "/pin ",  pinPut},
+  {PUT, "/ ",  rootPut},
   {0, 0, 0}
 };
 
@@ -112,13 +112,16 @@ uint16_t rootGet(uint8_t *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, plen, PSTR(HARDWARE));
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"name\":\""));
-    plen = addToBufferTCP_e(buf, plen, getConfigBoardName_e());
+    plen = addToBufferTCP_p(buf, plen, boardDescription.name);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"description\":\""));
-    plen = addToBufferTCP_p(buf, plen, boardDescription.technicaldesc);
+    plen = addToBufferTCP_p(buf, plen, boardDescription.description);
+
+    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"technicalDescription\":\""));
+    plen = addToBufferTCP_p(buf, plen, boardDescription.technicalDescription);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"notifyUrl\":\""));
-    plen = addToBufferTCP(buf, plen, boardData.notifyurl);
+    plen = addToBufferTCP_p(buf, plen, boardDescription.notifyurl);
 
     uint8_t ip[4];
     getConfigIP(ip);
@@ -131,15 +134,15 @@ uint16_t rootGet(uint8_t *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, plen, IP_SEPARATOR);
     plen = addToBufferTCP(buf, plen, ip[3]);
 
-    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"port\":\""));
+    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"port\":"));
     plen = addToBufferTCP(buf, plen, getConfigPort());
 
-    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"numberOfPin\":\""));
+    plen = addToBufferTCP_p(buf, plen, PSTR(",\"numberOfPin\":"));
     plen = addToBufferTCP(buf, plen, NUMBER_OF_PINS);
 
     uint8_t mac[6];
     getConfigMac(mac);
-    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"mac\":\""));
+    plen = addToBufferTCP_p(buf, plen, PSTR(",\"mac\":\""));
     plen = addToBufferTCPHex(buf, plen, mac[0]);
     plen = addToBufferTCP_p(buf, plen, MAC_SEPARATOR);
     plen = addToBufferTCPHex(buf, plen, mac[1]);
@@ -154,6 +157,14 @@ uint16_t rootGet(uint8_t *buf, uint16_t dat_p, uint16_t plen) {
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\"}"));
     return plen;
+}
+
+uint16_t rootPut(uint8_t *buf, uint16_t dat_p, uint16_t plen) {
+    return 0;
+}
+
+uint16_t pinPut(uint8_t *buf, uint16_t dat_p, uint16_t plen) {
+    return 0;
 }
 
 uint16_t pinGet(uint8_t *buf, uint16_t dat_p, uint16_t plen) {

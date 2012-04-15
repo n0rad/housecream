@@ -12,9 +12,7 @@ void hccInit(void) {
 }
 
 void hccSetup(void) {
-    if (checkBoardRequirement()) {
-        return;
-    }
+//    checkBoardRequirement();
     configLoad();
     networkSetup();
 }

@@ -7,7 +7,9 @@
 #define PUT "PUT "
 
 uint16_t pinGet(uint8_t *buf, uint16_t dat_p, uint16_t plen);
+uint16_t pinPut(uint8_t *buf, uint16_t dat_p, uint16_t plen);
 uint16_t rootGet(uint8_t *buf, uint16_t dat_p, uint16_t plen);
+uint16_t rootPut(uint8_t *buf, uint16_t dat_p, uint16_t plen);
 uint16_t pinGetDescription(uint8_t *buf, uint8_t pinId);
 
 

@@ -1,61 +1,39 @@
-# Arduino Makefile
-# Arduino adaptation by mellis, eighthave, oli.keller
-#
-# Adapted for BSD make(1) by Seth Wright (seth@crosse.org)
-#
-# This makefile allows you to build sketches from the command line
-# without the Arduino environment (or Java).
-#
-# Detailed instructions for using the makefile:
-#
-#  1. Copy this file into the folder with your sketch. There should be a
-#     file with the same name as the folder and with the extension .pde
-#     (e.g. foo.pde in the foo/ folder).
-#
-#  2. Modify the line containg "INSTALL_DIR" to point to the directory that
-#     contains the Arduino installation (for example, under Mac OS X, this
-#     might be /Applications/arduino-0012).
-#
-#  3. Modify the line containing "PORT" to refer to the filename
-#     representing the USB or serial connection to your Arduino board
-#     (e.g. PORT = /dev/tty.USB0).  If the exact name of this file
-#     changes, you can use * as a wildcard (e.g. PORT = /dev/tty.usb*).
-#
-#  4. Set the line containing "MCU" to match your board's processor. 
-#     Older one's are atmega8 based, newer ones like Arduino Mini, Bluetooth
-#     or Diecimila have the atmega168.  If you're using a LilyPad Arduino,
-#     change F_CPU to 8000000.
-#
-#  5. At the command line, change to the directory containing your
-#     program's file and the makefile.
-#
-#  6. Type "make" and press enter to compile/verify your program.
-#
-#  7. Type "make upload", reset your Arduino board, and press enter to
-#     upload your program to the Arduino board.
-#
-# $Id$
-
-TARGET = hcc
+# HouseCream Makefile based on arduino / crumb644 makefiles
+SRC =
+CXXSRC =
+ARDUINO_SRC =  lib/arduino/wiring.c lib/arduino/wiring_analog.c lib/arduino/wiring_digital.c \
+	lib/arduino/wiring_pulse.c lib/arduino/wiring_shift.c lib/arduino/WInterrupts.c
+ARDUINO_CXXSRC = lib/arduino/HardwareSerial.cpp lib/arduino/WMath.cpp lib/arduino/Print.cpp
+############################################################################
+# your configuration part
 PORT = /dev/ttyUSB0
 UPLOAD_RATE = 57600
 AVRDUDE_PROGRAMMER = stk500v1
 MCU = atmega328p
 F_CPU = 16000000
 
-#AVR_TOOLS_PATH = /usr/local/bin/
+#-- arduino duemilanove
+SRC += $(ARDUINO_SRC) 
+CXXSRC += $(ARDUINO_CXXSRC)
 
 ############################################################################
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+
+
+TARGET = hcc
+
+
 # Below here nothing should be changed...
+#AVR_TOOLS_PATH = /usr/local/bin/
 
 
 # ARDUINO
 ARDUINO = lib/arduino
-SRC =  $(ARDUINO)/wiring.c \
-$(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
-$(ARDUINO)/wiring_pulse.c $(ARDUINO)/wiring_shift.c \
-$(ARDUINO)/WInterrupts.c
-CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp $(ARDUINO)/Print.cpp
 
 # HCC
 HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
@@ -65,7 +43,7 @@ HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
 # BOARD
 HCC_CXXSRC += src/driver/impl/board-duemilanove.cpp 
 
-# ETHERNET SHIELD
+# ENC28j60 ETHERNET SHIELD
 ETHERNET_SHIELD_PATH = lib/ethernetShield-enc28j60
 SRC += $(ETHERNET_SHIELD_PATH)/enc28j60.c $(ETHERNET_SHIELD_PATH)/ip_arp_udp_tcp.c  
 HCC_CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp src/driver/impl/network-enc28j60.cpp

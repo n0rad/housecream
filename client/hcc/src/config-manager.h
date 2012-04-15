@@ -6,11 +6,9 @@
 #include <stdint.h>
 
 void configLoad(void);
-char* getNotifyUrl(void);
 void getConfigIP(uint8_t ip[4]);
 void getConfigMac(uint8_t ip[6]);
 uint16_t getConfigPort();
-uint8_t *getConfigBoardName_e();
 
 #define CONFIG_VERSION "hcc1"
 #define CONFIG_EEPROM_START 0
@@ -18,20 +16,13 @@ uint8_t *getConfigBoardName_e();
 /** description stay in program memory and cannot change */
 typedef struct s_boardDescription {
     uint8_t mac[6];
-    prog_char technicaldesc[101];
-} t_boardDescription;
-
-/** infos are stored in eeprom and can change  */
-typedef struct s_boardInfo {
     uint8_t ip[4];
     uint16_t port;
     char name[21];
-} t_boardInfo;
-
-/** data are stored in eeprom and keep in ram for fast access */
-typedef struct s_boardData {
+    char description[101];
+    char technicalDescription[101];
     char notifyurl[51];
-} t_boardData;
+} t_boardDescription;
 
 ///////////////////////////////////////////////////////////////
 // PIN
@@ -86,8 +77,6 @@ typedef struct s_pinData {
 ///////////////////////////////////////////////////////////////
 
 typedef struct s_config {
-   t_boardInfo boardInfo;
-   t_boardData boardData;
    t_pinInfo pinInfos[NUMBER_OF_PINS];
    t_pinData pinData[NUMBER_OF_PINS];
    char version[5];

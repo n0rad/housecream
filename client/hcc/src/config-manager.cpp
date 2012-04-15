@@ -2,7 +2,7 @@
 #include "config-manager.h"
 #include "hcc.h"
 
-s_boardData boardData;
+//s_boardData boardData;
 s_pinData pinData;
 
 const char PIN_STRING_INPUT[] PROGMEM = "INPUT";
@@ -33,41 +33,26 @@ void configLoad(void) {
         eeprom_read_byte((uint8_t *)(uint16_t)CONFIG_EEPROM_START + sizeof(defaultConfig) - 5) == pgm_read_byte((char*)&defaultConfig + sizeof(defaultConfig) - 5))
     {
         DEBUG_PRINT_FULL(F("Loading config from eeprom"));
-        eeprom_read_block((void*)&boardData, (char*)sizeof(t_boardInfo), sizeof(boardData));
-        eeprom_read_block((void*)&pinData, (char*)sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
+//        eeprom_read_block((void*)&boardData, (char*)sizeof(t_boardInfo), sizeof(boardData));
+//        eeprom_read_block((void*)&pinData, (char*)sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
     } else {
         DEBUG_PRINT_FULL(F("Version not found in eeprom, will load default config"));
         configSave();
     }
 }
 
-
-char* getNotifyUrl(void) {
-    return boardData.notifyurl;
-}
-
-#define CONF_BOARD_MAC_SIZE sizeof(uint8_t) * 6
-#define CONF_BOARD_IP_SIZE sizeof(uint8_t) * 4
-#define CONF_BOARD_PORT_SIZE sizeof(uint16_t)
-#define CONF_BOARD_NAME_SIZE sizeof(char) * 21
-
 void getConfigIP(uint8_t ip[4]) {
-    eeprom_read_block((void*)ip, (void*) CONFIG_EEPROM_START, CONF_BOARD_IP_SIZE);
+    memcpy_P(ip, boardDescription.ip, 4);
 }
-
 void getConfigMac(uint8_t mac[6]) {
-    for (uint8_t i = 0; i < CONF_BOARD_MAC_SIZE; i++) {
-        mac[i] = pgm_read_byte((byte*)boardDescription.mac + i);
-    }
+    memcpy_P(mac, boardDescription.mac,6);
 }
-
 uint16_t getConfigPort() {
-   return eeprom_read_word((uint16_t*)(CONFIG_EEPROM_START + CONF_BOARD_IP_SIZE));
+   return pgm_read_word(&boardDescription.port);
 }
 
-uint8_t *getConfigBoardName_e() {
-    return (uint8_t *) CONFIG_EEPROM_START + CONF_BOARD_IP_SIZE + CONF_BOARD_PORT_SIZE;
-}
+
+
 
 uint16_t getConfigPinValue(uint8_t pinId) {
     return pinData.lastValue;
