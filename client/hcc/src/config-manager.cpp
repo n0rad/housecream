@@ -2,7 +2,6 @@
 #include "config-manager.h"
 #include "hcc.h"
 
-//s_boardData boardData;
 s_pinData pinData;
 
 const char PIN_STRING_INPUT[] PROGMEM = "INPUT";
@@ -15,7 +14,6 @@ const char *pinDirection[] = { PIN_STRING_INPUT, PIN_STRING_OUTPUT, PIN_STRING_N
 const char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
 const char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";
 const char *pinType[] = { PIN_TYPE_ANALOG, PIN_TYPE_DIGITAL};
-
 
 
 void configSave(void) {

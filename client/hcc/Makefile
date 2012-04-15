@@ -38,7 +38,9 @@ ARDUINO = lib/arduino
 # HCC
 HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
 		src/util/simple_free.cpp config.cpp src/config-manager.cpp \
-		src/net-server/net-server.cpp src/pin/pin-manager.cpp
+		src/net-server/net-server.cpp src/pin/pin-manager.cpp \
+		src/net-server/server-pin.cpp src/net-server/server-board.cpp \
+		src/util/json.cpp src/util/mylibc.cpp
 
 # BOARD
 HCC_CXXSRC += src/driver/impl/board-duemilanove.cpp 
