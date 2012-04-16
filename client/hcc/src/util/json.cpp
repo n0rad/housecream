@@ -4,7 +4,7 @@
 // notifies : [{notifyValue: 42.4, notifyCondition : "sup_or_equal"}, {notifyValue.3, notifyCondition : "inf_or_equal"}]
 
 static char findEndOfValue(char *buf) {
-    for (uint8_t i; buf[i]; i++) {
+    for (uint8_t i = 0; buf[i]; i++) {
         if (buf[i] == '\t' || buf[i] == '\n' || buf[i] == '\r' || buf[i] == ' '
                 || buf[i] == ']' || buf[i] == '}' || buf[i] == ',') {
             return i;
@@ -39,19 +39,20 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
         return JSON_ERROR_NO_KEY_START;
     }
     buf = &buf[1]; // enter inside key
+    boolean managed = false;
     for (uint8_t i = 0; (keypos = (char*) pgm_read_word(&structure[i].key)); i++) {
         int keylen = strlen_P(keypos);
         if (strncmp_P(buf, keypos, keylen) == 0) {
             if (buf[keylen] != '"') {
                 continue; // same key start but its not the buf full key name
             }
+            managed = true;
             buf = &buf[keylen + 1]; // going out of key
             buf = skipSpaces(buf);
             if (buf[0] != ':') {
                 return JSON_ERROR_NO_SEPARATOR;
             }
             buf = skipSpaces(&buf[1]); // skip separator ':' and white spaces
-
             if (buf[0] == '[') {
                 return PSTR("nested array not implemented");
             } else if (buf[0] == '{') {
@@ -74,13 +75,30 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
                     DEBUG_PRINTLN("value without quotes");
                     len = findEndOfValue(buf);
                     res = func(keypos, buf, len, 0);
-                    buf = &buf[len];
+                    buf = &buf[len + 1];
                 }
                 if (res) {
                     return res;
                 }
                 break;
             }
+        }
+    }
+    if (!managed) {
+        buf = &buf[my_strpos(buf, '"') + 1]; // skip key
+        buf = skipSpaces(buf);
+        if (buf[0] != ':') {
+            return JSON_ERROR_NO_SEPARATOR;
+        }
+        buf = skipSpaces(&buf[1]);
+        if (buf[0] == '"') { // skip value with quotes
+            buf = &buf[my_strpos(&buf[1], '"') + 2];
+        } else if (buf[0] == '{') { // TODO manage nested object as the end may be the end of an inner obj
+            buf = &buf[my_strpos(&buf[1], '}') + 2];
+        } else if (buf[0] == '[') { // TODO manage nested array
+            buf = &buf[my_strpos(&buf[1], ']') + 2];
+        } else {
+            buf = &buf[findEndOfValue(buf) + 1];
         }
     }
     *buffer = buf;
@@ -93,9 +111,7 @@ static char *parseObject(char *buf, t_json *structure) {
         return JSON_ERROR_NO_OBJECT_START;
     }
     do {
-        buf = &buf[1]; // skip { or ,
-        buf = skipSpaces(buf);
-
+        buf = skipSpaces(&buf[1]);  // skip { or ,
         char *fail = parseKeyValue(&buf, structure);
         if (fail) {
             return fail;

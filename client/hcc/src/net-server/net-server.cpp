@@ -65,8 +65,17 @@ uint16_t addToBufferTCP_e(char *buf, uint16_t pos, uint8_t *eeprom_s) {
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     DEBUG_PRINT(F("Available memory : "));
     DEBUG_PRINTLN(availableMemory());
+    DEBUG_PRINT(F("DATA LEN : "));
+    DEBUG_PRINTLN(dataLen);
+    DEBUG_PRINTLN(&buf[dataPointer]);
 
     uint16_t plen;
+    if (dataLen >= 999) {
+        plen = addToBufferTCP_p(buf, 0, HEADER_413);
+        plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\"413: Request is too big, please be gentle\"}"));
+        return plen;
+    }
+
     if (criticalProblem_p) {
         plen = addToBufferTCP_p(buf, 0, HEADER_500);
         plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\""));
@@ -87,7 +96,7 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     }
     if (!managed) {
         plen = addToBufferTCP_p(buf, 0, HEADER_404);
-        plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\"404, No resource for this method & url\"}"));
+        plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\"404: No resource for this method & url\"}"));
     }
     return plen;
 }

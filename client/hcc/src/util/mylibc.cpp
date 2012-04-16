@@ -4,9 +4,7 @@
 
 int my_strpos(const char *s, int ch) {
     for (int i = 0; s[i]; i++) {
-        DEBUG_PRINT(s[i]);
         if (s[i] == ch) {
-            DEBUG_PRINTLN(" ");
             return i;
         }
     }

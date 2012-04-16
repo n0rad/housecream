@@ -2,7 +2,8 @@
 #include "config-manager.h"
 #include "hcc.h"
 
-s_pinData pinData;
+t_pinData pinData;
+t_boardData boardData;
 
 const char PIN_STRING_INPUT[] PROGMEM = "INPUT";
 const char PIN_STRING_OUTPUT[] PROGMEM = "OUTPUT";
@@ -31,27 +32,52 @@ void configLoad(void) {
         eeprom_read_byte((uint8_t *)(uint16_t)CONFIG_EEPROM_START + sizeof(defaultConfig) - 5) == pgm_read_byte((char*)&defaultConfig + sizeof(defaultConfig) - 5))
     {
         DEBUG_PRINT_FULL(F("Loading config from eeprom"));
-//        eeprom_read_block((void*)&boardData, (char*)sizeof(t_boardInfo), sizeof(boardData));
-//        eeprom_read_block((void*)&pinData, (char*)sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
+        eeprom_read_block((void*)&boardData, (char*)sizeof(t_boardInfo), sizeof(boardData));
+        eeprom_read_block((void*)&pinData, (char*)sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
     } else {
         DEBUG_PRINT_FULL(F("Version not found in eeprom, will load default config"));
+        DEBUG_PRINT_FULL(sizeof(t_config));
         configSave();
     }
 }
 
-void getConfigIP(uint8_t ip[4]) {
-    memcpy_P(ip, boardDescription.ip, 4);
-}
+
+#define CONF_BOARD_MAC_SIZE sizeof(uint8_t) * 6
+#define CONF_BOARD_IP_SIZE sizeof(uint8_t) * 4
+#define CONF_BOARD_PORT_SIZE sizeof(uint16_t)
+#define CONF_BOARD_NAME_SIZE sizeof(char) * 21
+
+
 void getConfigMac(uint8_t mac[6]) {
-    memcpy_P(mac, boardDescription.mac,6);
+    memcpy_P(mac, boardDescription.mac, 6);
+}
+void getConfigIP(uint8_t ip[4]) {
+    eeprom_read_block((void*)ip, (void*) CONFIG_EEPROM_START, CONF_BOARD_IP_SIZE);
 }
 uint16_t getConfigPort() {
-   return pgm_read_word(&boardDescription.port);
+   return eeprom_read_word((uint16_t*)(CONFIG_EEPROM_START + CONF_BOARD_IP_SIZE));
 }
-
-
-
-
+uint8_t *getConfigBoardName_e() {
+    return (uint8_t *) CONFIG_EEPROM_START + CONF_BOARD_IP_SIZE + CONF_BOARD_PORT_SIZE;
+}
 uint16_t getConfigPinValue(uint8_t pinId) {
     return pinData.lastValue;
 }
+char* getConfigNotifyUrl(void) {
+    return boardData.notifyurl;
+}
+
+//////////////////
+
+char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+    DEBUG_PRINTLN("writing board name");
+    if (len >  CONFIG_BOARD_NAME_SIZE) {
+        return PSTR("name is too long");
+    }
+    eeprom_write_block(buf, (uint8_t *) CONFIG_EEPROM_START + CONF_BOARD_IP_SIZE + CONF_BOARD_PORT_SIZE, len);
+    eeprom_write_byte((uint8_t *) CONFIG_EEPROM_START + CONF_BOARD_IP_SIZE + CONF_BOARD_PORT_SIZE + len, 0);
+    return 0;
+}
+
+
+

@@ -10,16 +10,13 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, plen, PSTR(HARDWARE));
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"name\":\""));
-    plen = addToBufferTCP_p(buf, plen, boardDescription.name);
-
-    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"description\":\""));
-    plen = addToBufferTCP_p(buf, plen, boardDescription.description);
+    plen = addToBufferTCP_e(buf, plen, getConfigBoardName_e());
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"technicalDescription\":\""));
     plen = addToBufferTCP_p(buf, plen, boardDescription.technicalDescription);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"notifyUrl\":\""));
-    plen = addToBufferTCP_p(buf, plen, boardDescription.notifyurl);
+    plen = addToBufferTCP_p(buf, plen, getConfigNotifyUrl());
 
     uint8_t ip[4];
     getConfigIP(ip);
@@ -78,15 +75,13 @@ char *sampleHandler(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
 }
 
 static char BOARDPUT_PARAM_NAME[] PROGMEM = "name";
-static char BOARDPUT_PARAM_DESCRIPTION[] PROGMEM = "description";
 static char BOARDPUT_PARAM_NOTIFYURL[] PROGMEM = "notifyUrl";
 static char BOARDPUT_PARAM_TECHNICALDESC[] PROGMEM = "technicalDescription";
 static char BOARDPUT_PARAM_IP[] PROGMEM = "ip";
 static char BOARDPUT_PARAM_PORT[] PROGMEM = "port";
 
 t_json boardPutElements[] PROGMEM = {
-        {BOARDPUT_PARAM_NAME, sampleHandler},
-        {BOARDPUT_PARAM_DESCRIPTION, sampleHandler},
+        {BOARDPUT_PARAM_NAME, setConfigBoardName},
         {BOARDPUT_PARAM_NOTIFYURL, sampleHandler},
         {BOARDPUT_PARAM_TECHNICALDESC, sampleHandler},
         {BOARDPUT_PARAM_IP, sampleHandler},

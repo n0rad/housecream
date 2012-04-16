@@ -17,6 +17,7 @@ static char HEADER_200[] PROGMEM = "HTTP/1.0 200 OK\r\nContent-Type: application
 static char HEADER_500[] PROGMEM = "HTTP/1.0 500 Internal Server Error\r\nContent-Type: application/json\r\n\r\n";
 static char HEADER_404[] PROGMEM = "HTTP/1.0 404 Not Found\r\nContent-Type: application/json\r\n\r\n";
 static char HEADER_400[] PROGMEM = "HTTP/1.0 400 Bad Request\r\nContent-Type: application/json\r\n\r\n";
+static char HEADER_413[] PROGMEM = "HTTP/1.0 413 Request Entity Too Large\r\nContent-Type: application/json\r\n\r\n";
 static char BAD_PIN_REQUEST[] PROGMEM = "{\"message\":\"404 No resource on pin for this method & url\"}";
 static char CANNOT_READ_PINID[] PROGMEM = "{\"message\":\"Cannot read pin number in the request\"}";
 static char MAC_SEPARATOR[] PROGMEM = ":";
