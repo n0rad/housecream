@@ -13,9 +13,19 @@ uint8_t *getConfigBoardName_e();
 char* getConfigNotifyUrl(void);
 
 char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+
+char *handleUnsetableNumberOfPin(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *handleUnsetableMac(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *handleUnsetableDescription(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *handleUnsetableVersion(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *handleUnsetableHardware(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+char *handleUnsetableSoftware(char* PGMkey, char *buf, uint16_t len, uint8_t index);
 
 
-#define CONFIG_VERSION "hcc2"
+#define CONFIG_VERSION "hcc0"
 #define CONFIG_EEPROM_START 0
 
 #define CONFIG_BOARD_NAME_SIZE 20

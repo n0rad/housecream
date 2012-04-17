@@ -14,9 +14,6 @@
 
 int my_strpos(const char *s, int ch);
 
-
-#define HCC_VERSION "0.1"
-
 //extern s_boardData boardData;
 extern s_pinData pinData;
 extern char *criticalProblem_p;

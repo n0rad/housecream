@@ -23,14 +23,14 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-
-static void DEBUG_p(const prog_char *progmem_s) {
-    char c;
-    while ((c = pgm_read_byte(progmem_s++))) {
-        DEBUG_PRINT(c);
-    }
-    DEBUG_PRINTLN(" ");
-}
+//
+//static void DEBUG_p(const prog_char *progmem_s) {
+//    char c;
+//    while ((c = pgm_read_byte(progmem_s++))) {
+//        DEBUG_PRINT(c);
+//    }
+//    DEBUG_PRINTLN(" ");
+//}
 
 static char *parseKeyValue(char **buffer, t_json *structure) {
     char *buf =  *buffer;
@@ -70,6 +70,8 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
                         return JSON_ERROR_NO_VALUE_END;
                     }
                     res = func(keypos, buf, len, 0);
+                    DEBUG_PRINT(buf[0]);
+                    DEBUG_PRINTLN(buf[1]); // seems to affect program
                     buf = &buf[len + 1];
                 } else {
                     DEBUG_PRINTLN("value without quotes");
@@ -85,6 +87,7 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
         }
     }
     if (!managed) {
+        DEBUG_PRINT_FULL("unmanaged param")
         buf = &buf[my_strpos(buf, '"') + 1]; // skip key
         buf = skipSpaces(buf);
         if (buf[0] != ':') {
@@ -118,7 +121,11 @@ static char *parseObject(char *buf, t_json *structure) {
         }
         buf = skipSpaces(buf);
     } while (buf[0] == ',');
-
+//    DEBUG_PRINTLN(buf[0]);
+//    DEBUG_PRINTLN(buf[1]);
+//    DEBUG_PRINTLN(buf[2]);
+//    DEBUG_PRINTLN(buf[3]);
+//    DEBUG_PRINTLN(buf[4]);
     if (buf[0] != '}') { // end of object
         return JSON_ERROR_NO_OBJECT_END;
     }

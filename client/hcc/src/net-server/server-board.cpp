@@ -1,10 +1,12 @@
 #include "../hcc.h"
 #include <string.h>
 
+extern char hcc_version[];
+
 uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, 0, HEADER_200);
     plen = addToBufferTCP_p(buf, plen, PSTR("{\"software\":\"HouseCream Client\", \"version\":\""));
-    plen = addToBufferTCP_p(buf, plen, PSTR(HCC_VERSION));
+    plen = addToBufferTCP_p(buf, plen, hcc_version);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"hardware\":\""));
     plen = addToBufferTCP_p(buf, plen, PSTR(HARDWARE));
@@ -16,7 +18,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, plen, boardDescription.technicalDescription);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"notifyUrl\":\""));
-    plen = addToBufferTCP_p(buf, plen, getConfigNotifyUrl());
+    plen = addToBufferTCP(buf, plen, getConfigNotifyUrl());
 
     uint8_t ip[4];
     getConfigIP(ip);
@@ -76,16 +78,26 @@ char *sampleHandler(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
 
 static char BOARDPUT_PARAM_NAME[] PROGMEM = "name";
 static char BOARDPUT_PARAM_NOTIFYURL[] PROGMEM = "notifyUrl";
-static char BOARDPUT_PARAM_TECHNICALDESC[] PROGMEM = "technicalDescription";
+static char BOARDPUT_PARAM_DESCRIPTION[] PROGMEM = "description";
 static char BOARDPUT_PARAM_IP[] PROGMEM = "ip";
 static char BOARDPUT_PARAM_PORT[] PROGMEM = "port";
+static char BOARDPUT_PARAM_NUMBEROFPIN[] PROGMEM = "numberOfPin";
+static char BOARDPUT_PARAM_HARDWARE[] PROGMEM = "hardware";
+static char BOARDPUT_PARAM_VERSION[] PROGMEM = "version";
+static char BOARDPUT_PARAM_SOFTWARE[] PROGMEM = "software";
+static char BOARDPUT_PARAM_MAC[] PROGMEM = "mac";
 
 t_json boardPutElements[] PROGMEM = {
+        {BOARDPUT_PARAM_NUMBEROFPIN, handleUnsetableNumberOfPin},
+        {BOARDPUT_PARAM_HARDWARE, handleUnsetableHardware},
+        {BOARDPUT_PARAM_VERSION, handleUnsetableVersion},
+        {BOARDPUT_PARAM_SOFTWARE, handleUnsetableSoftware},
+        {BOARDPUT_PARAM_MAC, handleUnsetableMac},
         {BOARDPUT_PARAM_NAME, setConfigBoardName},
-        {BOARDPUT_PARAM_NOTIFYURL, sampleHandler},
-        {BOARDPUT_PARAM_TECHNICALDESC, sampleHandler},
-        {BOARDPUT_PARAM_IP, sampleHandler},
-        {BOARDPUT_PARAM_PORT, sampleHandler},
+        {BOARDPUT_PARAM_NOTIFYURL, setConfigBoardNotifyUrl},
+        {BOARDPUT_PARAM_DESCRIPTION, handleUnsetableDescription},
+        {BOARDPUT_PARAM_IP, setConfigBoardIP},
+        {BOARDPUT_PARAM_PORT, setConfigBoardPort},
         {0, 0}
 };
 

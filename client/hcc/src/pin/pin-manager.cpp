@@ -11,6 +11,14 @@ uint16_t getPinValue(uint8_t pinId) {
     return 0;
 }
 
+void pinCheckChange() {
+    // loop on pins
+    // check if its in input
+    // get value
+    // compare with previous value
+    // if going over notify cond notify
+}
+
 
 //
 //

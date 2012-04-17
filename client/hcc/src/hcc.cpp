@@ -1,6 +1,8 @@
 #include "hcc.h"
 
 char *criticalProblem_p;
+boolean needReboot = false;
+
 
 void hccInit(void) {
     init(); // load init of arduino
@@ -19,4 +21,5 @@ void hccSetup(void) {
 
 void hccLoop(void) {
     networkManage();
+    pinCheckChange();
 }
