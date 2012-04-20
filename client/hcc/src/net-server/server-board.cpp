@@ -14,7 +14,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"name\":\""));
     plen = addToBufferTCP_e(buf, plen, getConfigBoardName_e());
 
-    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"technicalDescription\":\""));
+    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"description\":\""));
     plen = addToBufferTCP_p(buf, plen, boardDescription.technicalDescription);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"notifyUrl\":\""));
@@ -107,7 +107,7 @@ uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen) {
     if (error) {
         plen = addToBufferTCP_p(buf, 0, HEADER_400);
         plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\""));
-        plen = addToBufferTCP_p(buf, plen, error);
+        plen = addToBufferTCP(buf, plen, error);
         plen = addToBufferTCP_p(buf, plen, PSTR("\"}"));
     } else {
         plen = addToBufferTCP_p(buf, 0, HEADER_200);

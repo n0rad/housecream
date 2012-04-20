@@ -18,7 +18,7 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen) {
         }
         if (strncmp("/value", request, 5) == 0) {
             plen = addToBufferTCP_p(buf, 0, HEADER_200);
-            plen = addToBufferTCP(buf, plen, getPinValue(pinId));
+//            plen = addToBufferTCP(buf, plen, getPinValue(pinId));
             return plen;
         } else if ((request[0] == '/' && !request[1])
                 || strncmp("HTTP/", request, 5) == 0) {
@@ -45,8 +45,8 @@ uint16_t pinGetDescription(char *buf, uint8_t pinId) {
     uint16_t plen;
 
     plen = addToBufferTCP_p(buf, 0, HEADER_200);
-    plen = addToBufferTCP_p(buf, plen, PSTR("{\"technicalDescription\":\""));
-    plen = addToBufferTCP_p(buf, plen, (const prog_char *)&pinDescriptions[pinId].technicalDesc);
+    plen = addToBufferTCP_p(buf, plen, PSTR("{\"description\":\""));
+    plen = addToBufferTCP_p(buf, plen, (const prog_char *)&pinDescriptions[pinId].description);
 
     uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"direction\":\""));
@@ -62,10 +62,6 @@ uint16_t pinGetDescription(char *buf, uint8_t pinId) {
 //    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"valueMax\":\""));
 //    plen = addToBufferTCP_p(buf, plen, type ? PSTR("1") : PSTR("1"));
 
-
-//  plen = addToBuffer(buf, plen, "\",\"pullUp\":\"");
-//  plen = addToBuffer(buf, plen, current.pullUp);
-//
 //
 //  plen = addToBuffer(buf, plen, "\",\"valueStep\":\"");
 //  plen = addToBuffer(buf, plen, current.valueStep);

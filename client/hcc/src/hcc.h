@@ -14,9 +14,15 @@
 
 int my_strpos(const char *s, int ch);
 
+
+
+void DEBUG_p(const prog_char *progmem_s);
+
 //extern s_boardData boardData;
 extern s_pinData pinData;
 extern char *criticalProblem_p;
+extern char *definitionError;
+
 
 
 int availableMemory(void);

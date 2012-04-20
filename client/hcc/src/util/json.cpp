@@ -23,15 +23,6 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-//
-//static void DEBUG_p(const prog_char *progmem_s) {
-//    char c;
-//    while ((c = pgm_read_byte(progmem_s++))) {
-//        DEBUG_PRINT(c);
-//    }
-//    DEBUG_PRINTLN(" ");
-//}
-
 static char *parseKeyValue(char **buffer, t_json *structure) {
     char *buf =  *buffer;
     char *keypos;

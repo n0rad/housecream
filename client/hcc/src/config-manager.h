@@ -1,9 +1,11 @@
 #ifndef EEPROM_CONFIG_H
 #define EEPROM_CONFIG_H
 
-#include <avr/pgmspace.h>
-#include "../config.h"
 #include <stdint.h>
+#include <avr/pgmspace.h>
+
+#include "../config.h"
+#include "pin/pin-manager.h"
 
 void configLoad(void);
 void getConfigIP(uint8_t ip[4]);
@@ -76,14 +78,26 @@ typedef struct s_notify { // 3 Bytes
     char condition;
     uint16_t value;
 } t_notify;
+typedef float (*conversion)(float pinValue);
+
+
+union s_pinAccess {
+    uint16_t (*readPin)(uint8_t pinId); // function read the pin
+    void (*writePin)(uint8_t pinId, uint16_t value); // function to write the pin
+};
 
 /** description stay in program memory and cannot change */
 typedef struct s_pinDescription {
-    char direction;             // PIN_INPUT, PIN_OUTPUT, PIN_NOTUSED, PIN_RESERVED
-    char type;                  // PIN_ANALOG, PIN_DIGITAL
-//  float (*convertPinValue)(uint16_t pinValue); //
-//  uint16_t (*accessPin)(char type, int pinId);
-    char technicalDesc[101];
+    int8_t direction;     // PIN_INPUT, PIN_OUTPUT, PIN_NOTUSED, PIN_RESERVED
+    char type;          // PIN_ANALOG, PIN_DIGITAL
+    uint16_t valueMin;  // for input pin : min value as input for transform function (usually 0)
+                        // for output pin : min value as input for transform function that will not result under 0
+    uint16_t valueMax;  // for input pin : max value as input for transform function (usually 1023)
+                        // for output pin : max value as input for transform function that will not result over 255
+    conversion convertValue; // for input pin : convert the 0-1023 to the wanted display value
+                                           // for output pin : convert the display value to 0-255
+    union s_pinAccess pinAccess;    // access the pin in read or write depending on direction
+    char description[101];
 } t_pinDescription;
 
 /** infos are stored in eeprom and can change  */

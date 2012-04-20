@@ -1,6 +1,10 @@
 #include "../hcc.h"
 
-uint16_t getPinValue(uint8_t pinId) {
+float noConversion(float pinValue) {
+    return pinValue;
+}
+
+uint16_t defaultPinRead(uint8_t pinId) {
     uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
     uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
     if (direction == PIN_INPUT) {
@@ -11,6 +15,11 @@ uint16_t getPinValue(uint8_t pinId) {
     return 0;
 }
 
+void defaultPinWrite(uint8_t pinId, uint16_t value) {
+
+}
+
+
 void pinCheckChange() {
     // loop on pins
     // check if its in input
@@ -18,6 +27,9 @@ void pinCheckChange() {
     // compare with previous value
     // if going over notify cond notify
 }
+
+
+
 
 
 //

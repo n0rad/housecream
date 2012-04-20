@@ -83,6 +83,14 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         plen = addToBufferTCP_p(buf, plen, PSTR("\"}"));
         return plen;
     }
+    if (definitionError) {
+        DEBUG_PRINTLN(definitionError);
+        plen = addToBufferTCP_p(buf, 0, HEADER_500);
+        plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\""));
+        plen = addToBufferTCP(buf, plen, definitionError);
+        plen = addToBufferTCP_p(buf, plen, PSTR("\"}"));
+        return plen;
+    }
 
     boolean managed = false;
     for (int i = 0; p_resource[i].method; i++) {
@@ -100,30 +108,3 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     }
     return plen;
 }
-
-
-
-
-
-
-//
-//
-///**
-// * Add a char * to buf buffer.
-// * @return new position in buf
-// */
-//uint16_t addToBuffer(uint8_t *buf, unsigned long pos, char *value, unsigned int len) {
-//  memcpy(&buf[TCP_CHECKSUM_L_P + 3 + pos], value, len);
-//  return pos + len;
-//}
-//
-///**
-// * Add a char * to buf buffer.
-// * @return new position in buf
-// */
-//uint16_t addToBuffer(uint8_t *buf, unsigned long pos, char *value) {
-//  size_t size = strlen(value);
-//  memcpy(&buf[TCP_CHECKSUM_L_P + 3 + pos], value, size);
-//  return pos + size;
-//}
-//
