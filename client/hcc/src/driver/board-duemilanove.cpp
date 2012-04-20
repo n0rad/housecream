@@ -8,7 +8,6 @@ static char *buildGlobalError_P(const prog_char *progmem_s, int pin) {
 }
 
 char *checPinDescriptions() {
-
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
         int direction = pgm_read_byte(&pinDescriptions[i].direction);
         int type = pgm_read_byte(&pinDescriptions[i].type);

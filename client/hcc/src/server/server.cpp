@@ -1,10 +1,13 @@
 #include "server.h"
 
-t_resource  p_resource[] = {
-  {GET, "/pin/", pinGet},
-  {PUT, "/pin ",  pinPut},
-  {GET, "/ ", boardGet},
-  {PUT, "/ ",  boardPut},
+prog_char resourcePin[] PROGMEM = "/pin/";
+prog_char resourceBoard[] PROGMEM = "/ ";
+
+t_resource  p_resource[] PROGMEM = {
+  {GET, resourcePin, pinGet},
+  {PUT, resourcePin,  pinPut},
+  {GET, resourceBoard, boardGet},
+  {PUT, resourceBoard,  boardPut},
   {0, 0, 0}
 };
 

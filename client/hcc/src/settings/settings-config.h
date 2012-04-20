@@ -3,7 +3,6 @@
 
 #include <avr/pgmspace.h>
 
-#include "../pin/pin-manager.h"
 #include "../../config.h"
 
 #define CONFIG_VERSION "hcc0"
@@ -47,10 +46,14 @@ typedef struct s_boardData {
 #define PIN_NOTIFY_OVER_EQ 1
 #define PIN_NOTIFY_UNDER_EQ 2
 
+#define PIN_NUMBER_OF_NOTIFY 4
+
 typedef struct s_notify {
     char condition;
     uint16_t value;
 } t_notify;
+
+#include "../pin/pin-manager.h"
 
 typedef struct s_pinDescription {
     int8_t direction;     // PIN_INPUT, PIN_OUTPUT, PIN_NOTUSED, PIN_RESERVED
@@ -72,7 +75,7 @@ typedef struct s_pinInfo {
 
 typedef struct s_pinData {
     uint16_t lastValue; // output only
-    t_notify notifies[4];
+    t_notify notifies[PIN_NUMBER_OF_NOTIFY];
 } t_pinData;
 
 ///////////////////////////////////////////////////////////////

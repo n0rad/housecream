@@ -5,6 +5,7 @@
 #include <avr/pgmspace.h>
 #include <avr/eeprom.h>
 
+#include "../hcc.h"
 #include "../pin/pin-manager.h"
 #include "settings-config.h"
 
@@ -20,7 +21,7 @@ void settingsReload(void);
 void getConfigIP(uint8_t ip[4]);
 void getConfigMac(uint8_t ip[6]);
 uint16_t getConfigPort();
-uint8_t *getConfigBoardName_e();
+uint8_t *getConfigBoardName_E();
 char* getConfigNotifyUrl(void);
 
 

@@ -9,7 +9,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, plen, PSTR(HARDWARE));
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"name\":\""));
-    plen = addToBufferTCP_e(buf, plen, getConfigBoardName_e());
+    plen = addToBufferTCP_e(buf, plen, getConfigBoardName_E());
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"description\":\""));
     plen = addToBufferTCP_p(buf, plen, boardDescription.description);
@@ -65,7 +65,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
 //DEBUG_PRINTLN(" ");
 
 char *sampleHandler(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
-    DEBUG_PRINT("HERE>>");
+    DEBUG_p(PSTR("HERE>>"));
     for (int i = 0; i < len; ++i) {
         DEBUG_PRINT(buf[i]);
     }
@@ -85,14 +85,14 @@ static char BOARDPUT_PARAM_SOFTWARE[] PROGMEM = "software";
 static char BOARDPUT_PARAM_MAC[] PROGMEM = "mac";
 
 t_json boardPutElements[] PROGMEM = {
-        {BOARDPUT_PARAM_NUMBEROFPIN, handleUnsetableNumberOfPin},
-        {BOARDPUT_PARAM_HARDWARE, handleUnsetableHardware},
-        {BOARDPUT_PARAM_VERSION, handleUnsetableVersion},
-        {BOARDPUT_PARAM_SOFTWARE, handleUnsetableSoftware},
-        {BOARDPUT_PARAM_MAC, handleUnsetableMac},
+        {BOARDPUT_PARAM_NUMBEROFPIN, setConfigBoardNumberOfPin},
+        {BOARDPUT_PARAM_HARDWARE, setConfigBoardHardware},
+        {BOARDPUT_PARAM_VERSION, setConfigBoardVersion},
+        {BOARDPUT_PARAM_SOFTWARE, setConfigBoardSoftware},
+        {BOARDPUT_PARAM_MAC, setConfigBoardMac},
         {BOARDPUT_PARAM_NAME, setConfigBoardName},
         {BOARDPUT_PARAM_NOTIFYURL, setConfigBoardNotifyUrl},
-        {BOARDPUT_PARAM_DESCRIPTION, handleUnsetableDescription},
+        {BOARDPUT_PARAM_DESCRIPTION, setConfigBoardDescription},
         {BOARDPUT_PARAM_IP, setConfigBoardIP},
         {BOARDPUT_PARAM_PORT, setConfigBoardPort},
         {0, 0}

@@ -7,13 +7,6 @@
 #include "../hcc.h"
 #include "mylibc.h"
 
-static char JSON_OBJECT_START  = '{';
-static char JSON_OBJECT_END  = '}';
-static char JSON_VALUE_SEPARATOR  = ':';
-static char JSON_ELEM_SEPARATOR  = ',';
-static char JSON_STR_WRAPPER  = '"';
-static char JSON_ARRAY_START  = '[';
-static char JSON_ARRAY_END  = ']';
 
 static char JSON_ERROR_NO_OBJECT_START[] PROGMEM = "Cannot find object start";
 static char JSON_ERROR_NO_OBJECT_END[] PROGMEM = "Cannot find object end";
@@ -23,7 +16,7 @@ static char JSON_ERROR_NO_SEPARATOR[] PROGMEM = "Cannot find key-value separator
 
 // notifies : [{notifyValue: 42.4, notifyCondition : "sup_or_equal"}, {notifyValue.3, notifyCondition : "inf_or_equal"}]
 
-typedef char *(*jsonHandleValue)(char *PGMkey, char *val, uint16_t valLen, uint8_t index);
+typedef prog_char *(*jsonHandleValue)(char *PGMkey, char *val, uint16_t valLen, uint8_t index);
 
 typedef struct s_json {
     char *key;
@@ -32,6 +25,6 @@ typedef struct s_json {
     char isArray;
 } t_json;
 
-char *jsonParse(char *buf, t_json *structure);
+prog_char *jsonParse(char *buf, t_json *structure);
 
 #endif

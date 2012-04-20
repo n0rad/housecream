@@ -22,7 +22,7 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-static char *parseKeyValue(char **buffer, t_json *structure) {
+static prog_char *parseKeyValue(char **buffer, t_json *structure) {
     char *buf =  *buffer;
     char *keypos;
     if (buf[0] != '"') { // start of key
@@ -53,7 +53,7 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
                 char *res;
                 int len;
                 if (buf[0] == '"') {
-                    DEBUG_PRINTLN("value with quotes");
+                    DEBUG_p(PSTR("value with quotes"));
                     buf = &buf[1];
                     len = my_strpos(buf, '"');
                     if (len == -1) {
@@ -64,7 +64,7 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
                     DEBUG_PRINTLN(buf[1]); // seems to affect program
                     buf = &buf[len + 1];
                 } else {
-                    DEBUG_PRINTLN("value without quotes");
+                    DEBUG_p(PSTR("value without quotes"));
                     len = findEndOfValue(buf);
                     res = func(keypos, buf, len, 0);
                     buf = &buf[len + 1];
@@ -77,7 +77,7 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
         }
     }
     if (!managed) {
-        DEBUG_PRINT_FULL("unmanaged param")
+        DEBUG_p(PSTR("unmanaged param"));
         buf = &buf[my_strpos(buf, '"') + 1]; // skip key
         buf = skipSpaces(buf);
         if (buf[0] != ':') {
@@ -98,9 +98,9 @@ static char *parseKeyValue(char **buffer, t_json *structure) {
     return 0;
 }
 
-static char *parseObject(char *buf, t_json *structure) {
+static prog_char *parseObject(char *buf, t_json *structure) {
     buf = skipSpaces(buf);
-    if (buf[0] != JSON_OBJECT_START) {
+    if (buf[0] != '{') {
         return JSON_ERROR_NO_OBJECT_START;
     }
     do {
@@ -123,7 +123,7 @@ static char *parseObject(char *buf, t_json *structure) {
 }
 
 
-char *jsonParse(char *buf, t_json *structure) {
+prog_char *jsonParse(char *buf, t_json *structure) {
     return parseObject(buf, structure);
 //    return 0;
 }

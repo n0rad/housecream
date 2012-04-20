@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "hcc.h"
 #include "settings/settings.h"
 
 char *checPinDescriptions();

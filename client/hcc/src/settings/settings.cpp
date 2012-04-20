@@ -1,6 +1,6 @@
 #include "settings.h"
 
-t_pinData pinData;
+//t_pinData pinData;
 t_boardData boardData;
 
 const char PIN_STRING_INPUT[] PROGMEM = "INPUT";
@@ -24,7 +24,7 @@ static void settingsSave() {
 
 void settingsReload() {
     eeprom_read_block((void*)&boardData, (char*) CONFIG_EEPROM_START + sizeof(t_boardInfo), sizeof(boardData));
-    eeprom_read_block((void*)&pinData, (char*) CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
+//    eeprom_read_block((void*)&pinData, (char*) CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
 }
 
 void settingsLoad() {
@@ -49,11 +49,8 @@ void getConfigIP(uint8_t ip[4]) {
 uint16_t getConfigPort() {
    return eeprom_read_word((uint16_t*)(CONFIG_EEPROM_START + CONFIG_BOARD_IP_SIZE));
 }
-uint8_t *getConfigBoardName_e() {
+uint8_t *getConfigBoardName_E() {
     return (uint8_t *) CONFIG_EEPROM_START + CONFIG_BOARD_IP_SIZE + CONFIG_BOARD_PORT_SIZE;
-}
-uint16_t getConfigPinValue(uint8_t pinId) {
-    return pinData.lastValue;
 }
 char* getConfigNotifyUrl(void) {
     return boardData.notifyurl;

@@ -4,7 +4,7 @@ static char NOT_VALID_IP[] PROGMEM = "not valid ip";
 static char NOT_VALID_PORT[] PROGMEM = "not valid port";
 
 
-char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_BOARD_NOTIFY_SIZE) {
         return PSTR("notifyUrl is too long");
     }
@@ -13,7 +13,7 @@ char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t ind
     settingsReload();
     return 0;
 }
-char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_BOARD_NAME_SIZE) {
         return PSTR("name is too long");
     }
@@ -22,7 +22,7 @@ char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     return 0;
 }
 
-char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     char num = 0;
     char point = 0;
     for (uint8_t i = 0; i < len; i++) {
@@ -56,7 +56,7 @@ char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     return 0;
 }
 
-char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     for (uint8_t i = 0; i < len; i++) {
         if (buf[i] < '0' || buf[i] > '9') {
             return NOT_VALID_PORT;
@@ -72,20 +72,21 @@ char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
 
 //////////////
 
+prog_char sprintfHEX[] PROGMEM  = "%02X";
 
-char *handleUnsetableMac(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardMac(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (len != 17) {
         return PSTR("mac cannot be set");
     }
     char strMac[17];
     uint8_t byteMac[6];
     getConfigMac(byteMac);
-    sprintf(strMac, "%02X", byteMac[0]);
-    sprintf(&strMac[3], "%02X", byteMac[1]);
-    sprintf(&strMac[6], "%02X", byteMac[2]);
-    sprintf(&strMac[9], "%02X", byteMac[3]);
-    sprintf(&strMac[12], "%02X", byteMac[4]);
-    sprintf(&strMac[15], "%02X", byteMac[5]);
+    sprintf_P(strMac, sprintfHEX, byteMac[0]);
+    sprintf_P(&strMac[3], sprintfHEX, byteMac[1]);
+    sprintf_P(&strMac[6], sprintfHEX, byteMac[2]);
+    sprintf_P(&strMac[9], sprintfHEX, byteMac[3]);
+    sprintf_P(&strMac[12], sprintfHEX, byteMac[4]);
+    sprintf_P(&strMac[15], sprintfHEX, byteMac[5]);
     strMac[2] = ':';
     strMac[5] = ':';
     strMac[8] = ':';
@@ -97,31 +98,31 @@ char *handleUnsetableMac(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     return PSTR("mac cannot be set");
 }
 
-char *handleUnsetableDescription(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardDescription(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, boardDescription.description, len)) {
         return 0;
     }
     return PSTR("description cannot be set");
 }
-char *handleUnsetableSoftware(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
-    if (!strncmp(buf, "HouseCream Client", len)) {
+prog_char *setConfigBoardSoftware(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+    if (!strncmp_P(buf, PSTR("HouseCream Client"), len)) {
         return 0;
     }
     return PSTR("software cannot be set");
 }
-char *handleUnsetableHardware(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardHardware(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, PSTR(HARDWARE), len)) {
         return 0;
     }
     return PSTR("hardware cannot be set");
 }
-char *handleUnsetableVersion(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardVersion(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, hcc_version, len)) {
         return 0;
     }
     return PSTR("version cannot be set");
 }
-char *handleUnsetableNumberOfPin(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardNumberOfPin(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     char pins[3] = {0, 0, 0};
     itoa(NUMBER_OF_PINS, pins, 10);
     if (!strncmp(pins, buf, len)) {

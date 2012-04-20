@@ -47,7 +47,6 @@ void networkSetup() {
     uint8_t ip[4];
     getConfigIP(ip);
     port = getConfigPort();
-    DEBUG_PRINTLN(port);
     //init the ethernet/ip layer:
     es.ES_init_ip_arp_udp_tcp((uint8_t *) mac, (uint8_t *)ip, port);
 }
@@ -76,8 +75,6 @@ void networkManage() {
         return;
       }
 
-      DEBUG_PRINT("receive ");
-      DEBUG_PRINTLN(port);
       // tcp port www start, compare only the lower byte
       if (buf[IP_PROTO_P] == IP_PROTO_TCP_V && buf[TCP_DST_PORT_H_P] == 0 && buf[TCP_DST_PORT_L_P] == port) {
         if (buf[TCP_FLAGS_P] & TCP_FLAGS_SYN_V) {

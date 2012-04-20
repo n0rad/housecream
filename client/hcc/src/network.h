@@ -3,6 +3,7 @@
 
 #include <avr/pgmspace.h>
 
+#include "hcc.h"
 #include "server/server.h"
 #include "settings/settings.h"
 

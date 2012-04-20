@@ -8,9 +8,9 @@ uint16_t defaultPinRead(uint8_t pinId) {
     uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
     uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
     if (direction == PIN_INPUT) {
-     //   return pinReadValue(pinId, type);
+        return pinReadValue(pinId, type);
     } else if (direction == PIN_OUTPUT) {
-      //  return getConfigPinValue(pinId);
+        return getConfigPinValue(pinId);
     }
     return 0;
 }
@@ -19,18 +19,20 @@ void defaultPinWrite(uint8_t pinId, uint16_t value) {
 
 }
 
-
 void pinCheckChange() {
+    DEBUG_p(PSTR("memory "));
+    DEBUG_PRINTLN(getFreeMemory());
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
-        uint8_t type = pgm_read_byte(&pinDescriptions[i].type);
-        if (type == PIN_INPUT) {
-//            uint16_t oldValue = conf
+        int direction = pgm_read_byte(&pinDescriptions[i].direction);
+        if (direction == PIN_INPUT) {
+            uint16_t oldValue = getConfigPinValue(i);
+            t_notify *notify = getConfigPinNotify(i);
             PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
             uint16_t pinValue = read(i);
+            if (0) {
+                clientNotify(i, notify[0]);
+            }
         }
-        // get value
-        // compare with previous value
-        // if going over notify cond notify
     }
 }
 

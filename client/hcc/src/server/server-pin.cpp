@@ -9,22 +9,22 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen) {
     char request[15] = { 0 };
 
     //sscanf will always return 0 or 2 because it read HTTP/1.1 when there is nothing after the pinId
-    int found = sscanf((char *) &buf[dat_p + 5], "%d%s", &pinId, request);
+    int found = sscanf_P((char *) &buf[dat_p + 5], PSTR("%d%s"), &pinId, request);
     if (found != 0) {
         if (pinId < 0 || pinId > NUMBER_OF_PINS - 1) {
             plen = addToBufferTCP_p(buf, 0, HEADER_400);
             plen = addToBufferTCP_p(buf, plen, PSTR("{\"message\":\"PinId overflow\"}"));
             return plen;
         }
-        if (strncmp("/value", request, 5) == 0) {
+        if (strncmp_P(request, PSTR("/value"), 5) == 0) {
             plen = addToBufferTCP_p(buf, 0, HEADER_200);
 //            plen = addToBufferTCP(buf, plen, getPinValue(pinId));
             return plen;
         } else if ((request[0] == '/' && !request[1])
-                || strncmp("HTTP/", request, 5) == 0) {
+                || strncmp_P(request, PSTR("HTTP/"), 5) == 0) {
             plen = pinGetDescription(buf, pinId);
             return plen;
-        } else if (strncmp("/info", request, 4) == 0) {
+        } else if (strncmp_P(request, PSTR("/info"), 5) == 0) {
             plen = addToBufferTCP_p(buf, 0, HEADER_200);
             plen = addToBufferTCP_p(buf, plen, PSTR("{info}"));
             return plen;
