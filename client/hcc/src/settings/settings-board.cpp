@@ -70,10 +70,6 @@ prog_char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t ind
 }
 
 
-//////////////
-
-prog_char sprintfHEX[] PROGMEM  = "%02X";
-
 prog_char *setConfigBoardMac(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (len != 17) {
         return PSTR("mac cannot be set");
@@ -81,12 +77,12 @@ prog_char *setConfigBoardMac(char* PGMkey, char *buf, uint16_t len, uint8_t inde
     char strMac[17];
     uint8_t byteMac[6];
     getConfigMac(byteMac);
-    sprintf_P(strMac, sprintfHEX, byteMac[0]);
-    sprintf_P(&strMac[3], sprintfHEX, byteMac[1]);
-    sprintf_P(&strMac[6], sprintfHEX, byteMac[2]);
-    sprintf_P(&strMac[9], sprintfHEX, byteMac[3]);
-    sprintf_P(&strMac[12], sprintfHEX, byteMac[4]);
-    sprintf_P(&strMac[15], sprintfHEX, byteMac[5]);
+    sprintf_P(strMac, sprintfpHEX, byteMac[0]);
+    sprintf_P(&strMac[3], sprintfpHEX, byteMac[1]);
+    sprintf_P(&strMac[6], sprintfpHEX, byteMac[2]);
+    sprintf_P(&strMac[9], sprintfpHEX, byteMac[3]);
+    sprintf_P(&strMac[12], sprintfpHEX, byteMac[4]);
+    sprintf_P(&strMac[15], sprintfpHEX, byteMac[5]);
     strMac[2] = ':';
     strMac[5] = ':';
     strMac[8] = ':';

@@ -3,16 +3,8 @@
 //t_pinData pinData;
 t_boardData boardData;
 
-const char PIN_STRING_INPUT[] PROGMEM = "INPUT";
-const char PIN_STRING_OUTPUT[] PROGMEM = "OUTPUT";
-const char PIN_STRING_NOTUSED[] PROGMEM = "NOTUSED";
-const char PIN_STRING_RESERVED[] PROGMEM = "RESERVED";
-
-const char *pinDirection[] = { PIN_STRING_INPUT, PIN_STRING_OUTPUT, PIN_STRING_NOTUSED, PIN_STRING_RESERVED};
-
-const char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
-const char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";
-const char *pinType[] = { PIN_TYPE_ANALOG, PIN_TYPE_DIGITAL};
+const prog_char *pinDirection[] PROGMEM = { PIN_STRING_INPUT, PIN_STRING_OUTPUT, PIN_STRING_NOTUSED, PIN_STRING_RESERVED};
+const prog_char *pinType[] PROGMEM = { PIN_TYPE_ANALOG, PIN_TYPE_DIGITAL};
 
 
 static void settingsSave() {

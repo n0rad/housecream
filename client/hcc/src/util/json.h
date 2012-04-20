@@ -19,10 +19,10 @@ static char JSON_ERROR_NO_SEPARATOR[] PROGMEM = "Cannot find key-value separator
 typedef prog_char *(*jsonHandleValue)(char *PGMkey, char *val, uint16_t valLen, uint8_t index);
 
 typedef struct s_json {
-    char *key;
+    const prog_char *key;
     jsonHandleValue handleValue; // handle a value
     s_json *valueStruct;                           // handle an object
-    char isArray;
+    uint8_t isArray;
 } t_json;
 
 prog_char *jsonParse(char *buf, t_json *structure);

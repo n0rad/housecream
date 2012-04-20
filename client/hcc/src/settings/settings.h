@@ -10,6 +10,14 @@
 #include "settings-config.h"
 
 
+const prog_char PIN_STRING_INPUT[] PROGMEM = "INPUT";
+const prog_char PIN_STRING_OUTPUT[] PROGMEM = "OUTPUT";
+const prog_char PIN_STRING_NOTUSED[] PROGMEM = "NOTUSED";
+const prog_char PIN_STRING_RESERVED[] PROGMEM = "RESERVED";
+
+const prog_char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
+const prog_char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";
+
 /** description stay in program memory and cannot change */
 /** infos are stored in eeprom and can change */
 /** data are stored in eeprom and keep in ram for fast access */

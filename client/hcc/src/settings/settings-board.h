@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "../util/buffer.h"
 #include "settings.h"
 #include "../util/mylibc.h"
 
