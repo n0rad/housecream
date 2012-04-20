@@ -24,13 +24,13 @@ static char *skipSpaces(char *buf) {
 
 static prog_char *parseKeyValue(char **buffer, t_json *structure) {
     char *buf =  *buffer;
-    char *keypos;
+    prog_char *keypos;
     if (buf[0] != '"') { // start of key
         return JSON_ERROR_NO_KEY_START;
     }
     buf = &buf[1]; // enter inside key
     boolean managed = false;
-    for (uint8_t i = 0; (keypos = (char*) pgm_read_word(&structure[i].key)); i++) {
+    for (uint8_t i = 0; (keypos = (prog_char *) pgm_read_word(&structure[i].key)); i++) {
         int keylen = strlen_P(keypos);
         if (strncmp_P(buf, keypos, keylen) == 0) {
             if (buf[keylen] != '"') {

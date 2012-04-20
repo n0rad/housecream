@@ -38,10 +38,12 @@ uint16_t addToBufferTCP_e(char *buf, uint16_t pos, uint8_t *eeprom_s);
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen);
 
+typedef uint16_t (*ResourceFunc)(char *buf, uint16_t dat_p, uint16_t plen);
+
 struct s_resource {
   const prog_char *method;
   const prog_char *query;
-  uint16_t (*func)(char *buf, uint16_t dat_p, uint16_t plen);
+  ResourceFunc resourceFunc;
 } const resources[] PROGMEM = {
   {GET, RESOURCE_PIN, pinGet},
   {PUT, RESOURCE_PIN,  pinPut},

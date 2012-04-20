@@ -13,7 +13,7 @@ uint16_t addToBufferTCPHex(char *buf, uint16_t pos, uint16_t val) {
 }
 
 uint16_t addToBufferTCP(char *buf, uint16_t pos, char val) {
-    buf[TCP_CHECKSUM_L_P + 3 + pos++] = buf[0];
+    buf[TCP_CHECKSUM_L_P + 3 + pos++] = val;
     return pos;
 }
 

@@ -5,7 +5,7 @@
 
 #include "../../config.h"
 
-#define CONFIG_VERSION "hcc0"
+#define CONFIG_VERSION "hcc1"
 
 ///////////////////////////////////////////////////////////////
 // BOARD

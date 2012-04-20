@@ -1,9 +1,12 @@
 #include "server.h"
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
-    DEBUG_PRINT(PSTR("Available memory : "));
-    DEBUG_PRINTLN(availableMemory());
-    DEBUG_PRINT(PSTR("DATA LEN : "));
+        DEBUG_p(PSTR("memory "));
+        DEBUG_PRINTLN(getFreeMemory());
+//    DEBUG_PRINT(PSTR("Available memory : "));
+//    DEBUG_PRINTLN(availableMemory());
+
+    DEBUG_p(PSTR("DATA LEN : "));
     DEBUG_PRINTLN(dataLen);
     DEBUG_PRINTLN(&buf[dataPointer]);
 
@@ -31,13 +34,17 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     }
 
     uint8_t managed = false;
-    for (int i = 0; resources[i].method; i++) {
-        int reslen = strlen(resources[i].method);
-        if (strncmp(resources[i].method, (char *) & (buf[dataPointer]), reslen) == 0
-                && strncmp(resources[i].query, (char *) & (buf[dataPointer + reslen]), strlen(resources[i].query)) == 0) {
-          plen = resources[i].func((char*)buf, dataPointer + reslen, dataLen);
-          managed = true;
-          break;
+    prog_char *methodPos;
+    for (int i = 0; (methodPos = (prog_char *) pgm_read_word(&resources[i].method)); i++) {
+        uint16_t reslen = strlen_P(methodPos);
+        uint16_t querylen = strlen_P((prog_char *) pgm_read_word(&resources[i].query));
+        prog_char *queryPos = (prog_char *) pgm_read_word(&resources[i].query);
+        if (strncmp_P((char *) &(buf[dataPointer]), methodPos, reslen) == 0
+                && strncmp_P((char *) & (buf[dataPointer + reslen]), queryPos, querylen) == 0) {
+            ResourceFunc func = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
+            plen = func((char*)buf, dataPointer + reslen, dataLen);
+            managed = true;
+            break;
         }
     }
     if (!managed) {

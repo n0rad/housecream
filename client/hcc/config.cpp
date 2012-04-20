@@ -20,7 +20,7 @@ const t_pinDescription pinDescriptions[NUMBER_OF_PINS] PROGMEM = {
 /*11*/  {PIN_RESERVED, 0, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*12*/  {PIN_RESERVED, 0, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*13*/  {PIN_RESERVED, 0, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
-/*14*/  {PIN_OUTPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
+/*14*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*15*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*16*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*17*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
@@ -33,7 +33,7 @@ const t_pinDescription pinDescriptions[NUMBER_OF_PINS] PROGMEM = {
 /** A copy of this struct is saved in EEPROM and can be modified through the rest API */
 const t_config defaultConfig PROGMEM = {
     {
-        {192, 168, 12, 3},                            // ip
+        {192, 168, 42, 245},                            // ip
         80,                                             // port
         "window1 controller",                           // name
     },

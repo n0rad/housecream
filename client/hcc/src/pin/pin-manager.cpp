@@ -20,8 +20,6 @@ void defaultPinWrite(uint8_t pinId, uint16_t value) {
 }
 
 void pinCheckChange() {
-    DEBUG_p(PSTR("memory "));
-    DEBUG_PRINTLN(getFreeMemory());
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
         int direction = pgm_read_byte(&pinDescriptions[i].direction);
         if (direction == PIN_INPUT) {
