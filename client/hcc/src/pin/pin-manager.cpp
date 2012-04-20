@@ -1,4 +1,4 @@
-#include "../hcc.h"
+#include "pin-manager.h"
 
 float noConversion(float pinValue) {
     return pinValue;
@@ -21,11 +21,17 @@ void defaultPinWrite(uint8_t pinId, uint16_t value) {
 
 
 void pinCheckChange() {
-    // loop on pins
-    // check if its in input
-    // get value
-    // compare with previous value
-    // if going over notify cond notify
+    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
+        uint8_t type = pgm_read_byte(&pinDescriptions[i].type);
+        if (type == PIN_INPUT) {
+//            uint16_t oldValue = conf
+            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
+            uint16_t pinValue = read(i);
+        }
+        // get value
+        // compare with previous value
+        // if going over notify cond notify
+    }
 }
 
 

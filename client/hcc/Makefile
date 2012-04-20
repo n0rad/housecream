@@ -37,18 +37,19 @@ ARDUINO = lib/arduino
 
 # HCC
 HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
-		src/util/simple_free.cpp config.cpp src/config-manager.cpp \
-		src/net-server/net-server.cpp src/pin/pin-manager.cpp \
-		src/net-server/server-pin.cpp src/net-server/server-board.cpp \
+		src/util/availableMemory.cpp config.cpp src/settings/settings.cpp \
+		src/settings/settings-board.cpp \
+		src/server/server.cpp src/pin/pin-manager.cpp \
+		src/server/server-pin.cpp src/server/server-board.cpp \
 		src/util/json.cpp src/util/mylibc.cpp
 
 # BOARD
-HCC_CXXSRC += src/driver/impl/board-duemilanove.cpp 
+HCC_CXXSRC += src/driver/board-duemilanove.cpp 
 
 # ENC28j60 ETHERNET SHIELD
 ETHERNET_SHIELD_PATH = lib/ethernetShield-enc28j60
 SRC += $(ETHERNET_SHIELD_PATH)/enc28j60.c $(ETHERNET_SHIELD_PATH)/ip_arp_udp_tcp.c  
-HCC_CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp src/driver/impl/network-enc28j60.cpp
+HCC_CXXSRC += $(ETHERNET_SHIELD_PATH)/etherShield.cpp src/driver/network-enc28j60.cpp
 
 
 
@@ -71,6 +72,7 @@ CXXDEFS = -DF_CPU=$(F_CPU)
 # Place -I options here
 CINCS = -I$(ARDUINO)
 CXXINCS = -I$(ARDUINO)
+
 
 # Compiler flag to set the C Standard level.
 # c89   - "ANSI" C

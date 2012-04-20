@@ -2,7 +2,9 @@
 #define NETWORK_H
 
 #include <avr/pgmspace.h>
-#include "../net-server/net-server.h"
+
+#include "server/server.h"
+#include "settings/settings.h"
 
 void networkSetup(void);
 void networkManage(void);

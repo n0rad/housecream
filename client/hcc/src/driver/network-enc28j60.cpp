@@ -1,5 +1,5 @@
-#include "../../hcc.h"
-#include "../../../lib/ethernetShield-enc28j60/etherShield.h"
+#include "../network.h"
+#include "../../lib/ethernetShield-enc28j60/etherShield.h"
 
 #define BUFFER_SIZE 1000
 uint8_t buf[BUFFER_SIZE + 1];

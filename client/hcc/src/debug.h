@@ -1,6 +1,10 @@
 #ifndef DEBUGUTILS_H
 #define DEBUGUTILS_H
 
+#include "Arduino.h"
+
+void DEBUG_p(const prog_char *progmem_s);
+
 #ifdef DEBUG
     #include "hcc.h"
 

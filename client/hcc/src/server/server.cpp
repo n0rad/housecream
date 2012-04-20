@@ -1,7 +1,4 @@
-#include "net-server.h"
-#include "../hcc.h"
-#include <avr/pgmspace.h>
-#include <avr/eeprom.h>
+#include "server.h"
 
 t_resource  p_resource[] = {
   {GET, "/pin/", pinGet},
@@ -43,9 +40,9 @@ uint16_t addToBufferTCP(char *buf, uint16_t pos, char *mem_s) {
     return pos;
 }
 
-uint16_t addToBufferTCP_p(char *buf, uint16_t pos, const prog_char *progmem_s) {
-    char c;
-    while ((c = pgm_read_byte(progmem_s++))) {
+uint16_t addToBufferTCP_p(char *buf, uint16_t pos, const prog_char *progmem) {
+    unsigned char c;
+    while ((c = pgm_read_byte(progmem++))) {
             buf[TCP_CHECKSUM_L_P + 3 + pos] = c;
             pos++;
     }
@@ -63,9 +60,9 @@ uint16_t addToBufferTCP_e(char *buf, uint16_t pos, uint8_t *eeprom_s) {
 
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
-    DEBUG_PRINT(F("Available memory : "));
+    DEBUG_PRINT(PSTR("Available memory : "));
     DEBUG_PRINTLN(availableMemory());
-    DEBUG_PRINT(F("DATA LEN : "));
+    DEBUG_PRINT(PSTR("DATA LEN : "));
     DEBUG_PRINTLN(dataLen);
     DEBUG_PRINTLN(&buf[dataPointer]);
 
@@ -92,7 +89,7 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         return plen;
     }
 
-    boolean managed = false;
+    uint8_t managed = false;
     for (int i = 0; p_resource[i].method; i++) {
         int reslen = strlen(p_resource[i].method);
         if (strncmp(p_resource[i].method, (char *) & (buf[dataPointer]), reslen) == 0

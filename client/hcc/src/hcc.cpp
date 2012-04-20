@@ -1,9 +1,12 @@
 #include "hcc.h"
+#include "../lib/arduino/Arduino.h" // for serial
+#include "board.h"
+#include "network.h"
+#include "settings/settings.h"
 
 char *definitionError;
 char *criticalProblem_p;
-boolean needReboot = false;
-
+uint8_t needReboot = false;
 
 
 void DEBUG_p(const prog_char *progmem_s) {
@@ -25,7 +28,7 @@ void hccInit(void) {
 
 void hccSetup(void) {
     definitionError = checPinDescriptions();
-    configLoad();
+    settingsLoad();
     networkSetup();
 }
 

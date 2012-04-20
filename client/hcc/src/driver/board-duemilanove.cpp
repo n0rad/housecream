@@ -1,8 +1,6 @@
-#include "../../hcc.h"
-
+#include "../board.h"
 
 static char *buildGlobalError_P(const prog_char *progmem_s, int pin) {
-    va_list argp;
     char *ptr = (char *) malloc(100 * sizeof(char));
     memset(ptr, 0, 100 * sizeof(char));
     sprintf_P(ptr, progmem_s, pin);
@@ -35,7 +33,7 @@ char *checPinDescriptions() {
         }
 
         // check converter
-        conversion conversionFunc = (conversion) pgm_read_word(&(pinDescriptions[i].convertValue));
+        PinValueConversion conversionFunc = (PinValueConversion) pgm_read_word(&(pinDescriptions[i].convertValue));
         if (conversionFunc == 0) {
             return buildGlobalError_P(PSTR("FATAL ERROR : conversion func not found on pin%d. Forgot to set NUMBER_OF_PIN ?"), i);
         }

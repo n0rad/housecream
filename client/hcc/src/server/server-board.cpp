@@ -1,7 +1,4 @@
-#include "../hcc.h"
-#include <string.h>
-
-extern char hcc_version[];
+#include "server-board.h"
 
 uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_p(buf, 0, HEADER_200);
@@ -15,7 +12,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_e(buf, plen, getConfigBoardName_e());
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"description\":\""));
-    plen = addToBufferTCP_p(buf, plen, boardDescription.technicalDescription);
+    plen = addToBufferTCP_p(buf, plen, boardDescription.description);
 
     plen = addToBufferTCP_p(buf, plen, PSTR("\",\"notifyUrl\":\""));
     plen = addToBufferTCP(buf, plen, getConfigNotifyUrl());

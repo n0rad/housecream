@@ -1,4 +1,4 @@
-#include "../hcc.h"
+#include "server-pin.h"
 
 uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen) {
     return 0;

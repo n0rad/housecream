@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 
+#include "../hcc.h"
+#include "mylibc.h"
+
 static char JSON_OBJECT_START  = '{';
 static char JSON_OBJECT_END  = '}';
 static char JSON_VALUE_SEPARATOR  = ':';

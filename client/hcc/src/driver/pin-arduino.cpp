@@ -1,4 +1,4 @@
-#include "../../hcc.h"
+#include "../pin.h"
 
 uint16_t pinReadValue(uint8_t pin, uint8_t type) {
     if (type == PIN_ANALOG) {

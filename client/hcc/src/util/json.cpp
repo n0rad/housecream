@@ -1,5 +1,4 @@
 #include "json.h"
-#include "../hcc.h"
 
 // notifies : [{notifyValue: 42.4, notifyCondition : "sup_or_equal"}, {notifyValue.3, notifyCondition : "inf_or_equal"}]
 

@@ -1,4 +1,4 @@
-#include "src/config-manager.h"
+#include "src/settings/settings-config.h"
 
 const t_boardDescription boardDescription PROGMEM = {
     {0x54, 0x55, 0x58, 0x10, 0x00, 0xF5},           // mac
@@ -33,7 +33,7 @@ const t_pinDescription pinDescriptions[NUMBER_OF_PINS] PROGMEM = {
 /** A copy of this struct is saved in EEPROM and can be modified through the rest API */
 const t_config defaultConfig PROGMEM = {
     {
-        {192, 168, 42, 245},                            // ip
+        {192, 168, 12, 3},                            // ip
         80,                                             // port
         "window1 controller",                           // name
     },

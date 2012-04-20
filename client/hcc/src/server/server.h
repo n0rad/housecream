@@ -1,5 +1,8 @@
-#ifndef NET_SERVER_H_
-#define NET_SERVER_H_
+#ifndef SERVER_H_
+#define SERVER_H_
+
+#include <avr/eeprom.h>
+#include <string.h>
 
 #include "../hcc.h"
 #include "../util/json.h"
@@ -41,4 +44,4 @@ typedef struct s_resource {
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen);
 
-#endif /* NET_SERVER_H_ */
+#endif
