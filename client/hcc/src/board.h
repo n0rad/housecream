@@ -8,6 +8,6 @@
 #include "hcc.h"
 #include "settings/settings.h"
 
-char *checPinDescriptions();
+char *boardCheckConfig();
 
 #endif

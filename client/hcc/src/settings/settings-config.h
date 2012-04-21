@@ -3,6 +3,9 @@
 
 #include <avr/pgmspace.h>
 
+char *checkConfig();
+char *buildGlobalError_P(const prog_char *progmem_s, int pin);
+
 #include "../../config.h"
 
 #define CONFIG_VERSION "hcc1"
@@ -35,6 +38,7 @@ typedef struct s_boardData {
 ///////////////////////////////////////////////////////////////
 // PIN
 ///////////////////////////////////////////////////////////////
+
 #define PIN_INPUT 1
 #define PIN_OUTPUT 2
 #define PIN_NOTUSED 3
@@ -43,6 +47,7 @@ typedef struct s_boardData {
 #define PIN_ANALOG 1
 #define PIN_DIGITAL 2
 
+#define PIN_NOTIFY_NOT_SET 0
 #define PIN_NOTIFY_OVER_EQ 1
 #define PIN_NOTIFY_UNDER_EQ 2
 

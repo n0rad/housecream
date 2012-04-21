@@ -1,6 +1,5 @@
 #include "hcc.h"
 #include "../lib/arduino/Arduino.h" // for serial
-#include "board.h"
 #include "network.h"
 #include "settings/settings.h"
 
@@ -27,7 +26,7 @@ void hccInit(void) {
 }
 
 void hccSetup(void) {
-    definitionError = checPinDescriptions();
+    definitionError = checkConfig();
     settingsLoad();
     networkSetup();
 }

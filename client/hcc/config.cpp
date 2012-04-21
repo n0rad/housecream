@@ -62,8 +62,8 @@ const t_config defaultConfig PROGMEM = {
 /*18*/  "pin16",
 /*19*/  "pin16",
     }, {
-/* 0*/  42, {{PIN_NOTIFY_OVER_EQ, 44}, {PIN_NOTIFY_OVER_EQ, 46}, {PIN_NOTIFY_OVER_EQ, 48}, {PIN_NOTIFY_OVER_EQ, 50}}, // pin notify Condition
-/* 1*/  51, {{PIN_NOTIFY_OVER_EQ, 53}, {PIN_NOTIFY_OVER_EQ, 55}, {PIN_NOTIFY_OVER_EQ, 57}, {PIN_NOTIFY_OVER_EQ, 59}},
+/* 0*/  42, {{PIN_NOTIFY_OVER_EQ, 44}, {PIN_NOTIFY_OVER_EQ, 46}, {PIN_NOTIFY_NOT_SET, 48}, {PIN_NOTIFY_NOT_SET, 50}}, // pin notify Condition
+/* 1*/  51, {{PIN_NOTIFY_OVER_EQ, 53}, {PIN_NOTIFY_OVER_EQ, 55}, {PIN_NOTIFY_NOT_SET, 57}, {PIN_NOTIFY_OVER_EQ, 59}},
 /* 2*/  60, 61, 62, 63, 64, 65, 66, 67, 68,
 ///* 3*/  {45, {{PIN_NOTIFY_OVER_EQ, 1}, {PIN_NOTIFY_UNDER_EQ, 1}, {0, 0}, {0, 0}}},
 ///* 4*/  46, {PIN_NOTIFY_OVER_EQ, 1},
