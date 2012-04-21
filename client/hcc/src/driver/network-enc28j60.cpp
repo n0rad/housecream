@@ -191,6 +191,9 @@ void networkManage2() {
 
 
 void networkManage() {
+    if (client_state != IDLE) {
+        return;
+    }
     uint16_t plen, dat_p;
     plen = es.ES_enc28j60PacketReceive(BUFFER_SIZE, buf);
     /*plen will not equal zero if there is a valid packet (without crc error) */
