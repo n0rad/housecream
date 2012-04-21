@@ -17,7 +17,8 @@ typedef void (*PinWrite)(uint8_t pinId, uint16_t value);
 float noConversion(float pinValue);
 uint16_t defaultPinRead(uint8_t pinId);
 void defaultPinWrite(uint8_t pinId, uint16_t value);
-
+float getPinValue(uint8_t pinId);
+void initPin();
 
 
 

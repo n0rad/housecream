@@ -9,7 +9,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
     plen = addToBufferTCP_P(buf, plen, PSTR(HARDWARE));
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"name\":\""));
-    plen = addToBufferTCP_e(buf, plen, getConfigBoardName_E());
+    plen = addToBufferTCP_E(buf, plen, getConfigBoardName_E());
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
     plen = addToBufferTCP_P(buf, plen, boardDescription.description);
@@ -64,5 +64,20 @@ uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen) {
     } else {
         plen = addToBufferTCP_P(buf, 0, HEADER_200);
     }
+    return plen;
+}
+
+uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen) {
+    extern uint8_t needReboot;
+    needReboot = true;
+    plen = addToBufferTCP_P(buf, 0, HEADER_200);
+    return plen;
+}
+
+uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen) {
+    settingsSave();
+    extern uint8_t needReboot;
+    needReboot = true;
+    plen = addToBufferTCP_P(buf, 0, HEADER_200);
     return plen;
 }

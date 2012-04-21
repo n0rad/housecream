@@ -19,21 +19,31 @@ void defaultPinWrite(uint8_t pinId, uint16_t value) {
 
 }
 
+
+float getPinValue(uint8_t pinId) {
+    PinRead read = (PinRead) pgm_read_word(&pinDescriptions[pinId].read);
+    PinValueConversion convert = (PinValueConversion) pgm_read_word(&pinDescriptions[pinId].convertValue);
+    return convert(read(pinId));
+}
+
 void pinCheckChange() {
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
         int direction = pgm_read_byte(&pinDescriptions[i].direction);
         if (direction == PIN_INPUT) {
-            uint16_t oldValue = getConfigPinValue(i);
-            t_notify *notify = getConfigPinNotify(i);
-            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-            uint16_t pinValue = read(i);
+//            uint16_t oldValue = getConfigPinValue(i);
+//            t_notify *notify = getConfigPinNotify(i);
+//            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
+//            uint16_t pinValue = read(i);
             if (0) {
-                clientNotify(i, notify[0]);
+//                clientNotify(i, notify[0]);
             }
         }
     }
 }
 
+void pinInit() {
+
+}
 
 
 

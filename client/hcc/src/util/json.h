@@ -25,6 +25,6 @@ typedef struct s_json {
     uint8_t isArray;
 } t_json;
 
-prog_char *jsonParse(char *buf, t_json *structure);
+prog_char *jsonParse(char *buf, const t_json *structure);
 
 #endif

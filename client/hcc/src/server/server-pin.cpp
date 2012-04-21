@@ -1,5 +1,67 @@
 #include "server-pin.h"
 
+
+
+static uint16_t pinGetDescription(char *buf, uint8_t pinId) {
+    uint16_t plen;
+
+    plen = addToBufferTCP_P(buf, 0, HEADER_200);
+    plen = addToBufferTCP_P(buf, plen, PSTR("{\"id\":"));
+    plen = addToBufferTCP(buf, plen, (uint16_t) pinId);
+
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"name\":\""));
+    plen = addToBufferTCP_E(buf, plen, getConfigPinName_E(pinId));
+
+    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
+    plen = addToBufferTCP_P(buf, plen, (const prog_char *)&pinDescriptions[pinId].description);
+
+    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
+    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"direction\":\""));
+    plen = addToBufferTCP_P(buf, plen, (const prog_char *) pgm_read_byte(&pinDirection[direction]));
+
+    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
+    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"type\":\""));
+    plen = addToBufferTCP_P(buf, plen, (const prog_char *) pgm_read_byte(&pinType[type]));
+
+    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"valueMin\":"));
+    float minValue;
+    memcpy_P(&minValue, &pinDescriptions[pinId].valueMin, sizeof(float));
+    plen = addToBufferTCP(buf, plen, minValue);
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"valueMax\":"));
+    float maxValue;
+    memcpy_P(&maxValue, &pinDescriptions[pinId].valueMax, sizeof(float));
+    plen = addToBufferTCP(buf, plen, maxValue);
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"startValue\":"));
+    plen = addToBufferTCP(buf, plen, getConfigPinValue(pinId));
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"notifies\":["));
+    for (uint8_t i = 0; i < PIN_NUMBER_OF_NOTIFY; i++) {
+        if (i) {
+            plen = addToBufferTCP_P(buf, plen, PSTR(","));
+        }
+        t_notify notify;
+        getConfigPinNotify(pinId, i, &notify);
+        plen = addToBufferTCP_P(buf, plen, PSTR("{\"notifyCondition\":\""));
+        plen = addToBufferTCP(buf, plen, (uint16_t)notify.condition);
+
+        plen = addToBufferTCP_P(buf, plen, PSTR("\",\"notifyValue\":\""));
+        plen = addToBufferTCP(buf, plen, notify.value);
+        plen = addToBufferTCP_P(buf, plen, PSTR("\"}"));
+    }
+    plen = addToBufferTCP_P(buf, plen, PSTR("]"));
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
+    plen = addToBufferTCP(buf, plen, getPinValue(pinId));
+
+
+    plen = addToBufferTCP_P(buf, plen, PSTR("}"));
+    return plen;
+}
+
+
 uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen) {
     return 0;
 }
@@ -18,15 +80,11 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen) {
         }
         if (strncmp_P(request, PSTR("/value"), 5) == 0) {
             plen = addToBufferTCP_P(buf, 0, HEADER_200);
-//            plen = addToBufferTCP(buf, plen, getPinValue(pinId));
+            plen = addToBufferTCP(buf, plen, getPinValue(pinId));
             return plen;
         } else if ((request[0] == '/' && !request[1])
                 || strncmp_P(request, PSTR("HTTP/"), 5) == 0) {
             plen = pinGetDescription(buf, pinId);
-            return plen;
-        } else if (strncmp_P(request, PSTR("/info"), 5) == 0) {
-            plen = addToBufferTCP_P(buf, 0, HEADER_200);
-            plen = addToBufferTCP_P(buf, plen, PSTR("{info}"));
             return plen;
         } else {
             plen = addToBufferTCP_P(buf, 0, HEADER_404);
@@ -41,31 +99,4 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen) {
     return plen;
 }
 
-uint16_t pinGetDescription(char *buf, uint8_t pinId) {
-    uint16_t plen;
 
-    plen = addToBufferTCP_P(buf, 0, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("{\"description\":\""));
-    plen = addToBufferTCP_P(buf, plen, (const prog_char *)&pinDescriptions[pinId].description);
-
-    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"direction\":\""));
-    plen = addToBufferTCP_P(buf, plen, pinDirection[direction]);
-
-    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"type\":\""));
-    plen = addToBufferTCP_P(buf, plen, pinType[type]);
-
-//    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"valueMin\":\""));
-//    plen = addToBufferTCP_p(buf, plen, type ? PSTR("0") : PSTR("0"));
-//
-//    plen = addToBufferTCP_p(buf, plen, PSTR("\",\"valueMax\":\""));
-//    plen = addToBufferTCP_p(buf, plen, type ? PSTR("1") : PSTR("1"));
-
-//
-//  plen = addToBuffer(buf, plen, "\",\"valueStep\":\"");
-//  plen = addToBuffer(buf, plen, current.valueStep);
-
-    plen = addToBufferTCP_P(buf, plen, PSTR("\"}"));
-    return plen;
-}

@@ -35,10 +35,10 @@ typedef struct s_boardData {
 ///////////////////////////////////////////////////////////////
 // PIN
 ///////////////////////////////////////////////////////////////
-#define PIN_INPUT 0
-#define PIN_OUTPUT 1
-#define PIN_NOTUSED 2
-#define PIN_RESERVED 3
+#define PIN_INPUT 1
+#define PIN_OUTPUT 2
+#define PIN_NOTUSED 3
+#define PIN_RESERVED 4
 
 #define PIN_ANALOG 1
 #define PIN_DIGITAL 2
@@ -49,7 +49,7 @@ typedef struct s_boardData {
 #define PIN_NUMBER_OF_NOTIFY 4
 
 typedef struct s_notify {
-    char condition;
+    uint8_t condition;
     uint16_t value;
 } t_notify;
 
@@ -57,11 +57,11 @@ typedef struct s_notify {
 
 typedef struct s_pinDescription {
     int8_t direction;     // PIN_INPUT, PIN_OUTPUT, PIN_NOTUSED, PIN_RESERVED
-    char type;          // PIN_ANALOG, PIN_DIGITAL
-    uint16_t valueMin;  // for input pin : min value as input for transform function (usually 0)
-                        // for output pin : min value as input for transform function that will not result under 0
-    uint16_t valueMax;  // for input pin : max value as input for transform function (usually 1023)
-                        // for output pin : max value as input for transform function that will not result over 255
+    int8_t type;          // PIN_ANALOG, PIN_DIGITAL
+    float valueMin;  // for input pin : min value as input for transform function (usually 0) (pin value)
+                        // for output pin : min value as input for transform function that will not result under 0 (display value)
+    float valueMax;  // for input pin : max value as input for transform function (usually 1023) (pin value)
+                        // for output pin : max value as input for transform function that will not result over 255 (display value)
     PinValueConversion convertValue; // for input pin : convert the 0-1023 to the wanted display value
                                      // for output pin : convert the display value to 0-255
     PinRead read; // (used for input pin only)
@@ -75,7 +75,7 @@ typedef struct s_pinInfo {
 
 typedef struct s_pinData {
     uint16_t lastValue; // output only
-    t_notify notifies[PIN_NUMBER_OF_NOTIFY];
+    t_notify notifies[PIN_NUMBER_OF_NOTIFY]; // input only
 } t_pinData;
 
 ///////////////////////////////////////////////////////////////

@@ -1,7 +1,9 @@
 #include "buffer.h"
+#include "../hcc.h"
+
+char value_to_add[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 uint16_t addToBufferTCPHex(char *buf, uint16_t pos, uint16_t val) {
-    static char value_to_add[4] = {0,0,0,0};
     int j = 0;
 
     sprintf_P(value_to_add, sprintfpHEX, val);
@@ -12,6 +14,45 @@ uint16_t addToBufferTCPHex(char *buf, uint16_t pos, uint16_t val) {
     return pos;
 }
 
+uint16_t addToBufferTCP(char *buf, uint16_t pos, float number) {
+    uint8_t digits = 2;
+
+    // Handle negative numbers
+    if (number < 0.0)
+    {
+       buf[TCP_CHECKSUM_L_P + 3 + pos++] = '-';
+       number = -number;
+    }
+
+    // Round correctly so that print(1.999, 2) prints as "2.00"
+    double rounding = 0.5;
+    for (uint8_t i=0; i<digits; ++i)
+      rounding /= 10.0;
+
+    number += rounding;
+
+    // Extract the integer part of the number and print it
+    unsigned long int_part = (unsigned long)number;
+    double remainder = number - (double)int_part;
+    pos = addToBufferTCP(buf, pos, (uint16_t) int_part);
+
+    // Print the decimal point, but only if there are digits beyond
+    if (digits > 0) {
+      buf[TCP_CHECKSUM_L_P + 3 + pos++] = '.';
+    }
+
+    // Extract digits from the remainder one at a time
+    while (digits-- > 0)
+    {
+      remainder *= 10.0;
+      int toPrint = int(remainder);
+      pos = addToBufferTCP(buf, pos, (uint16_t) toPrint);
+      remainder -= toPrint;
+    }
+
+    return pos;
+}
+
 uint16_t addToBufferTCP(char *buf, uint16_t pos, char val) {
     buf[TCP_CHECKSUM_L_P + 3 + pos++] = val;
     return pos;
@@ -19,7 +60,6 @@ uint16_t addToBufferTCP(char *buf, uint16_t pos, char val) {
 
 uint16_t addToBufferTCP(char *buf, uint16_t pos, uint16_t val) {
     int j = 0;
-    char value_to_add[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     sprintf_P(value_to_add, sprintfpDEC, val);
     while (value_to_add[j]) {
       buf[TCP_CHECKSUM_L_P + 3 + pos] = value_to_add[j++];
@@ -46,7 +86,7 @@ uint16_t addToBufferTCP_P(char *buf, uint16_t pos, const prog_char *progmem) {
     return pos;
 }
 
-uint16_t addToBufferTCP_e(char *buf, uint16_t pos, uint8_t *eeprom_s) {
+uint16_t addToBufferTCP_E(char *buf, uint16_t pos, uint8_t *eeprom_s) {
     char c;
     while ((c = eeprom_read_byte(eeprom_s++))) {
             buf[TCP_CHECKSUM_L_P + 3 + pos] = c;

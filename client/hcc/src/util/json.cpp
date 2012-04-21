@@ -22,7 +22,7 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-static prog_char *parseKeyValue(char **buffer, t_json *structure) {
+static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
     char *buf =  *buffer;
     prog_char *keypos;
     if (buf[0] != '"') { // start of key
@@ -98,7 +98,7 @@ static prog_char *parseKeyValue(char **buffer, t_json *structure) {
     return 0;
 }
 
-static prog_char *parseObject(char *buf, t_json *structure) {
+static prog_char *parseObject(char *buf, const t_json *structure) {
     buf = skipSpaces(buf);
     if (buf[0] != '{') {
         return JSON_ERROR_NO_OBJECT_START;
@@ -123,7 +123,7 @@ static prog_char *parseObject(char *buf, t_json *structure) {
 }
 
 
-prog_char *jsonParse(char *buf, t_json *structure) {
+prog_char *jsonParse(char *buf, const t_json *structure) {
     return parseObject(buf, structure);
 //    return 0;
 }

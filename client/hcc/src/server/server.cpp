@@ -3,8 +3,6 @@
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         DEBUG_p(PSTR("memory "));
         DEBUG_PRINTLN(getFreeMemory());
-//    DEBUG_PRINT(PSTR("Available memory : "));
-//    DEBUG_PRINTLN(availableMemory());
 
     DEBUG_p(PSTR("DATA LEN : "));
     DEBUG_PRINTLN(dataLen);
@@ -25,7 +23,6 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         return plen;
     }
     if (definitionError) {
-        DEBUG_PRINTLN(definitionError);
         plen = addToBufferTCP_P(buf, 0, HEADER_500);
         plen = addToBufferTCP_P(buf, plen, PSTR("{\"message\":\""));
         plen = addToBufferTCP(buf, plen, definitionError);
