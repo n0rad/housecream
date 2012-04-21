@@ -40,7 +40,7 @@ HCC_CXXSRC =  src/hcc.cpp src/main.cpp src/util/pure_virtual.cpp \
 		src/util/availableMemory.cpp config.cpp src/settings/settings.cpp \
 		src/settings/settings-board.cpp src/settings/settings-pin.cpp \
 		src/server/server.cpp src/pin/pin-manager.cpp src/settings/settings-config.cpp \
-		src/server/server-pin.cpp src/server/server-board.cpp \
+		src/server/server-pin.cpp src/server/server-board.cpp src/client/client.cpp \
 		src/util/json.cpp src/util/mylibc.cpp src/util/buffer.cpp
 
 # BOARD

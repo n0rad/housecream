@@ -4,6 +4,6 @@
 #include "../hcc.h"
 #include "../settings/settings-config.h"
 
-void clientNotify(int pinId, t_notify notify);
+void clientNotify(int pinId, float oldValue, float value, t_notify notify);
 
 #endif

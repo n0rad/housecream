@@ -12,7 +12,7 @@ const t_boardDescription boardDescription PROGMEM = {
 const t_pinDescription pinDescriptions[NUMBER_OF_PINS] PROGMEM = {
 /* 0*/  {PIN_INPUT, PIN_DIGITAL, 0, 1, noConversion, defaultPinRead, defaultPinWrite, "switch number 1"},
 /* 1*/  {PIN_INPUT, PIN_DIGITAL, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, "temperature captor for window2"},
-/* 2*/  {PIN_NOTUSED, PIN_DIGITAL, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
+/* 2*/  {PIN_INPUT, PIN_DIGITAL, 0, 1, noConversion, defaultPinRead, defaultPinWrite, "switch 42"},
 /* 3*/  {PIN_INPUT, PIN_ANALOG, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
 /* 4*/  {PIN_OUTPUT, PIN_DIGITAL, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
 /* 5*/  {PIN_INPUT, PIN_ANALOG, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
@@ -68,7 +68,7 @@ const t_config defaultConfig PROGMEM = {
     }, {
 /* 0*/  42, {{PIN_NOTIFY_OVER_EQ, 1}, {PIN_NOTIFY_UNDER_EQ, 0}, {PIN_NOTIFY_NOT_SET, 0}, {PIN_NOTIFY_NOT_SET, 0}}, // pin notify Condition
 /* 1*/  51, {{PIN_NOTIFY_OVER_EQ, 53}, {PIN_NOTIFY_OVER_EQ, 55}, {PIN_NOTIFY_NOT_SET, 57}, {PIN_NOTIFY_OVER_EQ, 59}},
-/* 2*/  60, 61, 62, 63, 64, 65, 66, 67, 68,
+/* 2*/  42, {{PIN_NOTIFY_OVER_EQ, 1}, {PIN_NOTIFY_UNDER_EQ, 0}, {PIN_NOTIFY_NOT_SET, 0}, {PIN_NOTIFY_NOT_SET, 0}},
 ///* 3*/  {45, {{PIN_NOTIFY_OVER_EQ, 1}, {PIN_NOTIFY_UNDER_EQ, 1}, {0, 0}, {0, 0}}},
 ///* 4*/  46, {PIN_NOTIFY_OVER_EQ, 1},
 ///* 5*/  47, {PIN_NOTIFY_OVER_EQ, 1},

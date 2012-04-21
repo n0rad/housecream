@@ -43,25 +43,18 @@ void pinCheckChange() {
         if (direction == PIN_INPUT) {
             uint16_t oldValue = previousValue[i];
             PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-            uint16_t pinValue = read(i);
+            uint16_t value = read(i);
             for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
                 t_notify notify;
                 getConfigPinNotify(i, j, &notify);
                 if (notify.condition != PIN_NOTIFY_NOT_SET) {
-                    if ((notify.condition == PIN_NOTIFY_UNDER_EQ && oldValue > notify.value && pinValue <= notify.value)
-                            || (notify.condition == PIN_NOTIFY_OVER_EQ && oldValue < notify.value && pinValue >= notify.value)) {
-                        DEBUG_PRINT("notify old: ");
-                        DEBUG_PRINT(oldValue);
-                        DEBUG_PRINT(" new :");
-                        DEBUG_PRINT(pinValue);
-                        DEBUG_PRINT(" with cond ");
-                        DEBUG_PRINT(notify.condition);
-                        DEBUG_PRINT(" ");
-                        DEBUG_PRINTLN(notify.value);
+                    if ((notify.condition == PIN_NOTIFY_UNDER_EQ && oldValue > notify.value && value <= notify.value)
+                            || (notify.condition == PIN_NOTIFY_OVER_EQ && oldValue < notify.value && value >= notify.value)) {
+                        clientNotify(i, oldValue, value, notify);
                     }
                 }
             }
-            previousValue[i] = pinValue;
+            previousValue[i] = value;
         }
     }
 }
