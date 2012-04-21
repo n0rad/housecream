@@ -39,6 +39,7 @@ typedef struct s_boardData {
 // PIN
 ///////////////////////////////////////////////////////////////
 
+#define PIN_NOTSET 0
 #define PIN_INPUT 1
 #define PIN_OUTPUT 2
 #define PIN_NOTUSED 3

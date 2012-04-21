@@ -1,5 +1,7 @@
 #include "pin-manager.h"
 
+static uint16_t previousValue[NUMBER_OF_PINS];
+
 float noConversion(float pinValue) {
     return pinValue;
 }
@@ -26,23 +28,46 @@ float getPinValue(uint8_t pinId) {
     return convert(read(pinId));
 }
 
+void pinCheckInit() {
+    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
+        int direction = pgm_read_byte(&pinDescriptions[i].direction);
+        if (direction == PIN_INPUT) {
+            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
+            previousValue[i] = read(i);
+        }
+    }
+}
 void pinCheckChange() {
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
         int direction = pgm_read_byte(&pinDescriptions[i].direction);
         if (direction == PIN_INPUT) {
-//            uint16_t oldValue = getConfigPinValue(i);
-//            t_notify *notify = getConfigPinNotify(i);
-//            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-//            uint16_t pinValue = read(i);
-            if (0) {
-//                clientNotify(i, notify[0]);
+            uint16_t oldValue = previousValue[i];
+            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
+            uint16_t pinValue = read(i);
+            for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
+                t_notify notify;
+                getConfigPinNotify(i, j, &notify);
+                if (notify.condition != PIN_NOTIFY_NOT_SET) {
+                    if ((notify.condition == PIN_NOTIFY_UNDER_EQ && oldValue > notify.value && pinValue <= notify.value)
+                            || (notify.condition == PIN_NOTIFY_OVER_EQ && oldValue < notify.value && pinValue >= notify.value)) {
+                        DEBUG_PRINT("notify old: ");
+                        DEBUG_PRINT(oldValue);
+                        DEBUG_PRINT(" new :");
+                        DEBUG_PRINT(pinValue);
+                        DEBUG_PRINT(" with cond ");
+                        DEBUG_PRINT(notify.condition);
+                        DEBUG_PRINT(" ");
+                        DEBUG_PRINTLN(notify.value);
+                    }
+                }
             }
+            previousValue[i] = pinValue;
         }
     }
 }
 
 void pinInit() {
-
+    pinMode(0, INPUT);
 }
 
 

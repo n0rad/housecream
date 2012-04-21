@@ -1,5 +1,9 @@
 #include "src/settings/settings-config.h"
 
+float tempConversion(float value) {
+    return value * 50 / 1023;
+}
+
 const t_boardDescription boardDescription PROGMEM = {
     {0x54, 0x55, 0x58, 0x10, 0x00, 0xF5},           // mac
     "window in front of the house not powered from POE but only by a transfo",   // description
@@ -20,9 +24,9 @@ const t_pinDescription pinDescriptions[NUMBER_OF_PINS] PROGMEM = {
 /*11*/  {PIN_RESERVED, 0, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*12*/  {PIN_RESERVED, 0, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*13*/  {PIN_RESERVED, 0, 0, 1, noConversion, defaultPinRead, defaultPinWrite, ""},
-/*14*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
-/*15*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
-/*16*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
+/*14*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, tempConversion, defaultPinRead, defaultPinWrite, ""},
+/*15*/  {PIN_INPUT, PIN_ANALOG, 0, 500, tempConversion, defaultPinRead, defaultPinWrite, ""},
+/*16*/  {PIN_INPUT, PIN_ANALOG, 20, 500, tempConversion, defaultPinRead, defaultPinWrite, ""},
 /*17*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*18*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
 /*19*/  {PIN_INPUT, PIN_ANALOG, 0, 1023, noConversion, defaultPinRead, defaultPinWrite, ""},
@@ -62,7 +66,7 @@ const t_config defaultConfig PROGMEM = {
 /*18*/  "pin16",
 /*19*/  "pin16",
     }, {
-/* 0*/  42, {{PIN_NOTIFY_OVER_EQ, 44}, {PIN_NOTIFY_OVER_EQ, 46}, {PIN_NOTIFY_NOT_SET, 48}, {PIN_NOTIFY_NOT_SET, 50}}, // pin notify Condition
+/* 0*/  42, {{PIN_NOTIFY_OVER_EQ, 1}, {PIN_NOTIFY_UNDER_EQ, 0}, {PIN_NOTIFY_NOT_SET, 0}, {PIN_NOTIFY_NOT_SET, 0}}, // pin notify Condition
 /* 1*/  51, {{PIN_NOTIFY_OVER_EQ, 53}, {PIN_NOTIFY_OVER_EQ, 55}, {PIN_NOTIFY_NOT_SET, 57}, {PIN_NOTIFY_OVER_EQ, 59}},
 /* 2*/  60, 61, 62, 63, 64, 65, 66, 67, 68,
 ///* 3*/  {45, {{PIN_NOTIFY_OVER_EQ, 1}, {PIN_NOTIFY_UNDER_EQ, 1}, {0, 0}, {0, 0}}},

@@ -29,6 +29,8 @@ void hccSetup(void) {
     definitionError = checkConfig();
     settingsLoad();
     networkSetup();
+    pinInit();
+    pinCheckInit();
 }
 
 void hccLoop(void) {

@@ -26,15 +26,17 @@ static uint16_t pinGetDescription(char *buf, uint8_t pinId) {
         plen = addToBufferTCP_P(buf, plen, PSTR(",\"type\":\""));
         plen = addToBufferTCP_P(buf, plen, (const prog_char *) pgm_read_byte(&pinType[type - 1]));
 
+        PinValueConversion conversionFunc = (PinValueConversion) pgm_read_word(&(pinDescriptions[pinId].convertValue));
+
         plen = addToBufferTCP_P(buf, plen, PSTR("\",\"valueMin\":"));
         float minValue;
         memcpy_P(&minValue, &pinDescriptions[pinId].valueMin, sizeof(float));
-        plen = addToBufferTCP(buf, plen, minValue);
+        plen = addToBufferTCP(buf, plen, conversionFunc(minValue));
 
         plen = addToBufferTCP_P(buf, plen, PSTR(",\"valueMax\":"));
         float maxValue;
         memcpy_P(&maxValue, &pinDescriptions[pinId].valueMax, sizeof(float));
-        plen = addToBufferTCP(buf, plen, maxValue);
+        plen = addToBufferTCP(buf, plen, conversionFunc(maxValue));
 
         if (direction == PIN_OUTPUT) {
             plen = addToBufferTCP_P(buf, plen, PSTR(",\"startValue\":"));
