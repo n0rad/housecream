@@ -6,7 +6,7 @@
 char *definitionError;
 char *criticalProblem_p;
 uint8_t needReboot = false;
-
+uint8_t clientDataReady = false;
 
 void DEBUG_p(const prog_char *progmem_s) {
     char c;
@@ -36,4 +36,5 @@ void hccSetup(void) {
 void hccLoop(void) {
     networkManage();
     pinCheckChange();
+    networkManage2();
 }

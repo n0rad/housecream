@@ -44,16 +44,16 @@ static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
             }
             buf = skipSpaces(&buf[1]); // skip separator ':' and white spaces
             if (buf[0] == '[') {
-                return PSTR("nested array not implemented");
+                return PSTR("nonested");
             } else if (buf[0] == '{') {
-                return PSTR("nested object not implemented");
+                return PSTR("nonested");
             } else { // call handleValue
                 jsonHandleValue func;
                 func = (jsonHandleValue) pgm_read_word(&structure[i].handleValue);
                 char *res;
                 int len;
                 if (buf[0] == '"') {
-                    DEBUG_p(PSTR("value with quotes"));
+//                    DEBUG_p(PSTR("value with quotes"));
                     buf = &buf[1];
                     len = my_strpos(buf, '"');
                     if (len == -1) {
@@ -64,7 +64,7 @@ static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
                     DEBUG_PRINTLN(buf[1]); // seems to affect program
                     buf = &buf[len + 1];
                 } else {
-                    DEBUG_p(PSTR("value without quotes"));
+//                    DEBUG_p(PSTR("value without quotes"));
                     len = findEndOfValue(buf);
                     res = func(keypos, buf, len, 0);
                     buf = &buf[len + 1];

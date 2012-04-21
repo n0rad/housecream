@@ -5,9 +5,11 @@
 
 #include "hcc.h"
 #include "server/server.h"
+#include "client/client.h"
 #include "settings/settings.h"
 
 void networkSetup(void);
 void networkManage(void);
+void networkManage2();
 
 #endif

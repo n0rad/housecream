@@ -37,7 +37,12 @@ void pinCheckInit() {
         }
     }
 }
+
+extern uint8_t clientDataReady;
 void pinCheckChange() {
+    if (clientDataReady) {
+        return; // TODO do not skip but instead keep nexts to send
+    }
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
         int direction = pgm_read_byte(&pinDescriptions[i].direction);
         if (direction == PIN_INPUT) {
