@@ -20,38 +20,38 @@ uint8_t *getConfigPinName_E(uint8_t pinId) {
 /////////////////
 
 prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("id cannot be set");
+    return PSTR("id ");
 }
 prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("name cannot be set");
+    return PSTR("name");
 }
 prog_char *setConfigPinDescription(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("description cannot be set");
+    return PSTR("description");
 }
 prog_char *setConfigPinDirection(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("direction cannot be set");
+    return PSTR("direction");
 }
 prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("type cannot be set");
+    return PSTR("type");
 }
 prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("valueMin cannot be set");
+    return PSTR("valueMin");
 }
 prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("valueMax cannot be set");
+    return PSTR("valueMax");
 }
 prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("notifies cannot be set");
+    return PSTR("notifies");
 }
 prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("notifyCondition cannot be set");
+    return PSTR("notifyCondition");
 }
 prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("notifyValue cannot be set");
+    return PSTR("notifyValue");
 }
 prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("value cannot be set");
+    return PSTR("value");
 }
 prog_char *setConfigPinStartValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("startValue cannot be set");
+    return PSTR("startValue");
 }
