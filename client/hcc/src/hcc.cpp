@@ -2,11 +2,12 @@
 #include "../lib/arduino/Arduino.h" // for serial
 #include "network.h"
 #include "settings/settings.h"
+#include "client/client.h"
 
 char *definitionError;
 char *criticalProblem_p;
 uint8_t needReboot = false;
-uint8_t clientDataReady = false;
+t_notification *notification = 0;
 
 void DEBUG_p(const prog_char *progmem_s) {
     char c;

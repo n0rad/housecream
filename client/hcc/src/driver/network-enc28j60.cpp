@@ -52,7 +52,6 @@ void networkSetup() {
 }
 
 static uint8_t dest_ip[4] = { 192, 168, 42, 4 };
-extern uint8_t clientDataReady;
 static uint16_t dstPort = 80;
 static uint16_t srcPort = 1200;
 static uint8_t syn_ack_timeout = 0;
@@ -65,7 +64,7 @@ static CLIENT_STATE client_state;
 void networkManage2() {
     uint16_t plen;
     uint8_t i;
-    if (clientDataReady == 0) {
+    if (notification == 0) {
         return; // nothing to send
     }
     if (client_state == IDLE) { // initialize ARP
@@ -90,7 +89,8 @@ void networkManage2() {
         if (syn_ack_timeout == 100) { //timeout, server ip not found
             DEBUG_p(PSTR("arpnotfound"));
             client_state = IDLE;
-            clientDataReady = 0;
+            free(notification);
+            notification = 0;
             syn_ack_timeout = 0;
             return;
         }
@@ -184,7 +184,8 @@ void networkManage2() {
                     1, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     0, dest_mac, dest_ip);
             client_state = IDLE; // return to IDLE state
-            clientDataReady = 0; // client data sent
+            free(notification);
+            notification = 0;
         }
     }
 }

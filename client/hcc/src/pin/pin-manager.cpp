@@ -38,9 +38,8 @@ void pinCheckInit() {
     }
 }
 
-extern uint8_t clientDataReady;
 void pinCheckChange() {
-    if (clientDataReady) {
+    if (notification) {
         return; // TODO do not skip but instead keep nexts to send
     }
     for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
