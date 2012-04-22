@@ -1,5 +1,28 @@
 #include "server.h"
 
+uint16_t startResponseHeader(char *buf, const prog_char *codeMsg) {
+    uint16_t plen;
+    plen = addToBufferTCP_P(buf, 0, HEADER_HTTP);
+    plen = addToBufferTCP_P(buf, plen, HEADER_CONTENT);
+    plen = addToBufferTCP_P(buf, plen, codeMsg);
+    plen = addToBufferTCP_P(buf, plen, DOUBLE_ENDL);
+    return plen;
+}
+
+uint16_t appendErrorMsg_P(char *buf, uint16_t plen, const prog_char *msg) {
+    plen = addToBufferTCP_P(buf, plen, ERROR_MSG_START);
+    plen = addToBufferTCP_P(buf, plen, msg);
+    plen = addToBufferTCP_P(buf, plen, JSON_STR_END);
+    return plen;
+}
+
+uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg) {
+    plen = addToBufferTCP_P(buf, plen, ERROR_MSG_START);
+    plen = addToBufferTCP(buf, plen, msg);
+    plen = addToBufferTCP_P(buf, plen, JSON_STR_END);
+    return plen;
+}
+
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         DEBUG_p(PSTR("memory "));
         DEBUG_PRINTLN(getFreeMemory());
@@ -10,23 +33,19 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
 
     uint16_t plen;
     if (dataLen >= 999) {
-        plen = addToBufferTCP_P(buf, 0, HEADER_413);
-        plen = addToBufferTCP_P(buf, plen, PSTR("{\"message\":\"413: Request is too big, please be gentle\"}"));
+        plen = startResponseHeader(buf, HEADER_413);
+        plen = appendErrorMsg_P(buf, plen, PSTR("Too big"));
         return plen;
     }
 
     if (criticalProblem_p) {
-        plen = addToBufferTCP_P(buf, 0, HEADER_500);
-        plen = addToBufferTCP_P(buf, plen, PSTR("{\"message\":\""));
-        plen = addToBufferTCP_P(buf, plen, criticalProblem_p);
-        plen = addToBufferTCP_P(buf, plen, PSTR("\"}"));
+        plen = startResponseHeader(buf, HEADER_500);
+        plen = appendErrorMsg_P(buf, plen, criticalProblem_p);
         return plen;
     }
     if (definitionError) {
-        plen = addToBufferTCP_P(buf, 0, HEADER_500);
-        plen = addToBufferTCP_P(buf, plen, PSTR("{\"message\":\""));
-        plen = addToBufferTCP(buf, plen, definitionError);
-        plen = addToBufferTCP_P(buf, plen, PSTR("\"}"));
+        plen = startResponseHeader(buf, HEADER_500);
+        plen = appendErrorMsg(buf, plen, definitionError);
         return plen;
     }
 
@@ -45,8 +64,8 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         }
     }
     if (!managed) {
-        plen = addToBufferTCP_P(buf, 0, HEADER_404);
-        plen = addToBufferTCP_P(buf, plen, PSTR("{\"message\":\"404: No resource for this method & url\"}"));
+        plen = startResponseHeader(buf, HEADER_404);
+        plen = appendErrorMsg_P(buf, plen, PSTR("No resource for this method & url"));
     }
     return plen;
 }

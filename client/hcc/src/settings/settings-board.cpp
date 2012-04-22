@@ -3,7 +3,6 @@
 static char NOT_VALID_IP[] PROGMEM = "not valid ip";
 static char NOT_VALID_PORT[] PROGMEM = "not valid port";
 
-
 prog_char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_BOARD_NOTIFY_SIZE) {
         return PSTR("notifyUrl is too long");

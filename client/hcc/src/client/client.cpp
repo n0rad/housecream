@@ -11,7 +11,6 @@ uint16_t addToBufferTCP_P2(char *buf, uint16_t pos, const prog_char *progmem) {
     return pos;
 }
 
-
 void clientNotify(int pinId, float oldValue, float value, t_notify notify) {
     DEBUG_PRINT("notify for pin: ");
     DEBUG_PRINT(pinId);

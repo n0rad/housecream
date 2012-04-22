@@ -1,7 +1,7 @@
 #include "buffer.h"
 #include "../hcc.h"
 
-char value_to_add[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+static char value_to_add[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 uint16_t addToBufferTCPHex(char *buf, uint16_t pos, uint16_t val) {
     int j = 0;

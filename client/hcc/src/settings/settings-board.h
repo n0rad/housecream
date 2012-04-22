@@ -13,7 +13,6 @@
 
 const char hcc_version[] PROGMEM = "0.1";
 
-
 prog_char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index);
 prog_char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index);
 prog_char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index);

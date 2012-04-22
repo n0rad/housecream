@@ -17,7 +17,7 @@ char *checkConfig() {
             continue;
         }
         if (direction != PIN_INPUT && direction != PIN_OUTPUT) {
-            return buildGlobalError_P(PSTR("Pin direction in not set for %d"), i);
+            return buildGlobalError_P(PSTR("Pin%d direction is not set"), i);
         }
 
         int type = pgm_read_byte(&pinDescriptions[i].type);
@@ -31,7 +31,7 @@ char *checkConfig() {
         // check converter
         PinValueConversion conversionFunc = (PinValueConversion) pgm_read_word(&(pinDescriptions[i].convertValue));
         if (conversionFunc == 0) {
-            return buildGlobalError_P(PSTR("Conversion func not found on pin%d. Forgot to set NUMBER_OF_PIN ?"), i);
+            return buildGlobalError_P(PSTR("No conversion found for pin%d"), i);
         }
 
         if (direction == PIN_OUTPUT) {
@@ -39,17 +39,17 @@ char *checkConfig() {
             float minRes = conversionFunc(min);
             if (type == PIN_DIGITAL) {
                 if (maxRes != 1) {
-                    return buildGlobalError_P(PSTR("Conversion func on pin%d with max value is not 1 (max of digital pin)"), i);
+                    return buildGlobalError_P(PSTR("Max conversion on pin%d must be 1"), i);
                 }
                 if (minRes != 0) {
-                    return buildGlobalError_P(PSTR("Conversion func on pin%d with min value is not 0 (min of digital pin)"), i);
+                    return buildGlobalError_P(PSTR("Min conversion on pin%d must be 0"), i);
                 }
             } else if (type == PIN_ANALOG) {
                 if (maxRes > 255) {
-                    return buildGlobalError_P(PSTR("Conversion func on pin%d with max value is over 255 (max of PWM pin)"), i);
+                    return buildGlobalError_P(PSTR("Max conversion on pin%d cannot be over 255"), i);
                 }
                 if (minRes < 0) {
-                    return buildGlobalError_P(PSTR("Conversion func on pin%d with min value is under 0 (min of PWM pin)"), i);
+                    return buildGlobalError_P(PSTR("Min conversion on pin%d cannot be under 0"), i);
                 }
             }
         } else if (direction == PIN_INPUT) {

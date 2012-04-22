@@ -1,7 +1,5 @@
 #include "json.h"
 
-// notifies : [{notifyValue: 42.4, notifyCondition : "sup_or_equal"}, {notifyValue.3, notifyCondition : "inf_or_equal"}]
-
 static char findEndOfValue(char *buf) {
     for (uint8_t i = 0; buf[i]; i++) {
         if (buf[i] == '\t' || buf[i] == '\n' || buf[i] == '\r' || buf[i] == ' '

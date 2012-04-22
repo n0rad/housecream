@@ -10,7 +10,7 @@
 #include "../util/json.h"
 
 
-const char DOUBLE_ENDL[] PROGMEM = "\r\n\r\n";
+const prog_char DOUBLE_ENDL[] PROGMEM = "\r\n\r\n";
 const prog_char RESOURCE_PIN[] PROGMEM = "/pin/";
 const prog_char RESOURCE_BOARD[] PROGMEM = "/ ";
 const prog_char RESOURCE_RESET[] PROGMEM = "/reset";
@@ -18,20 +18,26 @@ const prog_char RESOURCE_INIT[] PROGMEM = "/init";
 const prog_char GET[] PROGMEM = "GET ";
 const prog_char PUT[] PROGMEM = "PUT ";
 
-static prog_char HEADER_200[] PROGMEM = "HTTP/1.0 200 OK\r\nContent-Type: application/json\r\n\r\n";
-static prog_char HEADER_500[] PROGMEM = "HTTP/1.0 500 Internal Server Error\r\nContent-Type: application/json\r\n\r\n";
-static prog_char HEADER_404[] PROGMEM = "HTTP/1.0 404 Not Found\r\nContent-Type: application/json\r\n\r\n";
-static prog_char HEADER_400[] PROGMEM = "HTTP/1.0 400 Bad Request\r\nContent-Type: application/json\r\n\r\n";
-static prog_char HEADER_413[] PROGMEM = "HTTP/1.0 413 Request Entity Too Large\r\nContent-Type: application/json\r\n\r\n";
-static prog_char BAD_PIN_REQUEST[] PROGMEM = "{\"message\":\"404 No resource on pin for this method & url\"}";
-static prog_char CANNOT_READ_PINID[] PROGMEM = "{\"message\":\"Cannot read pin number in the request\"}";
+const prog_char HEADER_HTTP[] PROGMEM = "HTTP/1.0 ";
+const prog_char HEADER_CONTENT[] PROGMEM = "Content-Type: application/json";
+const prog_char HEADER_200[] PROGMEM = "200 OK\r\n";
+const prog_char HEADER_500[] PROGMEM = "500 Internal Server Error\r\n";
+const prog_char HEADER_404[] PROGMEM = "404 Not Found\r\n";
+const prog_char HEADER_400[] PROGMEM = "400 Bad Request\r\n";
+const prog_char HEADER_413[] PROGMEM = "413 Request Entity Too Large\r\n";
 
+const prog_char JSON_STR_END[] PROGMEM = "\"}";
+const prog_char ERROR_MSG_START[] PROGMEM = "{\"message\":\"";
+
+uint16_t startResponseHeader(char *buf, const prog_char *codeMsg);
+uint16_t appendErrorMsg_P(char *buf, uint16_t plen, const prog_char *msg);
+uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg);
+uint16_t appendJsonKey(char *buf, uint16_t plen, const prog_char *key);
 
 
 #include "server-board.h"
 #include "server-pin.h"
 
-//uint16_t pinGetDescription(char *buf, uint8_t pinId);
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen);
 

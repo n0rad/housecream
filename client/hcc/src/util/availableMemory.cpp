@@ -2,18 +2,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-int availableMemory() {
-  int size = 512;
-  uint8_t *buf;
-
-  while ((buf = (uint8_t *) malloc(--size)) == NULL)
-    ;
-
-  free(buf);
-
-  return size;
-}
-
 extern int __bss_end;
 extern void *__brkval;
 int getFreeMemory() {
