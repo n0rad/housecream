@@ -4,6 +4,7 @@
 #include "settings/settings.h"
 #include "client/client.h"
 
+
 char *definitionError;
 char *criticalProblem_p;
 uint8_t needReboot = false;
