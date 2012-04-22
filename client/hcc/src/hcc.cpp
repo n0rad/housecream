@@ -16,25 +16,26 @@ void DEBUG_p(const prog_char *progmem_s) {
     DEBUG_PRINTLN(" ");
 }
 
-void hccInit(void) {
+
+int main(void) {
     init(); // load init of arduino
 
 #ifdef DEBUG
     delay(3000);
     Serial.begin(9600);
 #endif
-}
 
-void hccSetup(void) {
     definitionError = checkConfig();
     settingsLoad();
     networkSetup();
     pinInit();
     pinCheckInit();
-}
 
-void hccLoop(void) {
-    networkManage();
-    pinCheckChange();
-    networkManage2();
+    for (;;) {
+        networkManage();
+        pinCheckChange();
+        networkManage2();
+    }
+
+    return 0;
 }

@@ -10,8 +10,4 @@ extern char *definitionError;
 
 int getFreeMemory();
 
-void hccInit(void);
-void hccSetup(void);
-void hccLoop(void);
-
 #endif
