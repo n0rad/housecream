@@ -1,7 +1,7 @@
 #include "server-board.h"
 
 uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen) {
-    plen = startResponseHeader(buf, HEADER_200);
+    plen = startResponseHeader(&buf, HEADER_200);
     plen = addToBufferTCP_P(buf, plen, PSTR("{\"software\":\"HouseCream Client\", \"version\":\""));
     plen = addToBufferTCP_P(buf, plen, hcc_version);
 
@@ -57,10 +57,10 @@ uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen) {
     char *data = &strstr(&buf[dat_p], DOUBLE_ENDL)[4];
     char *error = jsonParse(data, boardPutElements);
     if (error) {
-        plen = startResponseHeader(buf, HEADER_400);
+        plen = startResponseHeader(&buf, HEADER_400);
         plen = appendErrorMsg(buf, plen, error);
     } else {
-        plen = startResponseHeader(buf, HEADER_200);
+        plen = startResponseHeader(&buf, HEADER_200);
     }
     return plen;
 }
@@ -68,7 +68,7 @@ uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen) {
 uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen) {
     extern uint8_t needReboot;
     needReboot = true;
-    plen = startResponseHeader(buf, HEADER_200);
+    plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }
 
@@ -76,6 +76,6 @@ uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen) {
     settingsSave();
     extern uint8_t needReboot;
     needReboot = true;
-    plen = startResponseHeader(buf, HEADER_200);
+    plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }

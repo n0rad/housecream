@@ -32,7 +32,7 @@ const prog_char ERROR_MSG_START[] PROGMEM = "{\"message\":\"";
 const prog_char PARAM_NAME[] PROGMEM = "name";
 const prog_char PARAM_DESCRIPTION[] PROGMEM = "description";
 
-uint16_t startResponseHeader(char *buf, const prog_char *codeMsg);
+uint16_t startResponseHeader(char **buf, const prog_char *codeMsg);
 uint16_t appendErrorMsg_P(char *buf, uint16_t plen, const prog_char *msg);
 uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg);
 uint16_t appendJsonKey(char *buf, uint16_t plen, const prog_char *key);

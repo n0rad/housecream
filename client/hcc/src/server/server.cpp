@@ -1,11 +1,12 @@
 #include "server.h"
 
-uint16_t startResponseHeader(char *buf, const prog_char *codeMsg) {
+uint16_t startResponseHeader(char **buf, const prog_char *codeMsg) {
+    *buf = &((*buf)[TCP_CHECKSUM_L_P + 3]);
     uint16_t plen;
-    plen = addToBufferTCP_P(buf, 0, HEADER_HTTP);
-    plen = addToBufferTCP_P(buf, plen, HEADER_CONTENT);
-    plen = addToBufferTCP_P(buf, plen, codeMsg);
-    plen = addToBufferTCP_P(buf, plen, DOUBLE_ENDL);
+    plen = addToBufferTCP_P(*buf, 0, HEADER_HTTP);
+    plen = addToBufferTCP_P(*buf, plen, HEADER_CONTENT);
+    plen = addToBufferTCP_P(*buf, plen, codeMsg);
+    plen = addToBufferTCP_P(*buf, plen, DOUBLE_ENDL);
     return plen;
 }
 
@@ -33,18 +34,18 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
 
     uint16_t plen;
     if (dataLen >= 999) {
-        plen = startResponseHeader(buf, HEADER_413);
+        plen = startResponseHeader(&buf, HEADER_413);
         plen = appendErrorMsg_P(buf, plen, PSTR("Too big"));
         return plen;
     }
 
     if (criticalProblem_p) {
-        plen = startResponseHeader(buf, HEADER_500);
+        plen = startResponseHeader(&buf, HEADER_500);
         plen = appendErrorMsg_P(buf, plen, criticalProblem_p);
         return plen;
     }
     if (definitionError) {
-        plen = startResponseHeader(buf, HEADER_500);
+        plen = startResponseHeader(&buf, HEADER_500);
         plen = appendErrorMsg(buf, plen, definitionError);
         return plen;
     }
@@ -64,7 +65,7 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         }
     }
     if (!managed) {
-        plen = startResponseHeader(buf, HEADER_404);
+        plen = startResponseHeader(&buf, HEADER_404);
         plen = appendErrorMsg_P(buf, plen, PSTR("No resource for this method & url"));
     }
     return plen;
