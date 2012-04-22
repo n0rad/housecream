@@ -20,38 +20,38 @@ uint8_t *getConfigPinName_E(uint8_t pinId) {
 /////////////////
 
 prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("id cannot be set");
 }
 prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("name cannot be set");
 }
 prog_char *setConfigPinDescription(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("description cannot be set");
 }
 prog_char *setConfigPinDirection(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("direction cannot be set");
 }
 prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("type cannot be set");
 }
 prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("valueMin cannot be set");
 }
 prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("valueMax cannot be set");
 }
 prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("notifies cannot be set");
 }
 prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("notifyCondition cannot be set");
 }
 prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("notifyValue cannot be set");
 }
 prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("value cannot be set");
 }
 prog_char *setConfigPinStartValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("Not settable");
+    return PSTR("startValue cannot be set");
 }

@@ -53,6 +53,8 @@ void networkSetup() {
 
 static uint8_t dest_ip[4] = { 192, 168, 42, 4 };
 extern uint8_t clientDataReady;
+static uint16_t dstPort = 80;
+static uint16_t srcPort = 1200;
 static uint8_t syn_ack_timeout = 0;
 static uint8_t dest_mac[6];
 enum CLIENT_STATE {
@@ -100,7 +102,7 @@ void networkManage2() {
         for (i = 0; i < 6; i++) {
             dest_mac[i] = buf[ETH_SRC_MAC + i];
         }
-        es.ES_tcp_client_send_packet(buf, 80, 1200, TCP_FLAG_SYN_V, // flag
+        es.ES_tcp_client_send_packet(buf, dstPort, srcPort, TCP_FLAG_SYN_V, // flag
                 1, // (bool)maximum segment size
                 1, // (bool)clear sequence ack number
                 0, // 0=use old seq, seqack : 1=new seq,seqack no data : new seq,seqack with data
@@ -125,7 +127,7 @@ void networkManage2() {
         if (buf[TCP_FLAGS_P] == (TCP_FLAG_SYN_V | TCP_FLAG_ACK_V)) {
             DEBUG_p(PSTR("synack"));
             // send ACK to answer SYNACK
-            es.ES_tcp_client_send_packet(buf, 80, 1200, TCP_FLAG_ACK_V, // flag
+            es.ES_tcp_client_send_packet(buf, dstPort, srcPort, TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     1, // 0=use old seq, seqack : 1=new seq,seqack no data : new seq,seqack with data
@@ -135,8 +137,8 @@ void networkManage2() {
             plen = generateRequest((char *)buf);
             // send http request packet
             // send packet with PSHACK
-            es.ES_tcp_client_send_packet(buf, 80, // destination port
-                    1200, // source port
+            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+                    srcPort, // source port
                     TCP_FLAG_ACK_V | TCP_FLAG_PUSH_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
@@ -151,24 +153,22 @@ void networkManage2() {
             DEBUG_p(PSTR("pshack"));
             plen = es.ES_tcp_get_dlength((uint8_t*) &buf);
             // send ACK to answer PSHACK from server
-            es.ES_tcp_client_send_packet(buf, 80, // destination port
-                    1200, // source port
+            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+                    srcPort, // source port
                     TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     plen, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     0, // tcp data length
                     dest_mac, dest_ip);
-            ;
             // send finack to disconnect from web server
-            es.ES_tcp_client_send_packet(buf, 80, // destination port
-                    1200, // source port
+            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+                    srcPort, // source port
                     TCP_FLAG_FIN_V | TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     0, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     0, dest_mac, dest_ip);
-
             return;
         }
         // answer FINACK from web server by send ACK to web server
@@ -176,8 +176,8 @@ void networkManage2() {
             DEBUG_p(PSTR("finack"));
             // send ACK with seqack = 1
             es.ES_tcp_client_send_packet(
-            buf, 80, // destination port
-                    1200, // source port
+            buf, dstPort, // destination port
+            srcPort, // source port
                     TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
@@ -203,7 +203,7 @@ void networkManage() {
         es.ES_make_arp_answer_from_request(buf);
         return;
       }
-      // check if packet is for us
+      // check if packet is for me
       if (es.ES_eth_type_is_ip_and_my_ip(buf,plen) == 0) {
         return;
       }

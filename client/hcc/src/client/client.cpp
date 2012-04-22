@@ -28,7 +28,7 @@ void clientNotify(int pinId, float oldValue, float value, t_notify notify) {
 
 uint16_t generateRequest(char *buf) {
     uint16_t plen;
-    plen = addToBufferTCP_P2(buf, 0, PSTR("GET /ethershield_log/save.php?pwd=secret&client="));
+    plen = addToBufferTCP_P2(buf, 0, PSTR("PUT /ethershield_log/save.php?pwd=secret&client="));
     plen = addToBufferTCP_P2(buf, plen, PSTR(" HTTP/1.0\r\n"));
     plen = addToBufferTCP_P2(buf, plen, PSTR("Host: 192.168.1.4\r\n"));
     plen = addToBufferTCP_P2(buf, plen, PSTR("User-Agent: HouseCream Client\r\n"));

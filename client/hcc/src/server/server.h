@@ -20,11 +20,11 @@ const prog_char PUT[] PROGMEM = "PUT ";
 
 const prog_char HEADER_HTTP[] PROGMEM = "HTTP/1.0 ";
 const prog_char HEADER_CONTENT[] PROGMEM = "Content-Type: application/json";
-const prog_char HEADER_200[] PROGMEM = "200 OK\r\n";
-const prog_char HEADER_500[] PROGMEM = "500 Internal Server Error\r\n";
-const prog_char HEADER_404[] PROGMEM = "404 Not Found\r\n";
-const prog_char HEADER_400[] PROGMEM = "400 Bad Request\r\n";
-const prog_char HEADER_413[] PROGMEM = "413 Request Entity Too Large\r\n";
+const prog_char HEADER_200[] PROGMEM = "200 OK";
+const prog_char HEADER_500[] PROGMEM = "500 Internal Server Error";
+const prog_char HEADER_404[] PROGMEM = "404 Not Found";
+const prog_char HEADER_400[] PROGMEM = "400 Bad Request";
+const prog_char HEADER_413[] PROGMEM = "413 Request Entity Too Large";
 
 const prog_char JSON_STR_END[] PROGMEM = "\"}";
 const prog_char ERROR_MSG_START[] PROGMEM = "{\"message\":\"";
