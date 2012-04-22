@@ -8,8 +8,8 @@
 #include "client/client.h"
 #include "settings/settings.h"
 
-void networkSetup(void);
-void networkManage(void);
-void networkManage2();
+void networkSetup();
+void networkManageServer();
+void networkManageClient();
 
 #endif

@@ -61,7 +61,7 @@ enum CLIENT_STATE {
 };
 static CLIENT_STATE client_state;
 
-void networkManage2() {
+void networkManageClient() {
     uint16_t plen;
     uint8_t i;
     if (notification == 0) {
@@ -134,7 +134,7 @@ void networkManage2() {
                     0, // tcp data length
                     dest_mac, dest_ip);
             // setup http request to server
-            plen = generateRequest((char *)buf);
+            plen = clientBuildNextQuery((char *)buf);
             // send http request packet
             // send packet with PSHACK
             es.ES_tcp_client_send_packet(buf, dstPort, // destination port
@@ -191,7 +191,7 @@ void networkManage2() {
 }
 
 
-void networkManage() {
+void networkManageServer() {
     if (client_state != IDLE) {
         return;
     }

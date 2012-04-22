@@ -33,9 +33,9 @@ int main(void) {
     pinCheckInit();
 
     for (;;) {
-        networkManage();
+        networkManageServer();
         pinCheckChange();
-        networkManage2();
+        networkManageClient();
     }
 
     return 0;
