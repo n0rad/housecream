@@ -13,17 +13,17 @@
 
 const char hcc_version[] PROGMEM = "0.1";
 
-prog_char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardName(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardNotifyUrl(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardIP(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardPort(char *buf, uint16_t len, uint8_t index);
 
-prog_char *setConfigBoardNumberOfPin(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardMac(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardDescription(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardVersion(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardHardware(char* PGMkey, char *buf, uint16_t len, uint8_t index);
-prog_char *setConfigBoardSoftware(char* PGMkey, char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardNumberOfPin(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardMac(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardDescription(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardVersion(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardHardware(char *buf, uint16_t len, uint8_t index);
+prog_char *setConfigBoardSoftware(char *buf, uint16_t len, uint8_t index);
 
 
 #endif

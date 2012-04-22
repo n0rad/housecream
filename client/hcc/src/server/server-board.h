@@ -14,9 +14,7 @@ uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen);
 
 #include "server.h"
 
-const prog_char BOARD_PARAM_NAME[] PROGMEM = "name";
 const prog_char BOARD_PARAM_NOTIFYURL[] PROGMEM = "notifyUrl";
-const prog_char BOARD_PARAM_DESCRIPTION[] PROGMEM = "description";
 const prog_char BOARD_PARAM_IP[] PROGMEM = "ip";
 const prog_char BOARD_PARAM_PORT[] PROGMEM = "port";
 const prog_char BOARD_PARAM_NUMBEROFPIN[] PROGMEM = "numberOfPin";
@@ -31,9 +29,9 @@ const t_json boardPutElements[] PROGMEM = {
         {BOARD_PARAM_VERSION, setConfigBoardVersion},
         {BOARD_PARAM_SOFTWARE, setConfigBoardSoftware},
         {BOARD_PARAM_MAC, setConfigBoardMac},
-        {BOARD_PARAM_NAME, setConfigBoardName},
+        {PARAM_NAME, setConfigBoardName},
         {BOARD_PARAM_NOTIFYURL, setConfigBoardNotifyUrl},
-        {BOARD_PARAM_DESCRIPTION, setConfigBoardDescription},
+        {PARAM_DESCRIPTION, setConfigBoardDescription},
         {BOARD_PARAM_IP, setConfigBoardIP},
         {BOARD_PARAM_PORT, setConfigBoardPort},
         {0, 0}

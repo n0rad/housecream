@@ -3,7 +3,7 @@
 static char NOT_VALID_IP[] PROGMEM = "not valid ip";
 static char NOT_VALID_PORT[] PROGMEM = "not valid port";
 
-prog_char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardNotifyUrl(char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_BOARD_NOTIFY_SIZE) {
         return PSTR("notifyUrl is too long");
     }
@@ -12,7 +12,7 @@ prog_char *setConfigBoardNotifyUrl(char* PGMkey, char *buf, uint16_t len, uint8_
     settingsReload();
     return 0;
 }
-prog_char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardName(char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_BOARD_NAME_SIZE) {
         return PSTR("name is too long");
     }
@@ -21,7 +21,7 @@ prog_char *setConfigBoardName(char* PGMkey, char *buf, uint16_t len, uint8_t ind
     return 0;
 }
 
-prog_char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardIP(char *buf, uint16_t len, uint8_t index) {
     char num = 0;
     char point = 0;
     for (uint8_t i = 0; i < len; i++) {
@@ -55,7 +55,7 @@ prog_char *setConfigBoardIP(char* PGMkey, char *buf, uint16_t len, uint8_t index
     return 0;
 }
 
-prog_char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardPort(char *buf, uint16_t len, uint8_t index) {
     for (uint8_t i = 0; i < len; i++) {
         if (buf[i] < '0' || buf[i] > '9') {
             return NOT_VALID_PORT;
@@ -69,7 +69,7 @@ prog_char *setConfigBoardPort(char* PGMkey, char *buf, uint16_t len, uint8_t ind
 }
 
 
-prog_char *setConfigBoardMac(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardMac(char *buf, uint16_t len, uint8_t index) {
     if (len != 17) {
         return PSTR("mac cannot be set");
     }
@@ -93,31 +93,31 @@ prog_char *setConfigBoardMac(char* PGMkey, char *buf, uint16_t len, uint8_t inde
     return PSTR("mac cannot be set");
 }
 
-prog_char *setConfigBoardDescription(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardDescription(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, boardDescription.description, len)) {
         return 0;
     }
     return PSTR("description cannot be set");
 }
-prog_char *setConfigBoardSoftware(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardSoftware(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, PSTR("HouseCream Client"), len)) {
         return 0;
     }
     return PSTR("software cannot be set");
 }
-prog_char *setConfigBoardHardware(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardHardware(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, PSTR(HARDWARE), len)) {
         return 0;
     }
     return PSTR("hardware cannot be set");
 }
-prog_char *setConfigBoardVersion(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardVersion(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, hcc_version, len)) {
         return 0;
     }
     return PSTR("version cannot be set");
 }
-prog_char *setConfigBoardNumberOfPin(char* PGMkey, char *buf, uint16_t len, uint8_t index) {
+prog_char *setConfigBoardNumberOfPin(char *buf, uint16_t len, uint8_t index) {
     char pins[3] = {0, 0, 0};
     itoa(NUMBER_OF_PINS, pins, 10);
     if (!strncmp(pins, buf, len)) {

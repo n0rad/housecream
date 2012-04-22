@@ -16,7 +16,7 @@ static char JSON_ERROR_NO_SEPARATOR[] PROGMEM = "Cannot find key-value separator
 
 // notifies : [{notifyValue: 42.4, notifyCondition : "sup_or_equal"}, {notifyValue.3, notifyCondition : "inf_or_equal"}]
 
-typedef prog_char *(*jsonHandleValue)(char *PGMkey, char *val, uint16_t valLen, uint8_t index);
+typedef prog_char *(*jsonHandleValue)(char *val, uint16_t valLen, uint8_t index);
 
 typedef struct s_json {
     const prog_char *key;

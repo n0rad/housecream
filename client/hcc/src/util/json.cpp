@@ -57,14 +57,14 @@ static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
                     if (len == -1) {
                         return JSON_ERROR_NO_VALUE_END;
                     }
-                    res = func(keypos, buf, len, 0);
+                    res = func(buf, len, 0);
                     DEBUG_PRINT(buf[0]);
                     DEBUG_PRINTLN(buf[1]); // seems to affect program
                     buf = &buf[len + 1];
                 } else {
 //                    DEBUG_p(PSTR("value without quotes"));
                     len = findEndOfValue(buf);
-                    res = func(keypos, buf, len, 0);
+                    res = func(buf, len, 0);
                     buf = &buf[len + 1];
                 }
                 if (res) {

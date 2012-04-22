@@ -15,3 +15,43 @@ void getConfigPinNotify(uint8_t pinId, uint8_t notifyId, t_notify *notify) {
 uint8_t *getConfigPinName_E(uint8_t pinId) {
     return (uint8_t *)CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + (sizeof(t_pinInfo) * pinId);
 }
+
+
+/////////////////
+
+prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinDescription(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinDirection(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
+prog_char *setConfigPinStartValue(char *buf, uint16_t len, uint8_t index) {
+    return PSTR("Not settable");
+}
