@@ -27,16 +27,16 @@ uint16_t clientBuildNextQuery(char *buf) {
 //    plen = addToBufferTCP_P2(buf, plen, PSTR("User-Agent: HouseCream Client\r\n"));
 
     plen = addToBufferTCP_P(buf, plen, PSTR("{id:"));
-    plen = addToBufferTCP(buf, plen, (uint16_t) 42);
+    plen = addToBufferTCP(buf, plen, notification->pinId);
     plen = addToBufferTCP_P(buf, plen, PSTR(",oldValue:"));
-    plen = addToBufferTCP(buf, plen, (float) 42);
+    plen = addToBufferTCP(buf, plen, notification->oldValue);
     plen = addToBufferTCP_P(buf, plen, PSTR(",value:"));
-    plen = addToBufferTCP(buf, plen, (float) 42);
+    plen = addToBufferTCP(buf, plen, notification->value);
 
     plen = addToBufferTCP_P(buf, plen, PSTR(",notify:{notifyCondition:\""));
-    plen = addToBufferTCP_P(buf, plen, PSTR("SUP_OR_EQUAL"));
+    plen = addToBufferTCP_P(buf, plen, PSTR("ZZZZZZZZZZ"));
     plen = addToBufferTCP_P(buf, plen, PSTR("\",notifyValue:"));
-    plen = addToBufferTCP(buf, plen, (float) 42);
+    plen = addToBufferTCP(buf, plen, notification->notify.value);
     plen = addToBufferTCP_P(buf, plen, PSTR("}}"));
     return plen;
 }
