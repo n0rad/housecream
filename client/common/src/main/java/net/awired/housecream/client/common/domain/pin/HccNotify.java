@@ -1,4 +1,5 @@
-package net.awired.housecream.client.common.domain;
+package net.awired.housecream.client.common.domain.pin;
+
 
 public class HccNotify {
 

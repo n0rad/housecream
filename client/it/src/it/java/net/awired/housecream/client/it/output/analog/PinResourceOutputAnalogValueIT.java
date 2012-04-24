@@ -2,7 +2,7 @@ package net.awired.housecream.client.it.output.analog;
 
 import static org.junit.Assert.assertEquals;
 import net.awired.housecream.client.HccTestRule;
-import net.awired.housecream.client.common.domain.HccPin;
+import net.awired.housecream.client.common.domain.pin.HccPin;
 import net.awired.housecream.client.common.resource.HccUpdateException;
 import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import org.junit.Rule;

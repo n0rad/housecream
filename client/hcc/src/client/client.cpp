@@ -21,22 +21,23 @@ uint16_t startRequestHeader(char **buf, const prog_char *method) {
 uint16_t clientBuildNextQuery(char *buf) {
     uint16_t plen;
     plen = startRequestHeader(&buf, PUT2);
-    plen = addToBufferTCP_P(buf, plen, PSTR("/g"));
-    plen = addToBufferTCP_P(buf, plen, PSTR(" HTTP/1.0\r\nAccept: application/json\r\nKeep-Alive: 300\r\nConnection: keep-alive\r\n\r\n"));
+    plen = addToBufferTCP_P(buf, plen, PSTR("/notify/pin"));
+    plen = addToBufferTCP_P(buf, plen, PSTR(" HTTP/1.0\r\nContent-Type: application/json\r\nKeep-Alive: 300\r\nConnection: keep-alive\r\n"));
 //    plen = addToBufferTCP_P2(buf, plen, PSTR("Host: 192.168.1.4\r\n"));
 //    plen = addToBufferTCP_P2(buf, plen, PSTR("User-Agent: HouseCream Client\r\n"));
+    plen = addToBufferTCP_P(buf, plen, PSTR("Content-Length: 8\r\n\r\n"));
 
-    plen = addToBufferTCP_P(buf, plen, PSTR("{id:"));
-    plen = addToBufferTCP(buf, plen, notification->pinId);
-    plen = addToBufferTCP_P(buf, plen, PSTR(",oldValue:"));
-    plen = addToBufferTCP(buf, plen, notification->oldValue);
-    plen = addToBufferTCP_P(buf, plen, PSTR(",value:"));
-    plen = addToBufferTCP(buf, plen, notification->value);
-
-    plen = addToBufferTCP_P(buf, plen, PSTR(",notify:{notifyCondition:\""));
-    plen = addToBufferTCP_P(buf, plen, PSTR("ZZZZZZZZZZ"));
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",notifyValue:"));
-    plen = addToBufferTCP(buf, plen, notification->notify.value);
-    plen = addToBufferTCP_P(buf, plen, PSTR("}}"));
+    plen = addToBufferTCP_P(buf, plen, PSTR("{\"id\":"));
+    plen = addToBufferTCP(buf, plen, (uint16_t) notification->pinId);
+//    plen = addToBufferTCP_P(buf, plen, PSTR(",oldValue:"));
+//    plen = addToBufferTCP(buf, plen, notification->oldValue);
+//    plen = addToBufferTCP_P(buf, plen, PSTR(",value:"));
+//    plen = addToBufferTCP(buf, plen, notification->value);
+//
+//    plen = addToBufferTCP_P(buf, plen, PSTR(",notify:{notifyCondition:\""));
+//    plen = addToBufferTCP_P(buf, plen, PSTR("ZZZZZZZZZZ"));
+//    plen = addToBufferTCP_P(buf, plen, PSTR("\",notifyValue:"));
+//    plen = addToBufferTCP(buf, plen, notification->notify.value);
+    plen = addToBufferTCP_P(buf, plen, PSTR("}"));
     return plen;
 }

@@ -3,7 +3,7 @@ package net.awired.housecream.client.it;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import net.awired.housecream.client.HccTestRule;
-import net.awired.housecream.client.common.domain.HccDevice;
+import net.awired.housecream.client.common.domain.board.HccDevice;
 import net.awired.housecream.client.common.resource.HccUpdateException;
 import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;

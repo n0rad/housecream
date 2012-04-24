@@ -1,11 +1,13 @@
-package net.awired.housecream.client.common.resource;
+package net.awired.housecream.client.common.resource.client;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import net.awired.housecream.client.common.domain.HccPinDescription;
-import net.awired.housecream.client.common.domain.HccPinInfo;
+import net.awired.housecream.client.common.domain.pin.HccPinDescription;
+import net.awired.housecream.client.common.domain.pin.HccPinInfo;
+import net.awired.housecream.client.common.resource.HccUpdateException;
+import net.awired.housecream.client.common.resource.PinNotFoundException;
 
 @Path("pin/{pinId}")
 public interface HccPinResource {

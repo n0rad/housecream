@@ -1,7 +1,7 @@
 package net.awired.housecream.client.it;
 
 import net.awired.housecream.client.HccTestRule;
-import net.awired.housecream.client.common.domain.HccPinInfo;
+import net.awired.housecream.client.common.domain.pin.HccPinInfo;
 import net.awired.housecream.client.common.resource.PinNotFoundException;
 import org.junit.Rule;
 import org.junit.Test;

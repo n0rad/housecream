@@ -2,7 +2,7 @@ package net.awired.housecream.client.it.notused;
 
 import static org.junit.Assert.assertTrue;
 import net.awired.housecream.client.HccTestRule;
-import net.awired.housecream.client.common.domain.HccPinDescription;
+import net.awired.housecream.client.common.domain.pin.HccPinDescription;
 import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Rule;

@@ -1,16 +1,18 @@
 package net.awired.housecream.client.common.resource.server;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import net.awired.housecream.client.common.domain.HccPinNotify;
+import net.awired.housecream.client.common.domain.board.HccBoardNotification;
+import net.awired.housecream.client.common.domain.pin.HccPinNotification;
 
 public interface HccNotifyResource {
 
-    @GET
-    public String start();
+    @PUT
+    @Path("pin")
+    public void pinNotification(HccPinNotification pinNotification);
 
-    @POST
-    @Path("notify")
-    public void notify(HccPinNotify pinNotify);
+    @PUT
+    @Path("board")
+    public void boardNotification(HccBoardNotification boardNotification);
+
 }

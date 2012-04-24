@@ -1,9 +1,10 @@
-package net.awired.housecream.client.common.resource;
+package net.awired.housecream.client.common.resource.client;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import net.awired.housecream.client.common.domain.HccDevice;
+import net.awired.housecream.client.common.domain.board.HccDevice;
+import net.awired.housecream.client.common.resource.HccUpdateException;
 
 @Path("/")
 public interface HccResource {

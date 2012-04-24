@@ -12,14 +12,16 @@
 
 const prog_char DOUBLE_ENDL[] PROGMEM = "\r\n\r\n";
 const prog_char RESOURCE_PIN[] PROGMEM = "/pin/";
+const prog_char RESOURCE_PIN_SUFFIX[] PROGMEM = "/value";
+const prog_char RESOURCE_OTHER_SUFFIX[] PROGMEM = "/value";
 const prog_char RESOURCE_BOARD[] PROGMEM = "/ ";
-const prog_char RESOURCE_RESET[] PROGMEM = "/reset";
-const prog_char RESOURCE_INIT[] PROGMEM = "/init";
+const prog_char RESOURCE_RESET[] PROGMEM = "/reset ";
+const prog_char RESOURCE_INIT[] PROGMEM = "/init ";
 const prog_char GET[] PROGMEM = "GET ";
 const prog_char PUT[] PROGMEM = "PUT ";
 
 const prog_char HEADER_HTTP[] PROGMEM = "HTTP/1.0 ";
-const prog_char HEADER_CONTENT[] PROGMEM = "Content-Type: application/json";
+const prog_char HEADER_CONTENT[] PROGMEM = "\r\nContent-Type: application/json";
 const prog_char HEADER_200[] PROGMEM = "200 OK";
 const prog_char HEADER_500[] PROGMEM = "500 Internal Server Error";
 const prog_char HEADER_404[] PROGMEM = "404 Not Found";
@@ -49,14 +51,17 @@ typedef uint16_t (*ResourceFunc)(char *buf, uint16_t dat_p, uint16_t plen);
 struct s_resource {
   const prog_char *method;
   const prog_char *query;
+  const prog_char *suffix;
   ResourceFunc resourceFunc;
 } const resources[] PROGMEM = {
-  {GET, RESOURCE_PIN, pinGet},
-  {PUT, RESOURCE_PIN,  pinPut},
-  {GET, RESOURCE_BOARD, boardGet},
-  {PUT, RESOURCE_BOARD,  boardPut},
-  {PUT, RESOURCE_RESET,  boardReset},
-  {PUT, RESOURCE_INIT,  boardReInit},
+  {PUT, RESOURCE_PIN, RESOURCE_PIN_SUFFIX, pinPutValue},
+  {GET, RESOURCE_PIN, RESOURCE_PIN_SUFFIX, pinGetValue},
+  {GET, RESOURCE_PIN, 0, pinGet},
+  {PUT, RESOURCE_PIN,  0, pinPut},
+  {GET, RESOURCE_BOARD, 0, boardGet},
+  {PUT, RESOURCE_BOARD, 0, boardPut},
+  {PUT, RESOURCE_RESET, 0, boardReset},
+  {GET, RESOURCE_INIT, 0, boardReInit},
   {0, 0, 0}
 };
 

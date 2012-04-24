@@ -1,12 +1,12 @@
 package net.awired.housecream.client;
 
 import java.util.Collections;
-import net.awired.housecream.client.common.domain.HccDevice;
-import net.awired.housecream.client.common.domain.HccPin;
-import net.awired.housecream.client.common.domain.HccPinInfo;
+import net.awired.housecream.client.common.domain.board.HccDevice;
+import net.awired.housecream.client.common.domain.pin.HccPin;
+import net.awired.housecream.client.common.domain.pin.HccPinInfo;
 import net.awired.housecream.client.common.resource.HCCResponseExceptionMapper;
-import net.awired.housecream.client.common.resource.HccPinResource;
-import net.awired.housecream.client.common.resource.HccResource;
+import net.awired.housecream.client.common.resource.client.HccPinResource;
+import net.awired.housecream.client.common.resource.client.HccResource;
 import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import net.awired.housecream.client.common.test.DefaultTestDebugResource;
 import net.awired.housecream.client.it.HccItServer;

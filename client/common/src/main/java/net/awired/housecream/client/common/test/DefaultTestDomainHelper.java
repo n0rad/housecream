@@ -1,13 +1,13 @@
 package net.awired.housecream.client.common.test;
 
-import net.awired.housecream.client.common.domain.HccCondition;
-import net.awired.housecream.client.common.domain.HccDevice;
-import net.awired.housecream.client.common.domain.HccNotify;
-import net.awired.housecream.client.common.domain.HccPin;
-import net.awired.housecream.client.common.domain.HccPinDescription;
-import net.awired.housecream.client.common.domain.HccPinDirection;
-import net.awired.housecream.client.common.domain.HccPinInfo;
-import net.awired.housecream.client.common.domain.HccPinType;
+import net.awired.housecream.client.common.domain.board.HccDevice;
+import net.awired.housecream.client.common.domain.pin.HccCondition;
+import net.awired.housecream.client.common.domain.pin.HccNotify;
+import net.awired.housecream.client.common.domain.pin.HccPin;
+import net.awired.housecream.client.common.domain.pin.HccPinDescription;
+import net.awired.housecream.client.common.domain.pin.HccPinDirection;
+import net.awired.housecream.client.common.domain.pin.HccPinInfo;
+import net.awired.housecream.client.common.domain.pin.HccPinType;
 
 class DefaultTestDomainHelper {
 

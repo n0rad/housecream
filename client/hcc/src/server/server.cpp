@@ -4,8 +4,8 @@ uint16_t startResponseHeader(char **buf, const prog_char *codeMsg) {
     *buf = &((*buf)[TCP_CHECKSUM_L_P + 3]);
     uint16_t plen;
     plen = addToBufferTCP_P(*buf, 0, HEADER_HTTP);
-    plen = addToBufferTCP_P(*buf, plen, HEADER_CONTENT);
     plen = addToBufferTCP_P(*buf, plen, codeMsg);
+    plen = addToBufferTCP_P(*buf, plen, HEADER_CONTENT);
     plen = addToBufferTCP_P(*buf, plen, DOUBLE_ENDL);
     return plen;
 }
@@ -24,12 +24,15 @@ uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg) {
     return plen;
 }
 
-uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
-        DEBUG_p(PSTR("memory "));
-        DEBUG_PRINTLN(getFreeMemory());
+ResourceFunc currentFunc = 0;
+uint8_t currentPinId = 0;
 
-    DEBUG_p(PSTR("DATA LEN : "));
-    DEBUG_PRINTLN(dataLen);
+
+uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
+    DEBUG_p(PSTR("memory "));
+    DEBUG_PRINTLN(getFreeMemory());
+
+    DEBUG_p(PSTR("DATA :"));
     DEBUG_PRINTLN(&buf[dataPointer]);
 
     uint16_t plen;
@@ -50,23 +53,63 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         return plen;
     }
 
-    uint8_t managed = false;
+
+
     prog_char *methodPos;
-    for (int i = 0; (methodPos = (prog_char *) pgm_read_word(&resources[i].method)); i++) {
-        uint16_t reslen = strlen_P(methodPos);
+    int i = 0;
+    for (; (methodPos = (prog_char *) pgm_read_word(&resources[i].method)); i++) {
         uint16_t querylen = strlen_P((prog_char *) pgm_read_word(&resources[i].query));
         prog_char *queryPos = (prog_char *) pgm_read_word(&resources[i].query);
-        if (strncmp_P((char *) &(buf[dataPointer]), methodPos, reslen) == 0
-                && strncmp_P((char *) & (buf[dataPointer + reslen]), queryPos, querylen) == 0) {
-            ResourceFunc func = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
-            plen = func((char*)buf, dataPointer + reslen, dataLen);
-            managed = true;
-            break;
+        if (strncmp_P((char *) &(buf[dataPointer]), methodPos, 4) == 0
+                && strncmp_P((char *) & (buf[dataPointer + 4]), queryPos, querylen) == 0) {
+
+            prog_char *suffixPos = (prog_char *) pgm_read_word(&resources[i].suffix);
+            if (' ' == pgm_read_byte(&queryPos[querylen - 1])) {
+               break;
+            } else {
+                currentPinId = atoi(&buf[dataPointer + 4 + querylen]);
+                uint8_t j = dataPointer + 4 + querylen;
+                for (; buf[j] >= '0' && buf[j] <= '9'; j++);
+                if (suffixPos == 0 && (buf[j] == ' ' || (buf[j] == '/' && buf[j + 1] == ' '))) {
+                    currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
+                    break;
+                } else if (strncmp_P((char *) & (buf[j]), suffixPos, strlen_P(suffixPos)) == 0) {
+                    currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
+                    break;
+                }
+            }
         }
     }
-    if (!managed) {
+
+    if (!methodPos) {
         plen = startResponseHeader(&buf, HEADER_404);
         plen = appendErrorMsg_P(buf, plen, PSTR("No resource for this method & url"));
+        return plen;
+    } else {
+        currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
+
+        if (methodPos == GET) { // we should not have data call function directly
+            plen = currentFunc((char*)buf, 0, dataLen);
+            return plen;
+        } else {
+            uint16_t endPos = strstrpos_P(&buf[dataPointer], DOUBLE_ENDL);
+            if (endPos == -1) {
+                plen = startResponseHeader(&buf, HEADER_400);
+                plen = appendErrorMsg_P(buf, plen, PSTR("Double endl not found"));
+                return plen;
+            }
+
+            uint16_t dataStartPos = dataPointer + endPos + 4;
+            if (dataStartPos == dataLen) {
+                // no data in this packet
+                DEBUG_p(PSTR("NEED DATA"));
+            } else {
+                plen = currentFunc((char *)buf, dataStartPos, dataLen);
+                return plen;
+            }
+        }
+
     }
+
     return plen;
 }

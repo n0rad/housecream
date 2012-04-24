@@ -37,7 +37,7 @@ const t_pinDescription pinDescriptions[NUMBER_OF_PINS] PROGMEM = {
 /** A copy of this struct is saved in EEPROM and can be modified through the rest API */
 const t_config defaultConfig PROGMEM = {
     {
-        {192, 168, 42, 245},                            // ip
+        {192, 168, 12, 3},                            // ip
         80,                                             // port
         "window1 controller",                           // name
     },

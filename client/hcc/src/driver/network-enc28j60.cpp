@@ -51,8 +51,8 @@ void networkSetup() {
     es.ES_init_ip_arp_udp_tcp((uint8_t *) mac, (uint8_t *)ip, port);
 }
 
-static uint8_t dest_ip[4] = { 192, 168, 42, 4 };
-static uint16_t dstPort = 80;
+static uint8_t dest_ip[4] = { 192, 168, 42, 210 };
+static uint16_t dstPort = 8080;
 static uint16_t srcPort = 1200;
 static uint8_t syn_ack_timeout = 0;
 static uint8_t dest_mac[6];
@@ -74,7 +74,7 @@ void networkManageClient() {
         return;
     }
     if (client_state == ARP_SENT) {
-        DEBUG_p(PSTR("arp"));
+       // DEBUG_p(PSTR("arp"));
         plen = es.ES_enc28j60PacketReceive(BUFFER_SIZE, buf);
         // destination ip address was found on network
         if (plen != 0) {

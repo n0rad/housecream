@@ -1,4 +1,4 @@
-package net.awired.housecream.client.common.domain;
+package net.awired.housecream.client.common.domain.board;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
