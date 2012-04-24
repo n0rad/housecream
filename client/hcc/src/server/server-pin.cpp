@@ -2,9 +2,25 @@
 
 
 
-static uint16_t pinGetDescription(char *buf, uint8_t pinId) {
-    uint16_t plen;
+uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+    plen = startResponseHeader(&buf, HEADER_200);
+    plen = addToBufferTCP_P(buf, plen, PSTR("pinPutValue"));
+    return plen;
+}
 
+uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+    plen = startResponseHeader(&buf, HEADER_200);
+    plen = addToBufferTCP_P(buf, plen, PSTR("pinGetValue"));
+    return plen;
+}
+
+uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+    plen = startResponseHeader(&buf, HEADER_200);
+    plen = addToBufferTCP_P(buf, plen, PSTR("pinPut"));
+    return plen;
+}
+
+uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     plen = startResponseHeader(&buf, HEADER_200);
     plen = addToBufferTCP_P(buf, plen, PSTR("{\"id\":"));
     plen = addToBufferTCP(buf, plen, (uint16_t) pinId);
@@ -66,64 +82,8 @@ static uint16_t pinGetDescription(char *buf, uint8_t pinId) {
         plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
         plen = addToBufferTCP(buf, plen, getPinValue(pinId));
     }
-
-
     plen = addToBufferTCP_P(buf, plen, PSTR("}"));
     return plen;
-}
-
-uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen) {
-    plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinPutValue"));
-    return plen;
-}
-
-uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen) {
-    plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinGetValue"));
-    return plen;
-}
-
-uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen) {
-    plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinPut"));
-    return plen;
-}
-
-uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen) {
-    plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinGet"));
-    return plen;
-//    uint8_t pinId;
-//    char request[15] = { 0 };
-//
-//    //sscanf will always return 0 or 2 because it read HTTP/1.1 when there is nothing after the pinId
-//    int found = sscanf_P((char *) &buf[dat_p + 5], PSTR("%d%s"), &pinId, request);
-//    if (found != 0) {
-//        if (pinId < 0 || pinId > NUMBER_OF_PINS - 1) {
-//            plen = startResponseHeader(&buf, HEADER_400);
-//            plen = appendErrorMsg_P(buf, plen, PSTR("PinId overflow"));
-//            return plen;
-//        }
-//        if (strncmp_P(request, PSTR("/value"), 5) == 0) {
-//            plen = startResponseHeader(&buf, HEADER_200);
-//            plen = addToBufferTCP(buf, plen, getPinValue(pinId));
-//            return plen;
-//        } else if ((request[0] == '/' && !request[1])
-//                || strncmp_P(request, PSTR("HTTP/"), 5) == 0) {
-//            plen = pinGetDescription(buf, pinId);
-//            return plen;
-//        } else {
-//            plen = startResponseHeader(&buf, HEADER_404);
-//            plen = appendErrorMsg_P(buf, plen, PSTR("No resource on pin for this method & url"));
-//            return plen;
-//        }
-//    } else {
-//        plen = startResponseHeader(&buf, HEADER_400);
-//        plen = appendErrorMsg_P(buf, plen, PSTR("Cannot read pin number in the request"));
-//        return plen;
-//    }
-//    return plen;
 }
 
 

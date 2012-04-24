@@ -7,10 +7,10 @@
 #include "../hcc.h"
 #include "../settings/settings.h"
 
-uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen);
-uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen);
-uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen);
-uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen);
+uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
 
 #include "server.h"
 

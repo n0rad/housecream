@@ -88,8 +88,8 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     } else {
         currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
 
-        if (methodPos == GET) { // we should not have data call function directly
-            plen = currentFunc((char*)buf, 0, dataLen);
+        if (methodPos == GET) { // GET do not need data, calling func directly
+            plen = currentFunc((char*)buf, 0, dataLen, 0);
             return plen;
         } else {
             uint16_t endPos = strstrpos_P(&buf[dataPointer], DOUBLE_ENDL);
@@ -104,7 +104,15 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 // no data in this packet
                 DEBUG_p(PSTR("NEED DATA"));
             } else {
-                plen = currentFunc((char *)buf, dataStartPos, dataLen);
+
+                if (currentPinId < 0 || currentPinId > NUMBER_OF_PINS - 1) {
+                    plen = startResponseHeader(&buf, HEADER_400);
+                    plen = appendErrorMsg_P(buf, plen, PSTR("PinId overflow"));
+                    return plen;
+                }
+
+
+                plen = currentFunc((char *)buf, dataStartPos, dataLen, currentPinId);
                 return plen;
             }
         }

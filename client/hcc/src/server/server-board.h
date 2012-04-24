@@ -7,10 +7,10 @@
 #include "../settings/settings-board.h"
 #include "../util/buffer.h"
 
-uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen);
-uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen);
-uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen);
-uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen);
+uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
 
 #include "server.h"
 

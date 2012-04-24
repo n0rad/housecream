@@ -46,7 +46,7 @@ uint16_t appendJsonKey(char *buf, uint16_t plen, const prog_char *key);
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen);
 
-typedef uint16_t (*ResourceFunc)(char *buf, uint16_t dat_p, uint16_t plen);
+typedef uint16_t (*ResourceFunc)(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
 
 struct s_resource {
   const prog_char *method;
