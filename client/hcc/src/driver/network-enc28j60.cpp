@@ -51,7 +51,7 @@ void networkSetup() {
     es.ES_init_ip_arp_udp_tcp((uint8_t *) mac, (uint8_t *)ip, port);
 }
 
-static uint8_t dest_ip[4] = { 192, 168, 42, 210 };
+static uint8_t dest_ip[4] = { 192, 168, 42, 211 };
 static uint16_t dstPort = 8080;
 static uint16_t srcPort = 1200;
 static uint8_t syn_ack_timeout = 0;
@@ -191,6 +191,8 @@ void networkManageClient() {
 }
 
 
+extern boolean needReboot;
+
 void networkManageServer() {
     if (client_state != IDLE) {
         return;
@@ -229,8 +231,9 @@ void networkManageServer() {
           }
           plen = handleWebRequest((char *)buf, dat_p, plen);
           es.ES_make_tcp_ack_from_any(buf); // send ack for http get
-          es.ES_make_tcp_ack_with_data(buf, plen); // send data
-          extern boolean needReboot;
+          if (plen != 0) { // we need more data send no response
+              es.ES_make_tcp_ack_with_data(buf, plen); // send data
+          }
           if (needReboot) {
               resetFunc();
           }

@@ -1,6 +1,6 @@
 package net.awired.housecream.client.common.test;
 
-import net.awired.housecream.client.common.domain.board.HccDevice;
+import net.awired.housecream.client.common.domain.board.HccBoard;
 import net.awired.housecream.client.common.domain.pin.HccCondition;
 import net.awired.housecream.client.common.domain.pin.HccNotify;
 import net.awired.housecream.client.common.domain.pin.HccPin;
@@ -123,8 +123,8 @@ class DefaultTestDomainHelper {
         }
     }
 
-    public static HccDevice buildDefaultDevice() {
-        HccDevice device = new HccDevice();
+    public static HccBoard buildDefaultDevice() {
+        HccBoard device = new HccBoard();
         device.setVersion("1.0");
         device.setSoftware("hcc");
         device.setNotifyUrl("http://localhost/4242");

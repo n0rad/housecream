@@ -28,13 +28,22 @@ public class NotifyServer extends ExternalResource {
         //        ResourceConfig rc = newConfig();
         //        server = GrizzlyServerFactory.createHttpServer(uri, rc);
 
-        DefaultResourceConfig resourceConfig = new DefaultResourceConfig(resource);
+        DefaultResourceConfig resourceConfig = new DefaultResourceConfig(BoardResource.class);
+        //        DefaultResourceConfig resourceConfig = new DefaultResourceConfig(resource);
         resourceConfig.getProperties().put(PROPERTY_CONTAINER_REQUEST_FILTERS, new LoggingFilter());
         resourceConfig.getProperties().put(PROPERTY_CONTAINER_RESPONSE_FILTERS, new LoggingFilter());
 
         // The following line is to enable GZIP when client accepts it
         //        resourceConfig.getContainerResponseFilters().add(new GZIPContentEncodingFilter());
-        server = GrizzlyServerFactory.createHttpServer("http://192.168.42.210:" + port, resourceConfig);
+        server = GrizzlyServerFactory.createHttpServer("http://localhost:" + port, resourceConfig);
+    }
+
+    public static void main(String[] args) throws Throwable {
+        NotifyServer notifyServer = new NotifyServer(8080, null);
+        notifyServer.before();
+        while (true) {
+            Thread.sleep(1000);
+        }
     }
 
     @Override

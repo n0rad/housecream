@@ -3,8 +3,9 @@
 
 
 uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+    defaultPinWrite(pinId, atoi(&buf[dat_p]));
+    DEBUG_p(PSTR("pvalue"));
     plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinPutValue"));
     return plen;
 }
 
@@ -17,6 +18,7 @@ uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
 uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     plen = startResponseHeader(&buf, HEADER_200);
     plen = addToBufferTCP_P(buf, plen, PSTR("pinPut"));
+    DEBUG_p(PSTR("pinput"));
     return plen;
 }
 

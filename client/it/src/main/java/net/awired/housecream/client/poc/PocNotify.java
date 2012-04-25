@@ -18,7 +18,7 @@ public class PocNotify implements HccNotifyResource {
 
     public PocNotify() {
         Client client = Client.create();
-        webResource = client.resource("http://192.168.42.4/");
+        webResource = client.resource("http://192.168.1.122:8181/");
         //        //        pinResource = JAXRSClientFactory.create("http://192.168.42.245/", HccPinResource.class);
         //        WebClient client = WebClient.create("http://192.168.42.245/");
         //        WebClient.getConfig(client).getHttpConduit().getClient().setAllowChunking(false);
@@ -33,6 +33,21 @@ public class PocNotify implements HccNotifyResource {
         //        //            WebClient.client(pinResource).accept("application/json");
     }
 
+    public class threadtest extends Thread {
+        private final HccPinNotification pinNotification;
+
+        public threadtest(HccPinNotification pinNotification) {
+            this.pinNotification = pinNotification;
+        }
+
+        @Override
+        public void run() {
+            ClientResponse response = webResource.path("pin/" + (pinNotification.getId() + 1) + "/value").put(
+                    ClientResponse.class, pinNotification.getValue() == 1 ? "0" : "1");
+            System.out.println(response);
+        }
+    }
+
     @Override
     public void pinNotification(HccPinNotification pinNotification) {
         System.out.println("pin notif id :" + pinNotification.getId());
@@ -42,9 +57,7 @@ public class PocNotify implements HccNotifyResource {
         //                }
         //            pinResource.setValue(pinNotification.getId() + 1, pinNotification.getValue() == 1 ? 0f : 1f);
 
-        ClientResponse response = webResource.path("pin/" + (pinNotification.getId() + 1) + "/value")
-                .header("connection", "close").put(ClientResponse.class, "1");
-        System.out.println("genre");
+        new Thread(new threadtest(pinNotification)).start();
         //                return "sal";
         //        } catch (PinNotFoundException e) {
         //            // TODO Auto-generated catch block

@@ -8,7 +8,7 @@ char *buildGlobalError_P(const prog_char *progmem_s, int pin);
 
 #include "../../config.h"
 
-#define CONFIG_VERSION "hcc0"
+#define CONFIG_VERSION "hcc1"
 
 ///////////////////////////////////////////////////////////////
 // BOARD

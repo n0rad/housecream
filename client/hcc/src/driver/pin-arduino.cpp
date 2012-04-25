@@ -7,3 +7,10 @@ uint16_t pinReadValue(uint8_t pin, uint8_t type) {
         return digitalRead(pin);
     }
 }
+
+void pinWriteValue(uint8_t pin, uint16_t value) {
+    DEBUG_p(PSTR("WRITEVAL"));
+    DEBUG_PRINT(value);
+    //TODO
+    digitalWrite(pin, value);
+}

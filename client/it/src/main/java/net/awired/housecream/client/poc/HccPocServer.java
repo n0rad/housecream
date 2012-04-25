@@ -29,7 +29,7 @@ public class HccPocServer {
 
         // The following line is to enable GZIP when client accepts it
         //        resourceConfig.getContainerResponseFilters().add(new GZIPContentEncodingFilter());
-        server = GrizzlyServerFactory.createHttpServer("http://192.168.42.210:" + port, resourceConfig);
+        server = GrizzlyServerFactory.createHttpServer("http://192.168.1.122:" + port, resourceConfig);
         server.getListeners().iterator().next().setChunkingEnabled(false);
         //        System.out.println(size);
         //        server.getHttpHandler

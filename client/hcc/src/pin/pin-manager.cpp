@@ -18,7 +18,7 @@ uint16_t defaultPinRead(uint8_t pinId) {
 }
 
 void defaultPinWrite(uint8_t pinId, uint16_t value) {
-
+    pinWriteValue(pinId, value);
 }
 
 
@@ -65,6 +65,8 @@ void pinCheckChange() {
 
 void pinInit() {
     pinMode(0, INPUT);
+    pinMode(2, INPUT);
+    pinMode(3, OUTPUT);
 }
 
 

@@ -1,12 +1,12 @@
 package net.awired.housecream.client;
 
 import java.util.Collections;
-import net.awired.housecream.client.common.domain.board.HccDevice;
+import net.awired.housecream.client.common.domain.board.HccBoard;
 import net.awired.housecream.client.common.domain.pin.HccPin;
 import net.awired.housecream.client.common.domain.pin.HccPinInfo;
 import net.awired.housecream.client.common.resource.HCCResponseExceptionMapper;
 import net.awired.housecream.client.common.resource.client.HccPinResource;
-import net.awired.housecream.client.common.resource.client.HccResource;
+import net.awired.housecream.client.common.resource.client.HccBoardResource;
 import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import net.awired.housecream.client.common.test.DefaultTestDebugResource;
 import net.awired.housecream.client.it.HccItServer;
@@ -16,7 +16,7 @@ import org.junit.rules.ExternalResource;
 
 public class HccTestRule extends ExternalResource {
 
-    private HccResource hccResource;
+    private HccBoardResource hccResource;
 
     private HccPinResource pinResource;
 
@@ -28,7 +28,7 @@ public class HccTestRule extends ExternalResource {
                 Collections.singletonList(exceptionMapper));
         WebClient.client(pinResource).accept("application/xml");
 
-        hccResource = JAXRSClientFactory.create(HccItServer.getUrl(), HccResource.class,
+        hccResource = JAXRSClientFactory.create(HccItServer.getUrl(), HccBoardResource.class,
                 Collections.singletonList(exceptionMapper));
         WebClient.client(hccResource).accept("application/xml");
 
@@ -43,8 +43,8 @@ public class HccTestRule extends ExternalResource {
     }
 
     public void reset() throws Exception {
-        HccDevice deviceInfo = DefaultITDomainHelper.buildDefaultDevice();
-        hccResource.updateDevice(deviceInfo);
+        HccBoard deviceInfo = DefaultITDomainHelper.buildDefaultDevice();
+        hccResource.setBoard(deviceInfo);
 
         for (int i = 0; i < deviceInfo.getNumberOfPin() - 1; i++) {
             HccPinInfo info = DefaultITDomainHelper.buildDefaultPin(i).getInfo();
@@ -65,7 +65,7 @@ public class HccTestRule extends ExternalResource {
         return pinResource;
     }
 
-    public HccResource getHccResource() {
+    public HccBoardResource getHccResource() {
         return hccResource;
     }
 

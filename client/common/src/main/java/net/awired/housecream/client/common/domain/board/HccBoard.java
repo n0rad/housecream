@@ -4,9 +4,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "board")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HccDevice {
+public class HccBoard {
 
     private String software;
     private String version;
@@ -14,7 +14,6 @@ public class HccDevice {
     private String name; // updatable
     private String description; // updatable
     private String notifyUrl; // updatable
-    private String technicalDescription;
     private String mac;
     private String ip;
     private Integer port;
@@ -23,6 +22,8 @@ public class HccDevice {
     //private toto42 analogReference;
     //    private boolean hash;
     //    private boolean crypt;
+
+    ////////////////////////////////////////////////////////
 
     public String getSoftware() {
         return software;
@@ -102,14 +103,6 @@ public class HccDevice {
 
     public String getHardware() {
         return hardware;
-    }
-
-    public void setTechnicalDescription(String technicalDescription) {
-        this.technicalDescription = technicalDescription;
-    }
-
-    public String getTechnicalDescription() {
-        return technicalDescription;
     }
 
 }
