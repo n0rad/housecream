@@ -1,8 +1,6 @@
 package net.awired.housecream.client.poc;
 
 import net.awired.housecream.client.common.domain.board.HccBoard;
-import net.awired.housecream.client.common.resource.HCCResponseExceptionMapper;
-import net.awired.housecream.client.common.resource.client.HccBoardResource;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -10,363 +8,32 @@ import com.sun.jersey.api.client.WebResource;
 public class Main {
 
     public static void main(String[] args) throws Throwable {
-        HCCResponseExceptionMapper exceptionMapper = new HCCResponseExceptionMapper();
+        //        HCCResponseExceptionMapper exceptionMapper = new HCCResponseExceptionMapper();
+        //
+        //        //        HccPinResource pinResource;
+        //        HccBoardResource boardResource;
+        //
+        //        Client client = Client.create();
+        //        System.out.println(getboard(client).getName());
+        //        setPinValue(client, 1f);
+        //        setPinValue(client, 0f);
+        //
+        //        long currentTimeMillis = System.currentTimeMillis();
+        //        setPinValue(client, 0f);
+        //        long currentTimeMillis2 = System.currentTimeMillis();
+        //
+        //        System.out.println(currentTimeMillis2 - currentTimeMillis);
 
-        //        HccPinResource pinResource;
-        HccBoardResource boardResource;
-
-        Client client = Client.create();
-        System.out.println(getboard(client).getName());
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-        setPinValue(client, 1f);
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        setPinValue(client, 0f);
-
-        setPinValue(client, 1f);
-
-        long currentTimeMillis = System.currentTimeMillis();
-        setPinValue(client, 0f);
-        long currentTimeMillis2 = System.currentTimeMillis();
-
-        System.out.println(currentTimeMillis2 - currentTimeMillis);
         //        boardResource = JAXRSClientFactory.create("http://localhost:8080", HccBoardResource.class,
         //                Collections.singletonList(exceptionMapper));
         //        WebClient.client(boardResource).accept("application/json");
         //        HccBoard board = boardResource.getBoard();
 
-        //        new HccPocServer(8080, PocNotify.class).start();
-        //
-        //        while (true) {
-        //            Thread.sleep(1000);
-        //        }
+        new HccPocServer(8080, PocNotify.class).start();
+
+        while (true) {
+            Thread.sleep(1000);
+        }
     }
 
     private static HccBoard getboard(Client client) {

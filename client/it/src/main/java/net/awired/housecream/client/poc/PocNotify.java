@@ -35,22 +35,27 @@ public class PocNotify implements HccNotifyResource {
 
     public class threadtest extends Thread {
         private final HccPinNotification pinNotification;
+        private Client client;
 
         public threadtest(HccPinNotification pinNotification) {
             this.pinNotification = pinNotification;
+            client = Client.create();
         }
 
         @Override
         public void run() {
-            ClientResponse response = webResource.path("pin/" + (pinNotification.getId() + 1) + "/value").put(
-                    ClientResponse.class, pinNotification.getValue() == 1 ? "0" : "1");
+            System.out.println("sending");
+            WebResource webResource = client.resource("http://192.168.42.245/pin/" + (pinNotification.getId() + 1)
+                    + "/value");
+            ClientResponse response = webResource.type("application/json").accept("application/json")
+                    .put(ClientResponse.class, pinNotification.getValue() == 1 ? "0" : "1");
             System.out.println(response);
         }
     }
 
     @Override
     public void pinNotification(HccPinNotification pinNotification) {
-        System.out.println("pin notif id :" + pinNotification.getId());
+        System.out.println("pin notif id :" + pinNotification.getId() + "value :" + pinNotification.getValue());
         //        try {
         //                if (true || true) {
         //                    return;

@@ -6,7 +6,7 @@
 #define PSTR2(s) (__extension__({static prog_char __c[] PROGMEM2 = (s); &__c[0];}))
 #endif
 
-#define DEBUG
+//#define DEBUG
 
 #include "debug.h"
 
