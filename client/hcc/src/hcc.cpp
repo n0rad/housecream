@@ -36,7 +36,7 @@ int main(void) {
     for (;;) {
         networkManageServer();
         pinCheckChange();
-        networkManageClient();
+//        networkManageClient();
     }
 
     return 0;
