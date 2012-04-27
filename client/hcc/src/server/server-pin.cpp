@@ -3,8 +3,11 @@
 
 
 uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
-    defaultPinWrite(pinId, atoi(&buf[dat_p]));
+    int t = atoi(&buf[dat_p]);
+    defaultPinWrite(pinId, t);
     DEBUG_p(PSTR("pvalue"));
+    DEBUG_PRINTLN(pinId);
+    DEBUG_PRINTLN(t);
     plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }
@@ -55,11 +58,6 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
         float maxValue;
         memcpy_P(&maxValue, &pinDescriptions[pinId].valueMax, sizeof(float));
         plen = addToBufferTCP(buf, plen, conversionFunc(maxValue));
-
-        if (direction == PIN_OUTPUT) {
-            plen = addToBufferTCP_P(buf, plen, PSTR(",\"startValue\":"));
-            plen = addToBufferTCP(buf, plen, getConfigPinValue(pinId));
-        }
 
         if (direction == PIN_INPUT) {
             plen = addToBufferTCP_P(buf, plen, PSTR(",\"notifies\":["));

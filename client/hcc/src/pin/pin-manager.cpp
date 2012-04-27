@@ -67,6 +67,8 @@ void pinInit() {
     pinMode(0, INPUT);
     pinMode(2, INPUT);
     pinMode(3, OUTPUT);
+    pinMode(4, INPUT);
+    pinMode(5, OUTPUT);
 }
 
 

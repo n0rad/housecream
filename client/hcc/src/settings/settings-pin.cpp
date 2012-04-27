@@ -19,39 +19,39 @@ uint8_t *getConfigPinName_E(uint8_t pinId) {
 
 /////////////////
 
-prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index) {
     return PSTR("id ");
 }
-prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index) {
     return PSTR("name");
 }
-prog_char *setConfigPinDescription(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinDescription(char *buf, uint16_t len, uint8_t index) {
     return PSTR("description");
 }
-prog_char *setConfigPinDirection(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinDirection(char *buf, uint16_t len, uint8_t index) {
     return PSTR("direction");
 }
-prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
     return PSTR("type");
 }
-prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
     return PSTR("valueMin");
 }
-prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
     return PSTR("valueMax");
 }
-prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
     return PSTR("notifies");
 }
-prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
     return PSTR("notifyCondition");
 }
-prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index) {
     return PSTR("notifyValue");
 }
-prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index) {
     return PSTR("value");
 }
-prog_char *setConfigPinStartValue(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigPinStartValue(char *buf, uint16_t len, uint8_t index) {
     return PSTR("startValue");
 }

@@ -54,11 +54,10 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
 }
 
 uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
-    char *data = &strstr(&buf[dat_p], DOUBLE_ENDL)[4];
-    char *error = jsonParse(data, boardPutElements);
+    const prog_char *error = jsonParse(&buf[dat_p], boardPutElements);
     if (error) {
         plen = startResponseHeader(&buf, HEADER_400);
-        plen = appendErrorMsg(buf, plen, error);
+        plen = appendErrorMsg_P(buf, plen, error);
     } else {
         plen = startResponseHeader(&buf, HEADER_200);
     }
@@ -66,16 +65,22 @@ uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
 }
 
 uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
-    extern uint8_t needReboot;
     needReboot = true;
     plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }
 
+//TODO should be able to reload without reboot
 uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     settingsSave();
-    extern uint8_t needReboot;
     needReboot = true;
+    plen = startResponseHeader(&buf, HEADER_200);
+    return plen;
+}
+
+
+//TODO it
+uint16_t boardNotify(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }

@@ -7,6 +7,8 @@ import com.sun.jersey.api.client.WebResource;
 
 public class Main {
 
+    public static Client client = Client.create();
+
     public static void main(String[] args) throws Throwable {
         //        HCCResponseExceptionMapper exceptionMapper = new HCCResponseExceptionMapper();
         //
@@ -36,7 +38,7 @@ public class Main {
         }
     }
 
-    private static HccBoard getboard(Client client) {
+    public static HccBoard getboard(Client client) {
         WebResource webResource = client.resource("http://192.168.42.245");
         ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
         //        int status = response.getStatus();
@@ -44,8 +46,8 @@ public class Main {
         return board;
     }
 
-    private static void setPinValue(Client client, Float value) {
-        WebResource webResource = client.resource("http://192.168.42.245/pin/3/value");
+    public static void setPinValue(Client client, int pin, Float value) {
+        WebResource webResource = client.resource("http://192.168.42.245/pin/" + pin + "/value");
         ClientResponse response = webResource.type("application/json").accept("application/json")
                 .put(ClientResponse.class, value.toString());
         //        int status = response.getStatus();

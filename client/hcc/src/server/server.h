@@ -13,10 +13,10 @@
 const prog_char DOUBLE_ENDL[] PROGMEM = "\r\n\r\n";
 const prog_char RESOURCE_PIN[] PROGMEM = "/pin/";
 const prog_char RESOURCE_PIN_SUFFIX[] PROGMEM = "/value";
-const prog_char RESOURCE_OTHER_SUFFIX[] PROGMEM = "/value";
 const prog_char RESOURCE_BOARD[] PROGMEM = "/ ";
 const prog_char RESOURCE_RESET[] PROGMEM = "/reset ";
 const prog_char RESOURCE_INIT[] PROGMEM = "/init ";
+const prog_char RESOURCE_NOTIFY[] PROGMEM = "/notify ";
 const prog_char GET[] PROGMEM = "GET ";
 const prog_char PUT[] PROGMEM = "PUT ";
 
@@ -61,7 +61,8 @@ struct s_resource {
   {GET, RESOURCE_BOARD, 0, boardGet},
   {PUT, RESOURCE_BOARD, 0, boardPut},
   {PUT, RESOURCE_RESET, 0, boardReset},
-  {GET, RESOURCE_INIT, 0, boardReInit},
+  {PUT, RESOURCE_INIT, 0, boardReInit},
+  {PUT, RESOURCE_NOTIFY, 0, boardReInit},
   {0, 0, 0}
 };
 

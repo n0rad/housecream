@@ -20,7 +20,7 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
+static const prog_char *parseKeyValue(char **buffer, const t_json *structure) {
     char *buf =  *buffer;
     prog_char *keypos;
     if (buf[0] != '"') { // start of key
@@ -48,7 +48,7 @@ static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
             } else { // call handleValue
                 jsonHandleValue func;
                 func = (jsonHandleValue) pgm_read_word(&structure[i].handleValue);
-                char *res;
+                const prog_char *res;
                 int len;
                 if (buf[0] == '"') {
 //                    DEBUG_p(PSTR("value with quotes"));
@@ -64,8 +64,11 @@ static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
                 } else {
 //                    DEBUG_p(PSTR("value without quotes"));
                     len = findEndOfValue(buf);
+                    DEBUG_PRINT("endoflen");
+                    DEBUG_PRINTLN(len);
+                    DEBUG_PRINTLN(buf[0]);
                     res = func(buf, len, 0);
-                    buf = &buf[len + 1];
+                    buf = &buf[len];
                 }
                 if (res) {
                     return res;
@@ -96,14 +99,14 @@ static prog_char *parseKeyValue(char **buffer, const t_json *structure) {
     return 0;
 }
 
-static prog_char *parseObject(char *buf, const t_json *structure) {
+static const prog_char *parseObject(char *buf, const t_json *structure) {
     buf = skipSpaces(buf);
     if (buf[0] != '{') {
         return JSON_ERROR_NO_OBJECT_START;
     }
     do {
         buf = skipSpaces(&buf[1]);  // skip { or ,
-        char *fail = parseKeyValue(&buf, structure);
+        const prog_char *fail = parseKeyValue(&buf, structure);
         if (fail) {
             return fail;
         }
@@ -121,7 +124,7 @@ static prog_char *parseObject(char *buf, const t_json *structure) {
 }
 
 
-prog_char *jsonParse(char *buf, const t_json *structure) {
+const prog_char *jsonParse(char *buf, const t_json *structure) {
     return parseObject(buf, structure);
 //    return 0;
 }

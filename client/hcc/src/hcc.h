@@ -12,6 +12,7 @@
 
 extern char *criticalProblem_p;
 extern char *definitionError;
+extern uint8_t needReboot;
 
 int getFreeMemory();
 
