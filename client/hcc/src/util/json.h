@@ -21,7 +21,7 @@ typedef const prog_char *(*jsonHandleValue)(char *val, uint16_t valLen, uint8_t 
 typedef struct s_json {
     const prog_char *key;
     jsonHandleValue handleValue; // handle a value
-    s_json *valueStruct;                           // handle an object
+    s_json *valueStruct;                           // sub struct
     uint8_t isArray;
 } t_json;
 

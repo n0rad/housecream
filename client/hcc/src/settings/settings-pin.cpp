@@ -1,19 +1,25 @@
 #include "settings-pin.h"
 
-uint16_t getConfigPinValue(uint8_t pinId) {
-//    uint16_t pinData = CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + (sizeof(t_pinInfo) * NUMBER_OF_PINS);
-//    return eeprom_read_word((const uint16_t *)(pinData + (sizeof(t_pinData) * pinId)));
+uint16_t getConfigPinValue(uint8_t pinIdx) {
+    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * pinIdx);
+    eepromPos += offsetof(t_pinOutputSettings, lastValue);
+    return eeprom_read_word((const uint16_t *)eepromPos);
 }
 
-void getConfigPinNotify(uint8_t pinId, uint8_t notifyId, t_notify *notify) {
-//    uint16_t pinData = CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + (sizeof(t_pinInfo) * NUMBER_OF_PINS);
-//    uint16_t sizePinId = (sizeof(t_pinData) * pinId);
-//    uint16_t sizeLastvalue = sizeof(uint16_t);
-//    eeprom_read_block((void *)notify, (char *)pinData + sizePinId + sizeLastvalue + (sizeof(t_notify) * notifyId), sizeof(t_notify));
+void getConfigPinNotify(uint8_t pinIdx, uint8_t notifyId, t_notify *notify) {
+    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinIdx);
+    eepromPos += offsetof(t_pinInputSettings, notifies) + (sizeof(t_notify) * notifyId);
+    eeprom_read_block((void *)notify, (char *)eepromPos, sizeof(t_notify));
 }
 
-uint8_t *getConfigPinName_E(uint8_t pinId) {
-//    return (uint8_t *)CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + (sizeof(t_pinInfo) * pinId);
+uint8_t *getConfigPinName_E(uint8_t pinIdx, uint8_t pinDirection) {
+    uint16_t eepromPinIdx = sizeof(t_boardSettings);
+    if (pinDirection == PIN_INPUT) {
+        eepromPinIdx += (sizeof(t_pinInputSettings) * pinIdx);
+    } else {
+        eepromPinIdx += (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * pinIdx);
+    }
+    return (uint8_t *)eepromPinIdx /* + offsetof(t_pin*Settings, name); not needed as name is first elem in both */;
 }
 
 

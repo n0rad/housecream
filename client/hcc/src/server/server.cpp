@@ -24,12 +24,6 @@ uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg) {
     return plen;
 }
 
-//ResourceFunc currentFunc = 0;
-//prog_char *currentQueryPos = 0;
-
-#define PIN_DIRECTION_INPUT 1
-#define PIN_DIRECTION_OUTPUT 2
-
 t_webRequest current = {0, 0, 0};
 
 static uint16_t commonCheck(char *buf, uint16_t dataPointer, uint16_t dataLen) {
@@ -79,16 +73,16 @@ uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 int8_t idx = getInputPinIdx(currentPinId);
                 if (idx != -1) {
                     current.pinIdx = idx;
-                    current.pinDirection = PIN_DIRECTION_INPUT;
+                    current.pinDirection = PIN_INPUT;
                 } else {
                     idx = getOutputPinIdx(currentPinId);
                     if (idx == -1) {
                         plen = startResponseHeader(&buf, HEADER_400);
-                        plen = appendErrorMsg_P(buf, plen, PSTR("Pin notfound"));
+                        plen = appendErrorMsg_P(buf, plen, PSTR("Pin not found"));
                         return plen;
                     }
                     current.pinIdx = idx;
-                    current.pinDirection = PIN_DIRECTION_OUTPUT;
+                    current.pinDirection = PIN_OUTPUT;
                 }
 
                 uint8_t j = dataPointer + 4 + querylen;

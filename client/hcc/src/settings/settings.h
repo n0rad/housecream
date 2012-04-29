@@ -40,10 +40,6 @@ uint8_t *getConfigBoardNotifyUrl_E();
 
 
 const prog_char CONFIG_VERSION[] PROGMEM = "hcc";
-const prog_char PIN_STRING_INPUT[] PROGMEM = "INPUT";
-const prog_char PIN_STRING_OUTPUT[] PROGMEM = "OUTPUT";
-const prog_char PIN_STRING_NOTUSED[] PROGMEM = "NOTUSED";
-const prog_char PIN_STRING_RESERVED[] PROGMEM = "RESERVED";
 
 const prog_char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
 const prog_char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";

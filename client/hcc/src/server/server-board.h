@@ -18,14 +18,14 @@ uint16_t boardNotify(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *web
 const prog_char BOARD_PARAM_NOTIFYURL[] PROGMEM = "notifyUrl";
 const prog_char BOARD_PARAM_IP[] PROGMEM = "ip";
 const prog_char BOARD_PARAM_PORT[] PROGMEM = "port";
-const prog_char BOARD_PARAM_NUMBEROFPIN[] PROGMEM = "numberOfPin";
+const prog_char BOARD_PARAM_PINIDS[] PROGMEM = "pinIds";
 const prog_char BOARD_PARAM_HARDWARE[] PROGMEM = "hardware";
 const prog_char BOARD_PARAM_VERSION[] PROGMEM = "version";
 const prog_char BOARD_PARAM_SOFTWARE[] PROGMEM = "software";
 const prog_char BOARD_PARAM_MAC[] PROGMEM = "mac";
 
 const t_json boardPutElements[] PROGMEM = {
-        {BOARD_PARAM_NUMBEROFPIN, setConfigBoardNumberOfPin},
+        {BOARD_PARAM_PINIDS, setConfigBoardPinId, 0, 1},
         {BOARD_PARAM_HARDWARE, setConfigBoardHardware},
         {BOARD_PARAM_VERSION, setConfigBoardVersion},
         {BOARD_PARAM_SOFTWARE, setConfigBoardSoftware},

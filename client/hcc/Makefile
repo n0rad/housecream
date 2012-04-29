@@ -6,7 +6,7 @@ ARDUINO_SRC =  lib/arduino/wiring.c lib/arduino/wiring_analog.c lib/arduino/wiri
 ARDUINO_CXXSRC = lib/arduino/HardwareSerial.cpp lib/arduino/WMath.cpp lib/arduino/Print.cpp
 ############################################################################
 # your configuration part
-PORT = /dev/ttyUSB0
+PORT = /dev/ttyUSB1
 UPLOAD_RATE = 57600
 AVRDUDE_PROGRAMMER = stk500v1
 MCU = atmega328p

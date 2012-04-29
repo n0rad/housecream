@@ -14,6 +14,10 @@ uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *web
 
 #include "server.h"
 
+
+const prog_char PIN_MIN[] PROGMEM = "\",\"valueMin\":";
+const prog_char PIN_MAX[] PROGMEM = ",\"valueMax\":";
+
 const prog_char PIN_PARAM_ID[] PROGMEM = "id";
 const prog_char PIN_PARAM_DIRECTION[] PROGMEM = "direction";
 const prog_char PIN_PARAM_TYPE[] PROGMEM = "type";

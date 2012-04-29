@@ -32,7 +32,7 @@ const t_pinInputDescription pinInputDescription[] PROGMEM = {
         {15, ANALOG, "door1 outside temp", {{OVER_EQ, 21.5},{UNDER_EQ, 4},{0,0},{0,0}}, noInputConversion, defaultPinRead, "lm35 temperature captor"},
         {16, ANALOG, "door1 outside temp", {{OVER_EQ, 21.5},{UNDER_EQ, 4},{0,0},{0,0}}, noInputConversion, defaultPinRead, "lm35 temperature captor"},
         {17, ANALOG, "door1 outside temp", {{OVER_EQ, 21.5},{UNDER_EQ, 4},{0,0},{0,0}}, noInputConversion, defaultPinRead, "lm35 temperature captor"},
-        {18, ANALOG, "door1 outside temp", {{OVER_EQ, 21.5},{UNDER_EQ, 4},{0,0},{0,0}}, noInputConversion, defaultPinRead, "lm35 temperature captor"},
+//        {18, ANALOG, "door1 outside temp", {{OVER_EQ, 21.5},{UNDER_EQ, 4},{0,0},{0,0}}, noInputConversion, defaultPinRead, "lm35 temperature captor"},
         {-1}
 };
 

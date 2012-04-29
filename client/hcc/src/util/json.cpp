@@ -59,7 +59,7 @@ static const prog_char *parseKeyValue(char **buffer, const t_json *structure) {
                     }
                     res = func(buf, len, 0);
                     DEBUG_PRINT(buf[0]);
-                    DEBUG_PRINTLN(buf[1]); // seems to affect program
+                    DEBUG_PRINTLN(buf[1]); //FIXME seems to affect program
                     buf = &buf[len + 1];
                 } else {
 //                    DEBUG_p(PSTR("value without quotes"));
@@ -112,11 +112,11 @@ static const prog_char *parseObject(char *buf, const t_json *structure) {
         }
         buf = skipSpaces(buf);
     } while (buf[0] == ',');
-//    DEBUG_PRINTLN(buf[0]);
-//    DEBUG_PRINTLN(buf[1]);
-//    DEBUG_PRINTLN(buf[2]);
-//    DEBUG_PRINTLN(buf[3]);
-//    DEBUG_PRINTLN(buf[4]);
+    DEBUG_PRINTLN(buf[0]);
+    DEBUG_PRINTLN(buf[1]);
+    DEBUG_PRINTLN(buf[2]);
+    DEBUG_PRINTLN(buf[3]);
+    DEBUG_PRINTLN(buf[4]);
     if (buf[0] != '}') { // end of object
         return JSON_ERROR_NO_OBJECT_END;
     }
@@ -126,6 +126,5 @@ static const prog_char *parseObject(char *buf, const t_json *structure) {
 
 const prog_char *jsonParse(char *buf, const t_json *structure) {
     return parseObject(buf, structure);
-//    return 0;
 }
 

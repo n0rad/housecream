@@ -7,7 +7,6 @@ uint8_t pinOutputSize = 0;
 //t_pinData pinData;
 //t_boardData boardData;
 
-const prog_char *pinDirection[] PROGMEM = { PIN_STRING_INPUT, PIN_STRING_OUTPUT, PIN_STRING_NOTUSED, PIN_STRING_RESERVED};
 const prog_char *pinType[] PROGMEM = { PIN_TYPE_ANALOG, PIN_TYPE_DIGITAL};
 const prog_char *pinNotification[] PROGMEM = { PIN_NOTIFICATION_SUP, PIN_NOTIFICATION_INF};
 
@@ -21,19 +20,19 @@ static void eeprom_write_block_P(uint8_t *eepromPos, prog_char *progPos, uint16_
 void settingsSave() {
     eeprom_write_block_P((uint8_t *)offsetof(t_boardSettings, ip), (prog_char *)&boardDescription.ip, CONFIG_BOARD_IP_SIZE);
     eeprom_write_word((uint16_t *)offsetof(t_boardSettings, port), pgm_read_word(&boardDescription.port));
-    eeprom_write_block_P((uint8_t *)offsetof(t_boardSettings, name), (prog_char *)&boardDescription.name, CONFIG_BOARD_NAME_SIZE - 1);
-    eeprom_write_block_P((uint8_t *)offsetof(t_boardSettings, notifyUrl), (prog_char *)&boardDescription.notifyurl, CONFIG_BOARD_NOTIFY_SIZE - 1);
+    eeprom_write_block_P((uint8_t *)offsetof(t_boardSettings, name), (prog_char *)&boardDescription.name, CONFIG_BOARD_NAME_SIZE);
+    eeprom_write_block_P((uint8_t *)offsetof(t_boardSettings, notifyUrl), (prog_char *)&boardDescription.notifyurl, CONFIG_BOARD_NOTIFY_SIZE);
 
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
         uint16_t pinPos = sizeof(t_boardSettings) + sizeof(t_pinInputSettings) * i;
-        eeprom_write_block_P((uint8_t *)(pinPos + offsetof(t_pinInputSettings, name)), (prog_char *) &pinInputDescription[i].name, CONFIG_PIN_NAME_SIZE - 1);
+        eeprom_write_block_P((uint8_t *)(pinPos + offsetof(t_pinInputSettings, name)), (prog_char *) &pinInputDescription[i].name, CONFIG_PIN_NAME_SIZE);
         eeprom_write_block_P((uint8_t *)(pinPos + offsetof(t_pinInputSettings, notifies)), (prog_char *)&pinInputDescription[i].notifies, sizeof(t_notify) * PIN_NUMBER_OF_NOTIFY);
     }
 
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
         uint16_t pinPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * i);
-        eeprom_write_block_P((uint8_t *)(pinPos + offsetof(t_pinOutputSettings, name)), (prog_char *) &pinOutputDescription[i].name, CONFIG_PIN_NAME_SIZE - 1);
+        eeprom_write_block_P((uint8_t *)(pinPos + offsetof(t_pinOutputSettings, name)), (prog_char *) &pinOutputDescription[i].name, CONFIG_PIN_NAME_SIZE);
         eeprom_write_dword((uint32_t *)(pinPos + offsetof(t_pinOutputSettings, lastValue)), pgm_read_dword(&pinOutputDescription[i].startValue));
     }
 
