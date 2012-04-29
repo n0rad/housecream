@@ -4,11 +4,14 @@
 #include <stdint.h>
 
 #include "../config.h"
-#include "settings.h"
+#include "settings-board.h"
+
+extern uint8_t currentSetPinIdx;
+
 
 uint16_t getConfigPinValue(uint8_t pinId);
 void getConfigPinNotify(uint8_t pinIdx, uint8_t notifyId, t_notify *notify);
-uint8_t *getConfigPinName_E(uint8_t pinIdx, uint8_t pinDirection);
+uint8_t *getConfigPinName_E(uint8_t pinIdx);
 
 const prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index);
@@ -21,6 +24,5 @@ const prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index);
-const prog_char *setConfigPinStartValue(char *buf, uint16_t len, uint8_t index);
 
 #endif

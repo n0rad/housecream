@@ -15,7 +15,6 @@
 typedef struct s_webRequest {
     const struct s_resource *resource;
     uint8_t pinIdx;
-    uint8_t pinDirection;
 } t_webRequest;
 
 

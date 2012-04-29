@@ -9,6 +9,10 @@
 #include "../hcc.h"
 #include "../pin/pin-manager.h"
 
+const prog_char STR_INPUT[] PROGMEM = "INPUT";
+const prog_char STR_OUTPUT[] PROGMEM = "OUTPUT";
+const prog_char DESCRIPTION_CANNOT_BE_SET[] PROGMEM = "description cannot be set";
+const prog_char NAME_TOO_LONG[] PROGMEM = "name is too long";
 const prog_char NOTIFY_VAL_OVERFLOW[] PROGMEM = "notify val overflow on pin%d";
 const prog_char PIN_DEFINE_TWICE[] PROGMEM = "pin%d is define twice";
 const prog_char PIN_TYPE_INVALID[] PROGMEM = "invalid type on pin%d";

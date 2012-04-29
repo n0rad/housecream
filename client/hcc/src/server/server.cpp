@@ -24,7 +24,7 @@ uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg) {
     return plen;
 }
 
-t_webRequest current = {0, 0, 0};
+t_webRequest current = {0, 0};
 
 static uint16_t commonCheck(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     uint16_t plen;
@@ -73,7 +73,7 @@ uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 int8_t idx = getInputPinIdx(currentPinId);
                 if (idx != -1) {
                     current.pinIdx = idx;
-                    current.pinDirection = PIN_INPUT;
+//                    current.pinDirection = PIN_INPUT;
                 } else {
                     idx = getOutputPinIdx(currentPinId);
                     if (idx == -1) {
@@ -81,8 +81,8 @@ uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                         plen = appendErrorMsg_P(buf, plen, PSTR("Pin not found"));
                         return plen;
                     }
-                    current.pinIdx = idx;
-                    current.pinDirection = PIN_OUTPUT;
+                    current.pinIdx = pinInputSize + idx;
+//                    current.pinDirection = PIN_OUTPUT;
                 }
 
                 uint8_t j = dataPointer + 4 + querylen;

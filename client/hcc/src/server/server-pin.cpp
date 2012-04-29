@@ -17,38 +17,41 @@ uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *web
 }
 
 uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
-    plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinPut"));
-    DEBUG_P(PSTR("pinput"));
+    currentSetPinIdx = webResource->pinIdx;
+    const prog_char *error = jsonParse(&buf[dat_p], &pinPutObj);
+    if (error) {
+        plen = startResponseHeader(&buf, HEADER_400);
+        plen = appendErrorMsg_P(buf, plen, error);
+    } else {
+        plen = startResponseHeader(&buf, HEADER_200);
+    }
     return plen;
 }
-
-
 
 uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     plen = startResponseHeader(&buf, HEADER_200);
     plen = addToBufferTCP_P(buf, plen, PSTR("{\"id\":"));
-    plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(webResource->pinDirection == PIN_INPUT ?
-            &pinInputDescription[webResource->pinIdx].pinId : &pinOutputDescription[webResource->pinIdx].pinId));
+    plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(webResource->pinIdx < pinInputSize ?
+            &pinInputDescription[webResource->pinIdx].pinId : &pinOutputDescription[webResource->pinIdx - pinInputSize].pinId));
 
 
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"name\":\""));
-    plen = addToBufferTCP_E(buf, plen, getConfigPinName_E(webResource->pinIdx, webResource->pinDirection));
+    plen = addToBufferTCP_E(buf, plen, getConfigPinName_E(webResource->pinIdx));
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
-    plen = addToBufferTCP_P(buf, plen, (const prog_char *) (webResource->pinDirection == PIN_INPUT ?
-            &pinInputDescription[webResource->pinIdx].description : &pinOutputDescription[webResource->pinIdx].description));
+    plen = addToBufferTCP_P(buf, plen, (const prog_char *) (webResource->pinIdx < pinInputSize ?
+            &pinInputDescription[webResource->pinIdx].description : &pinOutputDescription[webResource->pinIdx - pinInputSize].description));
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"direction\":\""));
-    plen = addToBufferTCP_P(buf, plen, webResource->pinDirection == PIN_INPUT ? PSTR("INPUT") : PSTR("OUTPUT"));
+    plen = addToBufferTCP_P(buf, plen, webResource->pinIdx < pinInputSize ? STR_INPUT : STR_OUTPUT);
     plen = addToBufferTCP(buf, plen, '"');
 
-    uint8_t type = pgm_read_byte(webResource->pinDirection == PIN_INPUT ?
-            &pinInputDescription[webResource->pinIdx].type : &pinOutputDescription[webResource->pinIdx].type);
+    uint8_t type = pgm_read_byte(webResource->pinIdx < pinInputSize ?
+            &pinInputDescription[webResource->pinIdx].type : &pinOutputDescription[webResource->pinIdx - pinInputSize].type);
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"type\":\""));
     plen = addToBufferTCP_P(buf, plen, (const prog_char *) pgm_read_byte(&pinType[type - 1]));
 
-    if (webResource->pinDirection == PIN_INPUT) {
+    if (webResource->pinIdx < pinInputSize) {
         PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[webResource->pinIdx].convertValue));
 
         plen = addToBufferTCP_P(buf, plen, PIN_MIN);
@@ -76,12 +79,12 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
         plen = addToBufferTCP(buf, plen, ']');
     } else {
         float minValue;
-        memcpy_P(&minValue, &pinOutputDescription[webResource->pinIdx].valueMin, sizeof(float));
+        memcpy_P(&minValue, &pinOutputDescription[webResource->pinIdx - pinInputSize].valueMin, sizeof(float));
         plen = addToBufferTCP_P(buf, plen, PIN_MIN);
         plen = addToBufferTCP(buf, plen, minValue);
 
         float maxValue;
-        memcpy_P(&maxValue, &pinOutputDescription[webResource->pinIdx].valueMax, sizeof(float));
+        memcpy_P(&maxValue, &pinOutputDescription[webResource->pinIdx - pinInputSize].valueMax, sizeof(float));
         plen = addToBufferTCP_P(buf, plen, PIN_MAX);
         plen = addToBufferTCP(buf, plen, maxValue);
     }

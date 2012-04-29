@@ -50,7 +50,7 @@ const prog_char *setConfigBoardNotifyUrl(char *buf, uint16_t len, uint8_t index)
 }
 const prog_char *setConfigBoardName(char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_BOARD_NAME_SIZE - 1) {
-        return PSTR("name is too long");
+        return NAME_TOO_LONG;
     }
     eeprom_write_block(buf, (uint8_t *) offsetof(t_boardSettings, name), len);
     eeprom_write_byte((uint8_t *) (offsetof(t_boardSettings, name) + len), 0);
@@ -114,7 +114,7 @@ const prog_char *setConfigBoardDescription(char *buf, uint16_t len, uint8_t inde
     if (!strncmp_P(buf, boardDescription.description, len)) {
         return 0;
     }
-    return PSTR("description cannot be set");
+    return DESCRIPTION_CANNOT_BE_SET;
 }
 const prog_char *setConfigBoardSoftware(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, PSTR("HouseCream Client"), len)) {

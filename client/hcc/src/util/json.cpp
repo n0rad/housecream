@@ -3,7 +3,7 @@
 const prog_char *jsonParseValue(char **buffer, const t_json *currentStructure, uint8_t index);
 
 
-static char findEndOfValue(char *buf) {
+static uint8_t findEndOfValue(char *buf) {
     for (uint8_t i = 0; buf[i]; i++) {
         if (buf[i] == '\t' || buf[i] == '\n' || buf[i] == '\r' || buf[i] == ' '
                 || buf[i] == ']' || buf[i] == '}' || buf[i] == ',') {
