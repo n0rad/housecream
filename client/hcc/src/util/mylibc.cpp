@@ -2,6 +2,16 @@
 #include <string.h>
 #include <avr/pgmspace.h>
 
+#include "mylibc.h"
+
+float RelDif(float a, float b) {
+    float c = Abs(a);
+    float d = Abs(b);
+    d = Max(c, d);
+    return d == 0.0 ? 0.0 : Abs(a - b) / d;
+}
+
+
 int my_strpos(const char *s, int ch) {
     for (int i = 0; s[i]; i++) {
         if (s[i] == ch) {

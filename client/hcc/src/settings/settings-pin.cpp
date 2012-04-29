@@ -68,21 +68,11 @@ const prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
 
 const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "minValue cannot be set";
 
-#define Abs(x)    ((x) < 0 ? -(x) : (x))
-#define Max(a, b) ((a) > (b) ? (a) : (b))
-
-float RelDif(float a, float b) {
-    float c = Abs(a);
-    float d = Abs(b);
-    d = Max(c, d);
-    return d == 0.0 ? 0.0 : Abs(a - b) / d;
-}
-
 const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
     float value = atof(buf);
     if (currentSetPinIdx < pinInputSize) {
         PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
-        if (conversion(0) != value) {
+        if (RelDif(value, conversion(0)) >= 0.001) {
             return CANNOT_SET_MIN_VAL;
         }
     } else {

@@ -188,7 +188,7 @@ extcoff: $(TARGET).elf
 
 # Link: create ELF output file from library.
 target/$(TARGET).elf: target/core.a
-	$(CXX) $(ALL_CXXFLAGS) -o $@ -L. target/core.a $(LDFLAGS)
+	$(CXX) $(ALL_CXXFLAGS) -o $@ -L. target/core.a /usr/lib/avr/lib/avr5/libc.a $(LDFLAGS)
 
 target/core.a: $(OBJ)
 	@for i in $(OBJ); do echo $(AR) rcs target/core.a $$i; $(AR) rcs target/core.a $$i; done
