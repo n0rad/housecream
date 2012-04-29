@@ -67,7 +67,8 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webRes
 }
 
 uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
-    const prog_char *error = jsonParse(&buf[dat_p], boardPutElements);
+    char *tmp = &buf[dat_p];
+    const prog_char *error = jsonParse(tmp, &boardPutObj);
     if (error) {
         plen = startResponseHeader(&buf, HEADER_400);
         plen = appendErrorMsg_P(buf, plen, error);

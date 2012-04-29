@@ -86,12 +86,11 @@ const prog_char *setConfigBoardPort(char *buf, uint16_t len, uint8_t index) {
     return 0;
 }
 
-
 const prog_char *setConfigBoardMac(char *buf, uint16_t len, uint8_t index) {
     if (len != 17) {
         return CANNOT_SET_MAC;
     }
-    char strMac[17];
+    char strMac[18];
     uint8_t byteMac[6];
     getConfigBoardMac(byteMac);
     sprintf_P(strMac, sprintfpHEX, byteMac[0]);
@@ -136,13 +135,15 @@ const prog_char *setConfigBoardVersion(char *buf, uint16_t len, uint8_t index) {
     return PSTR("version cannot be set");
 }
 const prog_char *setConfigBoardPinId(char *buf, uint16_t len, uint8_t index) {
-    DEBUG_PRINT(">>index ");
-    DEBUG_PRINTLN(index);
-
-    //    char pins[3] = {0, 0, 0};
-//    itoa(NUMBER_OF_PINS, pins, 10);
-//    if (!strncmp(pins, buf, len)) {
-        return 0; // same number
-//    }
-//    return PSTR("numberOfPin cannot be set");
+    uint8_t bufPinId = atoi(buf);
+    uint8_t currentPinId;
+    if (index < pinInputSize) {
+        currentPinId = pgm_read_byte(&pinInputDescription[index].pinId);
+    } else {
+        currentPinId = pgm_read_byte(&pinOutputDescription[index - pinInputSize].pinId);
+    }
+    if (currentPinId != bufPinId) {
+        return PSTR("cannot set pinId");
+    }
+    return 0;
 }

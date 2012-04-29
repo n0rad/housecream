@@ -8,7 +8,7 @@
 #include "mylibc.h"
 
 
-static char JSON_ERROR_NO_OBJECT_START[] PROGMEM = "Cannot find object start";
+static char JSON_ERROR_NO_ARRAY_END[] PROGMEM = "Cannot find array end";
 static char JSON_ERROR_NO_OBJECT_END[] PROGMEM = "Cannot find object end";
 static char JSON_ERROR_NO_KEY_START[] PROGMEM = "Cannot find key start";
 static char JSON_ERROR_NO_VALUE_END[] PROGMEM = "Cannot find value end";
@@ -20,11 +20,11 @@ typedef const prog_char *(*jsonHandleValue)(char *val, uint16_t valLen, uint8_t 
 
 typedef struct s_json {
     const prog_char *key;
-    jsonHandleValue handleValue; // handle a value
-    s_json *valueStruct;                           // sub struct
-    uint8_t isArray;
+    jsonHandleValue handleValue;    // handle a value
+    s_json *valueStruct;            // sub obj
+    uint8_t isArray;                // array with handle a value
 } t_json;
 
-const prog_char *jsonParse(char *buf, const t_json *structure);
+const prog_char  *jsonParse(char *buf, const t_json *structure);
 
 #endif

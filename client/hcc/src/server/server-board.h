@@ -26,16 +26,18 @@ const prog_char BOARD_PARAM_MAC[] PROGMEM = "mac";
 
 const t_json boardPutElements[] PROGMEM = {
         {BOARD_PARAM_PINIDS, setConfigBoardPinId, 0, 1},
-        {BOARD_PARAM_HARDWARE, setConfigBoardHardware},
-        {BOARD_PARAM_VERSION, setConfigBoardVersion},
-        {BOARD_PARAM_SOFTWARE, setConfigBoardSoftware},
-        {BOARD_PARAM_MAC, setConfigBoardMac},
-        {PARAM_NAME, setConfigBoardName},
-        {BOARD_PARAM_NOTIFYURL, setConfigBoardNotifyUrl},
-        {PARAM_DESCRIPTION, setConfigBoardDescription},
-        {BOARD_PARAM_IP, setConfigBoardIP},
-        {BOARD_PARAM_PORT, setConfigBoardPort},
-        {0, 0}
+        {BOARD_PARAM_HARDWARE, setConfigBoardHardware, 0, 0},
+        {BOARD_PARAM_VERSION, setConfigBoardVersion, 0, 0},
+        {BOARD_PARAM_SOFTWARE, setConfigBoardSoftware, 0, 0},
+        {BOARD_PARAM_MAC, setConfigBoardMac, 0, 0},
+        {PARAM_NAME, setConfigBoardName, 0, 0},
+        {BOARD_PARAM_NOTIFYURL, setConfigBoardNotifyUrl, 0, 0},
+        {PARAM_DESCRIPTION, setConfigBoardDescription, 0, 0},
+        {BOARD_PARAM_IP, setConfigBoardIP, 0, 0},
+        {BOARD_PARAM_PORT, setConfigBoardPort, 0, 0},
+        {0, 0, 0, 0}
 };
+
+const t_json boardPutObj PROGMEM = {0, 0, (t_json *)boardPutElements, 0};
 
 #endif

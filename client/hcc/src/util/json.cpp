@@ -1,5 +1,8 @@
 #include "json.h"
 
+const prog_char *jsonParseValue(char **buffer, const t_json *currentStructure, uint8_t index);
+
+
 static char findEndOfValue(char *buf) {
     for (uint8_t i = 0; buf[i]; i++) {
         if (buf[i] == '\t' || buf[i] == '\n' || buf[i] == '\r' || buf[i] == ' '
@@ -20,111 +23,131 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-static const prog_char *parseKeyValue(char **buffer, const t_json *structure) {
+static const prog_char *jsonParseObject(char **buffer, const t_json *structureList) {
     char *buf =  *buffer;
     prog_char *keypos;
-    if (buf[0] != '"') { // start of key
-        return JSON_ERROR_NO_KEY_START;
-    }
-    buf = &buf[1]; // enter inside key
-    boolean managed = false;
-    for (uint8_t i = 0; (keypos = (prog_char *) pgm_read_word(&structure[i].key)); i++) {
-        int keylen = strlen_P(keypos);
-        if (strncmp_P(buf, keypos, keylen) == 0) {
-            if (buf[keylen] != '"') {
-                continue; // same key start but its not the buf full key name
-            }
-            managed = true;
-            buf = &buf[keylen + 1]; // going out of key
-            buf = skipSpaces(buf);
-            if (buf[0] != ':') {
-                return JSON_ERROR_NO_SEPARATOR;
-            }
-            buf = skipSpaces(&buf[1]); // skip separator ':' and white spaces
-            if (buf[0] == '[') {
-                return PSTR("nonested");
-            } else if (buf[0] == '{') {
-                return PSTR("nonested");
-            } else { // call handleValue
-                jsonHandleValue func;
-                func = (jsonHandleValue) pgm_read_word(&structure[i].handleValue);
-                const prog_char *res;
-                int len;
-                if (buf[0] == '"') {
-//                    DEBUG_p(PSTR("value with quotes"));
-                    buf = &buf[1];
-                    len = my_strpos(buf, '"');
-                    if (len == -1) {
-                        return JSON_ERROR_NO_VALUE_END;
-                    }
-                    res = func(buf, len, 0);
-                    DEBUG_PRINT(buf[0]);
-                    DEBUG_PRINTLN(buf[1]); //FIXME seems to affect program
-                    buf = &buf[len + 1];
-                } else {
-//                    DEBUG_p(PSTR("value without quotes"));
-                    len = findEndOfValue(buf);
-                    DEBUG_PRINT("endoflen");
-                    DEBUG_PRINTLN(len);
-                    DEBUG_PRINTLN(buf[0]);
-                    res = func(buf, len, 0);
-                    buf = &buf[len];
+    do {
+        buf = skipSpaces(&buf[1]); // skip '{' and then ',' on each loop
+
+        if (buf[0] != '"') { // start of key
+//            DEBUG_PRINT("CCC");
+//            DEBUG_PRINT(buf[0]);
+//            DEBUG_PRINTLN(buf[1]);
+            return JSON_ERROR_NO_KEY_START;
+        }
+        buf = &buf[1]; // enter inside key
+        const t_json *currentStructure = 0;
+        for (uint8_t i = 0; (keypos = (prog_char *) pgm_read_word(&structureList[i].key)); i++) {
+            int keylen = strlen_P(keypos);
+            if (strncmp_P(buf, keypos, keylen) == 0) {
+                if (buf[keylen] != '"') {
+                    continue; // same key start but its not the buf full key name
                 }
-                if (res) {
-                    return res;
-                }
+                currentStructure = &structureList[i];
                 break;
             }
         }
-    }
-    if (!managed) {
-        DEBUG_P(PSTR("unmanaged param"));
-        buf = &buf[my_strpos(buf, '"') + 1]; // skip key
-        buf = skipSpaces(buf);
+        buf = strchr(buf, '"'); // going to the end of key
+        buf = skipSpaces(&buf[1]);
+
         if (buf[0] != ':') {
             return JSON_ERROR_NO_SEPARATOR;
         }
-        buf = skipSpaces(&buf[1]);
-        if (buf[0] == '"') { // skip value with quotes
-            buf = &buf[my_strpos(&buf[1], '"') + 2];
-        } else if (buf[0] == '{') { // TODO manage nested object as the end may be the end of an inner obj
-            buf = &buf[my_strpos(&buf[1], '}') + 2];
-        } else if (buf[0] == '[') { // TODO manage nested array
-            buf = &buf[my_strpos(&buf[1], ']') + 2];
+        buf = skipSpaces(&buf[1]); // skip separator ':' and white spaces
+        const prog_char *res = jsonParseValue(&buf, currentStructure, 0);
+        if (res) {
+            return res;
+        }
+        buf = skipSpaces(buf);
+    } while (buf[0] == ',');
+    buf = skipSpaces(buf);
+    if (buf[0] != '}') { // end of object
+//        DEBUG_PRINT("EEE");
+//        DEBUG_PRINT(buf[0]);
+//        DEBUG_PRINTLN(buf[1]);
+        return JSON_ERROR_NO_OBJECT_END;
+    }
+    buf = skipSpaces(&buf[1]); // going out of object
+    *buffer = buf;
+    return 0;
+}
+
+static const prog_char *jsonParseArray(char **buffer, const t_json *currentStructure) {
+    char *buf =  *buffer;
+    if (currentStructure && !pgm_read_byte(&currentStructure->isArray)) {
+        return PSTR("Unexpected array");
+    }
+    uint8_t count = 0;
+    do {
+        buf = skipSpaces(&buf[1]); // skip '[' and then ',' on each loop
+        const prog_char *res = jsonParseValue(&buf, currentStructure, count);
+        if (res) {
+            return res;
+        }
+//        DEBUG_PRINT(">>>S>");
+//        DEBUG_PRINT(buf[0]);
+//        DEBUG_PRINTLN(buf[1]);
+        buf = skipSpaces(buf);
+        count++;
+    } while (buf[0] == ',');
+    buf = skipSpaces(buf);
+    if (buf[0] != ']') { // end of object
+        return JSON_ERROR_NO_ARRAY_END;
+    }
+    buf = skipSpaces(&buf[1]); // going out of array
+    *buffer = buf;
+    return 0;
+}
+
+const prog_char *jsonParseValue(char **buffer, const t_json *currentStructure, uint8_t index) {
+    char *buf =  *buffer;
+    buf = skipSpaces(buf);
+
+//    DEBUG_PRINT("STARTING value parse :");
+//    DEBUG_PRINT(buf[0]);
+//    DEBUG_PRINTLN(buf[1]);
+    if (buf[0] == '[') {
+//        DEBUG_PRINT("found array");
+        const prog_char *res = jsonParseArray(&buf, currentStructure);
+        if (res) {
+            return res;
+        }
+    } else if (buf[0] == '{') {
+//        DEBUG_PRINTLN("found OBJ");
+        const t_json *objStruct = (t_json *) pgm_read_word(&currentStructure->valueStruct);
+        const prog_char *res = jsonParseObject(&buf, objStruct);
+        if (res) {
+            return res;
+        }
+    } else { // parsing string or num value
+        jsonHandleValue func = 0;
+        if (currentStructure != 0) {
+            func = (jsonHandleValue) pgm_read_word(&currentStructure->handleValue);
+        }
+        uint16_t len;
+        const prog_char *res = 0;
+        if (buf[0] == '"') {
+            buf = &buf[1];
+            len = my_strpos(buf, '"');
+            if (func) {
+                res = func(buf, len, index);
+            }
+            buf = &buf[len + 1];
         } else {
-            buf = &buf[findEndOfValue(buf) + 1];
+            len = findEndOfValue(buf);
+            if (func) {
+                res = func(buf, len, index);
+            }
+            buf = &buf[len];
+        }
+        if (res) {
+            return res;
         }
     }
     *buffer = buf;
     return 0;
 }
 
-static const prog_char *parseObject(char *buf, const t_json *structure) {
-    buf = skipSpaces(buf);
-    if (buf[0] != '{') {
-        return JSON_ERROR_NO_OBJECT_START;
-    }
-    do {
-        buf = skipSpaces(&buf[1]);  // skip { or ,
-        const prog_char *fail = parseKeyValue(&buf, structure);
-        if (fail) {
-            return fail;
-        }
-        buf = skipSpaces(buf);
-    } while (buf[0] == ',');
-    DEBUG_PRINTLN(buf[0]);
-    DEBUG_PRINTLN(buf[1]);
-    DEBUG_PRINTLN(buf[2]);
-    DEBUG_PRINTLN(buf[3]);
-    DEBUG_PRINTLN(buf[4]);
-    if (buf[0] != '}') { // end of object
-        return JSON_ERROR_NO_OBJECT_END;
-    }
-    return 0;
+const prog_char  *jsonParse(char *buf, const t_json *currentStructure) {
+    return jsonParseValue(&buf, currentStructure, 0);
 }
-
-
-const prog_char *jsonParse(char *buf, const t_json *structure) {
-    return parseObject(buf, structure);
-}
-
