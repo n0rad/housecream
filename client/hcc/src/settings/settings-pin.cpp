@@ -71,22 +71,15 @@ const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "minValue cannot be set";
 #define Abs(x)    ((x) < 0 ? -(x) : (x))
 #define Max(a, b) ((a) > (b) ? (a) : (b))
 
-double RelDif(float a, float b)
-{
+float RelDif(float a, float b) {
     float c = Abs(a);
     float d = Abs(b);
-
     d = Max(c, d);
-
     return d == 0.0 ? 0.0 : Abs(a - b) / d;
 }
 
 const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
-    DEBUG_PRINTLN(buf[0]);
-    float value;
-    sscanf(buf, "%f", &value);
-    DEBUG_PRINT("found float");
-    DEBUG_PRINTLN(value);
+    float value = atof(buf);
     if (currentSetPinIdx < pinInputSize) {
         PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
         if (conversion(0) != value) {
@@ -95,10 +88,7 @@ const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
     } else {
         float minValue;
         memcpy_P(&minValue, &pinOutputDescription[currentSetPinIdx - pinInputSize].valueMin, sizeof(float));
-        DEBUG_PRINT("found min float");
-        DEBUG_PRINTLN(minValue);
-        if (RelDif(value, minValue) <= 0.001) {
-            DEBUG_PRINTLN("its different");
+        if (RelDif(value, minValue) >= 0.001) {
             return CANNOT_SET_MIN_VAL;
         }
     }
