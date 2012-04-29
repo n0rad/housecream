@@ -1,14 +1,23 @@
 #ifndef HCC_H
 #define HCC_H
 
-#if 1
-#define PROGMEM2 __attribute__(( section(".progmem.data") ))
-#define PSTR2(s) (__extension__({static prog_char __c[] PROGMEM2 = (s); &__c[0];}))
-#endif
+#define HARDWARE "Arduino Duemilanove / Nuelectronics enc28j60 Ethernet Shield V1.1"
+
+
+#define offsetof(st, m) \
+    ((size_t) ( (char *)&((st *)(0))->m - (char *)0 ))
+
 
 #define DEBUG
 
 #include "debug.h"
+
+typedef struct s_webRequest {
+    const struct s_resource *resource;
+    uint8_t pinIdx;
+    uint8_t pinDirection;
+} t_webRequest;
+
 
 extern char *criticalProblem_p;
 extern char *definitionError;

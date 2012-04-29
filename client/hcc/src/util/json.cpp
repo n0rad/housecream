@@ -78,7 +78,7 @@ static const prog_char *parseKeyValue(char **buffer, const t_json *structure) {
         }
     }
     if (!managed) {
-        DEBUG_p(PSTR("unmanaged param"));
+        DEBUG_P(PSTR("unmanaged param"));
         buf = &buf[my_strpos(buf, '"') + 1]; // skip key
         buf = skipSpaces(buf);
         if (buf[0] != ':') {

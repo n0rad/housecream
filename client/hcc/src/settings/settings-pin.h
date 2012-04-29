@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "settings-config.h"
+#include "../config.h"
 #include "settings.h"
 
 uint16_t getConfigPinValue(uint8_t pinId);

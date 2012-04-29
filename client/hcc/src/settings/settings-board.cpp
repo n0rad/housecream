@@ -32,20 +32,20 @@ static uint8_t readIP(char *buf, uint16_t len, uint8_t newIp[4]) {
 }
 
 const prog_char *setConfigBoardNotifyUrl(char *buf, uint16_t len, uint8_t index) {
-    if (len >  CONFIG_BOARD_NOTIFY_SIZE - 1) {
-        return PSTR("notifyUrl is too long");
-    }
-    if (strncmp_P(buf, PSTR("http://"), 7)) {
-        return PSTR("http only for notifyUrl");
-    }
-
-    uint8_t newIp[4];
-    if (readIP(&buf[7], strspn(&buf[7], "0123456789."), newIp)) {
-        return PSTR("Not valid Ip in notifyUrl");
-    }
-    eeprom_write_block(buf, (uint8_t *) CONFIG_EEPROM_START +  sizeof(t_boardInfo), len);
-    eeprom_write_byte((uint8_t *) CONFIG_EEPROM_START +  sizeof(t_boardInfo) + len, 0);
-    settingsReload();
+//    if (len >  CONFIG_BOARD_NOTIFY_SIZE - 1) {
+//        return PSTR("notifyUrl is too long");
+//    }
+//    if (strncmp_P(buf, PSTR("http://"), 7)) {
+//        return PSTR("http only for notifyUrl");
+//    }
+//
+//    uint8_t newIp[4];
+//    if (readIP(&buf[7], strspn(&buf[7], "0123456789."), newIp)) {
+//        return PSTR("Not valid Ip in notifyUrl");
+//    }
+//    eeprom_write_block(buf, (uint8_t *) CONFIG_EEPROM_START +  sizeof(t_boardInfo), len);
+//    eeprom_write_byte((uint8_t *) CONFIG_EEPROM_START +  sizeof(t_boardInfo) + len, 0);
+//    settingsReload();
     return 0;
 }
 const prog_char *setConfigBoardName(char *buf, uint16_t len, uint8_t index) {
@@ -64,7 +64,7 @@ const prog_char *setConfigBoardIP(char *buf, uint16_t len, uint8_t index) {
     }
 
     uint8_t currentIp[4];
-    getConfigIP(currentIp);
+    getConfigBoardIP(currentIp);
     if (currentIp[0] != newIp[0] || currentIp[1] != newIp[1] || currentIp[2] != newIp[2] || currentIp[3] != newIp[3]) {
         eeprom_write_block(newIp, (uint8_t *) CONFIG_EEPROM_START, 4);
         needReboot = true;
@@ -79,7 +79,7 @@ const prog_char *setConfigBoardPort(char *buf, uint16_t len, uint8_t index) {
         }
     }
     uint16_t port = atoi(buf);
-    if (port != getConfigPort()) {
+    if (port != getConfigBoardPort()) {
         eeprom_write_word((uint16_t*)(CONFIG_EEPROM_START + CONFIG_BOARD_IP_SIZE), port);
         needReboot = true;
     }
@@ -93,7 +93,7 @@ const prog_char *setConfigBoardMac(char *buf, uint16_t len, uint8_t index) {
     }
     char strMac[17];
     uint8_t byteMac[6];
-    getConfigMac(byteMac);
+    getConfigBoardMac(byteMac);
     sprintf_P(strMac, sprintfpHEX, byteMac[0]);
     sprintf_P(&strMac[3], sprintfpHEX, byteMac[1]);
     sprintf_P(&strMac[6], sprintfpHEX, byteMac[2]);
@@ -136,10 +136,10 @@ const prog_char *setConfigBoardVersion(char *buf, uint16_t len, uint8_t index) {
     return PSTR("version cannot be set");
 }
 const prog_char *setConfigBoardNumberOfPin(char *buf, uint16_t len, uint8_t index) {
-    char pins[3] = {0, 0, 0};
-    itoa(NUMBER_OF_PINS, pins, 10);
-    if (!strncmp(pins, buf, len)) {
-        return 0; // same number
-    }
+//    char pins[3] = {0, 0, 0};
+//    itoa(NUMBER_OF_PINS, pins, 10);
+//    if (!strncmp(pins, buf, len)) {
+//        return 0; // same number
+//    }
     return PSTR("numberOfPin cannot be set");
 }

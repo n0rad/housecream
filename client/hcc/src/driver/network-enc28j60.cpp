@@ -13,7 +13,7 @@ void (*resetFunc)(void) = 0; //declare reset function @ address 0
 void networkSetup() {
 
     uint8_t mac[6];
-    getConfigMac(mac);
+    getConfigBoardMac(mac);
 
     /*initialize enc28j60*/
     es.ES_enc28j60Init((uint8_t *) mac);
@@ -44,8 +44,8 @@ void networkSetup() {
     delay(100);
 
     uint8_t ip[4];
-    getConfigIP(ip);
-    port = getConfigPort();
+    getConfigBoardIP(ip);
+    port = getConfigBoardPort();
     //init the ethernet/ip layer:
     es.ES_init_ip_arp_udp_tcp((uint8_t *) mac, (uint8_t *) ip, port);
 }
@@ -70,7 +70,7 @@ void networkManageServer() {
     uint8_t i;
 
     if (notification != 0 && client_state == IDLE) { // initialize ARP
-        DEBUG_p(PSTR("idle"));
+        DEBUG_P(PSTR("idle"));
         es.ES_make_arp_request(buf, dest_ip);
         client_state = ARP_SENT;
         return;
@@ -89,7 +89,7 @@ void networkManageServer() {
         delay(10);
         syn_ack_timeout++;
         if (syn_ack_timeout == 100) { //timeout, server ip not found
-            DEBUG_p(PSTR("arpnotfound"));
+            DEBUG_P(PSTR("arpnotfound"));
             client_state = IDLE;
             free(notification);
             notification = 0;
@@ -99,7 +99,7 @@ void networkManageServer() {
     }
     // send SYN packet to initial connection
     if (client_state == ARP_REPLY) {
-        DEBUG_p(PSTR("arprep"));
+        DEBUG_P(PSTR("arprep"));
         // save dest mac
         for (i = 0; i < 6; i++) {
             dest_mac[i] = buf[ETH_SRC_MAC + i];
@@ -165,7 +165,7 @@ void networkManageServer() {
     } else {
         // check SYNACK flag, after AVR send SYN server response by send SYNACK to AVR
         if (buf[TCP_FLAGS_P] == (TCP_FLAG_SYN_V | TCP_FLAG_ACK_V)) {
-            DEBUG_p(PSTR("synack"));
+            DEBUG_P(PSTR("synack"));
             // send ACK to answer SYNACK
             es.ES_tcp_client_send_packet(buf, dstPort, srcPort, TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
@@ -190,7 +190,7 @@ void networkManageServer() {
         // after AVR send http request to server, server response by send data with PSHACK to AVR
         // AVR answer by send ACK and FINACK to server
         if (buf[TCP_FLAGS_P] == (TCP_FLAG_ACK_V | TCP_FLAG_PUSH_V)) {
-            DEBUG_p(PSTR("pshack"));
+            DEBUG_P(PSTR("pshack"));
             plen = es.ES_tcp_get_dlength((uint8_t*) &buf);
             // send ACK to answer PSHACK from server
             es.ES_tcp_client_send_packet(buf, dstPort, // destination port
@@ -213,7 +213,7 @@ void networkManageServer() {
         }
         // answer FINACK from web server by send ACK to web server
         if (buf[TCP_FLAGS_P] == (TCP_FLAG_ACK_V | TCP_FLAG_FIN_V)) {
-            DEBUG_p(PSTR("finack"));
+            DEBUG_P(PSTR("finack"));
             // send ACK with seqack = 1
             es.ES_tcp_client_send_packet(buf, dstPort, // destination port
                     srcPort, // source port

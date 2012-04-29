@@ -1,30 +1,45 @@
-#ifndef EEPROM_CONFIG_H
-#define EEPROM_CONFIG_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
 #include <stdint.h>
 #include <avr/pgmspace.h>
 #include <avr/eeprom.h>
 
+#include "../config.h"
 #include "../hcc.h"
 #include "../pin/pin-manager.h"
-#include "settings-config.h"
 
-/** description stay in program memory and cannot change */
-/** infos are stored in eeprom and can change */
-/** data are stored in eeprom and keep in ram for fast access */
+const prog_char NOTIFY_VAL_OVERFLOW[] PROGMEM = "notify val overflow on pin%d";
+const prog_char PIN_DEFINE_TWICE[] PROGMEM = "pin%d is define twice";
+const prog_char PIN_TYPE_INVALID[] PROGMEM = "invalid type on pin%d";
+const prog_char PIN_START_INVALID[] PROGMEM = "invalid start value for pin%d";
+const prog_char PIN_MIN_INVALID[] PROGMEM = "invalid min value for pin%d";
+const prog_char PIN_MAX_INVALID[] PROGMEM = "invalid max value for pin%d";
+
+const int8_t getInputPinIdx(uint8_t pinIdToFind);
+const int8_t getOutputPinIdx(uint8_t pinIdToFind);
+
+char *checkConfig();
+char *buildGlobalError_P(const prog_char *progmem_s, int pin);
+
+
+
+extern uint8_t pinInputSize;
+extern uint8_t pinOutputSize;
 
 
 void settingsLoad();
 void settingsReload();
 void settingsSave();
 
-void getConfigIP(uint8_t ip[4]);
-void getConfigMac(uint8_t ip[6]);
-uint16_t getConfigPort();
+void getConfigBoardIP(uint8_t ip[4]);
+void getConfigBoardMac(uint8_t ip[6]);
+uint16_t getConfigBoardPort();
 uint8_t *getConfigBoardName_E();
-char* getConfigNotifyUrl();
+uint8_t *getConfigBoardNotifyUrl_E();
 
 
+const prog_char CONFIG_VERSION[] PROGMEM = "hcc";
 const prog_char PIN_STRING_INPUT[] PROGMEM = "INPUT";
 const prog_char PIN_STRING_OUTPUT[] PROGMEM = "OUTPUT";
 const prog_char PIN_STRING_NOTUSED[] PROGMEM = "NOTUSED";
@@ -42,5 +57,33 @@ extern const char *pinType[];
 extern const char *pinNotification[];
 
 #define CONFIG_EEPROM_START 0
+
+
+typedef struct s_boardSettings {
+    uint8_t ip[CONFIG_BOARD_IP_SIZE];
+    uint16_t port;
+    char name[CONFIG_BOARD_NAME_SIZE];
+    char notifyUrl[CONFIG_BOARD_NOTIFY_SIZE];
+} t_boardSettings;
+
+typedef struct s_pinInputSettings {
+    prog_char name[CONFIG_PIN_NAME_SIZE];
+    t_notify notifies[PIN_NUMBER_OF_NOTIFY];
+} t_pinInputSettings;
+
+typedef struct s_pinOutputSettings {
+    char name[CONFIG_PIN_NAME_SIZE];
+    float lastValue;
+} t_pinOutputSettings;
+
+#ifdef DOC_ONLY // eeprom structure that is not real because input and output size are dynamic
+typedef struct s_settings {
+    t_boardSettings boardSettings;
+    t_pinInputSettings inputSettings[]; // array of size of pinInputDescription determined at runtime
+    t_pinOutputSettings outputSettings[]; // array of size of pinOutputDescription determined at runtime
+    char version[4];
+} t_settings;
+#endif
+
 
 #endif

@@ -24,18 +24,22 @@ uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg) {
     return plen;
 }
 
-ResourceFunc currentFunc = 0;
-int8_t currentPinId = -1;
-prog_char *currentQueryPos = 0;
+//ResourceFunc currentFunc = 0;
+//prog_char *currentQueryPos = 0;
 
-uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
-    DEBUG_p(PSTR("memory "));
+#define PIN_DIRECTION_INPUT 1
+#define PIN_DIRECTION_OUTPUT 2
+
+t_webRequest current = {0, 0, 0};
+
+static uint16_t commonCheck(char *buf, uint16_t dataPointer, uint16_t dataLen) {
+    uint16_t plen;
+    DEBUG_P(PSTR("memory "));
     DEBUG_PRINTLN(getFreeMemory());
 
-    DEBUG_p(PSTR("DATA :"));
+    DEBUG_P(PSTR("DATA :"));
     DEBUG_PRINTLN(&buf[dataPointer]);
 
-    uint16_t plen;
     if (dataLen >= 999) {
         plen = startResponseHeader(&buf, HEADER_413);
         plen = appendErrorMsg_P(buf, plen, PSTR("Too big"));
@@ -53,48 +57,80 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         return plen;
     }
 
-    if (currentFunc != 0) { // we were waiting for data packet
-        plen = currentFunc(buf, dataPointer, dataLen, currentPinId);
-        currentFunc = 0;
-        currentPinId = -1;
-        return plen;
-    }
+    return 0;
+}
+
+uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
+    uint16_t plen;
 
     prog_char *methodPos;
     int i = 0;
     for (; (methodPos = (prog_char *) pgm_read_word(&resources[i].method)); i++) {
         uint16_t querylen = strlen_P((prog_char *) pgm_read_word(&resources[i].query));
-        currentQueryPos = (prog_char *) pgm_read_word(&resources[i].query);
+        prog_char *currentQueryPos = (prog_char *) pgm_read_word(&resources[i].query);
         if (strncmp_P((char *) &(buf[dataPointer]), methodPos, 4) == 0
                 && strncmp_P((char *) & (buf[dataPointer + 4]), currentQueryPos, querylen) == 0) {
             prog_char *suffixPos = (prog_char *) pgm_read_word(&resources[i].suffix);
             if (' ' == pgm_read_byte(&currentQueryPos[querylen - 1])) {
+               current.resource = &resources[i];
                break;
             } else {
-                currentPinId = atoi(&buf[dataPointer + 4 + querylen]);
+                int8_t currentPinId = atoi(&buf[dataPointer + 4 + querylen]);
+                int8_t idx = getInputPinIdx(currentPinId);
+                if (idx != -1) {
+                    current.pinIdx = idx;
+                    current.pinDirection = PIN_DIRECTION_INPUT;
+                } else {
+                    idx = getOutputPinIdx(currentPinId);
+                    if (idx == -1) {
+                        plen = startResponseHeader(&buf, HEADER_400);
+                        plen = appendErrorMsg_P(buf, plen, PSTR("Pin notfound"));
+                        return plen;
+                    }
+                    current.pinIdx = idx;
+                    current.pinDirection = PIN_DIRECTION_OUTPUT;
+                }
+
                 uint8_t j = dataPointer + 4 + querylen;
                 for (; buf[j] >= '0' && buf[j] <= '9'; j++);
                 if (suffixPos == 0 && (buf[j] == ' ' || (buf[j] == '/' && buf[j + 1] == ' '))) {
-                    currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
+                    current.resource = &resources[i];
                     break;
                 } else if (strncmp_P((char *) & (buf[j]), suffixPos, strlen_P(suffixPos)) == 0) {
-                    currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
+                    current.resource = &resources[i];
                     break;
                 }
             }
         }
     }
+    return 0;
+}
 
-    if (!methodPos) {
+uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
+    uint16_t plen = commonCheck(buf, dataPointer, dataLen);
+    if (plen != 0) {
+        return plen;
+    }
+
+    if (current.resource != 0) { // we were waiting for data packet
+        ResourceFunc currentFunc = (ResourceFunc) pgm_read_word(&current.resource->resourceFunc);
+        plen = currentFunc(buf, dataPointer, dataLen, &current);
+        current.resource = 0;
+        return plen;
+    }
+
+    plen = parseHeaders(buf, dataPointer, dataLen);
+    if (plen != 0) {
+        return plen;
+    }
+
+    if (!current.resource) {
         plen = startResponseHeader(&buf, HEADER_404);
         plen = appendErrorMsg_P(buf, plen, PSTR("No resource for this method & url"));
-    } else if (currentQueryPos == RESOURCE_PIN && (currentPinId < 0 || currentPinId > NUMBER_OF_PINS - 1)) {
-            plen = startResponseHeader(&buf, HEADER_400);
-            plen = appendErrorMsg_P(buf, plen, PSTR("Pin overflow"));
     } else {
-        currentFunc = (ResourceFunc) pgm_read_word(&resources[i].resourceFunc);
-        if (methodPos == GET) { // GET do not need data, calling func directly
-            plen = currentFunc((char*)buf, 0, dataLen, currentPinId);
+        ResourceFunc currentFunc = (ResourceFunc) pgm_read_word(&current.resource->resourceFunc);
+        if ((prog_char *)pgm_read_word(&current.resource->method) == GET) { // GET do not need data, calling func directly
+            plen = currentFunc((char*)buf, 0, dataLen, &current);
         } else {
             uint16_t endPos = strstrpos_P(&buf[dataPointer], DOUBLE_ENDL);
             if (endPos == -1) {
@@ -105,12 +141,11 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 if (dataStartPos == dataLen) { // NO DATA IN THIS PACKET
                     return 0;
                 } else {
-                    plen = currentFunc((char *)buf, dataStartPos, dataLen, currentPinId);
+                    plen = currentFunc((char *)buf, dataStartPos, dataLen, &current);
                 }
             }
         }
     }
-    currentFunc = 0;
-    currentPinId = -1;
+    current.resource = 0;
     return plen;
 }

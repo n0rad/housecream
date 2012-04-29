@@ -46,7 +46,8 @@ uint16_t appendJsonKey(char *buf, uint16_t plen, const prog_char *key);
 
 uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen);
 
-typedef uint16_t (*ResourceFunc)(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId);
+
+typedef uint16_t (*ResourceFunc)(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *pinId);
 
 struct s_resource {
   const prog_char *method;
@@ -62,8 +63,14 @@ struct s_resource {
   {PUT, RESOURCE_BOARD, 0, boardPut},
   {PUT, RESOURCE_RESET, 0, boardReset},
   {PUT, RESOURCE_INIT, 0, boardReInit},
-  {PUT, RESOURCE_NOTIFY, 0, boardReInit},
+  {PUT, RESOURCE_NOTIFY, 0, boardNotify},
   {0, 0, 0}
 };
+
+//typedef struct s_webRequest {
+//    struct s_resource *resource;
+//    uint8_t pinIdx;
+//    uint8_t pinDirection;
+//} t_webRequest;
 
 #endif

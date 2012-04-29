@@ -1,19 +1,26 @@
 #include "pin-manager.h"
+#include "../client/client.h"
+#include "../hcc.h"
+#include "../settings/settings-pin.h"
+#include "../pin.h"
 
-static uint16_t previousValue[NUMBER_OF_PINS];
+//static uint16_t previousValue[NUMBER_OF_PINS];
 
-float noConversion(float pinValue) {
+float noInputConversion(uint16_t pinValue) {
+    return pinValue;
+}
+int16_t noOutputConversion(float pinValue) {
     return pinValue;
 }
 
 uint16_t defaultPinRead(uint8_t pinId) {
-    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
-    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
-    if (direction == PIN_INPUT) {
-        return pinReadValue(pinId, type);
-    } else if (direction == PIN_OUTPUT) {
-        return getConfigPinValue(pinId);
-    }
+//    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
+//    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
+//    if (direction == PIN_INPUT) {
+//        return pinReadValue(pinId, type);
+//    } else if (direction == PIN_OUTPUT) {
+//        return getConfigPinValue(pinId);
+//    }
     return 0;
 }
 
@@ -23,44 +30,44 @@ void defaultPinWrite(uint8_t pinId, uint16_t value) {
 
 
 float getPinValue(uint8_t pinId) {
-    PinRead read = (PinRead) pgm_read_word(&pinDescriptions[pinId].read);
-    PinValueConversion convert = (PinValueConversion) pgm_read_word(&pinDescriptions[pinId].convertValue);
-    return convert(read(pinId));
+//    PinRead read = (PinRead) pgm_read_word(&pinDescriptions[pinId].read);
+//    PinValueConversion convert = (PinValueConversion) pgm_read_word(&pinDescriptions[pinId].convertValue);
+//    return convert(read(pinId));
 }
 
 void pinCheckInit() {
-    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
-        int direction = pgm_read_byte(&pinDescriptions[i].direction);
-        if (direction == PIN_INPUT) {
-            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-            previousValue[i] = read(i);
-        }
-    }
+//    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
+//        int direction = pgm_read_byte(&pinDescriptions[i].direction);
+//        if (direction == PIN_INPUT) {
+//            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
+//            previousValue[i] = read(i);
+//        }
+//    }
 }
 
 void pinCheckChange() {
-    if (notification) {
-        return; // TODO do not skip but instead keep nexts to send
-    }
-    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
-        int direction = pgm_read_byte(&pinDescriptions[i].direction);
-        if (direction == PIN_INPUT) {
-            uint16_t oldValue = previousValue[i];
-            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-            uint16_t value = read(i);
-            for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
-                t_notify notify;
-                getConfigPinNotify(i, j, &notify);
-                if (notify.condition != PIN_NOTIFY_NOT_SET) {
-                    if ((notify.condition == PIN_NOTIFY_UNDER_EQ && oldValue > notify.value && value <= notify.value)
-                            || (notify.condition == PIN_NOTIFY_OVER_EQ && oldValue < notify.value && value >= notify.value)) {
-                        clientNotify(i, oldValue, value, notify);
-                    }
-                }
-            }
-            previousValue[i] = value;
-        }
-    }
+//    if (notification) {
+//        return; // TODO do not skip but instead keep nexts to send
+//    }
+//    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
+//        int direction = pgm_read_byte(&pinDescriptions[i].direction);
+//        if (direction == PIN_INPUT) {
+//            uint16_t oldValue = previousValue[i];
+//            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
+//            uint16_t value = read(i);
+//            for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
+//                t_notify notify;
+//                getConfigPinNotify(i, j, &notify);
+//                if (notify.condition != PIN_NOTIFY_NOT_SET) {
+//                    if ((notify.condition == PIN_NOTIFY_UNDER_EQ && oldValue > notify.value && value <= notify.value)
+//                            || (notify.condition == PIN_NOTIFY_OVER_EQ && oldValue < notify.value && value >= notify.value)) {
+//                        clientNotify(i, oldValue, value, notify);
+//                    }
+//                }
+//            }
+//            previousValue[i] = value;
+//        }
+//    }
 }
 
 void pinInit() {

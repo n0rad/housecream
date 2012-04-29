@@ -1,6 +1,6 @@
 #include "server-board.h"
 
-uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     plen = startResponseHeader(&buf, HEADER_200);
     plen = addToBufferTCP_P(buf, plen, PSTR("{\"software\":\"HouseCream Client\", \"version\":\""));
     plen = addToBufferTCP_P(buf, plen, hcc_version);
@@ -15,10 +15,10 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     plen = addToBufferTCP_P(buf, plen, boardDescription.description);
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"notifyUrl\":\""));
-    plen = addToBufferTCP(buf, plen, getConfigNotifyUrl());
+    plen = addToBufferTCP_E(buf, plen, getConfigBoardNotifyUrl_E());
 
     uint8_t ip[4];
-    getConfigIP(ip);
+    getConfigBoardIP(ip);
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"ip\":\""));
     plen = addToBufferTCP(buf, plen, (uint16_t) ip[0]);
     plen = addToBufferTCP(buf, plen, '.');
@@ -29,13 +29,26 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     plen = addToBufferTCP(buf, plen, (uint16_t) ip[3]);
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"port\":"));
-    plen = addToBufferTCP(buf, plen, getConfigPort());
+    plen = addToBufferTCP(buf, plen, getConfigBoardPort());
 
-    plen = addToBufferTCP_P(buf, plen, PSTR(",\"numberOfPin\":"));
-    plen = addToBufferTCP(buf, plen, (uint16_t)NUMBER_OF_PINS);
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"pinIds\":["));
+    uint8_t i = 0;
+    for (; i < pinInputSize; i++) {
+        if (i) {
+            plen = addToBufferTCP(buf, plen, ',');
+        }
+        plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(&pinInputDescription[i].pinId));
+    }
+    for (uint8_t j = 0; j < pinOutputSize; j++) {
+        if (i || j) {
+            plen = addToBufferTCP(buf, plen, ',');
+        }
+        plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(&pinOutputDescription[j].pinId));
+    }
+    plen = addToBufferTCP(buf, plen, ']');
 
     uint8_t mac[6];
-    getConfigMac(mac);
+    getConfigBoardMac(mac);
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"mac\":\""));
     plen = addToBufferTCPHex(buf, plen, mac[0]);
     plen = addToBufferTCP(buf, plen, ':');
@@ -53,7 +66,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     return plen;
 }
 
-uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     const prog_char *error = jsonParse(&buf[dat_p], boardPutElements);
     if (error) {
         plen = startResponseHeader(&buf, HEADER_400);
@@ -64,14 +77,14 @@ uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
     return plen;
 }
 
-uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     needReboot = true;
     plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }
 
 //TODO should be able to reload without reboot
-uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     settingsSave();
     needReboot = true;
     plen = startResponseHeader(&buf, HEADER_200);
@@ -80,7 +93,7 @@ uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
 
 
 //TODO it
-uint16_t boardNotify(char *buf, uint16_t dat_p, uint16_t plen, uint8_t pinId) {
+uint16_t boardNotify(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     plen = startResponseHeader(&buf, HEADER_200);
     return plen;
 }

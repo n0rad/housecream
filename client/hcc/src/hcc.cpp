@@ -10,12 +10,20 @@ char *criticalProblem_p;
 uint8_t needReboot = false;
 t_notification *notification = 0;
 
-void DEBUG_p(const prog_char *progmem_s) {
+void DEBUG_P(const prog_char *progmem) {
     char c;
-    while ((c = pgm_read_byte(progmem_s++))) {
+    while ((c = pgm_read_byte(progmem++))) {
         DEBUG_PRINT(c);
     }
-    DEBUG_PRINTLN(" ");
+    DEBUG_PRINTLN();
+}
+
+void DEBUG_E(const char *eeprom) {
+    char c;
+    while ((c = eeprom_read_byte((uint8_t *)eeprom++))) {
+        DEBUG_PRINT(c);
+    }
+    DEBUG_PRINTLN();
 }
 
 
@@ -30,13 +38,12 @@ int main(void) {
     definitionError = checkConfig();
     settingsLoad();
     networkSetup();
-    pinInit();
-    pinCheckInit();
+//    pinInit();
+//    pinCheckInit();
 
     for (;;) {
         networkManageServer();
-        pinCheckChange();
-//        networkManageClient();
+//        pinCheckChange();
     }
 
     return 0;
