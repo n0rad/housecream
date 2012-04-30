@@ -99,9 +99,7 @@ const prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
     }
     return 0;
 }
-const prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("notifies");
-}
+
 const prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
     return PSTR("notifyCondition");
 }
