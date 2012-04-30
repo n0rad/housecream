@@ -3,10 +3,6 @@
 uint8_t pinInputSize = 0;
 uint8_t pinOutputSize = 0;
 
-
-//t_pinData pinData;
-//t_boardData boardData;
-
 const prog_char *pinType[] PROGMEM = { PIN_TYPE_ANALOG, PIN_TYPE_DIGITAL};
 const prog_char *pinNotification[] PROGMEM = { PIN_NOTIFICATION_SUP, PIN_NOTIFICATION_INF};
 
@@ -38,6 +34,9 @@ void settingsSave() {
 
     eeprom_write_block_P((uint8_t *)(sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * pinOutputSize)),
             (prog_char *) CONFIG_VERSION, 4);
+
+    //TODO write 0 till the end of eeprom because if you reduce the number of pin and then put it back to same value it will find the version
+    //TODO and will not rewrite the conf and the eeprom conf will be corrupted
 }
 
 void settingsReload() {
@@ -64,18 +63,18 @@ void settingsLoad() {
     }
 }
 
-void getConfigBoardMac(uint8_t mac[6]) {
+void configGetBoardMac(uint8_t mac[6]) {
     memcpy_P(mac, boardDescription.mac, 6);
 }
-void getConfigBoardIP(uint8_t ip[4]) {
+void settingsGetBoardIP(uint8_t ip[4]) {
     eeprom_read_block((void*)ip, (uint8_t *)offsetof(t_boardSettings, ip), CONFIG_BOARD_IP_SIZE);
 }
-uint16_t getConfigBoardPort() {
+uint16_t settingsGetBoardPort() {
    return eeprom_read_word((uint16_t*) offsetof(t_boardSettings, port));
 }
-uint8_t *getConfigBoardName_E() {
+uint8_t *settingsGetBoardName_E() {
     return (uint8_t *) offsetof(t_boardSettings, name);
 }
-uint8_t *getConfigBoardNotifyUrl_E() {
+uint8_t *settingsGetBoardNotifyUrl_E() {
     return (uint8_t *) offsetof(t_boardSettings, notifyUrl);
 }

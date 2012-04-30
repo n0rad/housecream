@@ -70,12 +70,12 @@ uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                break;
             } else {
                 int8_t currentPinId = atoi(&buf[dataPointer + 4 + querylen]);
-                int8_t idx = getInputPinIdx(currentPinId);
+                int8_t idx = configGetInputPinIdx(currentPinId);
                 if (idx != -1) {
                     current.pinIdx = idx;
 //                    current.pinDirection = PIN_INPUT;
                 } else {
-                    idx = getOutputPinIdx(currentPinId);
+                    idx = configGetOutputPinIdx(currentPinId);
                     if (idx == -1) {
                         plen = startResponseHeader(&buf, HEADER_400);
                         plen = appendErrorMsg_P(buf, plen, PSTR("Pin not found"));

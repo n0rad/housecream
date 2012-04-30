@@ -1,4 +1,4 @@
-#include "src/config.h"
+#include "src/config/config.h"
 
 float tempConversion(float value) {
     return value * 50 / 1023;
@@ -6,7 +6,7 @@ float tempConversion(float value) {
 
 const t_boardDescription boardDescription PROGMEM = {
     {0x54, 0x55, 0x58, 0x10, 0x00, 0xF5},           // mac
-    {192, 168, 42, 245},                            // ip
+    {10, 0, 2, 245},                            // ip
     80,                                             // port
     "window1 controller",                           // name
     "window in front of the house not powered from POE but only by a transfo",   // description

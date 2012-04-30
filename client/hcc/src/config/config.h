@@ -2,7 +2,7 @@
 #define CONFIG_H_
 
 #include <avr/pgmspace.h>
-#include "pin/pin-manager.h"
+#include "../pin/pin-manager.h"
 
 ///////////////////////////////////////////////////////////////
 // BOARD

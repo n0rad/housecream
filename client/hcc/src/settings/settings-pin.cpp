@@ -71,13 +71,13 @@ const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
     float value = atof(buf);
     if (currentSetPinIdx < pinInputSize) {
         PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
-        if (RelDif(value, conversion(0)) >= 0.001) {
+        if (floatRelativeDiff(value, conversion(0)) >= 0.001) {
             return CANNOT_SET_MIN_VAL;
         }
     } else {
         float minValue;
         memcpy_P(&minValue, &pinOutputDescription[currentSetPinIdx - pinInputSize].valueMin, sizeof(float));
-        if (RelDif(value, minValue) >= 0.001) {
+        if (floatRelativeDiff(value, minValue) >= 0.001) {
             return CANNOT_SET_MIN_VAL;
         }
     }
@@ -87,13 +87,13 @@ const prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
     float value = atof(buf);
     if (currentSetPinIdx < pinInputSize) {
         PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
-        if (RelDif(value, conversion(1023)) >= 0.001) {
+        if (floatRelativeDiff(value, conversion(1023)) >= 0.001) {
             return CANNOT_SET_MAX_VAL;
         }
     } else {
         float minValue;
         memcpy_P(&minValue, &pinOutputDescription[currentSetPinIdx - pinInputSize].valueMax, sizeof(float));
-        if (RelDif(value, minValue) >= 0.001) {
+        if (floatRelativeDiff(value, minValue) >= 0.001) {
             return CANNOT_SET_MAX_VAL;
         }
     }

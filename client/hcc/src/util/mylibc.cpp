@@ -4,7 +4,7 @@
 
 #include "mylibc.h"
 
-float RelDif(float a, float b) {
+float floatRelativeDiff(float a, float b) {
     float c = Abs(a);
     float d = Abs(b);
     d = Max(c, d);

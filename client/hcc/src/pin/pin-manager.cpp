@@ -2,7 +2,7 @@
 #include "../client/client.h"
 #include "../hcc.h"
 #include "../settings/settings-pin.h"
-#include "../pin.h"
+#include "../driver/pin.h"
 
 //static uint16_t previousValue[NUMBER_OF_PINS];
 

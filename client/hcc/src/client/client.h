@@ -2,7 +2,7 @@
 #define CLIENT_H
 
 #include "../hcc.h"
-#include "../config.h"
+#include "../config/config.h"
 #include "../util/buffer.h"
 
 const prog_char PUT2[] PROGMEM = "PUT ";

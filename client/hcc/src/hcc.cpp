@@ -1,6 +1,6 @@
 #include "hcc.h"
 #include "../lib/arduino/Arduino.h" // for serial
-#include "network.h"
+#include "driver/network.h"
 #include "settings/settings.h"
 #include "client/client.h"
 
@@ -35,7 +35,7 @@ int main(void) {
     Serial.begin(9600);
 #endif
 
-    definitionError = checkConfig();
+    definitionError = configCheck();
     settingsLoad();
     networkSetup();
 //    pinInit();

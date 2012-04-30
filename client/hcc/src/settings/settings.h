@@ -5,7 +5,7 @@
 #include <avr/pgmspace.h>
 #include <avr/eeprom.h>
 
-#include "../config.h"
+#include "../config/config.h"
 #include "../hcc.h"
 #include "../pin/pin-manager.h"
 
@@ -22,10 +22,10 @@ const prog_char PIN_START_INVALID[] PROGMEM = "invalid start value for pin%d";
 const prog_char PIN_MIN_INVALID[] PROGMEM = "invalid min value for pin%d";
 const prog_char PIN_MAX_INVALID[] PROGMEM = "invalid max value for pin%d";
 
-const int8_t getInputPinIdx(uint8_t pinIdToFind);
-const int8_t getOutputPinIdx(uint8_t pinIdToFind);
+const int8_t configGetInputPinIdx(uint8_t pinIdToFind);
+const int8_t configGetOutputPinIdx(uint8_t pinIdToFind);
 
-char *checkConfig();
+char *configCheck();
 char *buildGlobalError_P(const prog_char *progmem_s, int pin);
 
 
@@ -38,14 +38,14 @@ void settingsLoad();
 void settingsReload();
 void settingsSave();
 
-void getConfigBoardIP(uint8_t ip[4]);
-void getConfigBoardMac(uint8_t ip[6]);
-uint16_t getConfigBoardPort();
-uint8_t *getConfigBoardName_E();
-uint8_t *getConfigBoardNotifyUrl_E();
+void settingsGetBoardIP(uint8_t ip[4]);
+void configGetBoardMac(uint8_t ip[6]);
+uint16_t settingsGetBoardPort();
+uint8_t *settingsGetBoardName_E();
+uint8_t *settingsGetBoardNotifyUrl_E();
 
 
-const prog_char CONFIG_VERSION[] PROGMEM = "hcc";
+const prog_char CONFIG_VERSION[] PROGMEM = "hc1";
 
 const prog_char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
 const prog_char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";

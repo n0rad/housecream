@@ -64,7 +64,7 @@ const prog_char *setConfigBoardIP(char *buf, uint16_t len, uint8_t index) {
     }
 
     uint8_t currentIp[4];
-    getConfigBoardIP(currentIp);
+    settingsGetBoardIP(currentIp);
     if (currentIp[0] != newIp[0] || currentIp[1] != newIp[1] || currentIp[2] != newIp[2] || currentIp[3] != newIp[3]) {
         eeprom_write_block(newIp, (uint8_t *) offsetof(t_boardSettings, ip), 4);
         needReboot = true;
@@ -79,7 +79,7 @@ const prog_char *setConfigBoardPort(char *buf, uint16_t len, uint8_t index) {
         }
     }
     uint16_t port = atoi(buf);
-    if (port != getConfigBoardPort()) {
+    if (port != settingsGetBoardPort()) {
         eeprom_write_word((uint16_t*)offsetof(t_boardSettings, port), port);
         needReboot = true;
     }
@@ -92,7 +92,7 @@ const prog_char *setConfigBoardMac(char *buf, uint16_t len, uint8_t index) {
     }
     char strMac[18];
     uint8_t byteMac[6];
-    getConfigBoardMac(byteMac);
+    configGetBoardMac(byteMac);
     sprintf_P(strMac, sprintfpHEX, byteMac[0]);
     sprintf_P(&strMac[3], sprintfpHEX, byteMac[1]);
     sprintf_P(&strMac[6], sprintfpHEX, byteMac[2]);

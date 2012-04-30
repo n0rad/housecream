@@ -1,6 +1,6 @@
 #include <avr/pgmspace.h>
 
-#include "../board.h"
+#include "../driver/board.h"
 
 char *buildGlobalError_P(const prog_char *progmem_s, int pin) {
     char *ptr = (char *) malloc(100 * sizeof(char));
@@ -9,7 +9,7 @@ char *buildGlobalError_P(const prog_char *progmem_s, int pin) {
     return ptr;
 }
 
-const int8_t getInputPinIdx(uint8_t pinIdToFind) {
+const int8_t configGetInputPinIdx(uint8_t pinIdToFind) {
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
         if (pinId == pinIdToFind) {
@@ -19,7 +19,7 @@ const int8_t getInputPinIdx(uint8_t pinIdToFind) {
     return -1;
 }
 
-const int8_t getOutputPinIdx(uint8_t pinIdToFind) {
+const int8_t configGetOutputPinIdx(uint8_t pinIdToFind) {
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
         if (pinId == pinIdToFind) {
@@ -29,7 +29,7 @@ const int8_t getOutputPinIdx(uint8_t pinIdToFind) {
     return -1;
 }
 
-char *checkConfig() {
+char *configCheck() {
 //    UNCESSERY AS WE CANNOT SEND THIS ERROR
 //    uint8_t ip[4];
 //    ip[0] = pgm_read_byte(&boardDescription.ip);
@@ -43,8 +43,8 @@ char *checkConfig() {
 
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
-        const int8_t inpos = getInputPinIdx(pinId);
-        const int8_t outpos = getOutputPinIdx(pinId);
+        const int8_t inpos = configGetInputPinIdx(pinId);
+        const int8_t outpos = configGetOutputPinIdx(pinId);
         if (outpos != -1 || inpos != i) {
             return buildGlobalError_P(PIN_DEFINE_TWICE, pinId);
         }
@@ -73,8 +73,8 @@ char *checkConfig() {
     }
 
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
-        const int8_t inpos = getInputPinIdx(pinId);
-        const int8_t outpos = getOutputPinIdx(pinId);
+        const int8_t inpos = configGetInputPinIdx(pinId);
+        const int8_t outpos = configGetOutputPinIdx(pinId);
         if (inpos != -1 || outpos != i) {
             return buildGlobalError_P(PIN_DEFINE_TWICE, pinId);
         }

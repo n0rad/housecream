@@ -16,7 +16,7 @@ float noInputConversion(uint16_t pinValue);
 int16_t noOutputConversion(float pinValue);
 
 
-#include "../config.h"
+#include "../config/config.h"
 
 float getPinValue(uint8_t pinId);
 void pinInit();

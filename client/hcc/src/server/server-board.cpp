@@ -9,16 +9,16 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webRes
     plen = addToBufferTCP_P(buf, plen, PSTR(HARDWARE));
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"name\":\""));
-    plen = addToBufferTCP_E(buf, plen, getConfigBoardName_E());
+    plen = addToBufferTCP_E(buf, plen, settingsGetBoardName_E());
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
     plen = addToBufferTCP_P(buf, plen, boardDescription.description);
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"notifyUrl\":\""));
-    plen = addToBufferTCP_E(buf, plen, getConfigBoardNotifyUrl_E());
+    plen = addToBufferTCP_E(buf, plen, settingsGetBoardNotifyUrl_E());
 
     uint8_t ip[4];
-    getConfigBoardIP(ip);
+    settingsGetBoardIP(ip);
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"ip\":\""));
     plen = addToBufferTCP(buf, plen, (uint16_t) ip[0]);
     plen = addToBufferTCP(buf, plen, '.');
@@ -29,7 +29,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webRes
     plen = addToBufferTCP(buf, plen, (uint16_t) ip[3]);
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"port\":"));
-    plen = addToBufferTCP(buf, plen, getConfigBoardPort());
+    plen = addToBufferTCP(buf, plen, settingsGetBoardPort());
 
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"pinIds\":["));
     uint8_t i = 0;
@@ -48,7 +48,7 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webRes
     plen = addToBufferTCP(buf, plen, ']');
 
     uint8_t mac[6];
-    getConfigBoardMac(mac);
+    configGetBoardMac(mac);
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"mac\":\""));
     plen = addToBufferTCPHex(buf, plen, mac[0]);
     plen = addToBufferTCP(buf, plen, ':');
