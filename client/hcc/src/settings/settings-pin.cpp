@@ -66,7 +66,6 @@ const prog_char *setConfigPinType(char *buf, uint16_t len, uint8_t index) {
     return PSTR("type cannot be set");
 }
 
-const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "minValue cannot be set";
 
 const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
     float value = atof(buf);
@@ -85,7 +84,20 @@ const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
     return 0;
 }
 const prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("valueMax");
+    float value = atof(buf);
+    if (currentSetPinIdx < pinInputSize) {
+        PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
+        if (RelDif(value, conversion(1023)) >= 0.001) {
+            return CANNOT_SET_MAX_VAL;
+        }
+    } else {
+        float minValue;
+        memcpy_P(&minValue, &pinOutputDescription[currentSetPinIdx - pinInputSize].valueMax, sizeof(float));
+        if (RelDif(value, minValue) >= 0.001) {
+            return CANNOT_SET_MAX_VAL;
+        }
+    }
+    return 0;
 }
 const prog_char *setConfigPinNotifies(char *buf, uint16_t len, uint8_t index) {
     return PSTR("notifies");

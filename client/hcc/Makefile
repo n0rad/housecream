@@ -3,7 +3,7 @@ SRC =
 CXXSRC =
 ARDUINO_SRC =  lib/arduino/wiring.c lib/arduino/wiring_analog.c lib/arduino/wiring_digital.c \
 	lib/arduino/wiring_pulse.c lib/arduino/wiring_shift.c lib/arduino/WInterrupts.c
-ARDUINO_CXXSRC = lib/arduino/HardwareSerial.cpp lib/arduino/WMath.cpp lib/arduino/Print.cpp
+ARDUINO_CXXSRC = lib/arduino/HardwareSerial.cpp lib/arduino/Print.cpp
 ############################################################################
 # your configuration part
 PORT = /dev/ttyUSB0

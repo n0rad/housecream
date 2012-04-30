@@ -9,6 +9,8 @@
 #include "../hcc.h"
 #include "../pin/pin-manager.h"
 
+const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "minValue cannot be set";
+const prog_char CANNOT_SET_MAX_VAL[] PROGMEM = "maxValue cannot be set";
 const prog_char STR_INPUT[] PROGMEM = "INPUT";
 const prog_char STR_OUTPUT[] PROGMEM = "OUTPUT";
 const prog_char DESCRIPTION_CANNOT_BE_SET[] PROGMEM = "description cannot be set";
