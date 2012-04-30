@@ -18,12 +18,13 @@ const char NOT_VALID_PORT[] PROGMEM = "not valid port";
 const char CANNOT_SET_MAC[] PROGMEM = "mac cannot be set";
 
 
+const prog_char *handlePinIdsArray(uint8_t index);
 const prog_char *setConfigBoardName(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigBoardNotifyUrl(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigBoardIP(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigBoardPort(char *buf, uint16_t len, uint8_t index);
 
-const prog_char *setConfigBoardPinId(char *buf, uint16_t len, uint8_t index);
+const prog_char *setConfigBoardPinIds(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigBoardMac(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigBoardDescription(char *buf, uint16_t len, uint8_t index);
 const prog_char *setConfigBoardVersion(char *buf, uint16_t len, uint8_t index);

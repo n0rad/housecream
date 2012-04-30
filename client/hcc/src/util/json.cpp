@@ -74,7 +74,8 @@ static const prog_char *jsonParseObject(char **buffer, const t_json *structureLi
 
 static const prog_char *jsonParseArray(char **buffer, const t_json *currentStructure) {
     char *buf =  *buffer;
-    if (currentStructure && !pgm_read_byte(&currentStructure->isArray)) {
+    jsonHandleEndArray endFunc = (jsonHandleEndArray) pgm_read_word(&currentStructure->handleEndArray);
+    if (currentStructure && !endFunc) {
         return PSTR("Unexpected array");
     }
     uint8_t count = 0;
@@ -93,6 +94,11 @@ static const prog_char *jsonParseArray(char **buffer, const t_json *currentStruc
     buf = skipSpaces(buf);
     if (buf[0] != ']') { // end of object
         return JSON_ERROR_NO_ARRAY_END;
+    }
+
+    const prog_char *res = endFunc(count);
+    if (res) {
+        return res;
     }
     buf = skipSpaces(&buf[1]); // going out of array
     *buffer = buf;

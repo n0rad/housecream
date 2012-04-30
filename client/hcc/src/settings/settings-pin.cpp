@@ -27,7 +27,7 @@ uint8_t *getConfigPinName_E(uint8_t pinIdx) {
 /////////////////
 
 const prog_char *setConfigPinId(char *buf, uint16_t len, uint8_t index) {
-    return setConfigBoardPinId(buf, len, currentSetPinIdx);
+    return setConfigBoardPinIds(buf, len, currentSetPinIdx);
 }
 const prog_char *setConfigPinName(char *buf, uint16_t len, uint8_t index) {
     if (len >  CONFIG_PIN_NAME_SIZE - 1) {
@@ -101,11 +101,15 @@ const prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
     return 0;
 }
 
-const prog_char TOO_MANY_NOTIFY[] PROGMEM = "Too many notify";
-const prog_char NO_NOTIFY_OUTPUT[] PROGMEM = "No notify on output";
+const prog_char *handlePinNotifyEndArray(uint8_t index) {
+    for (uint8_t i = index; i < 4; i++) {
+        uint16_t notifiesPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * currentSetPinIdx) + offsetof(t_pinInputSettings, notifies);
+        eeprom_write_byte((uint8_t *)(notifiesPos + (sizeof(t_notify) * i) + offsetof(t_notify, condition)), 0);
+    }
+    return 0;
+}
 
 const prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
-    DEBUG_PRINTLN(index);
     if (index > 3) {
         return TOO_MANY_NOTIFY;
     }

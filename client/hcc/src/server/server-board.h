@@ -25,7 +25,7 @@ const prog_char BOARD_PARAM_SOFTWARE[] PROGMEM = "software";
 const prog_char BOARD_PARAM_MAC[] PROGMEM = "mac";
 
 const t_json boardPutElements[] PROGMEM = {
-        {BOARD_PARAM_PINIDS, setConfigBoardPinId, 0, 1},
+        {BOARD_PARAM_PINIDS, setConfigBoardPinIds, 0, handlePinIdsArray},
         {BOARD_PARAM_HARDWARE, setConfigBoardHardware, 0, 0},
         {BOARD_PARAM_VERSION, setConfigBoardVersion, 0, 0},
         {BOARD_PARAM_SOFTWARE, setConfigBoardSoftware, 0, 0},

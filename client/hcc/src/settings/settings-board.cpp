@@ -134,7 +134,7 @@ const prog_char *setConfigBoardVersion(char *buf, uint16_t len, uint8_t index) {
     }
     return PSTR("version cannot be set");
 }
-const prog_char *setConfigBoardPinId(char *buf, uint16_t len, uint8_t index) {
+const prog_char *setConfigBoardPinIds(char *buf, uint16_t len, uint8_t index) {
     uint8_t bufPinId = atoi(buf);
     uint8_t currentPinId;
     if (index < pinInputSize) {
@@ -145,5 +145,9 @@ const prog_char *setConfigBoardPinId(char *buf, uint16_t len, uint8_t index) {
     if (currentPinId != bufPinId) {
         return PSTR("cannot set pinId");
     }
+    return 0;
+}
+
+const prog_char *handlePinIdsArray(uint8_t index) {
     return 0;
 }
