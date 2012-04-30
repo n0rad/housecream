@@ -9,8 +9,8 @@
 #include "../hcc.h"
 #include "../pin/pin-manager.h"
 
-const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "minValue cannot be set";
-const prog_char CANNOT_SET_MAX_VAL[] PROGMEM = "maxValue cannot be set";
+const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "valueMin cannot be set";
+const prog_char CANNOT_SET_MAX_VAL[] PROGMEM = "valueMax cannot be set";
 const prog_char STR_INPUT[] PROGMEM = "INPUT";
 const prog_char STR_OUTPUT[] PROGMEM = "OUTPUT";
 const prog_char DESCRIPTION_CANNOT_BE_SET[] PROGMEM = "description cannot be set";
@@ -45,7 +45,7 @@ uint8_t *settingsGetBoardName_E();
 uint8_t *settingsGetBoardNotifyUrl_E();
 
 
-const prog_char CONFIG_VERSION[] PROGMEM = "hc1";
+const prog_char CONFIG_VERSION[] PROGMEM = "hcc";
 
 const prog_char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
 const prog_char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";

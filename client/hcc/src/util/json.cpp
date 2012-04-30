@@ -23,7 +23,7 @@ static char *skipSpaces(char *buf) {
     return buf;
 }
 
-static const prog_char *jsonParseObject(char **buffer, const t_json *structureList) {
+static const prog_char *jsonParseObject(char **buffer, const t_json *structureList, uint8_t index) {
     char *buf =  *buffer;
     prog_char *keypos;
     do {
@@ -54,7 +54,7 @@ static const prog_char *jsonParseObject(char **buffer, const t_json *structureLi
             return JSON_ERROR_NO_SEPARATOR;
         }
         buf = skipSpaces(&buf[1]); // skip separator ':' and white spaces
-        const prog_char *res = jsonParseValue(&buf, currentStructure, 0);
+        const prog_char *res = jsonParseValue(&buf, currentStructure, index);
         if (res) {
             return res;
         }
@@ -115,7 +115,7 @@ const prog_char *jsonParseValue(char **buffer, const t_json *currentStructure, u
     } else if (buf[0] == '{') {
 //        DEBUG_PRINTLN("found OBJ");
         const t_json *objStruct = (t_json *) pgm_read_word(&currentStructure->valueStruct);
-        const prog_char *res = jsonParseObject(&buf, objStruct);
+        const prog_char *res = jsonParseObject(&buf, objStruct, index);
         if (res) {
             return res;
         }

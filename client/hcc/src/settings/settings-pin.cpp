@@ -86,25 +86,61 @@ const prog_char *setConfigPinValueMin(char *buf, uint16_t len, uint8_t index) {
 const prog_char *setConfigPinValueMax(char *buf, uint16_t len, uint8_t index) {
     float value = atof(buf);
     if (currentSetPinIdx < pinInputSize) {
+        uint8_t type = pgm_read_byte(&pinInputDescription[currentSetPinIdx].type);
         PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
-        if (floatRelativeDiff(value, conversion(1023)) >= 0.001) {
+        if (floatRelativeDiff(value, conversion(type == ANALOG ? 1023 : 1)) >= 0.001) {
             return CANNOT_SET_MAX_VAL;
         }
     } else {
-        float minValue;
-        memcpy_P(&minValue, &pinOutputDescription[currentSetPinIdx - pinInputSize].valueMax, sizeof(float));
-        if (floatRelativeDiff(value, minValue) >= 0.001) {
+        float maxValue;
+        memcpy_P(&maxValue, &pinOutputDescription[currentSetPinIdx - pinInputSize].valueMax, sizeof(float));
+        if (floatRelativeDiff(value, maxValue) >= 0.001) {
             return CANNOT_SET_MAX_VAL;
         }
     }
     return 0;
 }
 
+const prog_char TOO_MANY_NOTIFY[] PROGMEM = "Too many notify";
+const prog_char NO_NOTIFY_OUTPUT[] PROGMEM = "No notify on output";
+
 const prog_char *setConfigPinNotifyCond(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("notifyCondition");
+    DEBUG_PRINTLN(index);
+    if (index > 3) {
+        return TOO_MANY_NOTIFY;
+    }
+    if (currentSetPinIdx >= pinInputSize){
+        return NO_NOTIFY_OUTPUT;
+    }
+
+    uint8_t notif;
+    if (!strncmp_P(buf, PIN_NOTIFICATION_SUP, len)) {
+        notif = OVER_EQ;
+    } else if (!strncmp_P(buf, PIN_NOTIFICATION_INF, len)) {
+        notif = UNDER_EQ;
+    } else {
+        return PSTR("invalid notify condition");
+    }
+    uint16_t notifiesPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * currentSetPinIdx) + offsetof(t_pinInputSettings, notifies);
+    eeprom_write_byte((uint8_t *)(notifiesPos + (sizeof(t_notify) * index) + offsetof(t_notify, condition)), notif);
+    return 0;
 }
 const prog_char *setConfigPinNotifyValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("notifyValue");
+    if (index > 3) {
+        return TOO_MANY_NOTIFY;
+    }
+    if (currentSetPinIdx >= pinInputSize){
+        return NO_NOTIFY_OUTPUT;
+    }
+    float value = atof(buf);
+    uint8_t type = pgm_read_byte(&pinInputDescription[currentSetPinIdx].type);
+    PinInputConversion conversion = (PinInputConversion) pgm_read_word(&(pinInputDescription[currentSetPinIdx].convertValue));
+    if (value > conversion(type == ANALOG ? 1023 : 1) || value < conversion(0)) {
+        return PSTR("notify value overflow");
+    }
+    uint16_t notifiesPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * currentSetPinIdx) + offsetof(t_pinInputSettings, notifies);
+    eeprom_write_dword((uint32_t *)(notifiesPos + (sizeof(t_notify) * index) + offsetof(t_notify, value)), *((unsigned long *)&value));
+    return 0;
 }
 const prog_char *setConfigPinValue(char *buf, uint16_t len, uint8_t index) {
     return PSTR("value");
