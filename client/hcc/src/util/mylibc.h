@@ -1,6 +1,7 @@
 #ifndef MYLIBC_H
 #define MYLIBC_H
 
+uint8_t readIP(char *buf, uint16_t len, uint8_t newIp[4]);
 
 float floatRelativeDiff(float a, float b);
 int my_strpos(const char *s, int ch);

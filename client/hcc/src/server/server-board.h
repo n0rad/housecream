@@ -25,16 +25,16 @@ const prog_char BOARD_PARAM_SOFTWARE[] PROGMEM = "software";
 const prog_char BOARD_PARAM_MAC[] PROGMEM = "mac";
 
 const t_json boardPutElements[] PROGMEM = {
-        {BOARD_PARAM_PINIDS, setConfigBoardPinIds, 0, handlePinIdsArray},
-        {BOARD_PARAM_HARDWARE, setConfigBoardHardware, 0, 0},
-        {BOARD_PARAM_VERSION, setConfigBoardVersion, 0, 0},
-        {BOARD_PARAM_SOFTWARE, setConfigBoardSoftware, 0, 0},
-        {BOARD_PARAM_MAC, setConfigBoardMac, 0, 0},
-        {PARAM_NAME, setConfigBoardName, 0, 0},
-        {BOARD_PARAM_NOTIFYURL, setConfigBoardNotifyUrl, 0, 0},
-        {PARAM_DESCRIPTION, setConfigBoardDescription, 0, 0},
-        {BOARD_PARAM_IP, setConfigBoardIP, 0, 0},
-        {BOARD_PARAM_PORT, setConfigBoardPort, 0, 0},
+        {BOARD_PARAM_PINIDS, configBoardSetPinIds, 0, configBoardHandlePinIdsArray},
+        {BOARD_PARAM_HARDWARE, configBoardSetHardware, 0, 0},
+        {BOARD_PARAM_VERSION, configBoardSetVersion, 0, 0},
+        {BOARD_PARAM_SOFTWARE, configBoardSetSoftware, 0, 0},
+        {BOARD_PARAM_MAC, configBoardSetMac, 0, 0},
+        {PARAM_NAME, configBoardSetName, 0, 0},
+        {BOARD_PARAM_NOTIFYURL, configBoardSetNotifyUrl, 0, 0},
+        {PARAM_DESCRIPTION, configBoardSetDescription, 0, 0},
+        {BOARD_PARAM_IP, configBoardSetIP, 0, 0},
+        {BOARD_PARAM_PORT, configBoardSetPort, 0, 0},
         {0, 0, 0, 0}
 };
 

@@ -36,7 +36,7 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
 
 
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"name\":\""));
-    plen = addToBufferTCP_E(buf, plen, getConfigPinName_E(webResource->pinIdx));
+    plen = addToBufferTCP_E(buf, plen, settingsPinGetName_E(webResource->pinIdx));
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
     plen = addToBufferTCP_P(buf, plen, (const prog_char *) (webResource->pinIdx < pinInputSize ?
@@ -63,7 +63,7 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
         plen = addToBufferTCP_P(buf, plen, PSTR(",\"notifies\":["));
         for (uint8_t i = 0; i < PIN_NUMBER_OF_NOTIFY; i++) {
             t_notify notify;
-            getConfigPinNotify(webResource->pinIdx, i, &notify);
+            settingsPinGetNotify(webResource->pinIdx, i, &notify);
             if (notify.condition > 0) {
                 if (i) {
                     plen = addToBufferTCP(buf, plen, ',');

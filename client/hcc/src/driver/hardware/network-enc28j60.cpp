@@ -13,7 +13,7 @@ void (*resetFunc)(void) = 0; //declare reset function @ address 0
 void networkSetup() {
 
     uint8_t mac[6];
-    configGetBoardMac(mac);
+    configBoardGetMac(mac);
 
     /*initialize enc28j60*/
     es.ES_enc28j60Init((uint8_t *) mac);
@@ -44,8 +44,8 @@ void networkSetup() {
     delay(100);
 
     uint8_t ip[4];
-    settingsGetBoardIP(ip);
-    port = settingsGetBoardPort();
+    settingsBoardGetIP(ip);
+    port = settingsBoardGetPort();
     //init the ethernet/ip layer:
     es.ES_init_ip_arp_udp_tcp((uint8_t *) mac, (uint8_t *) ip, port);
 }

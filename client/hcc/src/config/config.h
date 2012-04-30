@@ -45,6 +45,7 @@ typedef struct s_notify {
 typedef struct s_pinInputDescription {
     int8_t pinId;           // unique pin id on board
     int8_t type;            // ANALOG, DIGITAL
+    uint8_t pullup;         // enable internal pullup resistor
     prog_char name[CONFIG_PIN_NAME_SIZE];
     t_notify notifies[PIN_NUMBER_OF_NOTIFY];
     PinInputConversion convertValue; // convert the 0-1023 to a display value (ex: float for temperature)

@@ -30,21 +30,21 @@ const prog_char PIN_PARAM_VALUE[] PROGMEM = "value";
 const prog_char PIN_PARAM_STARTVALUE[] PROGMEM = "startValue";
 
 const t_json pinPutNotifiesElements[] PROGMEM = {
-        {PIN_PARAM_NOTIFY_COND, setConfigPinNotifyCond},
-        {PIN_PARAM_NOTIFY_VALUE, setConfigPinNotifyValue},
+        {PIN_PARAM_NOTIFY_COND, settingsPinSetNotifyCond},
+        {PIN_PARAM_NOTIFY_VALUE, settingsPinSetNotifyValue},
         {0, 0}
 };
 
 const t_json pinPutElements[] PROGMEM = {
-        {PIN_PARAM_ID, setConfigPinId},
-        {PARAM_NAME, setConfigPinName},
-        {PARAM_DESCRIPTION, setConfigPinDescription},
-        {PIN_PARAM_DIRECTION, setConfigPinDirection},
-        {PIN_PARAM_TYPE, setConfigPinType},
-        {PIN_PARAM_VALUEMIN, setConfigPinValueMin},
-        {PIN_PARAM_VALUEMAX, setConfigPinValueMax},
-        {PIN_PARAM_NOTIFIES, 0, (t_json *) pinPutNotifiesElements, handlePinNotifyEndArray}, // array of objects
-        {PIN_PARAM_VALUE, setConfigPinValue},
+        {PIN_PARAM_ID, settingsPinSetId},
+        {PARAM_NAME, settingsPinSetName},
+        {PARAM_DESCRIPTION, settingsPinSetDescription},
+        {PIN_PARAM_DIRECTION, settingsPinSetDirection},
+        {PIN_PARAM_TYPE, settingsPinSetType},
+        {PIN_PARAM_VALUEMIN, settingsPinSetValueMin},
+        {PIN_PARAM_VALUEMAX, settingsPinSetValueMax},
+        {PIN_PARAM_NOTIFIES, 0, (t_json *) pinPutNotifiesElements, settingsPinHandlePinNotifyArray}, // array of objects
+        {PIN_PARAM_VALUE, settingsPinSetValue},
         {0, 0}
 };
 

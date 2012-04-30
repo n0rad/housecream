@@ -62,19 +62,3 @@ void settingsLoad() {
         settingsSave();
     }
 }
-
-void configGetBoardMac(uint8_t mac[6]) {
-    memcpy_P(mac, boardDescription.mac, 6);
-}
-void settingsGetBoardIP(uint8_t ip[4]) {
-    eeprom_read_block((void*)ip, (uint8_t *)offsetof(t_boardSettings, ip), CONFIG_BOARD_IP_SIZE);
-}
-uint16_t settingsGetBoardPort() {
-   return eeprom_read_word((uint16_t*) offsetof(t_boardSettings, port));
-}
-uint8_t *settingsGetBoardName_E() {
-    return (uint8_t *) offsetof(t_boardSettings, name);
-}
-uint8_t *settingsGetBoardNotifyUrl_E() {
-    return (uint8_t *) offsetof(t_boardSettings, notifyUrl);
-}

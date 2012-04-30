@@ -3,6 +3,7 @@
 #include "driver/network.h"
 #include "settings/settings.h"
 #include "client/client.h"
+#include "config/config-manager.h"
 
 
 char *definitionError;

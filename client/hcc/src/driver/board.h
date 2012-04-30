@@ -7,6 +7,7 @@
 
 #include "../hcc.h"
 #include "../settings/settings.h"
+#include "../config/config-manager.h"
 
 char *boardCheckConfig();
 

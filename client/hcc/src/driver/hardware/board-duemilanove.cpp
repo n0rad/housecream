@@ -1,6 +1,5 @@
 #include "../board.h"
 
-
 const prog_char ERROR_PIN_RESERVED[] PROGMEM = "pin%d is reserved";
 const prog_char ERROR_PIN_ANALOG[] PROGMEM = "pin%d cannot be ANALOG";
 

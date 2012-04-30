@@ -15,13 +15,16 @@ void pinInit() {
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
         pinMode(pinId, INPUT);
-        //TODO set pullup
+        if (pgm_read_byte(&pinInputDescription[i].pullup)) {
+            DEBUG_PRINTLN(pinId);
+            digitalWrite(pinId, HIGH);
+        }
     }
 
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
         pinMode(pinId, OUTPUT);
+//        setting
         //TODO set value
-        //TODO set pullup
     }
 }
 
@@ -31,7 +34,6 @@ void pinInit() {
 
 
 uint16_t defaultPinRead(uint8_t pinId) {
-    A0
 //    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
 //    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
 //    if (direction == PIN_INPUT) {

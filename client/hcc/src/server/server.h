@@ -4,6 +4,7 @@
 #include <avr/eeprom.h>
 #include <string.h>
 
+#include "../config/config-manager.h"
 #include "../settings/settings.h"
 #include "../util/buffer.h"
 #include "../hcc.h"

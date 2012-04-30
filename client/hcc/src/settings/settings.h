@@ -13,8 +13,6 @@ const prog_char TOO_MANY_NOTIFY[] PROGMEM = "Too many notify";
 const prog_char NO_NOTIFY_OUTPUT[] PROGMEM = "No notify on output";
 const prog_char CANNOT_SET_MIN_VAL[] PROGMEM = "valueMin cannot be set";
 const prog_char CANNOT_SET_MAX_VAL[] PROGMEM = "valueMax cannot be set";
-const prog_char STR_INPUT[] PROGMEM = "INPUT";
-const prog_char STR_OUTPUT[] PROGMEM = "OUTPUT";
 const prog_char DESCRIPTION_CANNOT_BE_SET[] PROGMEM = "description cannot be set";
 const prog_char NAME_TOO_LONG[] PROGMEM = "name is too long";
 const prog_char NOTIFY_VAL_OVERFLOW[] PROGMEM = "notify val overflow on pin%d";
@@ -24,45 +22,28 @@ const prog_char PIN_START_INVALID[] PROGMEM = "invalid start value for pin%d";
 const prog_char PIN_MIN_INVALID[] PROGMEM = "invalid min value for pin%d";
 const prog_char PIN_MAX_INVALID[] PROGMEM = "invalid max value for pin%d";
 
-const int8_t configGetInputPinIdx(uint8_t pinIdToFind);
-const int8_t configGetOutputPinIdx(uint8_t pinIdToFind);
-
-char *configCheck();
-char *buildGlobalError_P(const prog_char *progmem_s, int pin);
-
-
-
-extern uint8_t pinInputSize;
-extern uint8_t pinOutputSize;
-
-
 void settingsLoad();
 void settingsReload();
 void settingsSave();
 
-void settingsGetBoardIP(uint8_t ip[4]);
-void configGetBoardMac(uint8_t ip[6]);
-uint16_t settingsGetBoardPort();
-uint8_t *settingsGetBoardName_E();
-uint8_t *settingsGetBoardNotifyUrl_E();
-
-
 const prog_char CONFIG_VERSION[] PROGMEM = "hc1";
-
+const prog_char STR_INPUT[] PROGMEM = "INPUT";
+const prog_char STR_OUTPUT[] PROGMEM = "OUTPUT";
 const prog_char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
 const prog_char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";
-
 const prog_char PIN_NOTIFICATION_SUP[] PROGMEM = "SUP_OR_EQUAL";
 const prog_char PIN_NOTIFICATION_INF[] PROGMEM = "INF_OR_EQUAL";
 
 
+extern uint8_t pinInputSize;
+extern uint8_t pinOutputSize;
 extern const char *pinDirection[];
 extern const char *pinType[];
 extern const char *pinNotification[];
 
-#define CONFIG_EEPROM_START 0
-
-
+/////////////////////////////////////////////////////////////
+// EEPROM structure
+/////////////////////////////////////////////////////////////
 typedef struct s_boardSettings {
     uint8_t ip[CONFIG_BOARD_IP_SIZE];
     uint16_t port;
