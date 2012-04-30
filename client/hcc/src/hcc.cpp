@@ -38,7 +38,9 @@ int main(void) {
     definitionError = configCheck();
     settingsLoad();
     networkSetup();
-//    pinInit();
+    if (!definitionError) {
+        pinInit();
+    }
 //    pinCheckInit();
 
     for (;;) {

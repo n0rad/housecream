@@ -4,10 +4,6 @@
 #define HARDWARE "Arduino Duemilanove / Nuelectronics enc28j60 Ethernet Shield V1.1"
 
 
-//#define offsetof(st, m) \
-//    ((size_t) ( (char *)&((st *)(0))->m - (char *)0 ))
-
-
 #define DEBUG
 
 #include "debug.h"

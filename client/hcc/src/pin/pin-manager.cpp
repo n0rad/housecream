@@ -4,8 +4,6 @@
 #include "../settings/settings-pin.h"
 #include "../driver/pin.h"
 
-//static uint16_t previousValue[NUMBER_OF_PINS];
-
 float noInputConversion(uint16_t pinValue) {
     return pinValue;
 }
@@ -13,7 +11,27 @@ int16_t noOutputConversion(float pinValue) {
     return pinValue;
 }
 
+void pinInit() {
+    int8_t pinId;
+    for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
+        pinMode(pinId, INPUT);
+        //TODO set pullup
+    }
+
+    for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
+        pinMode(pinId, OUTPUT);
+        //TODO set value
+        //TODO set pullup
+    }
+}
+
+
+
+
+
+
 uint16_t defaultPinRead(uint8_t pinId) {
+    A0
 //    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
 //    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
 //    if (direction == PIN_INPUT) {
@@ -69,15 +87,6 @@ void pinCheckChange() {
 //        }
 //    }
 }
-
-void pinInit() {
-    pinMode(0, INPUT);
-    pinMode(2, INPUT);
-    pinMode(3, OUTPUT);
-    pinMode(4, INPUT);
-    pinMode(5, OUTPUT);
-}
-
 
 
 
@@ -155,43 +164,4 @@ void pinInit() {
 //  return 0;
 //}
 //
-//
-///**
-// * init pins as input or output and set starting value
-// */
-//void initPins() {
-//  for (int i = 0; i < p_pinSize; i++) {
-//    // skip notused and analog
-//    if (i >= 10 || p_pin[i].mode == NOTUSED) {
-//      continue;
-//    }
-//
-//    // init input and output (PWM does not need init)
-//    if (p_pin[i].mode != PWM) {
-//      DEBUG_PRINT("set pin (");
-//      DEBUG_PRINTDEC(i);
-//      DEBUG_PRINT(") to mode ");
-//
-//      DEBUG_PRINT((p_pin[i].mode == INPUT ? "INPUT" : (p_pin[i].mode == OUTPUT ? "OUTPUT" : "UNKNOWN")));
-//      DEBUG_PRINT(" (");
-//      DEBUG_PRINT(p_pin[i].description);
-//      DEBUG_PRINTLN(")");
-//      pinMode(i, p_pin[i].mode);
-//    }
-//
-//    // set default value
-//    if (p_pin[i].mode == OUTPUT || p_pin[i].mode == PWM) {
-//      if (setValue(i, p_pin[i].startValue)) {
-//        // error when set
-//        DEBUG_PRINTLN(globalErrorBuffer);
-//        return;
-//      }
-//    } else if (p_pin[i].mode == INPUT && p_pin[i].startValue == HIGH) {
-//      DEBUG_PRINT("Enable 20k pullup resistor on pin ");
-//      DEBUG_PRINTDEC(i);
-//      DEBUG_PRINTLN("");
-//      digitalWrite(i, HIGH);
-//    }
-//  }
-//}
 //

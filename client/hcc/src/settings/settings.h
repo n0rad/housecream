@@ -47,7 +47,7 @@ uint8_t *settingsGetBoardName_E();
 uint8_t *settingsGetBoardNotifyUrl_E();
 
 
-const prog_char CONFIG_VERSION[] PROGMEM = "hcc";
+const prog_char CONFIG_VERSION[] PROGMEM = "hc1";
 
 const prog_char PIN_TYPE_ANALOG[] PROGMEM = "ANALOG";
 const prog_char PIN_TYPE_DIGITAL[] PROGMEM = "DIGITAL";
