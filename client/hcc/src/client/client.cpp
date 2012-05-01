@@ -19,6 +19,7 @@ uint16_t startRequestHeader(char **buf, const prog_char *method) {
 }
 
 uint16_t clientBuildNextQuery(char *buf) {
+    DEBUG_PRINTLN("build next notify");
     uint16_t plen;
     plen = startRequestHeader(&buf, PUT2);
     plen = addToBufferTCP_P(buf, plen, PSTR("/notify/pin"));

@@ -42,11 +42,12 @@ int main(void) {
     if (!definitionError) {
         pinInit();
     }
-//    pinCheckInit();
 
     for (;;) {
         networkManageServer();
-//        pinCheckChange();
+        if (!definitionError) {
+            pinCheckChange();
+        }
     }
 
     return 0;

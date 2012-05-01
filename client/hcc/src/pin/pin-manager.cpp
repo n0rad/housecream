@@ -44,47 +44,52 @@ float getPinValue(uint8_t pinIdx) {
 ////////////////////////////////////////////////////////
 uint16_t defaultPinRead(uint8_t pinId, uint8_t type) {
     if (type == ANALOG) {
-        DEBUG_PRINT("reading analog ");
-        DEBUG_PRINT(pinId);
-        DEBUG_PRINT(" ");
+//        DEBUG_PRINT("reading analog ");
+//        DEBUG_PRINT(pinId);
+//        DEBUG_PRINT(" ");
         uint16_t val = analogRead(pinId);
-        DEBUG_PRINTLN(val);
+//        DEBUG_PRINTLN(val);
         return val;
     } else {
-        DEBUG_PRINT("reading digital ");
-        DEBUG_PRINT(pinId);
-        DEBUG_PRINT(" ");
+//        DEBUG_PRINT("reading digital ");
+//        DEBUG_PRINT(pinId);
+//        DEBUG_PRINT(" ");
         uint16_t val = digitalRead(pinId);
-        DEBUG_PRINTLN(val);
+//        DEBUG_PRINTLN(val);
         return val;
     }
 }
 void defaultPinWrite(uint8_t pinId, uint8_t type, uint16_t value) {
     if (type == ANALOG) {
-        DEBUG_PRINT("writing analog ");
-        DEBUG_PRINT(pinId);
-        DEBUG_PRINT(" ");
-        DEBUG_PRINTLN(value);
+//        DEBUG_PRINT("writing analog ");
+//        DEBUG_PRINT(pinId);
+//        DEBUG_PRINT(" ");
+//        DEBUG_PRINTLN(value);
         analogWrite(pinId, value);
     } else {
-        DEBUG_PRINT("writing digital ");
-        DEBUG_PRINT(pinId);
-        DEBUG_PRINT(" ");
-        DEBUG_PRINTLN(value);
+//        DEBUG_PRINT("writing digital ");
+//        DEBUG_PRINT(pinId);
+//        DEBUG_PRINT(" ");
+//        DEBUG_PRINTLN(value);
         digitalWrite(pinId, value);
     }
 }
 
-
+static uint16_t *previousInputValues;
 
 void pinInit() {
     int8_t pinId;
+    previousInputValues = (uint16_t *) malloc(pinInputSize * sizeof(uint16_t));
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
         pinMode(pinId, INPUT);
+
         if (pgm_read_byte(&pinInputDescription[i].pullup)) {
-            DEBUG_PRINTLN(pinId);
             digitalWrite(pinId, HIGH);
         }
+        delay(10);
+        PinRead readfunc = (PinRead) pgm_read_word(&pinInputDescription[i].read);
+        uint8_t type = pgm_read_byte(&pinInputDescription[i].type);
+        previousInputValues[i] = readfunc(pinId, type);
     }
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
         pinMode(pinId, OUTPUT);
@@ -93,118 +98,29 @@ void pinInit() {
     }
 }
 
-
-
-
-void pinCheckInit() {
-//    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
-//        int direction = pgm_read_byte(&pinDescriptions[i].direction);
-//        if (direction == PIN_INPUT) {
-//            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-//            previousValue[i] = read(i);
-//        }
-//    }
-}
-
 void pinCheckChange() {
-//    if (notification) {
-//        return; // TODO do not skip but instead keep nexts to send
-//    }
-//    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {
-//        int direction = pgm_read_byte(&pinDescriptions[i].direction);
-//        if (direction == PIN_INPUT) {
-//            uint16_t oldValue = previousValue[i];
-//            PinRead read = (PinRead) pgm_read_word(&pinDescriptions[i].read);
-//            uint16_t value = read(i);
-//            for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
-//                t_notify notify;
-//                getConfigPinNotify(i, j, &notify);
-//                if (notify.condition != PIN_NOTIFY_NOT_SET) {
-//                    if ((notify.condition == PIN_NOTIFY_UNDER_EQ && oldValue > notify.value && value <= notify.value)
-//                            || (notify.condition == PIN_NOTIFY_OVER_EQ && oldValue < notify.value && value >= notify.value)) {
-//                        clientNotify(i, oldValue, value, notify);
-//                    }
-//                }
-//            }
-//            previousValue[i] = value;
-//        }
-//    }
+    if (notification) {
+        DEBUG_PRINTLN("Skip notification");
+        return; // TODO do not skip but instead keep nexts to send
+    }
+    int8_t pinId;
+    for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
+        PinRead readfunc = (PinRead) pgm_read_word(&pinInputDescription[i].read);
+        uint8_t type = pgm_read_byte(&pinInputDescription[i].type);
+
+        uint16_t oldValue = previousInputValues[i];
+        uint16_t value = readfunc(pinId, type);
+
+        for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
+            t_notify notify;
+            settingsPinGetNotify(i, j, &notify);
+            if (notify.condition != 0) {
+                if ((notify.condition == UNDER_EQ && oldValue > notify.value && value <= notify.value)
+                        || (notify.condition == OVER_EQ && oldValue < notify.value && value >= notify.value)) {
+                    clientNotify(pinId, oldValue, value, notify);
+                }
+            }
+        }
+        previousInputValues[i] = value;
+    }
 }
-
-
-
-//
-//
-//int getValue(int pin) {
-//  if (checkGetValue(pin)) {
-//    return 0;
-//  }
-//  if (p_pin[pin].mode == ANALOG) {
-//    return analogRead(pin);
-//  } else {
-//    return digitalRead(pin);
-//  }
-//}
-//
-///**
-// * check that a value is setable to a pin
-// * @return 1 if error
-// * @TODO duamilanov specific function
-// */
-//int checkSetValue(int pin, int value) {
-//  if (pin >= 10) {
-//    sprintf(globalErrorBuffer, "You can not set this pin (%d)", pin);
-//    return 1;
-//  }
-//
-//  if (p_pin[pin].mode == PWM) {
-//    if (value < 0 || value > 255) {
-//      sprintf(globalErrorBuffer, "This value (%d) can not be set to PWM pin (%d)", value, pin);
-//      return 1;
-//    }
-//  } else if (p_pin[pin].mode == OUTPUT) {
-//    if (value < 0 || value > 1) {
-//      sprintf(globalErrorBuffer, "This value (%d) can not be set to OUTPUT pin (%d)", value, pin);
-//      return 1;
-//    }
-//  } else if (p_pin[pin].mode == INPUT) {
-//    if (value < 0 || value > 1) {
-//      sprintf(globalErrorBuffer, "This value (%d) can not be set to INPUT pin (%d)", value, pin);
-//      return 1;
-//    }
-//    // disable 20k pullup usage at run
-//    sprintf(globalErrorBuffer, "This pin (%d) is set as an input and can not be set", pin);
-//    return 1;
-//  } else {
-//    sprintf(globalErrorBuffer, "This pin (%d) is set as not used and can not be set", pin);
-//    return 1;
-//  }
-//  return 0;
-//}
-//
-//
-///**
-// * check if value is setable and set it
-// */
-//int setValue(int pin, int value) {
-//  if (checkSetValue(pin, value)) {
-//    return 1;
-//  }
-//
-//  DEBUG_PRINT("set pin (");
-//  //DEBUG_PRINTDEC(pin);
-//  DEBUG_PRINT(" ");
-//  DEBUG_PRINT(p_pin[pin].mode == OUTPUT ? "OUTPUT" : "PWM");
-//  DEBUG_PRINT(") to value : ");
-//  DEBUG_PRINTDEC(value);
-//  DEBUG_PRINTLN("");
-//
-//  if (p_pin[pin].mode == PWM) {
-//    analogWrite(pin, value);
-//  } else {
-//    digitalWrite(pin, value);
-//  }
-//  return 0;
-//}
-//
-//
