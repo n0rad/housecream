@@ -24,7 +24,7 @@ uint16_t appendErrorMsg(char *buf, uint16_t plen, char *msg) {
     return plen;
 }
 
-t_webRequest current = {0, 0};
+t_webRequest currentWebRequest = {0, 0};
 
 static uint16_t commonCheck(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     uint16_t plen;
@@ -66,13 +66,13 @@ uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 && strncmp_P((char *) & (buf[dataPointer + 4]), currentQueryPos, querylen) == 0) {
             prog_char *suffixPos = (prog_char *) pgm_read_word(&resources[i].suffix);
             if (' ' == pgm_read_byte(&currentQueryPos[querylen - 1])) {
-               current.resource = &resources[i];
+               currentWebRequest.resource = &resources[i];
                break;
             } else {
                 int8_t currentPinId = atoi(&buf[dataPointer + 4 + querylen]);
                 int8_t idx = configGetInputPinIdx(currentPinId);
                 if (idx != -1) {
-                    current.pinIdx = idx;
+                    currentWebRequest.pinIdx = idx;
 //                    current.pinDirection = PIN_INPUT;
                 } else {
                     idx = configGetOutputPinIdx(currentPinId);
@@ -81,17 +81,17 @@ uint16_t parseHeaders(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                         plen = appendErrorMsg_P(buf, plen, PSTR("Pin not found"));
                         return plen;
                     }
-                    current.pinIdx = pinInputSize + idx;
+                    currentWebRequest.pinIdx = pinInputSize + idx;
 //                    current.pinDirection = PIN_OUTPUT;
                 }
 
                 uint8_t j = dataPointer + 4 + querylen;
                 for (; buf[j] >= '0' && buf[j] <= '9'; j++);
                 if (suffixPos == 0 && (buf[j] == ' ' || (buf[j] == '/' && buf[j + 1] == ' '))) {
-                    current.resource = &resources[i];
+                    currentWebRequest.resource = &resources[i];
                     break;
                 } else if (strncmp_P((char *) & (buf[j]), suffixPos, strlen_P(suffixPos)) == 0) {
-                    current.resource = &resources[i];
+                    currentWebRequest.resource = &resources[i];
                     break;
                 }
             }
@@ -106,10 +106,10 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         return plen;
     }
 
-    if (current.resource != 0) { // we were waiting for data packet
-        ResourceFunc currentFunc = (ResourceFunc) pgm_read_word(&current.resource->resourceFunc);
-        plen = currentFunc(buf, dataPointer, dataLen, &current);
-        current.resource = 0;
+    if (currentWebRequest.resource != 0) { // we were waiting for data packet
+        ResourceFunc currentFunc = (ResourceFunc) pgm_read_word(&currentWebRequest.resource->resourceFunc);
+        plen = currentFunc(buf, dataPointer, dataLen, &currentWebRequest);
+        currentWebRequest.resource = 0;
         return plen;
     }
 
@@ -118,13 +118,13 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
         return plen;
     }
 
-    if (!current.resource) {
+    if (!currentWebRequest.resource) {
         plen = startResponseHeader(&buf, HEADER_404);
         plen = appendErrorMsg_P(buf, plen, PSTR("No resource for this method & url"));
     } else {
-        ResourceFunc currentFunc = (ResourceFunc) pgm_read_word(&current.resource->resourceFunc);
-        if ((prog_char *)pgm_read_word(&current.resource->method) == GET) { // GET do not need data, calling func directly
-            plen = currentFunc((char*)buf, 0, dataLen, &current);
+        ResourceFunc currentFunc = (ResourceFunc) pgm_read_word(&currentWebRequest.resource->resourceFunc);
+        if ((prog_char *)pgm_read_word(&currentWebRequest.resource->method) == GET) { // GET do not need data, calling func directly
+            plen = currentFunc((char*)buf, 0, dataLen, &currentWebRequest);
         } else {
             uint16_t endPos = strstrpos_P(&buf[dataPointer], DOUBLE_ENDL);
             if (endPos == -1) {
@@ -132,14 +132,14 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 plen = appendErrorMsg_P(buf, plen, PSTR("Double endl not found"));
             } else {
                 uint16_t dataStartPos = dataPointer + endPos + 4;
-                if (dataStartPos == dataLen && !pgm_read_byte(&current.resource->putDataNotNeeded)) { // NO DATA IN THIS PACKET
+                if (dataStartPos == dataLen && !pgm_read_byte(&currentWebRequest.resource->putDataNotNeeded)) { // NO DATA IN THIS PACKET
                     return 0;
                 } else {
-                    plen = currentFunc((char *)buf, dataStartPos, dataLen, &current);
+                    plen = currentFunc((char *)buf, dataStartPos, dataLen, &currentWebRequest);
                 }
             }
         }
     }
-    current.resource = 0;
+    currentWebRequest.resource = 0;
     return plen;
 }

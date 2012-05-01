@@ -4,7 +4,7 @@
 #define HARDWARE "Arduino Duemilanove / Nuelectronics enc28j60 Ethernet Shield V1.1"
 
 
-#define DEBUG
+//#define DEBUG
 
 #include "debug.h"
 

@@ -87,9 +87,7 @@ void networkManage() {
             DEBUG_P(PSTR("arpnotfound"));
             clientState = IDLE;
 
-            t_notification *tmp = notification;
-            notification = tmp->next;
-            free(tmp);
+            clientBuildNextQuery((char *) buf); // build next request to remove event
             syn_ack_timeout = 0;
             return;
         }
