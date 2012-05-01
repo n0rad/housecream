@@ -100,7 +100,6 @@ void pinInit() {
 
 void pinCheckChange() {
     if (notification) {
-        DEBUG_PRINTLN("Skip notification");
         return; // TODO do not skip but instead keep nexts to send
     }
     int8_t pinId;

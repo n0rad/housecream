@@ -27,7 +27,6 @@ void DEBUG_E(const char *eeprom) {
     DEBUG_PRINTLN();
 }
 
-
 int main(void) {
     init(); // load init of arduino
 
@@ -44,7 +43,7 @@ int main(void) {
     }
 
     for (;;) {
-        networkManageServer();
+        networkManage();
         if (!definitionError) {
             pinCheckChange();
         }

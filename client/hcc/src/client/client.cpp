@@ -22,6 +22,7 @@ uint16_t clientBuildNextQuery(char *buf) {
     DEBUG_PRINTLN("build next notify");
     uint16_t plen;
     plen = startRequestHeader(&buf, PUT2);
+    plen = addToBufferTCP(buf, plen, notifyUrlPrefix);
     plen = addToBufferTCP_P(buf, plen, PSTR("/notify/pin"));
     plen = addToBufferTCP_P(buf, plen, PSTR(" HTTP/1.0\r\nContent-Type: application/json\r\nKeep-Alive: 300\r\nConnection: keep-alive\r\n"));
 //    plen = addToBufferTCP_P2(buf, plen, PSTR("Host: 192.168.1.4\r\n"));

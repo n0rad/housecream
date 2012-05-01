@@ -9,7 +9,6 @@
 #include "../settings/settings.h"
 
 void networkSetup();
-void networkManageServer();
-void networkManageClient();
+void networkManage();
 
 #endif

@@ -50,38 +50,33 @@ void networkSetup() {
     es.ES_init_ip_arp_udp_tcp((uint8_t *) mac, (uint8_t *) ip, port);
 }
 
-static uint8_t dest_ip[4] = { 192, 168, 42, 211 };
-static uint16_t dstPort = 8080;
 static uint16_t srcPort = 1200;
 static uint8_t syn_ack_timeout = 0;
 static uint8_t dest_mac[6];
 enum CLIENT_STATE {
     IDLE, ARP_SENT, ARP_REPLY, SYNC_SENT
 };
-static CLIENT_STATE client_state;
-
-void networkManageClient() {
-}
+static CLIENT_STATE clientState;
 
 extern boolean needReboot;
 
-void networkManageServer() {
+void networkManage() {
     uint16_t plen, dat_p;
     uint8_t i;
 
-    if (notification != 0 && client_state == IDLE) { // initialize ARP
+    if (notification != 0 && clientState == IDLE) { // initialize ARP
         DEBUG_P(PSTR("idle"));
-        es.ES_make_arp_request(buf, dest_ip);
-        client_state = ARP_SENT;
+        es.ES_make_arp_request(buf, NotifyDstIp);
+        clientState = ARP_SENT;
         return;
     }
-    if (client_state == ARP_SENT) {
+    if (clientState == ARP_SENT) {
         // DEBUG_p(PSTR("arp"));
         plen = es.ES_enc28j60PacketReceive(BUFFER_SIZE, buf);
         // destination ip address was found on network
         if (plen != 0) {
             if (es.ES_arp_packet_is_myreply_arp(buf)) {
-                client_state = ARP_REPLY;
+                clientState = ARP_REPLY;
                 syn_ack_timeout = 0;
                 return;
             }
@@ -90,7 +85,7 @@ void networkManageServer() {
         syn_ack_timeout++;
         if (syn_ack_timeout == 100) { //timeout, server ip not found
             DEBUG_P(PSTR("arpnotfound"));
-            client_state = IDLE;
+            clientState = IDLE;
             free(notification);
             notification = 0;
             syn_ack_timeout = 0;
@@ -98,22 +93,22 @@ void networkManageServer() {
         }
     }
     // send SYN packet to initial connection
-    if (client_state == ARP_REPLY) {
+    if (clientState == ARP_REPLY) {
         DEBUG_P(PSTR("arprep"));
         // save dest mac
         for (i = 0; i < 6; i++) {
             dest_mac[i] = buf[ETH_SRC_MAC + i];
         }
-        es.ES_tcp_client_send_packet(buf, dstPort, srcPort, TCP_FLAG_SYN_V, // flag
+        es.ES_tcp_client_send_packet(buf, notifyDstPort, srcPort, TCP_FLAG_SYN_V, // flag
                 1, // (bool)maximum segment size
                 1, // (bool)clear sequence ack number
                 0, // 0=use old seq, seqack : 1=new seq,seqack no data : new seq,seqack with data
                 0, // tcp data length
-                dest_mac, dest_ip);
-        client_state = SYNC_SENT;
+                dest_mac, NotifyDstIp);
+        clientState = SYNC_SENT;
     }
 
-    if (client_state == ARP_SENT || client_state == ARP_REPLY) {
+    if (clientState == ARP_SENT || clientState == ARP_REPLY) {
         return;
     }
 
@@ -167,24 +162,24 @@ void networkManageServer() {
         if (buf[TCP_FLAGS_P] == (TCP_FLAG_SYN_V | TCP_FLAG_ACK_V)) {
             DEBUG_P(PSTR("synack"));
             // send ACK to answer SYNACK
-            es.ES_tcp_client_send_packet(buf, dstPort, srcPort, TCP_FLAG_ACK_V, // flag
+            es.ES_tcp_client_send_packet(buf, notifyDstPort, srcPort, TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     1, // 0=use old seq, seqack : 1=new seq,seqack no data : new seq,seqack with data
                     0, // tcp data length
-                    dest_mac, dest_ip);
+                    dest_mac, NotifyDstIp);
             // setup http request to server
             plen = clientBuildNextQuery((char *) buf);
             // send http request packet
             // send packet with PSHACK
-            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+            es.ES_tcp_client_send_packet(buf, notifyDstPort, // destination port
                     srcPort, // source port
                     TCP_FLAG_ACK_V | TCP_FLAG_PUSH_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     0, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     plen, // tcp data length
-                    dest_mac, dest_ip);
+                    dest_mac, NotifyDstIp);
             return;
         }
         // after AVR send http request to server, server response by send data with PSHACK to AVR
@@ -193,36 +188,36 @@ void networkManageServer() {
             DEBUG_P(PSTR("pshack"));
             plen = es.ES_tcp_get_dlength((uint8_t*) &buf);
             // send ACK to answer PSHACK from server
-            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+            es.ES_tcp_client_send_packet(buf, notifyDstPort, // destination port
                     srcPort, // source port
                     TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     plen, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     0, // tcp data length
-                    dest_mac, dest_ip);
+                    dest_mac, NotifyDstIp);
             // send finack to disconnect from web server
-            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+            es.ES_tcp_client_send_packet(buf, notifyDstPort, // destination port
                     srcPort, // source port
                     TCP_FLAG_FIN_V | TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     0, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
-                    0, dest_mac, dest_ip);
+                    0, dest_mac, NotifyDstIp);
             return;
         }
         // answer FINACK from web server by send ACK to web server
         if (buf[TCP_FLAGS_P] == (TCP_FLAG_ACK_V | TCP_FLAG_FIN_V)) {
             DEBUG_P(PSTR("finack"));
             // send ACK with seqack = 1
-            es.ES_tcp_client_send_packet(buf, dstPort, // destination port
+            es.ES_tcp_client_send_packet(buf, notifyDstPort, // destination port
                     srcPort, // source port
                     TCP_FLAG_ACK_V, // flag
                     0, // (bool)maximum segment size
                     0, // (bool)clear sequence ack number
                     1, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
-                    0, dest_mac, dest_ip);
-            client_state = IDLE; // return to IDLE state
+                    0, dest_mac, NotifyDstIp);
+            clientState = IDLE; // return to IDLE state
             free(notification);
             notification = 0;
         }

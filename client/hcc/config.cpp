@@ -10,7 +10,7 @@ const t_boardDescription boardDescription PROGMEM = {
     80,                                             // port
     "window1 controller",                           // name
     "window in front of the house not powered from POE but only by a transfo",   // description
-    "http://192.168.12.2:8080/hcs/ws/event",       // notify url
+    "http://192.168.42.211:8080",                   // notify url
 };
 
 // INPUT

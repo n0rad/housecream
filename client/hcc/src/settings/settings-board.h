@@ -39,5 +39,4 @@ const prog_char *configBoardSetVersion(char *buf, uint16_t len, uint8_t index);
 const prog_char *configBoardSetHardware(char *buf, uint16_t len, uint8_t index);
 const prog_char *configBoardSetSoftware(char *buf, uint16_t len, uint8_t index);
 
-
 #endif

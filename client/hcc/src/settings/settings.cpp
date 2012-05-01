@@ -1,5 +1,10 @@
 #include "settings.h"
 
+uint8_t NotifyDstIp[4];
+uint16_t notifyDstPort;
+char notifyUrlPrefix[36];
+
+
 uint8_t pinInputSize = 0;
 uint8_t pinOutputSize = 0;
 
@@ -40,8 +45,25 @@ void settingsSave() {
 }
 
 void settingsReload() {
-//    eeprom_read_block((void*)&boardData, (char*) CONFIG_EEPROM_START + sizeof(t_boardInfo), sizeof(boardData));
-//    eeprom_read_block((void*)&pinData, (char*) CONFIG_EEPROM_START + sizeof(t_boardInfo) + sizeof(t_boardData) + sizeof(t_pinInfo), sizeof(pinData));
+    char tmpNotifyUrl[CONFIG_BOARD_NOTIFY_SIZE];
+    eeprom_read_block((void*)&tmpNotifyUrl, (char*) offsetof(t_boardSettings, notifyUrl), CONFIG_BOARD_NOTIFY_SIZE);
+
+    // notify ip
+    uint16_t endIP = strspn_P(&tmpNotifyUrl[7], IP_CHARACTERS);
+    readIP(&tmpNotifyUrl[7], endIP, NotifyDstIp);
+
+    // notify port
+    uint16_t startUrl = 7 + endIP;
+    if (tmpNotifyUrl[7 + endIP] == ':') {
+        notifyDstPort = atoi(&tmpNotifyUrl[startUrl + 1]);
+        startUrl += strspn_P(&tmpNotifyUrl[startUrl + 1], PSTR("0123456789")) + 1;
+    } else {
+        notifyDstPort = 80;
+    }
+
+    // notify url
+    uint16_t len = strlen(&tmpNotifyUrl[startUrl]);
+    memcpy(notifyUrlPrefix, &tmpNotifyUrl[startUrl], len + 1);
 }
 
 void settingsLoad() {
@@ -55,10 +77,10 @@ void settingsLoad() {
         && eeprom_read_byte((uint8_t *) confVersionPos + 2) == pgm_read_byte(CONFIG_VERSION + 2)    // c
         && eeprom_read_byte((uint8_t *) confVersionPos + 3) == pgm_read_byte(CONFIG_VERSION + 3)) { //\0
 
-        DEBUG_PRINTLN("found");
-        settingsReload();
+        DEBUG_PRINTLN("conf found");
     } else {
-        DEBUG_PRINTLN("NOTfound");
+        DEBUG_PRINTLN("conf NOT found");
         settingsSave();
     }
+    settingsReload();
 }

@@ -1,6 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <stdlib.h>
 #include <stdint.h>
 #include <avr/pgmspace.h>
 #include <avr/eeprom.h>
@@ -8,6 +9,10 @@
 #include "../config/config.h"
 #include "../hcc.h"
 #include "../pin/pin-manager.h"
+#include "../util/mylibc.h"
+
+
+const prog_char IP_CHARACTERS[] PROGMEM = "0123456789.";
 
 const prog_char TOO_MANY_NOTIFY[] PROGMEM = "Too many notify";
 const prog_char NO_NOTIFY_OUTPUT[] PROGMEM = "No notify on output";
@@ -40,6 +45,10 @@ extern uint8_t pinOutputSize;
 extern const char *pinDirection[];
 extern const char *pinType[];
 extern const char *pinNotification[];
+
+extern uint8_t NotifyDstIp[4];
+extern uint16_t notifyDstPort;
+extern char notifyUrlPrefix[36];
 
 /////////////////////////////////////////////////////////////
 // EEPROM structure

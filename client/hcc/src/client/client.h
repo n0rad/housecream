@@ -4,6 +4,7 @@
 #include "../hcc.h"
 #include "../config/config.h"
 #include "../util/buffer.h"
+#include "../settings/settings.h"
 
 const prog_char PUT2[] PROGMEM = "PUT ";
 
