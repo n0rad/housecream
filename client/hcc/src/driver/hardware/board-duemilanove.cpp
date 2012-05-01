@@ -27,14 +27,5 @@ char *boardCheckConfig() {
             return buildGlobalError_P(PSTR("pin%d cannot be OUTPUT ANALOG"), pinId);
         }
     }
-
-////        // check set default value for digital pins
-////        // skip digital INPUT pin check to allow 20k pullup start value (but no modification after that)
-////        if (i < 10 && (p_pin[i].mode == OUTPUT || p_pin[i].mode == PWM)) {
-////          // check that default value is applicable
-////          if (checkSetValue(i, p_pin[i].startValue)) {
-////            return true;
-////          }
-////        }
     return 0;
 }
