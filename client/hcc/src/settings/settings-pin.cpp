@@ -2,10 +2,15 @@
 
 uint8_t currentSetPinIdx;
 
-uint16_t settingsPinGetValue(uint8_t pinIdx) {
-    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * pinIdx);
-    eepromPos += offsetof(t_pinOutputSettings, lastValue);
-    return eeprom_read_word((const uint16_t *)eepromPos);
+void settingsPinOutputSetValue(uint8_t outputIdx, float value) {
+    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * outputIdx);
+    eeprom_write_dword((uint32_t *)(eepromPos + offsetof(t_pinOutputSettings, lastValue)), *((unsigned long *)&value));
+}
+
+float settingsPinOutputGetValue(uint8_t outputIdx) {
+    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * outputIdx);
+    uint32_t val = eeprom_read_dword((uint32_t *)(eepromPos + offsetof(t_pinOutputSettings, lastValue)));
+    return *((float*)&val);
 }
 
 void settingsPinGetNotify(uint8_t pinIdx, uint8_t notifyId, t_notify *notify) {
@@ -65,7 +70,6 @@ const prog_char *settingsPinSetType(char *buf, uint16_t len, uint8_t index) {
     }
     return PSTR("type cannot be set");
 }
-
 
 const prog_char *settingsPinSetValueMin(char *buf, uint16_t len, uint8_t index) {
     float value = atof(buf);
@@ -147,5 +151,10 @@ const prog_char *settingsPinSetNotifyValue(char *buf, uint16_t len, uint8_t inde
     return 0;
 }
 const prog_char *settingsPinSetValue(char *buf, uint16_t len, uint8_t index) {
-    return PSTR("value");
+    if (currentSetPinIdx >= pinInputSize){
+        float value = atof(buf);
+//        float settingsVal = settingsPinOutputGetValue(currentSetPinIdx - pinInputSize);
+        should we remove val from this resource in favor of using pin/?/value
+    }
+    return PSTR("NOTIMPLEMENTED");
 }

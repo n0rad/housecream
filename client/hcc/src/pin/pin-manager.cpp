@@ -11,6 +11,67 @@ int16_t noOutputConversion(float pinValue) {
     return pinValue;
 }
 
+////////////////////////////////////////////////////////
+// High level pin access (read pin or settings)
+////////////////////////////////////////////////////////
+void setPinValue(uint8_t pinOutputIdx, float value) {
+    uint8_t type = pgm_read_byte(&pinOutputDescription[pinOutputIdx].type);
+    uint8_t pinId = pgm_read_byte(&pinOutputDescription[pinOutputIdx].pinId);
+    PinWrite writefunc = (PinWrite) pgm_read_word(&pinOutputDescription[pinOutputIdx].write);
+    PinOutputConversion converter = (PinOutputConversion) pgm_read_word(&pinOutputDescription[pinOutputIdx].convertValue);
+    settingsPinOutputSetValue(pinOutputIdx, value);
+    writefunc(pinId, type, converter(value));
+}
+float getPinValue(uint8_t pinIdx) {
+    if (pinIdx < pinInputSize) {
+        uint8_t type = pgm_read_byte(&pinInputDescription[pinIdx].type);
+        uint8_t pinId = pgm_read_byte(&pinInputDescription[pinIdx].pinId);
+        PinRead readfunc = (PinRead) pgm_read_word(&pinInputDescription[pinIdx].read);
+        PinInputConversion converter = (PinInputConversion) pgm_read_word(&pinInputDescription[pinIdx].convertValue);
+        return converter(readfunc(pinId, type));
+    } else {
+        return settingsPinOutputGetValue(pinIdx - pinInputSize);
+    }
+}
+
+////////////////////////////////////////////////////////
+// Low level pin access
+////////////////////////////////////////////////////////
+uint16_t defaultPinRead(uint8_t pinId, uint8_t type) {
+    if (type == ANALOG) {
+        DEBUG_PRINT("reading analog ");
+        DEBUG_PRINT(pinId);
+        DEBUG_PRINT(" ");
+        uint16_t val = analogRead(pinId);
+        DEBUG_PRINTLN(val);
+        return val;
+    } else {
+        DEBUG_PRINT("reading digital ");
+        DEBUG_PRINT(pinId);
+        DEBUG_PRINT(" ");
+        uint16_t val = digitalRead(pinId);
+        DEBUG_PRINTLN(val);
+        return val;
+    }
+}
+void defaultPinWrite(uint8_t pinId, uint8_t type, uint16_t value) {
+    if (type == ANALOG) {
+        DEBUG_PRINT("writing analog ");
+        DEBUG_PRINT(pinId);
+        DEBUG_PRINT(" ");
+        DEBUG_PRINTLN(value);
+        analogWrite(pinId, value);
+    } else {
+        DEBUG_PRINT("writing digital ");
+        DEBUG_PRINT(pinId);
+        DEBUG_PRINT(" ");
+        DEBUG_PRINTLN(value);
+        digitalWrite(pinId, value);
+    }
+}
+
+
+
 void pinInit() {
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
@@ -20,40 +81,15 @@ void pinInit() {
             digitalWrite(pinId, HIGH);
         }
     }
-
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
         pinMode(pinId, OUTPUT);
-//        setting
-        //TODO set value
+        float val = settingsPinOutputGetValue(i);
+        setPinValue(i, settingsPinOutputGetValue(i));
     }
 }
 
 
 
-
-
-
-uint16_t defaultPinRead(uint8_t pinId) {
-//    uint8_t direction = pgm_read_byte(&pinDescriptions[pinId].direction);
-//    uint8_t type = pgm_read_byte(&pinDescriptions[pinId].type);
-//    if (direction == PIN_INPUT) {
-//        return pinReadValue(pinId, type);
-//    } else if (direction == PIN_OUTPUT) {
-//        return getConfigPinValue(pinId);
-//    }
-    return 0;
-}
-
-void defaultPinWrite(uint8_t pinId, uint16_t value) {
-    pinWriteValue(pinId, value);
-}
-
-
-float getPinValue(uint8_t pinId) {
-//    PinRead read = (PinRead) pgm_read_word(&pinDescriptions[pinId].read);
-//    PinValueConversion convert = (PinValueConversion) pgm_read_word(&pinDescriptions[pinId].convertValue);
-//    return convert(read(pinId));
-}
 
 void pinCheckInit() {
 //    for (uint8_t i = 0; i < NUMBER_OF_PINS; i++) {

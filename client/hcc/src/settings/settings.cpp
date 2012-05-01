@@ -29,7 +29,7 @@ void settingsSave() {
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinOutputDescription[i].pinId)); i++) {
         uint16_t pinPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * i);
         eeprom_write_block_P((uint8_t *)(pinPos + offsetof(t_pinOutputSettings, name)), (prog_char *) &pinOutputDescription[i].name, CONFIG_PIN_NAME_SIZE);
-        eeprom_write_dword((uint32_t *)(pinPos + offsetof(t_pinOutputSettings, lastValue)), pgm_read_dword(&pinOutputDescription[i].startValue));
+        eeprom_write_dword((uint32_t *)(pinPos + offsetof(t_pinOutputSettings, lastValue)), pgm_read_dword(&(pinOutputDescription[i].startValue)));
     }
 
     eeprom_write_block_P((uint8_t *)(sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinInputSize) + (sizeof(t_pinOutputSettings) * pinOutputSize)),

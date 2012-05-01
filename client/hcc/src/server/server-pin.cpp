@@ -88,9 +88,9 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
         plen = addToBufferTCP_P(buf, plen, PIN_MAX);
         plen = addToBufferTCP(buf, plen, maxValue);
     }
-//
-//        plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
-//        plen = addToBufferTCP(buf, plen, getPinValue(pinId));
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
+    plen = addToBufferTCP(buf, plen, getPinValue(webResource->pinIdx));
     plen = addToBufferTCP(buf, plen, '}');
     return plen;
 }

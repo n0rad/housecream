@@ -8,7 +8,8 @@
 
 extern uint8_t currentSetPinIdx;
 
-uint16_t settingsPinGetValue(uint8_t pinId);
+void settingsPinOutputSetValue(uint8_t outputIdx, float value);
+float settingsPinOutputGetValue(uint8_t outputIdx);
 void settingsPinGetNotify(uint8_t pinIdx, uint8_t notifyId, t_notify *notify);
 uint8_t *settingsPinGetName_E(uint8_t pinIdx);
 
