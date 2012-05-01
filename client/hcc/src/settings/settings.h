@@ -49,6 +49,8 @@ extern const char *pinNotification[];
 extern uint8_t NotifyDstIp[4];
 extern uint16_t notifyDstPort;
 extern char notifyUrlPrefix[36];
+extern t_notify **pinNotifies;
+
 
 /////////////////////////////////////////////////////////////
 // EEPROM structure

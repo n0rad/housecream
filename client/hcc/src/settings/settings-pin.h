@@ -10,7 +10,7 @@ extern uint8_t currentSetPinIdx;
 
 void settingsPinOutputSetValue(uint8_t outputIdx, float value);
 float settingsPinOutputGetValue(uint8_t outputIdx);
-void settingsPinGetNotify(uint8_t pinIdx, uint8_t notifyId, t_notify *notify);
+t_notify *settingsPinGetNotify(uint8_t pinIdx, uint8_t notifyId);
 uint8_t *settingsPinGetName_E(uint8_t pinIdx);
 
 const prog_char *settingsPinHandlePinNotifyArray(uint8_t index);

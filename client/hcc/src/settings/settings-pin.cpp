@@ -13,10 +13,11 @@ float settingsPinOutputGetValue(uint8_t outputIdx) {
     return *((float*)&val);
 }
 
-void settingsPinGetNotify(uint8_t pinIdx, uint8_t notifyId, t_notify *notify) {
-    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinIdx);
-    eepromPos += offsetof(t_pinInputSettings, notifies) + (sizeof(t_notify) * notifyId);
-    eeprom_read_block((void *)notify, (char *)eepromPos, sizeof(t_notify));
+t_notify *settingsPinGetNotify(uint8_t pinIdx, uint8_t notifyId) {
+    return &pinNotifies[pinIdx][notifyId];
+//    uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * pinIdx);
+//    eepromPos += offsetof(t_pinInputSettings, notifies) + (sizeof(t_notify) * notifyId);
+//    eeprom_read_block((void *)notify, (char *)eepromPos, sizeof(t_notify));
 }
 
 uint8_t *settingsPinGetName_E(uint8_t pinIdx) {
@@ -110,6 +111,7 @@ const prog_char *settingsPinHandlePinNotifyArray(uint8_t index) {
         uint16_t notifiesPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * currentSetPinIdx) + offsetof(t_pinInputSettings, notifies);
         eeprom_write_byte((uint8_t *)(notifiesPos + (sizeof(t_notify) * i) + offsetof(t_notify, condition)), 0);
     }
+    settingsReload();
     return 0;
 }
 

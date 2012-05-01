@@ -8,7 +8,7 @@
 
 const prog_char PUT2[] PROGMEM = "PUT ";
 
-void clientNotify(int pinId, float oldValue, float value, t_notify notify);
+void clientNotify(int pinId, float oldValue, float value, t_notify *notify);
 uint16_t clientBuildNextQuery(char *buf);
 
 typedef struct s_notification {

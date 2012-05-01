@@ -90,11 +90,10 @@ void pinCheckChange() {
         uint16_t value = readfunc(pinId, type);
 
         for (uint8_t j = 0; j < PIN_NUMBER_OF_NOTIFY; j++) {
-            t_notify notify;
-            settingsPinGetNotify(i, j, &notify);
-            if (notify.condition != 0) {
-                if ((notify.condition == UNDER_EQ && oldValue > notify.value && value <= notify.value)
-                        || (notify.condition == OVER_EQ && oldValue < notify.value && value >= notify.value)) {
+            t_notify *notify = settingsPinGetNotify(i, j);
+            if (notify->condition != 0) {
+                if ((notify->condition == UNDER_EQ && oldValue > notify->value && value <= notify->value)
+                        || (notify->condition == OVER_EQ && oldValue < notify->value && value >= notify->value)) {
                     clientNotify(pinId, oldValue, value, notify);
                 }
             }

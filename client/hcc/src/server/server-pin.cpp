@@ -71,17 +71,16 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
 
         plen = addToBufferTCP_P(buf, plen, PSTR(",\"notifies\":["));
         for (uint8_t i = 0; i < PIN_NUMBER_OF_NOTIFY; i++) {
-            t_notify notify;
-            settingsPinGetNotify(webResource->pinIdx, i, &notify);
-            if (notify.condition > 0) {
+            t_notify *notify = settingsPinGetNotify(webResource->pinIdx, i);
+            if (notify->condition > 0) {
                 if (i) {
                     plen = addToBufferTCP(buf, plen, ',');
                 }
                 plen = addToBufferTCP_P(buf, plen, PSTR("{\"notifyCondition\":\""));
-                plen = addToBufferTCP_P(buf, plen, (const prog_char *) pgm_read_byte(&pinNotification[notify.condition - 1]));
+                plen = addToBufferTCP_P(buf, plen, (const prog_char *) pgm_read_byte(&pinNotification[notify->condition - 1]));
 
                 plen = addToBufferTCP_P(buf, plen, PSTR("\",\"notifyValue\":"));
-                plen = addToBufferTCP(buf, plen, notify.value);
+                plen = addToBufferTCP(buf, plen, notify->value);
                 plen = addToBufferTCP(buf, plen, '}');
             }
         }
@@ -100,7 +99,7 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
 
 //    plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
 //    plen = addToBufferTCP(buf, plen, getPinValue(webResource->pinIdx));
-//    plen = addToBufferTCP(buf, plen, '}');
+    plen = addToBufferTCP(buf, plen, '}');
     return plen;
 }
 

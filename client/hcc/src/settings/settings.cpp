@@ -4,6 +4,8 @@ uint8_t NotifyDstIp[4];
 uint16_t notifyDstPort;
 char notifyUrlPrefix[36];
 
+t_notify **pinNotifies = 0;
+
 
 uint8_t pinInputSize = 0;
 uint8_t pinOutputSize = 0;
@@ -64,6 +66,16 @@ void settingsReload() {
     // notify url
     uint16_t len = strlen(&tmpNotifyUrl[startUrl]);
     memcpy(notifyUrlPrefix, &tmpNotifyUrl[startUrl], len + 1);
+
+    // notifies
+    for (uint8_t i = 0; i < pinInputSize; i++) {
+        for (uint8_t j = 0; j < 4; j++) {
+            uint16_t eepromPos = sizeof(t_boardSettings) + (sizeof(t_pinInputSettings) * i);
+            eepromPos += offsetof(t_pinInputSettings, notifies) + (sizeof(t_notify) * j);
+            eeprom_read_block((void *)&pinNotifies[i][j], (char *)eepromPos, sizeof(t_notify));
+        }
+    }
+
 }
 
 void settingsLoad() {
@@ -82,5 +94,13 @@ void settingsLoad() {
         DEBUG_PRINTLN("conf NOT found");
         settingsSave();
     }
+
+    // allocate notifies in ram
+    pinNotifies = (t_notify **) malloc(pinInputSize * sizeof(t_notify *));
+    int8_t pinId;
+    for (uint8_t i = 0; i < pinInputSize; i++) {
+        pinNotifies[i] = (t_notify *) malloc(4 * sizeof(t_notify));
+    }
+
     settingsReload();
 }

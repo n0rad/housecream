@@ -2,15 +2,15 @@
 
 #define TCP_DATA_P          0x36
 
-void clientNotify(int pinId, float oldValue, float value, t_notify notify) {
+void clientNotify(int pinId, float oldValue, float value, t_notify *notify) {
     DEBUG_PRINT("notify pin");
     DEBUG_PRINTLN(pinId);
     t_notification *tmpNotification = (t_notification *) malloc(sizeof(t_notification));
     tmpNotification->pinId = pinId;
     tmpNotification->value = value;
     tmpNotification->oldValue = oldValue;
-    tmpNotification->notify.condition = notify.condition;
-    tmpNotification->notify.value = notify.value;
+    tmpNotification->notify.condition = notify->condition;
+    tmpNotification->notify.value = notify->value;
     tmpNotification->next = 0;
 
 
