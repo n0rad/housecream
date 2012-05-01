@@ -44,7 +44,7 @@ const t_json pinPutElements[] PROGMEM = {
         {PIN_PARAM_VALUEMIN, settingsPinSetValueMin},
         {PIN_PARAM_VALUEMAX, settingsPinSetValueMax},
         {PIN_PARAM_NOTIFIES, 0, (t_json *) pinPutNotifiesElements, settingsPinHandlePinNotifyArray}, // array of objects
-        {PIN_PARAM_VALUE, settingsPinSetValue},
+//        {PIN_PARAM_VALUE, settingsPinSetValue},
         {0, 0}
 };
 

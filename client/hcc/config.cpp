@@ -36,5 +36,6 @@ const t_pinInputDescription pinInputDescription[] PROGMEM = {
 // OUTPUT
 const t_pinOutputDescription pinOutputDescription[] PROGMEM = {
         {6, ANALOG, "variator for light 1", 0, 255, 10, noOutputConversion, defaultPinWrite, "optocoupler isolated and triac / no zero detection"},
+        {7, DIGITAL, "variator for light 1", 0, 1, 0, noOutputConversion, defaultPinWrite, "optocoupler isolated and triac / no zero detection"},
         {-1}
 };

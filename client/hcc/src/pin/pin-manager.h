@@ -26,7 +26,9 @@ void defaultPinWrite(uint8_t pinId, uint8_t type, uint16_t value);
 
 #include "../config/config.h"
 
+const prog_char *setPinValue(uint8_t pinOutputIdx, float value);
 float getPinValue(uint8_t pinId);
+
 void pinInit();
 void pinCheckInit();
 void pinCheckChange();

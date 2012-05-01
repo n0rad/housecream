@@ -150,11 +150,3 @@ const prog_char *settingsPinSetNotifyValue(char *buf, uint16_t len, uint8_t inde
     eeprom_write_dword((uint32_t *)(notifiesPos + (sizeof(t_notify) * index) + offsetof(t_notify, value)), *((unsigned long *)&value));
     return 0;
 }
-const prog_char *settingsPinSetValue(char *buf, uint16_t len, uint8_t index) {
-    if (currentSetPinIdx >= pinInputSize){
-        float value = atof(buf);
-//        float settingsVal = settingsPinOutputGetValue(currentSetPinIdx - pinInputSize);
-        should we remove val from this resource in favor of using pin/?/value
-    }
-    return PSTR("NOTIMPLEMENTED");
-}

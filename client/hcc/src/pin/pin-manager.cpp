@@ -14,13 +14,18 @@ int16_t noOutputConversion(float pinValue) {
 ////////////////////////////////////////////////////////
 // High level pin access (read pin or settings)
 ////////////////////////////////////////////////////////
-void setPinValue(uint8_t pinOutputIdx, float value) {
+const prog_char *setPinValue(uint8_t pinOutputIdx, float value) {
     uint8_t type = pgm_read_byte(&pinOutputDescription[pinOutputIdx].type);
     uint8_t pinId = pgm_read_byte(&pinOutputDescription[pinOutputIdx].pinId);
     PinWrite writefunc = (PinWrite) pgm_read_word(&pinOutputDescription[pinOutputIdx].write);
     PinOutputConversion converter = (PinOutputConversion) pgm_read_word(&pinOutputDescription[pinOutputIdx].convertValue);
+    uint16_t lowLvlVal = converter(value);
+    if (lowLvlVal > converter(type == ANALOG ? 255 : 1) || value < converter(0)) {
+        return PSTR("value overflow");
+    }
     settingsPinOutputSetValue(pinOutputIdx, value);
-    writefunc(pinId, type, converter(value));
+    writefunc(pinId, type, lowLvlVal);
+    return 0;
 }
 float getPinValue(uint8_t pinIdx) {
     if (pinIdx < pinInputSize) {

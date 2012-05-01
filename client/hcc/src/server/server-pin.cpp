@@ -1,20 +1,29 @@
 #include "server-pin.h"
 
 uint16_t pinPutValue(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
-//    int t = atoi(&buf[dat_p]);
-//    defaultPinWrite(pinId, t);
-//    DEBUG_P(PSTR("pvalue"));
-//    DEBUG_PRINTLN(pinId);
-//    DEBUG_PRINTLN(t);
-    plen = startResponseHeader(&buf, HEADER_200);
+    if (webResource->pinIdx < pinInputSize) {
+        plen = startResponseHeader(&buf, HEADER_400);
+        plen = appendErrorMsg_P(buf, plen, PSTR("Cannot set value on INPUT pin"));
+        return plen;
+    }
+    float value = atof(&buf[dat_p]);
+    const prog_char *res = setPinValue(webResource->pinIdx - pinInputSize, value);
+    if (res) {
+        plen = startResponseHeader(&buf, HEADER_400);
+        plen = appendErrorMsg_P(buf, plen, res);
+    } else {
+        plen = startResponseHeader(&buf, HEADER_200);
+    }
     return plen;
 }
 
 uint16_t pinGetValue(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("pinGetValue"));
+    plen = addToBufferTCP(buf, plen, getPinValue(webResource->pinIdx));
     return plen;
 }
+
+////////////////////////////////////////////
 
 uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     currentSetPinIdx = webResource->pinIdx;
@@ -89,9 +98,9 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
         plen = addToBufferTCP(buf, plen, maxValue);
     }
 
-    plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
-    plen = addToBufferTCP(buf, plen, getPinValue(webResource->pinIdx));
-    plen = addToBufferTCP(buf, plen, '}');
+//    plen = addToBufferTCP_P(buf, plen, PSTR(",\"value\":"));
+//    plen = addToBufferTCP(buf, plen, getPinValue(webResource->pinIdx));
+//    plen = addToBufferTCP(buf, plen, '}');
     return plen;
 }
 
