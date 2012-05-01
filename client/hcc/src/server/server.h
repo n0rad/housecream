@@ -55,23 +55,18 @@ struct s_resource {
   const prog_char *query;
   const prog_char *suffix;
   ResourceFunc resourceFunc;
+  const uint8_t putDataNotNeeded;
 } const resources[] PROGMEM = {
-  {PUT, RESOURCE_PIN, RESOURCE_PIN_SUFFIX, pinPutValue},
-  {GET, RESOURCE_PIN, RESOURCE_PIN_SUFFIX, pinGetValue},
-  {GET, RESOURCE_PIN, 0, pinGet},
-  {PUT, RESOURCE_PIN,  0, pinPut},
-  {GET, RESOURCE_BOARD, 0, boardGet},
-  {PUT, RESOURCE_BOARD, 0, boardPut},
-  {PUT, RESOURCE_RESET, 0, boardReset},
-  {PUT, RESOURCE_INIT, 0, boardReInit},
-  {PUT, RESOURCE_NOTIFY, 0, boardNotify},
-  {0, 0, 0}
+  {PUT, RESOURCE_PIN, RESOURCE_PIN_SUFFIX, pinPutValue, 0},
+  {GET, RESOURCE_PIN, RESOURCE_PIN_SUFFIX, pinGetValue, 0},
+  {GET, RESOURCE_PIN, 0, pinGet, 0},
+  {PUT, RESOURCE_PIN,  0, pinPut, 0},
+  {GET, RESOURCE_BOARD, 0, boardGet, 0},
+  {PUT, RESOURCE_BOARD, 0, boardPut, 0},
+  {PUT, RESOURCE_RESET, 0, boardReset, 1},
+  {PUT, RESOURCE_INIT, 0, boardReInit, 1},
+  {PUT, RESOURCE_NOTIFY, 0, boardNotify, 0},
+  {0, 0, 0, 0, 0}
 };
-
-//typedef struct s_webRequest {
-//    struct s_resource *resource;
-//    uint8_t pinIdx;
-//    uint8_t pinDirection;
-//} t_webRequest;
 
 #endif

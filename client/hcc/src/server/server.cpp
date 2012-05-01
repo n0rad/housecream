@@ -132,7 +132,7 @@ uint16_t handleWebRequest(char *buf, uint16_t dataPointer, uint16_t dataLen) {
                 plen = appendErrorMsg_P(buf, plen, PSTR("Double endl not found"));
             } else {
                 uint16_t dataStartPos = dataPointer + endPos + 4;
-                if (dataStartPos == dataLen) { // NO DATA IN THIS PACKET
+                if (dataStartPos == dataLen && !pgm_read_byte(&current.resource->putDataNotNeeded)) { // NO DATA IN THIS PACKET
                     return 0;
                 } else {
                     plen = currentFunc((char *)buf, dataStartPos, dataLen, &current);
