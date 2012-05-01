@@ -86,8 +86,10 @@ void networkManage() {
         if (syn_ack_timeout == 100) { //timeout, server ip not found
             DEBUG_P(PSTR("arpnotfound"));
             clientState = IDLE;
-            free(notification);
-            notification = 0;
+
+            t_notification *tmp = notification;
+            notification = tmp->next;
+            free(tmp);
             syn_ack_timeout = 0;
             return;
         }
@@ -218,8 +220,6 @@ void networkManage() {
                     1, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     0, dest_mac, NotifyDstIp);
             clientState = IDLE; // return to IDLE state
-            free(notification);
-            notification = 0;
         }
     }
 }

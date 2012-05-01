@@ -30,9 +30,9 @@ static uint16_t commonCheck(char *buf, uint16_t dataPointer, uint16_t dataLen) {
     uint16_t plen;
     DEBUG_P(PSTR("memory "));
     DEBUG_PRINTLN(getFreeMemory());
-
-    DEBUG_P(PSTR("DATA :"));
-    DEBUG_PRINTLN(&buf[dataPointer]);
+//
+//    DEBUG_P(PSTR("DATA :"));
+//    DEBUG_PRINTLN(&buf[dataPointer]);
 
     if (dataLen >= 999) {
         plen = startResponseHeader(&buf, HEADER_413);

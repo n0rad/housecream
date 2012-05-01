@@ -44,33 +44,15 @@ float getPinValue(uint8_t pinIdx) {
 ////////////////////////////////////////////////////////
 uint16_t defaultPinRead(uint8_t pinId, uint8_t type) {
     if (type == ANALOG) {
-//        DEBUG_PRINT("reading analog ");
-//        DEBUG_PRINT(pinId);
-//        DEBUG_PRINT(" ");
-        uint16_t val = analogRead(pinId);
-//        DEBUG_PRINTLN(val);
-        return val;
+        return analogRead(pinId);
     } else {
-//        DEBUG_PRINT("reading digital ");
-//        DEBUG_PRINT(pinId);
-//        DEBUG_PRINT(" ");
-        uint16_t val = digitalRead(pinId);
-//        DEBUG_PRINTLN(val);
-        return val;
+        return digitalRead(pinId);
     }
 }
 void defaultPinWrite(uint8_t pinId, uint8_t type, uint16_t value) {
     if (type == ANALOG) {
-//        DEBUG_PRINT("writing analog ");
-//        DEBUG_PRINT(pinId);
-//        DEBUG_PRINT(" ");
-//        DEBUG_PRINTLN(value);
         analogWrite(pinId, value);
     } else {
-//        DEBUG_PRINT("writing digital ");
-//        DEBUG_PRINT(pinId);
-//        DEBUG_PRINT(" ");
-//        DEBUG_PRINTLN(value);
         digitalWrite(pinId, value);
     }
 }
@@ -99,9 +81,6 @@ void pinInit() {
 }
 
 void pinCheckChange() {
-    if (notification) {
-        return; // TODO do not skip but instead keep nexts to send
-    }
     int8_t pinId;
     for (uint8_t i = 0; -1 != (pinId = (int8_t) pgm_read_byte(&pinInputDescription[i].pinId)); i++) {
         PinRead readfunc = (PinRead) pgm_read_word(&pinInputDescription[i].read);

@@ -16,10 +16,9 @@ typedef struct s_notification {
     float oldValue;
     float value;
     t_notify notify;
+    struct s_notification *next;
 } t_notification;
 
 extern t_notification *notification;
-
-//#include "../server/server.h"
 
 #endif
