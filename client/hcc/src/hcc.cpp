@@ -42,6 +42,8 @@ int main(void) {
         pinInit();
     }
 
+    clientBoardNotify(BOARD_NOTIFY_BOOT);
+
     for (;;) {
         networkManage();
         if (!definitionError) {

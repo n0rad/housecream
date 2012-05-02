@@ -94,7 +94,7 @@ void pinCheckChange() {
             if (notify->condition != 0) {
                 if ((notify->condition == UNDER_EQ && oldValue > notify->value && value <= notify->value)
                         || (notify->condition == OVER_EQ && oldValue < notify->value && value >= notify->value)) {
-                    clientNotify(pinId, oldValue, value, notify);
+                    clientPinNotify(pinId, oldValue, value, notify);
                 }
             }
         }

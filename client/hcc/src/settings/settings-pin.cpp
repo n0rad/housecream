@@ -61,7 +61,7 @@ const prog_char *settingsPinSetDirection(char *buf, uint16_t len, uint8_t index)
     if (!strncmp_P(buf, currentSetPinIdx < pinInputSize ? STR_INPUT : STR_OUTPUT, len)) {
         return 0;
     }
-    return PSTR("direction cannot be set");
+    return PSTR("cannot set direction");
 }
 const prog_char *settingsPinSetType(char *buf, uint16_t len, uint8_t index) {
     uint8_t type = pgm_read_byte(currentSetPinIdx < pinInputSize ? &pinInputDescription[currentSetPinIdx].type :
@@ -69,7 +69,7 @@ const prog_char *settingsPinSetType(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, (const prog_char *)pgm_read_byte(&pinType[type - 1]), len)) {
         return 0;
     }
-    return PSTR("type cannot be set");
+    return PSTR("cannot set type");
 }
 
 const prog_char *settingsPinSetValueMin(char *buf, uint16_t len, uint8_t index) {

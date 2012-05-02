@@ -8,10 +8,10 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webRes
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"hardware\":\""));
     plen = addToBufferTCP_P(buf, plen, PSTR(HARDWARE));
 
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"name\":\""));
+    plen = addToBufferTCP_P(buf, plen, JSON_NAME);
     plen = addToBufferTCP_E(buf, plen, settingsBoardGetName_E());
 
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
+    plen = addToBufferTCP_P(buf, plen, JSON_DESCRIPTION);
     plen = addToBufferTCP_P(buf, plen, boardDescription.description);
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"notifyUrl\":\""));
@@ -30,6 +30,9 @@ uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webRes
 
     plen = addToBufferTCP_P(buf, plen, PSTR("\",\"port\":"));
     plen = addToBufferTCP(buf, plen, settingsBoardGetPort());
+
+    plen = addToBufferTCP_P(buf, plen, PSTR(",\"freeMemory\":"));
+    plen = addToBufferTCP(buf, plen, (uint16_t) getFreeMemory());
 
     plen = addToBufferTCP_P(buf, plen, PSTR(",\"pinIds\":["));
     uint8_t i = 0;
@@ -83,7 +86,6 @@ uint16_t boardReset(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webR
     return plen;
 }
 
-//TODO should be able to reload without reboot
 uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     settingsSave();
     needReboot = true;
@@ -91,9 +93,8 @@ uint16_t boardReInit(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *web
     return plen;
 }
 
-
-//TODO it
 uint16_t boardNotify(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     plen = startResponseHeader(&buf, HEADER_200);
+    clientBoardNotify(BOARD_NOTIFY_NOTIF);
     return plen;
 }

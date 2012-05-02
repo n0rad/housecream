@@ -39,21 +39,21 @@ uint16_t pinPut(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
 
 uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource) {
     plen = startResponseHeader(&buf, HEADER_200);
-    plen = addToBufferTCP_P(buf, plen, PSTR("{\"id\":"));
-    plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(webResource->pinIdx < pinInputSize ?
-            &pinInputDescription[webResource->pinIdx].pinId : &pinOutputDescription[webResource->pinIdx - pinInputSize].pinId));
 
+    plen = addToBufferTCP_P(buf, plen, PSTR("{\"direction\":\""));
+    plen = addToBufferTCP_P(buf, plen, webResource->pinIdx < pinInputSize ? STR_INPUT : STR_OUTPUT);
 
-    plen = addToBufferTCP_P(buf, plen, PSTR(",\"name\":\""));
+    plen = addToBufferTCP_P(buf, plen, JSON_NAME);
     plen = addToBufferTCP_E(buf, plen, settingsPinGetName_E(webResource->pinIdx));
 
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"description\":\""));
+    plen = addToBufferTCP_P(buf, plen, JSON_DESCRIPTION);
     plen = addToBufferTCP_P(buf, plen, (const prog_char *) (webResource->pinIdx < pinInputSize ?
             &pinInputDescription[webResource->pinIdx].description : &pinOutputDescription[webResource->pinIdx - pinInputSize].description));
 
-    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"direction\":\""));
-    plen = addToBufferTCP_P(buf, plen, webResource->pinIdx < pinInputSize ? STR_INPUT : STR_OUTPUT);
-    plen = addToBufferTCP(buf, plen, '"');
+
+    plen = addToBufferTCP_P(buf, plen, PSTR("\",\"id\":"));
+    plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(webResource->pinIdx < pinInputSize ?
+            &pinInputDescription[webResource->pinIdx].pinId : &pinOutputDescription[webResource->pinIdx - pinInputSize].pinId));
 
     uint8_t type = pgm_read_byte(webResource->pinIdx < pinInputSize ?
             &pinInputDescription[webResource->pinIdx].type : &pinOutputDescription[webResource->pinIdx - pinInputSize].type);
@@ -68,6 +68,9 @@ uint16_t pinGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResou
 
         plen = addToBufferTCP_P(buf, plen, PIN_MAX);
         plen = addToBufferTCP(buf, plen, conversion(type == ANALOG ? 1023 : 1));
+
+        plen = addToBufferTCP_P(buf, plen, PSTR(",\"pullup\":"));
+        plen = addToBufferTCP(buf, plen, (uint16_t) pgm_read_byte(&pinInputDescription[webResource->pinIdx].pullup));
 
         plen = addToBufferTCP_P(buf, plen, PSTR(",\"notifies\":["));
         for (uint8_t i = 0; i < PIN_NUMBER_OF_NOTIFY; i++) {

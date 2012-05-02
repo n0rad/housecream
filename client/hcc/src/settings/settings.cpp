@@ -89,9 +89,7 @@ void settingsLoad() {
         && eeprom_read_byte((uint8_t *) confVersionPos + 2) == pgm_read_byte(CONFIG_VERSION + 2)    // c
         && eeprom_read_byte((uint8_t *) confVersionPos + 3) == pgm_read_byte(CONFIG_VERSION + 3)) { //\0
 
-        DEBUG_PRINTLN("conf found");
     } else {
-        DEBUG_PRINTLN("conf NOT found");
         settingsSave();
     }
 

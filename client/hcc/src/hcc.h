@@ -8,6 +8,10 @@
 
 #include "debug.h"
 
+
+const prog_char PUT[] PROGMEM = "PUT ";
+const prog_char JSON_STR_END[] PROGMEM = "\"}";
+
 typedef struct s_webRequest {
     const struct s_resource *resource;
     uint8_t pinIdx;

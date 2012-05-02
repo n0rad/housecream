@@ -31,7 +31,7 @@ const prog_char *configBoardSetNotifyUrl(char *buf, uint16_t len, uint8_t index)
 
     uint8_t newIp[4];
     if (readIP(&buf[7], strspn_P(&buf[7], IP_CHARACTERS), newIp)) {
-        return PSTR("Not valid Ip in notifyUrl");
+        return PSTR("invalid Ip in notifyUrl");
     }
     eeprom_write_block(buf, (uint8_t *) offsetof(t_boardSettings, notifyUrl), len);
     eeprom_write_byte((uint8_t *) (offsetof(t_boardSettings, notifyUrl) + len), 0);
@@ -110,19 +110,19 @@ const prog_char *configBoardSetSoftware(char *buf, uint16_t len, uint8_t index) 
     if (!strncmp_P(buf, PSTR("HouseCream Client"), len)) {
         return 0;
     }
-    return PSTR("software cannot be set");
+    return PSTR("cannot set software");
 }
 const prog_char *configBoardSetHardware(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, PSTR(HARDWARE), len)) {
         return 0;
     }
-    return PSTR("hardware cannot be set");
+    return PSTR("cannot set hardware");
 }
 const prog_char *configBoardSetVersion(char *buf, uint16_t len, uint8_t index) {
     if (!strncmp_P(buf, hcc_version, len)) {
         return 0;
     }
-    return PSTR("version cannot be set");
+    return PSTR("cannot set version");
 }
 const prog_char *configBoardSetPinIds(char *buf, uint16_t len, uint8_t index) {
     uint8_t bufPinId = atoi(buf);

@@ -6,12 +6,18 @@
 #include "../util/buffer.h"
 #include "../settings/settings.h"
 
-const prog_char PUT2[] PROGMEM = "PUT ";
 
-void clientNotify(int pinId, float oldValue, float value, t_notify *notify);
+#define BOARD_NOTIFY_BOOT 0
+#define BOARD_NOTIFY_NOTIF 1
+
+
+void clientBoardNotify(uint8_t notifType);
+void clientPinNotify(int pinId, float oldValue, float value, t_notify *notify);
 uint16_t clientBuildNextQuery(char *buf);
 
 typedef struct s_notification {
+    uint8_t isBoardNotif;
+    uint8_t boardNotifType;
     uint8_t pinId;
     float oldValue;
     float value;

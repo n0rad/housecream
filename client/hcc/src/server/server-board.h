@@ -6,6 +6,7 @@
 #include "../hcc.h"
 #include "../settings/settings-board.h"
 #include "../util/buffer.h"
+#include "../client/client.h"
 
 uint16_t boardGet(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource);
 uint16_t boardPut(char *buf, uint16_t dat_p, uint16_t plen, t_webRequest *webResource);
