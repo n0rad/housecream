@@ -2,9 +2,9 @@ package net.awired.housecream.server.core.service;
 
 import java.util.List;
 import javax.inject.Inject;
-import javax.persistence.EntityNotFoundException;
-import net.awired.housecream.server.common.domain.Floor;
-import net.awired.housecream.server.common.resource.NoFloorFoundException;
+import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.ajsl.persistence.EntityNotFoundException;
+import net.awired.housecream.server.common.domain.zone.Floor;
 import net.awired.housecream.server.storage.dao.FloorDao;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +18,11 @@ public class FloorService {
         return floorDao.save(floor);
     }
 
-    public Floor getFloor(Long id) throws NoFloorFoundException {
+    public Floor getFloor(Long id) throws NotFoundException {
         try {
             return floorDao.find(id);
         } catch (EntityNotFoundException e) {
-            throw new NoFloorFoundException("no Floor found for id " + id, e);
+            throw new NotFoundException("no Floor found for id " + id, e);
         }
     }
 

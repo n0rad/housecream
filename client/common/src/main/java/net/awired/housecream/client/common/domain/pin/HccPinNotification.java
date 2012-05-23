@@ -1,22 +1,18 @@
 package net.awired.housecream.client.common.domain.pin;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "pinNotification")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class HccPinNotification {
-    private int id;
+
+    private int pinId;
     private float oldValue;
     private float value;
-    private HccNotify notify;
-    private String address;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String source;
+    private HccPinNotify notify;
 
     public float getOldValue() {
         return oldValue;
@@ -34,19 +30,27 @@ public class HccPinNotification {
         this.value = value;
     }
 
-    public HccNotify getNotify() {
+    public HccPinNotify getNotify() {
         return notify;
     }
 
-    public void setNotify(HccNotify notify) {
+    public void setNotify(HccPinNotify notify) {
         this.notify = notify;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPinId(int pinId) {
+        this.pinId = pinId;
     }
 
-    public String getAddress() {
-        return address;
+    public int getPinId() {
+        return pinId;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

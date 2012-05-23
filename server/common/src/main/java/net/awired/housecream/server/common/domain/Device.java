@@ -13,7 +13,7 @@ public class Device {
 
     private static final long serialVersionUID = 1L;
 
-    private String url = "httparduino:http://192.168.42.4";
+    private String url = "hcc:http://192.168.42.4";
 
     //    private DeviceType type;
 

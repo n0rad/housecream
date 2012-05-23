@@ -1,49 +1,61 @@
 package net.awired.housecream.server.common.domain;
 
-import java.sql.Date;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+import net.awired.ajsl.persistence.entity.IdEntityImpl;
+import net.awired.housecream.server.common.domain.inpoint.InPointType;
 
 /**
  * A capture or command point (temperature, switch, ...)
  */
-@XmlRootElement
+//@XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Point {
+@MappedSuperclass
+public abstract class Point extends IdEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    //    private Coordinate position;
+    //    private List<Coordinate> coverage;
 
-    //  private Coordinate position;
-    private String name = "Interrupteur 42";
-    private String description = "Eclairage principal de la piece";
-    private String url = "httparduino:http://192.168.42.4/4";
-    private Integer devicePointId = 4;
-    //   private PointWay way;
-    private Date lastUpdate;
+    @NotNull
+    @Column(unique = true)
+    private String name; // = "Interrupteur 42";
+    //    private String description = "Eclairage principal de la piece";
 
-    //    private Room room;
-    private Device device;
+    @NotNull
+    private String url; // = "hcc:http://192.168.42.4/pin/4";
+
+    //    private PointDirection direction;
+
+    //    private Device device;
+
+    ////////////////////////
+
+    //    private Area area;
 
     ////////////////////
 
-    public void setDescription(String description) {
-        this.description = description;
+    public InPointType getPointComponentType() {
+        return null; // hcc, x10, xmpp, mail, http, ...
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    @XmlElement
+    public Long getId() {
+        return super.getId();
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
     }
 
-    public Device getDevice() {
-        return device;
-    }
+    ///////////////////////////
 
     public void setName(String name) {
         this.name = name;
@@ -53,12 +65,12 @@ public class Point {
         return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Long getId() {
-        return id;
+    public String getUrl() {
+        return url;
     }
 
 }

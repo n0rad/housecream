@@ -8,11 +8,11 @@ import net.awired.housecream.client.common.domain.pin.HccPinNotification;
 public interface HccNotifyResource {
 
     @PUT
-    @Path("pin")
+    @Path("/pin")
     public void pinNotification(HccPinNotification pinNotification);
 
     @PUT
-    @Path("board")
+    @Path("/board")
     public void boardNotification(HccBoardNotification boardNotification);
 
 }

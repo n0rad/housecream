@@ -5,7 +5,6 @@ import net.awired.housecream.client.common.domain.board.HccBoardNotification;
 import net.awired.housecream.client.common.domain.pin.HccPinNotification;
 import net.awired.housecream.client.common.resource.client.HccPinResource;
 import net.awired.housecream.client.common.resource.server.HccNotifyResource;
-import com.sun.jersey.api.client.Client;
 
 @Path("/notify")
 public class PocNotify implements HccNotifyResource {
@@ -42,14 +41,12 @@ public class PocNotify implements HccNotifyResource {
     //        }
     //    }
 
-    static Client client = Client.create();
-
     @Override
     public void pinNotification(HccPinNotification pinNotification) {
-        Main.setPinValue(Main.client, pinNotification.getId() + 1, pinNotification.getValue() == 1 ? 0f : 1f);
+        //        Main.setPinValue(Main.client, pinNotification.getId() + 1, pinNotification.getValue() == 1 ? 0f : 1f);
 
         //        long currentTimeMillis = System.currentTimeMillis();
-        System.out.println("pin notif id :" + pinNotification.getId() + "value :" + pinNotification.getValue());
+        System.out.println("pin notif id :" + pinNotification.getPinId() + "value :" + pinNotification.getValue());
         //        System.out.println("sending");
         //        WebResource webResource = client.resource("http://192.168.42.245/pin/" + (pinNotification.getId() + 1)
         //                + "/value");

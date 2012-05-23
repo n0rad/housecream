@@ -1,10 +1,9 @@
 package net.awired.housecream.client.stub;
 
-import net.awired.housecream.client.common.domain.HccPinDescription;
-import net.awired.housecream.client.common.domain.HccPinInfo;
+import net.awired.housecream.client.common.domain.pin.HccPin;
+import net.awired.housecream.client.common.resource.HccPinNotFoundException;
 import net.awired.housecream.client.common.resource.HccUpdateException;
-import net.awired.housecream.client.common.resource.PinNotFoundException;
-import net.awired.housecream.client.common.resource.HccPinResource;
+import net.awired.housecream.client.common.resource.client.HccPinResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,28 +14,24 @@ public class PinResourceStub implements HccPinResource {
     HccContext hccContext;
 
     @Override
-    public HccPinDescription getPinDescription(int pinId) throws PinNotFoundException {
-        return hccContext.getPin(pinId).getDescription();
+    public HccPin getPin(int pinId) throws HccPinNotFoundException {
+        return hccContext.getPin(pinId);
     }
 
     @Override
-    public HccPinInfo getPinInfo(int pinId) throws PinNotFoundException {
-        return hccContext.getPin(pinId).getInfo();
+    public void setPin(int pinId, HccPin pin) throws HccPinNotFoundException, HccUpdateException {
+        //        hccContext.updatePin(pinId, pin);
     }
 
     @Override
-    public void setPinInfo(int pinId, HccPinInfo pin) throws PinNotFoundException, HccUpdateException {
-        hccContext.updatePin(pinId, pin);
+    public Float getPinValue(int pinId) throws HccPinNotFoundException {
+        //        return hccContext.getPin(pinId).getValue();
+        return null;
     }
 
     @Override
-    public Float getValue(int pinId) throws PinNotFoundException {
-        return hccContext.getPin(pinId).getValue();
-    }
-
-    @Override
-    public void setValue(int pinId, Float value) throws PinNotFoundException, HccUpdateException {
-        hccContext.setPinValue(pinId, value);
+    public void setPinValue(int pinId, Float value) throws HccPinNotFoundException, HccUpdateException {
+        //        hccContext.setPinValue(pinId, value);
     }
 
 }

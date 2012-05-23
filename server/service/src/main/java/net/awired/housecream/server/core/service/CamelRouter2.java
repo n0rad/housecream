@@ -1,7 +1,5 @@
 package net.awired.housecream.server.core.service;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.NoErrorHandlerBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -15,14 +13,16 @@ public class CamelRouter2 extends RouteBuilder {
     public void configure() throws Exception {
         errorHandler(new NoErrorHandlerBuilder());
 
-        from("cxfrs:/rest?resourceClasses=net.awired.housecream.server.core.service.HccResource").process(
-                new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        //                        Message inMessage = exchange.getIn();
-                        exchange.getOut().setBody("salut");
-                    }
-                });
+        from(CXF_RS_ENDPOINT_URI).to("log:com.mycompany.order?level=WARN");
+
+        //                from("cxfrs:/rest?resourceClasses=net.awired.housecream.server.core.service.HccResource").process(
+        //                        new Processor() {
+        //                            @Override
+        //                            public void process(Exchange exchange) throws Exception {
+        //                                //                        Message inMessage = exchange.getIn();
+        //                                exchange.getOut().setBody("salut");
+        //                            }
+        //                        });
 
         //        from(CXF_RS_ENDPOINT_URI).to("cxfrs://bean://rsClient");
         //        if (true || true) {

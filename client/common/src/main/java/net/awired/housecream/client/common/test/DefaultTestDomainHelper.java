@@ -1,121 +1,73 @@
 package net.awired.housecream.client.common.test;
 
 import net.awired.housecream.client.common.domain.board.HccBoard;
-import net.awired.housecream.client.common.domain.pin.HccCondition;
-import net.awired.housecream.client.common.domain.pin.HccNotify;
 import net.awired.housecream.client.common.domain.pin.HccPin;
-import net.awired.housecream.client.common.domain.pin.HccPinDescription;
 import net.awired.housecream.client.common.domain.pin.HccPinDirection;
-import net.awired.housecream.client.common.domain.pin.HccPinInfo;
+import net.awired.housecream.client.common.domain.pin.HccPinNotify;
+import net.awired.housecream.client.common.domain.pin.HccPinNotifyCondition;
 import net.awired.housecream.client.common.domain.pin.HccPinType;
 
 class DefaultTestDomainHelper {
 
     public static HccPin buildDefaultPin(int num) {
         switch (num) {
-            case 0: {
-                HccPin pin = new HccPin();
-                HccPinDescription pinDesc = new HccPinDescription();
-                pin.setDescription(pinDesc);
-
-                pinDesc.setTechnicalDescription("technical desc");
-                pinDesc.setDirection(HccPinDirection.RESERVED);
-                pinDesc.setType(HccPinType.ANALOG);
-
-                return pin;
-            }
-            case 1: {
-                HccPin pin = new HccPin();
-                HccPinDescription pinDesc = new HccPinDescription();
-                pin.setDescription(pinDesc);
-
-                pinDesc.setTechnicalDescription("technical desc");
-                pinDesc.setDirection(HccPinDirection.NOTUSED);
-                pinDesc.setType(HccPinType.DIGITAL);
-                return pin;
-            }
             case 2: {
                 HccPin pin = new HccPin();
-                HccPinDescription pinDesc = new HccPinDescription();
-                HccPinInfo pinConf = new HccPinInfo();
-                pin.setDescription(pinDesc);
-                pin.setInfo(pinConf);
+                pin.setDescription("technical desc");
+                pin.setDirection(HccPinDirection.INPUT);
+                pin.setType(HccPinType.ANALOG);
+                pin.setValueMin(0f);
+                pin.setValueMax(1023f);
 
-                pinDesc.setTechnicalDescription("technical desc");
-                pinDesc.setDirection(HccPinDirection.INPUT);
-                pinDesc.setType(HccPinType.ANALOG);
-                pinDesc.setPullUp(true);
-                pinDesc.setValueMin(0f);
-                pinDesc.setValueMax(1023f);
-
-                pinConf.setName("pin2");
-                pinConf.setDescription("input analog pin");
-                pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 0));
-                pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 42));
-                pin.setValue(952f);
+                pin.setName("pin2");
+                pin.setDescription("input analog pin");
+                pin.addNotify(new HccPinNotify(HccPinNotifyCondition.inf_or_equal, 0));
+                pin.addNotify(new HccPinNotify(HccPinNotifyCondition.inf_or_equal, 42));
+                //                pin.setValue(952f);
                 return pin;
             }
             case 3: {
                 HccPin pin = new HccPin();
-                HccPinDescription pinDesc = new HccPinDescription();
-                HccPinInfo pinConf = new HccPinInfo();
-                pin.setDescription(pinDesc);
-                pin.setInfo(pinConf);
 
-                pinDesc.setTechnicalDescription("out technical desc");
-                pinDesc.setDirection(HccPinDirection.OUTPUT);
-                pinDesc.setType(HccPinType.ANALOG);
-                pinDesc.setPullUp(true);
-                pinDesc.setValueMin(0f);
-                pinDesc.setValueMax(254f);
-                pinDesc.setValueStep(2f);
+                pin.setDescription("out technical desc");
+                pin.setDirection(HccPinDirection.OUTPUT);
+                pin.setType(HccPinType.ANALOG);
+                pin.setValueMin(0f);
+                pin.setValueMax(254f);
+                //                pin.setValueStep(2f);
 
-                pinConf.setName("pin3");
-                pinConf.setDescription("output analog pin");
-                pinConf.setStartVal(50f);
-                pin.setValue(60f);
+                pin.setName("pin3");
+                pin.setDescription("output analog pin");
+                //                pin.setValue(60f);
                 return pin;
             }
             case 4: {
                 HccPin pin = new HccPin();
-                HccPinDescription pinDesc = new HccPinDescription();
-                HccPinInfo pinConf = new HccPinInfo();
-                pin.setDescription(pinDesc);
-                pin.setInfo(pinConf);
+                pin.setDescription("out technical desc42");
+                pin.setDirection(HccPinDirection.OUTPUT);
+                pin.setType(HccPinType.DIGITAL);
+                pin.setValueMin(0f);
+                pin.setValueMax(1f);
 
-                pinDesc.setTechnicalDescription("out technical desc42");
-                pinDesc.setDirection(HccPinDirection.OUTPUT);
-                pinDesc.setType(HccPinType.DIGITAL);
-                pinDesc.setPullUp(true);
-                pinDesc.setValueMin(0f);
-                pinDesc.setValueMax(1f);
-                pinDesc.setValueStep(1f);
-
-                pinConf.setName("pin4");
-                pinConf.setDescription("output digital pin");
-                pinConf.setStartVal(1f);
-                pin.setValue(1f);
+                pin.setName("pin4");
+                pin.setDescription("output digital pin");
+                //                pin.setValue(1f);
                 return pin;
             }
             case 5: {
                 HccPin pin = new HccPin();
-                HccPinDescription pinDesc = new HccPinDescription();
-                HccPinInfo pinConf = new HccPinInfo();
-                pin.setDescription(pinDesc);
-                pin.setInfo(pinConf);
 
-                pinDesc.setTechnicalDescription("in technical desc43");
-                pinDesc.setDirection(HccPinDirection.INPUT);
-                pinDesc.setType(HccPinType.DIGITAL);
-                pinDesc.setPullUp(true);
-                pinDesc.setValueMin(0f);
-                pinDesc.setValueMax(1f);
+                pin.setDescription("in technical desc43");
+                pin.setDirection(HccPinDirection.INPUT);
+                pin.setType(HccPinType.DIGITAL);
+                pin.setValueMin(0f);
+                pin.setValueMax(1f);
 
-                pinConf.setName("pin5");
-                pinConf.setDescription("input digital pin");
-                pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 0));
-                pinConf.addNotify(new HccNotify(HccCondition.inf_or_equal, 1));
-                pin.setValue(1f);
+                pin.setName("pin5");
+                pin.setDescription("input digital pin");
+                pin.addNotify(new HccPinNotify(HccPinNotifyCondition.inf_or_equal, 0));
+                pin.addNotify(new HccPinNotify(HccPinNotifyCondition.inf_or_equal, 1));
+                //                pin.setValue(1f);
                 return pin;
             }
             default:
@@ -128,10 +80,10 @@ class DefaultTestDomainHelper {
         device.setVersion("1.0");
         device.setSoftware("hcc");
         device.setNotifyUrl("http://localhost/4242");
-        device.setNumberOfPin(6);
+        //        device.setNumberOfPin(6);
         device.setHardware("arduino");
         device.setName("sample board");
-        device.setTechnicalDescription("genre");
+        device.setDescription("genre");
         device.setDescription("little description");
         device.setIp("123.456.789.123");
         device.setPort(8080);

@@ -7,7 +7,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import net.awired.housecream.server.common.domain.Floor;
+import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.housecream.server.common.domain.zone.Floor;
 
 @Path("/floor")
 public interface FloorResource {
@@ -26,7 +27,7 @@ public interface FloorResource {
 
     @GET
     @Path("{id}")
-    Floor getFloor(@PathParam("id") long id) throws NoFloorFoundException;
+    Floor getFloor(@PathParam("id") long id) throws NotFoundException;
 
     @DELETE
     @Path("{id}")

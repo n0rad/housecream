@@ -5,17 +5,35 @@ import net.awired.housecream.client.common.resource.HccUpdateException;
 import net.awired.housecream.client.common.resource.client.HccBoardResource;
 
 public class BoardResource implements HccBoardResource {
+
     @Override
     public HccBoard getBoard() {
-        HccBoard board = new HccBoard();
-        board.setName("genre");
-        return board;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
-    public HccBoard setBoard(HccBoard board) throws HccUpdateException {
+    public void setBoard(HccBoard board) throws HccUpdateException {
         // TODO Auto-generated method stub
-        return null;
+
+    }
+
+    @Override
+    public void resetBoard() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void init() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void runNotify() {
+        // TODO Auto-generated method stub
+
     }
 
 }

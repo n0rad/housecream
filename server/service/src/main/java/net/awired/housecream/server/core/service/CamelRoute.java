@@ -3,10 +3,6 @@ package net.awired.housecream.server.core.service;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.example.cxf.incident.IncidentService;
-import org.apache.camel.example.cxf.incident.InputReportIncident;
-import org.apache.camel.example.cxf.incident.OutputReportIncident;
-import org.apache.camel.example.cxf.incident.OutputStatusIncident;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +11,7 @@ public class CamelRoute extends RouteBuilder {
     // CXF webservice using code first approach
     //    private String uri = "cxfrs:/incident?serviceClass=" + IncidentService.class.getName();
 
-    private String uri = "cxf:/incident?serviceClass=" + IncidentService.class.getName();
+    private String uri = "cxf:/incident?serviceClass="; // + IncidentService.class.getName();
 
     @Override
     public void configure() throws Exception {
@@ -29,12 +25,12 @@ public class CamelRoute extends RouteBuilder {
             @Override
             public void process(Exchange exchange) throws Exception {
                 // get the id of the input
-                String id = exchange.getIn().getBody(InputReportIncident.class).getIncidentId();
+                //                String id = exchange.getIn().getBody(InputReportIncident.class).getIncidentId();
 
                 // set reply including the id
-                OutputReportIncident output = new OutputReportIncident();
-                output.setCode("OK;" + id);
-                exchange.getOut().setBody(output);
+                //                OutputReportIncident output = new OutputReportIncident();
+                //                output.setCode("OK;" + id);
+                //                exchange.getOut().setBody(output);
             }
         }).to("log:output");
 
@@ -43,9 +39,9 @@ public class CamelRoute extends RouteBuilder {
             @Override
             public void process(Exchange exchange) throws Exception {
                 // set reply
-                OutputStatusIncident output = new OutputStatusIncident();
-                output.setStatus("IN PROGRESS");
-                exchange.getOut().setBody(output);
+                //                OutputStatusIncident output = new OutputStatusIncident();
+                //                output.setStatus("IN PROGRESS");
+                //                exchange.getOut().setBody(output);
             }
         }).to("log:output");
     }

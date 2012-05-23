@@ -68,7 +68,7 @@ uint16_t clientBuildNextQuery(char *buf) {
     uint16_t datapos = plen;
     if (notification->isBoardNotif) {
         plen = addToBufferTCP_P(buf, plen, PSTR("{\"type\":\'"));
-        plen = addToBufferTCP_P(buf, plen, notification->boardNotifType == BOARD_NOTIFY_BOOT ? PSTR("boot") : PSTR("notif"));
+        plen = addToBufferTCP_P(buf, plen, notification->boardNotifType == BOARD_NOTIFY_BOOT ? PSTR("BOOT") : PSTR("TEST"));
         plen = addToBufferTCP_P(buf, plen, JSON_STR_END);
     } else {
         plen = addToBufferTCP_P(buf, plen, PSTR("{\"id\":"));

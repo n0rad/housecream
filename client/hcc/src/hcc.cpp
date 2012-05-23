@@ -44,7 +44,7 @@ int main(void) {
 
     clientBoardNotify(BOARD_NOTIFY_BOOT);
 
-    for (;;) {
+    while (1) {
         networkManage();
         if (!definitionError) {
             pinCheckChange();

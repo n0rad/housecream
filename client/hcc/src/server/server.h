@@ -31,7 +31,7 @@ const prog_char HEADER_413[] PROGMEM = "413 Request Entity Too Large";
 
 const prog_char JSON_DESCRIPTION[] PROGMEM = "\",\"description\":\"";
 const prog_char JSON_NAME[] PROGMEM = "\",\"name\":\"";
-const prog_char ERROR_MSG_START[] PROGMEM = "{\"message\":\"";
+const prog_char ERROR_MSG_START[] PROGMEM = "{\"errorClass\":\"net.awired.housecream.client.common.resource.HccUpdateException\",\"message\":\"";
 
 const prog_char PARAM_NAME[] PROGMEM = "name";
 const prog_char PARAM_DESCRIPTION[] PROGMEM = "description";

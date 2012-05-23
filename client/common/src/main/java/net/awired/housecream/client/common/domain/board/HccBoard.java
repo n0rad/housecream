@@ -1,27 +1,22 @@
 package net.awired.housecream.client.common.domain.board;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "board")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class HccBoard {
+
+    private String name; // updatable
+    private String description; // updatable
+    private String notifyUrl; // updatable
 
     private String software;
     private String version;
     private String hardware;
-    private String name; // updatable
-    private String description; // updatable
-    private String notifyUrl; // updatable
     private String mac;
     private String ip;
     private Integer port;
-    private Integer numberOfPin;
-
-    //private toto42 analogReference;
-    //    private boolean hash;
-    //    private boolean crypt;
+    private List<Integer> pinIds;
 
     ////////////////////////////////////////////////////////
 
@@ -81,14 +76,6 @@ public class HccBoard {
         this.notifyUrl = notifyUrl;
     }
 
-    public Integer getNumberOfPin() {
-        return numberOfPin;
-    }
-
-    public void setNumberOfPin(Integer numberOfPin) {
-        this.numberOfPin = numberOfPin;
-    }
-
     public String getName() {
         return name;
     }
@@ -103,6 +90,14 @@ public class HccBoard {
 
     public String getHardware() {
         return hardware;
+    }
+
+    public void setPinIds(List<Integer> pinIds) {
+        this.pinIds = pinIds;
+    }
+
+    public List<Integer> getPinIds() {
+        return pinIds;
     }
 
 }

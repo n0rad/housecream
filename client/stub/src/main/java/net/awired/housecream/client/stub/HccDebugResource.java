@@ -12,7 +12,7 @@ public class HccDebugResource implements DefaultTestDebugResource {
 
     @Override
     public void setDebugValue(int pinId, Float value) {
-        context.setdebugValue(pinId, value);
+        //        context.setdebugValue(pinId, value);
     }
 
 }

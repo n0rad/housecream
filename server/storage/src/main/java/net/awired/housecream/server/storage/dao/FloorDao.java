@@ -1,7 +1,7 @@
 package net.awired.housecream.server.storage.dao;
 
 import net.awired.ajsl.persistence.dao.GenericDAOImpl;
-import net.awired.housecream.server.common.domain.Floor;
+import net.awired.housecream.server.common.domain.zone.Floor;
 import org.springframework.stereotype.Repository;
 
 @Repository

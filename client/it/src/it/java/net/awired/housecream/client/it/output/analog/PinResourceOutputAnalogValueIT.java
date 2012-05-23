@@ -1,12 +1,7 @@
 package net.awired.housecream.client.it.output.analog;
 
-import static org.junit.Assert.assertEquals;
 import net.awired.housecream.client.HccTestRule;
-import net.awired.housecream.client.common.domain.pin.HccPin;
-import net.awired.housecream.client.common.resource.HccUpdateException;
-import net.awired.housecream.client.common.test.DefaultITDomainHelper;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class PinResourceOutputAnalogValueIT {
 
@@ -14,49 +9,49 @@ public class PinResourceOutputAnalogValueIT {
 
     @Rule
     public HccTestRule hcc = new HccTestRule();
-
-    @Test
-    public void should_get_value() throws Exception {
-        assertEquals((Float) 60f, hcc.getPinResource().getValue(PIN_ID));
-    }
-
-    @Test
-    public void should_set_value() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, 0f);
-
-        assertEquals((Float) 0f, hcc.getPinResource().getValue(PIN_ID));
-    }
-
-    @Test
-    public void should_set_value2() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, 40f);
-
-        assertEquals((Float) 40f, hcc.getPinResource().getValue(PIN_ID));
-    }
-
-    @Test(expected = HccUpdateException.class)
-    public void should_not_overflow_value() throws Exception {
-        HccPin pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID);
-
-        hcc.getPinResource().setValue(PIN_ID, pin.getDescription().getValueMax() + 1);
-    }
-
-    @Test(expected = HccUpdateException.class)
-    public void should_not_overflow_value2() throws Exception {
-        HccPin pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID);
-
-        hcc.getPinResource().setValue(PIN_ID, pin.getDescription().getValueMin() - 1);
-    }
-
-    @Test(expected = HccUpdateException.class)
-    public void should_not_set_value_using_step() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, 1f);
-    }
-
-    public void should_set_value_using_step() throws Exception {
-        hcc.getPinResource().setValue(PIN_ID, 2f);
-
-        assertEquals((Float) 2f, hcc.getPinResource().getValue(PIN_ID));
-    }
+    //
+    //    @Test
+    //    public void should_get_value() throws Exception {
+    //        assertEquals((Float) 60f, hcc.getPinResource().getValue(PIN_ID));
+    //    }
+    //
+    //    @Test
+    //    public void should_set_value() throws Exception {
+    //        hcc.getPinResource().setValue(PIN_ID, 0f);
+    //
+    //        assertEquals((Float) 0f, hcc.getPinResource().getValue(PIN_ID));
+    //    }
+    //
+    //    @Test
+    //    public void should_set_value2() throws Exception {
+    //        hcc.getPinResource().setValue(PIN_ID, 40f);
+    //
+    //        assertEquals((Float) 40f, hcc.getPinResource().getValue(PIN_ID));
+    //    }
+    //
+    //    @Test(expected = HccUpdateException.class)
+    //    public void should_not_overflow_value() throws Exception {
+    //        HccPin pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID);
+    //
+    //        hcc.getPinResource().setValue(PIN_ID, pin.getDescription().getValueMax() + 1);
+    //    }
+    //
+    //    @Test(expected = HccUpdateException.class)
+    //    public void should_not_overflow_value2() throws Exception {
+    //        HccPin pin = DefaultITDomainHelper.buildDefaultPin(PIN_ID);
+    //
+    //        hcc.getPinResource().setValue(PIN_ID, pin.getDescription().getValueMin() - 1);
+    //    }
+    //
+    //    @Test(expected = HccUpdateException.class)
+    //    public void should_not_set_value_using_step() throws Exception {
+    //        hcc.getPinResource().setValue(PIN_ID, 1f);
+    //    }
+    //
+    //    public void should_set_value_using_step() throws Exception {
+    //        hcc.getPinResource().setValue(PIN_ID, 2f);
+    //
+    //        assertEquals((Float) 2f, hcc.getPinResource().getValue(PIN_ID));
+    //    }
 
 }

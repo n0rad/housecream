@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it.floor;
 
-import net.awired.housecream.server.common.domain.Floor;
+import net.awired.housecream.server.common.domain.zone.Floor;
 import net.awired.housecream.server.common.resource.FloorResource;
 import net.awired.housecream.server.it.HcsItServer;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;

@@ -218,6 +218,8 @@ void networkManage() {
                     1, // 0=use old seq, seqack : 1=new seq,seqack no data : >1 new seq,seqack with data
                     0, dest_mac, NotifyDstIp);
             clientState = IDLE; // return to IDLE state
+            return;
         }
+        DEBUG_PRINTLN("OTHER CLIENT");
     }
 }
