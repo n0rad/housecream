@@ -18,7 +18,7 @@
 	</parent>
 
 	<modules>
-		<module>client</module>
+<!-- 		<module>client</module> -->
 		<module>server</module>
 		<module>web</module>
 	</modules>

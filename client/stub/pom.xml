@@ -3,21 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>housecream-client-stub</artifactId>
-	<name>Housecream Client - Stub</name>
+	<artifactId>restmcu-stub</artifactId>
+	<name>RestMcu - Stub</name>
 	<packaging>war</packaging>
 
 	<parent>
-		<groupId>net.awired.housecream.client</groupId>
-		<artifactId>housecream-client</artifactId>
+	        <groupId>net.awired.restmcu</groupId>
+        	<artifactId>rest-mcu</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.housecream.client</groupId>
-			<artifactId>housecream-client-common</artifactId>
+                	<groupId>net.awired.restmcu</groupId>
+		        <artifactId>restmcu-common</artifactId>
 		</dependency>
 
 
@@ -44,7 +44,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>hcc</finalName>
+		<finalName>restmcu</finalName>
 	</build>
 
 </project>
