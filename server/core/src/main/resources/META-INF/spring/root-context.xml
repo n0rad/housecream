@@ -24,7 +24,7 @@
 		</property>
 		<property name="propertiesArray">
 			<list>
-<!-- 				<bean factory-bean="visuwallApplication" factory-method="visuwallProperties" /> -->
+<!-- 				<bean factory-bean="housecreamApplication" factory-method="housecreamProperties" /> -->
 			</list>
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="false" />

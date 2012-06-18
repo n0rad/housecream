@@ -1,1 +1,1 @@
-net.awired.housecream.server.core.service.HcEventConverter
+net.awired.housecream.server.core.converter.HcEventConverter

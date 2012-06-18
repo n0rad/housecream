@@ -5,7 +5,7 @@
 
 	<groupId>net.awired.housecream.server</groupId>
 	<artifactId>housecream-server</artifactId>
-	<name>Housecream Server</name>
+	<name>HouseCream Server</name>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -21,7 +21,6 @@
 
 	<modules>
 		<module>common</module>
-		<module>camel-hcc</module>
 		<module>core</module>
 		<module>storage</module>
 		<module>service</module>

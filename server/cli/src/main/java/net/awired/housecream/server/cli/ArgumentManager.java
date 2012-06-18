@@ -1,19 +1,3 @@
-/**
- *     Copyright (C) 2010 Julien SMADJA <julien dot smadja at gmail dot com> - Arnaud LEMAIRE <alemaire at norad dot fr>
- *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
- *
- *             http://www.apache.org/licenses/LICENSE-2.0
- *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
- */
-
 package net.awired.housecream.server.cli;
 
 import java.io.File;
@@ -41,7 +25,7 @@ class ArgumentManager extends CliArgumentManager {
     public final CliOneParamArgument<FileInfoEnum> displayFile;
 
     public ArgumentManager(Main main) {
-        super("visuwall");
+        super("housecream");
 
         // -d
         displayFile = new CliOneParamArgument<FileInfoEnum>('d', new CliParamEnum<FileInfoEnum>("file",
@@ -73,10 +57,10 @@ class ArgumentManager extends CliArgumentManager {
         contextPath.setDescription("Context path to access the application");
         addArg(contextPath);
 
-        // -i
-        info = new CliNoParamArgument('i');
-        info.setName("info");
-        info.setDescription("Print Visuwall information and exit");
+        // -v
+        info = new CliNoParamArgument('v');
+        info.setName("version");
+        info.setDescription("Print HouseCream information and exit");
         addArg(info);
 
         // -r
@@ -88,9 +72,9 @@ class ArgumentManager extends CliArgumentManager {
                 return res;
             }
         });
-        rootFolder.setParamOneDefValue(new File("~/.visuwall"));
+        rootFolder.setParamOneDefValue(new File("~/.housecream"));
         rootFolder.setName("home");
-        rootFolder.setDescription("Visuwall root folder");
+        rootFolder.setDescription("HouseCream root folder");
         addArg(rootFolder);
 
         // -l

@@ -6,7 +6,6 @@ import net.awired.ajsl.persistence.EntityNotFoundException;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.resource.InPointResource;
 import net.awired.housecream.server.storage.dao.InPointDao;
-import org.apache.camel.CamelContext;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,9 +15,6 @@ public class InPointService implements InPointResource {
 
     @Inject
     private InPointDao pointDao;
-
-    @Inject
-    private CamelContext camelContext;
 
     @Override
     public InPoint createInPoint(InPoint inPoint) {
@@ -37,5 +33,10 @@ public class InPointService implements InPointResource {
     @Override
     public void deleteInPoint(long inPointId) {
         pointDao.delete(inPointId);
+    }
+
+    @Override
+    public void deleteAllInPoints() {
+        pointDao.deleteAll();
     }
 }

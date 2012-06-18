@@ -13,7 +13,7 @@ import net.awired.housecream.server.common.domain.inpoint.InPoint;
 public interface InPointResource {
 
     @PUT
-    InPoint createInPoint(@Valid InPoint Inpoint);
+    InPoint createInPoint(@Valid InPoint inPoint);
 
     @GET
     @Path("{id}")
@@ -22,4 +22,8 @@ public interface InPointResource {
     @DELETE
     @Path("{id}")
     void deleteInPoint(@PathParam("id") long inPointId);
+
+    @DELETE
+    void deleteAllInPoints();
+
 }

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-service</artifactId>
-	<name>Housecream Server - Service</name>	
+	<name>HouseCream Server - Service</name>
 
 	<parent>
 		<groupId>net.awired.housecream.server</groupId>
@@ -17,10 +17,6 @@
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-storage</artifactId>
-		</dependency>
- 		<dependency>
-			<groupId>net.awired.housecream.client</groupId>
-			<artifactId>housecream-client-common</artifactId>
 		</dependency>
 
 		<dependency>
@@ -109,10 +105,28 @@
 			<version>${camel.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.camel</groupId>
-		    <artifactId>camel-mail</artifactId>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-mail</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
+
+		<!-- Rules -->
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>5.4.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>5.4.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+
 
 	</dependencies>
 </project>

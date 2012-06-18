@@ -1,7 +1,8 @@
 package net.awired.housecream.server.common.domain.outPoint;
 
 public enum OutPointType {
-    SWITCH, //
+    LIGHT, //
+    OUTLET, //
     DIMMER, //
     SLUICE_GATE, //
 

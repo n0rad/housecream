@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-cli</artifactId>
-	<name>Housecream Server - Cli</name>	
+	<name>HouseCream Server - Cli</name>
 
 	<parent>
 		<groupId>net.awired.housecream.server</groupId>
@@ -17,6 +17,7 @@
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-core</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -25,8 +26,6 @@
 			<version>${jetty.version}</version>
 		</dependency>
 	</dependencies>
-
-
 
 	<build>
 		<plugins>

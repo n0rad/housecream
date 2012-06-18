@@ -23,10 +23,10 @@ public class ApplicationHelper {
 
     public static final String UNKNOW_VERSION = "Unknow Version";
     public static final String HOME_KEY = "HOUSECREAM_HOME";
-    public static final String MANIFEST_VERSION_KEY = "HousecreamVersion";
+    public static final String MANIFEST_VERSION_KEY = "HouseCreamVersion";
 
-    public static final String LOG_VISUWALL_AWIRED = "log.housecream.awired";
-    public static final String LOG_VISUWALL_ROOT = "log.housecream.root";
+    public static final String LOG_HOUSECREAM_AWIRED = "log.housecream.awired";
+    public static final String LOG_HOUSECREAM_ROOT = "log.housecream.root";
 
     private static String version;
 

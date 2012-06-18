@@ -23,7 +23,7 @@ public class PointProxy<T> extends ProxyClass<T> {
 
     @Override
     protected void handleSuccess(Method m, Object[] args, Object result) {
-        if (m.getName().equals("createPoint")) {
+        if (m.getName().equals("createInPoint")) {
             points.add(((Point) result).getId());
         }
     }

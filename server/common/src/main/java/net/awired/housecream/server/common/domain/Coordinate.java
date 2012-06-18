@@ -2,7 +2,6 @@ package net.awired.housecream.server.common.domain;
 
 import javax.persistence.Embeddable;
 
-//TODO add z to manage 3D interfaces
 @Embeddable
 public class Coordinate {
     private int x;

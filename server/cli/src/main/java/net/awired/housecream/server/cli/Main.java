@@ -1,19 +1,3 @@
-/**
- *     Copyright (C) 2010 Julien SMADJA <julien dot smadja at gmail dot com> - Arnaud LEMAIRE <alemaire at norad dot fr>
- *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
- *
- *             http://www.apache.org/licenses/LICENSE-2.0
- *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
- */
-
 package net.awired.housecream.server.cli;
 
 import java.io.File;
@@ -44,10 +28,10 @@ public class Main {
         argManager.parse(args);
 
         System.setProperty(ApplicationHelper.HOME_KEY, ApplicationHelper.findHomeDir());
-        System.setProperty(ApplicationHelper.LOG_VISUWALL_AWIRED, argManager.logLevel.getParamOneValue().toString());
-        System.setProperty(ApplicationHelper.LOG_VISUWALL_ROOT, argManager.logLevel.getParamOneValue().toString());
+        System.setProperty(ApplicationHelper.LOG_HOUSECREAM_AWIRED, argManager.logLevel.getParamOneValue().toString());
+        System.setProperty(ApplicationHelper.LOG_HOUSECREAM_ROOT, argManager.logLevel.getParamOneValue().toString());
         if (argManager.logRootLevel.isSet()) {
-            System.setProperty(ApplicationHelper.LOG_VISUWALL_ROOT, argManager.logRootLevel.getParamOneValue()
+            System.setProperty(ApplicationHelper.LOG_HOUSECREAM_ROOT, argManager.logRootLevel.getParamOneValue()
                     .toString());
         }
         ApplicationHelper.changeLogLvl();
@@ -82,8 +66,8 @@ public class Main {
 
     public void printInfo() {
         ApplicationHelper.getVersion(null);
-        System.out.println("Visuall version : " + ApplicationHelper.getVersion());
-        System.out.println("Visuall home : " + ApplicationHelper.findHomeDir());
+        System.out.println("HouseCream version : " + ApplicationHelper.getVersion());
+        System.out.println("HouseCream home : " + ApplicationHelper.findHomeDir());
         // TODO list plugin founds
     }
 

@@ -23,8 +23,10 @@
 			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
 		</jaxrs:outInterceptors>
 		<jaxrs:serviceBeans>
-			<ref bean="hccNotifyResourceEndPoint"/>
-			<ref bean="inPointService" />
+			<ref bean="restMcuNotifyResourceEndPoint"/>
+            <ref bean="inPointService" />
+            <ref bean="outPointService" />
+            <ref bean="ruleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />
@@ -52,7 +54,7 @@
 	</bean>
 
  	<!-- Defined the server endpoint to create the cxf-rs consumer --> 
-  	<cxf:rsServer id="hccNotifyEndPoint" address="/router2" serviceClass="net.awired.housecream.server.core.service.web.HccNotifyResourceEndPoint">
+  	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router" serviceClass="net.awired.housecream.server.core.service.web.RestMcuNotifyResourceEndPoint">
   		<cxf:providers>
   			<ref bean="jaxbProvider" />
 			<ref bean="jsonProvider" />

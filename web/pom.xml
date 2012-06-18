@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>housecream-web</artifactId>
-	<name>Housecream Web</name>	
+	<name>HouseCream Web</name>	
 	<packaging>war</packaging>
 
 	<parent>
@@ -14,10 +14,96 @@
 
 	<properties>
 		<sonar.language>js</sonar.language>
-		<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-		<js.sources>${project.basedir}/src/main/webapp/js</js.sources>
+        <hcs.url>/hcs/</hcs.url>
 	</properties>
+	
+	<dependencies>
 
-	<build>
-	</build>
+        <dependency>
+            <groupId>net.awired.ajsl</groupId>
+            <artifactId>ajsl-js</artifactId>
+            <version>${ajsl.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>net.awired.js</groupId>
+            <artifactId>jquery-ui</artifactId>
+            <version>1.8.18</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>net.awired.js</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.7.2</version>
+            <type>war</type>
+        </dependency>   
+        <dependency>
+            <groupId>net.awired.js</groupId>
+            <artifactId>underscore</artifactId>
+            <version>1.1.6</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>net.awired.js</groupId>
+            <artifactId>curl</artifactId>
+            <version>0.6.3-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+	
+       <!-- Test -->
+        <dependency>
+            <groupId>net.awired.js</groupId>
+            <artifactId>jasmine</artifactId>
+            <version>1.1.0</version>
+            <type>war</type>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+
+
+    <build>
+        <finalName>hcw</finalName>
+        <sourceDirectory>src/main/webapp</sourceDirectory>
+        <testSourceDirectory>src/test/webapp</testSourceDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>bootstrap.js</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.awired.jstest</groupId>
+                <artifactId>jstest-maven-plugin</artifactId>
+                <version>0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <amdPreloads>
+                        <amdPreload>main</amdPreload>
+                    </amdPreloads>          
+                    <coverage>true</coverage>
+                    <runnerType>CURL</runnerType>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>

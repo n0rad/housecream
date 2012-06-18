@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-storage</artifactId>
-	<name>Housecream Server - Storage</name>	
+	<name>HouseCream Server - Storage</name>	
 
 	<parent>
 		<groupId>net.awired.housecream.server</groupId>
@@ -60,11 +60,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.3.162</version>
-		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>2.2</version>
 		</dependency>
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.aspectj</groupId> -->

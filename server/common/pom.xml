@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-common</artifactId>
-	<name>Housecream Server - Common</name>
+	<name>HouseCream Server - Common</name>
 
 	<parent>
 		<groupId>net.awired.housecream.server</groupId>
@@ -30,6 +30,12 @@
 			<artifactId>ajsl-persistence</artifactId>
 			<version>${ajsl.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.awired.restmcu</groupId>
+			<artifactId>restmcu-api</artifactId>
+			<version>${restmcu.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.google.guava</groupId>

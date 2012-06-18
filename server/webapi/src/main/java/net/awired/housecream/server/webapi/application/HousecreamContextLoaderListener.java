@@ -75,7 +75,7 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
             try {
                 Files.write(currentVersion.getBytes(), versionFile);
             } catch (IOException e) {
-                System.err.println("cannot write visuwall version to file" + versionFile);
+                System.err.println("cannot write housecream version to file" + versionFile);
             }
         }
 

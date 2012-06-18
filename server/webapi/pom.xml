@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-webapi</artifactId>
-	<name>Housecream Server - Webapi</name>
+	<name>HouseCream Server - Webapi</name>
 	<packaging>war</packaging>
 
 	<parent>
