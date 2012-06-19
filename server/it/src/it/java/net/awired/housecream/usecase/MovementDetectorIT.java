@@ -8,7 +8,7 @@ import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 import net.awired.housecream.server.common.domain.outPoint.OutPointType;
 import net.awired.housecream.server.it.HcsTestRule;
-import net.awired.housecream.server.it.RestServerRule;
+import net.awired.housecream.server.it.RestServerRule2;
 import net.awired.restmcu.api.domain.pin.RestMcuPin;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
@@ -28,21 +28,21 @@ public class MovementDetectorIT {
     public static class OutputLightResource implements RestMcuPinResource {
 
         @Override
-        public RestMcuPin getPin(int pinId) throws NotFoundException {
+        public RestMcuPin getPin(Integer pinId) throws NotFoundException {
             return null;
         }
 
         @Override
-        public void setPin(int pinId, RestMcuPin pin) throws NotFoundException, UpdateException {
+        public void setPin(Integer pinId, RestMcuPin pin) throws NotFoundException, UpdateException {
         }
 
         @Override
-        public Float getPinValue(int pinId) throws NotFoundException {
+        public Float getPinValue(Integer pinId) throws NotFoundException {
             return null;
         }
 
         @Override
-        public void setPinValue(int pinId, Float value) throws NotFoundException, UpdateException {
+        public void setPinValue(Integer pinId, Float value) throws NotFoundException, UpdateException {
             if (pinId == 3) {
                 outputValue = value;
             }
@@ -50,7 +50,7 @@ public class MovementDetectorIT {
     }
 
     @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule(5879, OutputLightResource.class);
+    public static RestServerRule2 restMcuPin = new RestServerRule2(5879, OutputLightResource.class);
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
@@ -73,8 +73,9 @@ public class MovementDetectorIT {
         pinNotification.setNotify(new RestMcuPinNotify(RestMcuPinNotifyCondition.sup_or_equal, 1));
         hcs.getNotifyResource().pinNotification(pinNotification);
 
-        Thread.sleep(1000);
+        Thread.sleep(10000);
 
         assertEquals((Float) 1f, outputValue);
     }
+
 }

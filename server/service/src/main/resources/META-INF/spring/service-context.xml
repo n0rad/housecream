@@ -53,6 +53,10 @@
 		<property name="dropRootElement" value="true"/>
 	</bean>
 
+
+        <cxf:rsClient id="rsClient" address="http://localhost:5879/"
+                serviceClass="net.awired.housecream.server.core.service.web.Toto42" loggingFeatureEnabled="true" />
+
  	<!-- Defined the server endpoint to create the cxf-rs consumer --> 
   	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router" serviceClass="net.awired.housecream.server.core.service.web.RestMcuNotifyResourceEndPoint">
   		<cxf:providers>

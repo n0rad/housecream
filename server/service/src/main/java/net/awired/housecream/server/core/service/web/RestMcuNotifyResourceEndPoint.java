@@ -19,8 +19,4 @@ public class RestMcuNotifyResourceEndPoint implements RestMcuNotifyResource {
     public void boardNotification(RestMcuBoardNotification boardNotification) {
     }
 
-    @Override
-    public void tot() {
-    }
-
 }
