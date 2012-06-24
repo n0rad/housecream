@@ -14,10 +14,14 @@ import net.awired.housecream.server.common.domain.rule.Consequence;
 import net.awired.housecream.server.common.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsTestRule;
 import net.awired.housecream.server.it.RestServerRule;
+import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
+import net.awired.housecream.usecase.InPointCreationIT.SwitchResource;
+import net.awired.restmcu.api.domain.board.RestMcuBoard;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,6 +35,13 @@ public class MovementDetectorIT {
 
     public static Float outputValue;
 
+    private static RestMcuBoard board;
+
+    @Before
+    public void before() {
+        board = new RestMcuBoard();
+    }
+
     public static class OutputLightResource extends RestMcuEmptyPinResource {
         @Override
         public void setPinValue(Integer pinId, Float value) throws NotFoundException, UpdateException {
@@ -41,8 +52,21 @@ public class MovementDetectorIT {
         }
     }
 
+    public static class SwitchBoardResource extends RestMcuEmptyBoardResource {
+        @Override
+        public RestMcuBoard getBoard() {
+            return board;
+        }
+
+        @Override
+        public void setBoard(RestMcuBoard board2) throws UpdateException {
+            board = board2;
+        }
+    }
+
     @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule(5879, OutputLightResource.class);
+    public static RestServerRule restMcuPin = new RestServerRule(5879, SwitchResource.class,
+            SwitchBoardResource.class);
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {

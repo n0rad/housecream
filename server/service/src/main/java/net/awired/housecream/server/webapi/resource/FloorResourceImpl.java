@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.common.domain.zone.Floor;
 import net.awired.housecream.server.common.resource.FloorResource;
-import net.awired.housecream.server.core.service.FloorService;
+import net.awired.housecream.server.service.FloorService;
 import org.springframework.stereotype.Component;
 
 @Component

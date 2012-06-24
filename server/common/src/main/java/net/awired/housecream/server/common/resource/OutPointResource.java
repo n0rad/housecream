@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 
 @Path("/outpoint")
-public interface OutPointResource {
+public interface OutPointResource extends PointResource {
 
     @PUT
     Long createOutPoint(@Valid OutPoint outPoint);

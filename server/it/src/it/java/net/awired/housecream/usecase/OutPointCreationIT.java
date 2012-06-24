@@ -3,8 +3,8 @@ package net.awired.housecream.usecase;
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
-import net.awired.housecream.server.common.domain.inpoint.InPoint;
-import net.awired.housecream.server.common.domain.inpoint.InPointType;
+import net.awired.housecream.server.common.domain.outPoint.OutPoint;
+import net.awired.housecream.server.common.domain.outPoint.OutPointType;
 import net.awired.housecream.server.it.HcsTestRule;
 import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
@@ -15,7 +15,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class InPointCreationIT {
+public class OutPointCreationIT {
 
     @Rule
     public HcsTestRule hcs = new HcsTestRule();
@@ -29,7 +29,7 @@ public class InPointCreationIT {
     public static class SwitchResource extends RestMcuEmptyPinResource {
         @Override
         public Float getPinValue(Integer pinId) throws NotFoundException {
-            if (pinId == 3) {
+            if (pinId == 4) {
                 return 1f;
             }
             return 0f;
@@ -54,25 +54,14 @@ public class InPointCreationIT {
 
     @Test
     public void should_update_notify_url_when_create_point() throws Exception {
-        InPoint inPoint = new InPoint();
-        inPoint.setType(InPointType.PIR);
-        inPoint.setName("my pir1");
-        inPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
+        OutPoint outPoint = new OutPoint();
+        outPoint.setType(OutPointType.LIGHT);
+        outPoint.setName("my light");
+        outPoint.setUrl("restmcu://127.0.0.1:5879/pin/4");
 
-        hcs.getInPointResource().createInPoint(inPoint);
+        Long pointId = hcs.getOutPointResource().createOutPoint(outPoint);
 
-        assertEquals("http://localhost:8080/hcs/router", board.getNotifyUrl());
-    }
-
-    @Test
-    public void should_access_current_state_after_creation() throws Exception {
-        InPoint inPoint = new InPoint();
-        inPoint.setType(InPointType.PIR);
-        inPoint.setName("my pir1");
-        inPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
-        Long pointId = hcs.getInPointResource().createInPoint(inPoint);
-
-        Float pointValue = hcs.getInPointResource().getPointValue(pointId);
+        Float pointValue = hcs.getOutPointResource().getPointValue(pointId);
 
         assertEquals((Float) 1f, pointValue);
     }

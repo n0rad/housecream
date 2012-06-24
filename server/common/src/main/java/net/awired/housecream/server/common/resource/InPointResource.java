@@ -10,7 +10,7 @@ import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 
 @Path("/inpoint")
-public interface InPointResource {
+public interface InPointResource extends PointResource {
 
     @PUT
     Long createInPoint(@Valid InPoint inPoint);
@@ -25,9 +25,5 @@ public interface InPointResource {
 
     @DELETE
     void deleteAllInPoints();
-
-    @GET()
-    @Path("{id}/value")
-    Float getPointValue(@PathParam("id") long pointId) throws NotFoundException;
 
 }

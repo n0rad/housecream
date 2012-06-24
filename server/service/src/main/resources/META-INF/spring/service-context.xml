@@ -59,7 +59,7 @@
  -->
  
  	<!-- Defined the server endpoint to create the cxf-rs consumer --> 
-  	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router" serviceClass="net.awired.housecream.server.core.service.web.RestMcuNotifyResourceEndPoint">
+  	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router" serviceClass="net.awired.housecream.server.service.web.RestMcuNotifyResourceEndPoint">
   		<cxf:providers>
   			<ref bean="jaxbProvider" />
 			<ref bean="jsonProvider" />
