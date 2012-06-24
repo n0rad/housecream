@@ -26,13 +26,14 @@ public class InPointIT {
         point.setName("my point name");
         point.setUrl("genre style ouda");
 
-        Point createPoint = hcs.getInPointResource().createInPoint(point);
+        Long inPointId = hcs.getInPointResource().createInPoint(point);
+        point.setId(inPointId);
 
-        assertNotNull(createPoint.getId());
+        assertNotNull(inPointId);
 
-        Point getPoint = hcs.getInPointResource().getInPoint(createPoint.getId());
+        Point getPoint = hcs.getInPointResource().getInPoint(inPointId);
 
-        assertTrue(EqualsBuilder.reflectionEquals(createPoint, getPoint));
+        assertTrue(EqualsBuilder.reflectionEquals(point, getPoint));
     }
 
     @Test(expected = NotFoundException.class)

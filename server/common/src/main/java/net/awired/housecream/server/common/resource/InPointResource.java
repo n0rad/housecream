@@ -13,7 +13,7 @@ import net.awired.housecream.server.common.domain.inpoint.InPoint;
 public interface InPointResource {
 
     @PUT
-    InPoint createInPoint(@Valid InPoint inPoint);
+    Long createInPoint(@Valid InPoint inPoint);
 
     @GET
     @Path("{id}")
@@ -25,5 +25,9 @@ public interface InPointResource {
 
     @DELETE
     void deleteAllInPoints();
+
+    @GET()
+    @Path("{id}/value")
+    Float getPointValue(@PathParam("id") long pointId) throws NotFoundException;
 
 }

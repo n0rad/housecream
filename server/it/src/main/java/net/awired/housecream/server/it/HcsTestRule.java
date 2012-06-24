@@ -5,6 +5,7 @@ import net.awired.ajsl.web.resource.mapper.AjslResponseExceptionMapper;
 import net.awired.housecream.server.common.resource.HcRestMcuNotifyResource;
 import net.awired.housecream.server.common.resource.InPointResource;
 import net.awired.housecream.server.common.resource.OutPointResource;
+import net.awired.housecream.server.common.resource.RuleResource;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
@@ -17,6 +18,7 @@ public class HcsTestRule extends ExternalResource {
     private HcRestMcuNotifyResource notifyResource;
     private OutPointResource outPointResource;
     private InPointResource inPointResource;
+    private RuleResource ruleResource;
 
     //    private final PointProxy<InPointResource> inPointProxy;
     //    private final PointProxy<OutPointResource> outpointProxy;
@@ -49,12 +51,18 @@ public class HcsTestRule extends ExternalResource {
         notifyResource = JAXRSClientFactory.create(HcsItServer.getUrl(), HcRestMcuNotifyResource.class, providers);
         WebClient.client(notifyResource).accept(MediaType.APPLICATION_JSON_TYPE)
                 .type(MediaType.APPLICATION_JSON_TYPE);
+
+        // rule
+        ruleResource = JAXRSClientFactory.create(HcsItServer.getUrl(), RuleResource.class, providers);
+        WebClient.client(ruleResource).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
+
     }
 
     @Override
     public void before() throws Throwable {
         inPointResource.deleteAllInPoints();
         outPointResource.deleteAllOutPoints();
+        ruleResource.deleteAllRules();
     }
 
     @Override
@@ -71,6 +79,10 @@ public class HcsTestRule extends ExternalResource {
 
     public RestMcuNotifyResource getNotifyResource() {
         return notifyResource;
+    }
+
+    public RuleResource getRuleResource() {
+        return ruleResource;
     }
 
 }

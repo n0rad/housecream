@@ -18,7 +18,8 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        AnsiConsole.systemUninstall();
+        // do not uninstall it because it does not reinstall well
+        //        AnsiConsole.systemUninstall();
         SLF4JBridgeHandler.uninstall();
         super.contextDestroyed(event);
     }

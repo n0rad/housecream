@@ -15,9 +15,9 @@ public class OutPointService implements OutPointResource {
     private OutPointDao outPointDao;
 
     @Override
-    public OutPoint createOutPoint(OutPoint outPoint) {
-        outPointDao.persist(outPoint);
-        return outPoint;
+    public Long createOutPoint(OutPoint outPoint) {
+        outPointDao.save(outPoint);
+        return outPoint.getId();
     }
 
     @Override

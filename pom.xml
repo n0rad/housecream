@@ -37,20 +37,21 @@
 		<cargo.jvm.args>-XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError
 			-XX:HeapDumpPath=/tmp/</cargo.jvm.args>
 
-
-
 		<bootstrap.version>1.0</bootstrap.version>
 		<ajsl.version>0.5-SNAPSHOT</ajsl.version>
 		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
 
-		<junit.version>4.10</junit.version>
-		<mockito.version>1.9.0-rc1</mockito.version>
+        <hibernate.version>4.1.4.Final</hibernate.version>
 		<jetty.version>6.1.26</jetty.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
 		<camel.version>2.9.2</camel.version>
 		<cxf.version>2.5.2</cxf.version>
-		<jacoco.version>0.5.5.201112152213</jacoco.version>
 		<slf4j.version>1.6.4</slf4j.version>
+		
+        <!-- TEST -->		
+		<junit.version>4.10</junit.version>
+		<mockito.version>1.9.0-rc1</mockito.version>
+		<jacoco.version>0.5.5.201112152213</jacoco.version>
 	</properties>
 
 

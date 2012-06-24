@@ -1,19 +1,23 @@
 package net.awired.housecream.usecase;
 
 import static org.junit.Assert.assertEquals;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 import net.awired.housecream.server.common.domain.outPoint.OutPointType;
+import net.awired.housecream.server.common.domain.rule.Condition;
+import net.awired.housecream.server.common.domain.rule.Consequence;
+import net.awired.housecream.server.common.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsTestRule;
-import net.awired.housecream.server.it.RestServerRule2;
-import net.awired.restmcu.api.domain.pin.RestMcuPin;
+import net.awired.housecream.server.it.RestServerRule;
+import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
-import net.awired.restmcu.api.resource.client.RestMcuPinResource;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,59 +27,62 @@ public class MovementDetectorIT {
     @Rule
     public HcsTestRule hcs = new HcsTestRule();
 
+    public static CountDownLatch latch = new CountDownLatch(1);
+
     public static Float outputValue;
 
-    public static class OutputLightResource implements RestMcuPinResource {
-
-        @Override
-        public RestMcuPin getPin(Integer pinId) throws NotFoundException {
-            return null;
-        }
-
-        @Override
-        public void setPin(Integer pinId, RestMcuPin pin) throws NotFoundException, UpdateException {
-        }
-
-        @Override
-        public Float getPinValue(Integer pinId) throws NotFoundException {
-            return null;
-        }
-
+    public static class OutputLightResource extends RestMcuEmptyPinResource {
         @Override
         public void setPinValue(Integer pinId, Float value) throws NotFoundException, UpdateException {
             if (pinId == 3) {
                 outputValue = value;
+                latch.countDown();
             }
         }
     }
 
     @ClassRule
-    public static RestServerRule2 restMcuPin = new RestServerRule2(5879, OutputLightResource.class);
+    public static RestServerRule restMcuPin = new RestServerRule(5879, OutputLightResource.class);
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
+        // inpoint
         InPoint inPoint = new InPoint();
         inPoint.setType(InPointType.PIR);
         inPoint.setName("my pir1");
-        inPoint.setUrl("restmcu://localhost:5879/pin/2");
-        hcs.getInPointResource().createInPoint(inPoint);
+        inPoint.setUrl("restmcu://127.0.0.1:5879/pin/2");
+        Long inPointId = hcs.getInPointResource().createInPoint(inPoint);
 
+        // outpoint
         OutPoint outPoint = new OutPoint();
         outPoint.setName("my light1");
         outPoint.setType(OutPointType.LIGHT);
-        outPoint.setUrl("restmcu://localhost:5879/pin/3");
-        hcs.getOutPointResource().createOutPoint(outPoint);
+        outPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
+        Long outPointId = hcs.getOutPointResource().createOutPoint(outPoint);
+
+        // rule
+        EventRule rule = new EventRule();
+        rule.setName("my first rule");
+        Condition condition = new Condition();
+        condition.setPointId(inPointId);
+        condition.setValue(1);
+        rule.getConditions().add(condition);
+        Consequence consequence = new Consequence();
+        consequence.setOutPointId(outPointId);
+        consequence.setValue(1);
+        rule.getConsequences().add(consequence);
+        hcs.getRuleResource().createRule(rule);
 
         RestMcuPinNotification pinNotification = new RestMcuPinNotification();
         pinNotification.setPinId(2);
         pinNotification.setOldValue(0);
         pinNotification.setValue(1);
+        pinNotification.setSource("127.0.0.1:5879");
         pinNotification.setNotify(new RestMcuPinNotify(RestMcuPinNotifyCondition.sup_or_equal, 1));
         hcs.getNotifyResource().pinNotification(pinNotification);
 
-        Thread.sleep(10000);
+        latch.await(10, TimeUnit.SECONDS);
 
         assertEquals((Float) 1f, outputValue);
     }
-
 }

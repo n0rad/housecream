@@ -10,7 +10,7 @@ import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 public interface OutPointResource {
 
     @PUT
-    OutPoint createOutPoint(@Valid OutPoint outPoint);
+    Long createOutPoint(@Valid OutPoint outPoint);
 
     @DELETE
     void deleteAllOutPoints();

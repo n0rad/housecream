@@ -1,11 +1,28 @@
 package net.awired.housecream.server.common.domain;
 
-/**
- * Status of a point
- */
 public class Status {
 
+    private long pointId;
     private float value;
-    private float previousValue;
+
+    public Status(float value) {
+        this.value = value;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
+    }
+
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
+    }
 
 }

@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
-import net.awired.housecream.server.common.domain.inpoint.InPointType;
 
 /**
  * A capture or command point (temperature, switch, ...)
@@ -28,9 +27,8 @@ public abstract class Point extends IdEntityImpl<Long> {
     //    private String description = "Eclairage principal de la piece";
 
     @NotNull
-    private String url; // = "hcc:http://192.168.42.4/pin/4";
-
-    //    private PointDirection direction;
+    @Column(unique = true)
+    private String url;
 
     //    private Device device;
 
@@ -40,8 +38,15 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     ////////////////////
 
-    public InPointType getPointComponentType() {
-        return null; // hcc, x10, xmpp, mail, http, ...
+    public String getUrlPrefix() {
+        if (url == null) {
+            return null;
+        }
+        int indexOf = url.indexOf(':');
+        if (indexOf == -1) {
+            return null;
+        }
+        return url.substring(0, indexOf);
     }
 
     @Override

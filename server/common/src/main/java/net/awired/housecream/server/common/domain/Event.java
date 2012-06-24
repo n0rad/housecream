@@ -4,14 +4,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Event {
-    private int pointId;
+    private long pointId;
     private float value;
 
-    public void setPointId(int pointId) {
+    public void setPointId(long pointId) {
         this.pointId = pointId;
     }
 
-    public int getPointId() {
+    public long getPointId() {
         return pointId;
     }
 
