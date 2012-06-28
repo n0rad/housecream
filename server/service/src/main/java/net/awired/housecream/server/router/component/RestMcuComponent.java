@@ -5,11 +5,17 @@ import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.ajsl.web.resource.mapper.AjslResponseExceptionMapper;
 import net.awired.housecream.server.common.domain.Point;
+import net.awired.housecream.server.common.domain.outPoint.OutPoint;
+import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.router.ComponentType;
+import net.awired.housecream.server.router.OutDynamicRouter;
 import net.awired.restmcu.api.domain.board.RestMcuBoard;
 import net.awired.restmcu.api.resource.client.RestMcuBoardResource;
 import net.awired.restmcu.api.resource.client.RestMcuPinResource;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Message;
+import org.apache.camel.component.cxf.common.message.CxfConstants;
+import org.apache.camel.impl.DefaultMessage;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.JSONProvider;
@@ -84,6 +90,25 @@ public class RestMcuComponent implements EndPointComponent {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Message buildOutputMessage(ConsequenceAction action, OutPoint outpoint) {
+        DefaultMessage message = new DefaultMessage();
+        message.setHeader(CxfConstants.OPERATION_NAME, "setPinValue");
+        message.setHeader(CxfConstants.CAMEL_CXF_RS_USING_HTTP_API, Boolean.FALSE);
+
+        //        int indexOf = outpoint.getUrl().indexOf("://");
+        //        "http" + outpoint.getUrl().substring(indexOf)
+        String endUrl = "?resourceClasses=net.awired.housecream.server.service.web.Toto42&loggingFeatureEnabled=true";
+        //        url = "cxfrs://http://localhost:5879/?resourceClasses=net.awired.housecream.server.core.service.web.Toto42&loggingFeatureEnabled=true";
+
+        int lastPos = outpoint.getUrl().lastIndexOf('/');
+        Integer pinId = Integer.valueOf(outpoint.getUrl().substring(lastPos + 1));
+
+        message.setHeader(OutDynamicRouter.OUT_URL, "cxfrs://" + getBoardUrl(outpoint) + endUrl);
+        message.setBody(new Object[] { pinId, action.getValue() });
+        return message;
     }
 
 }

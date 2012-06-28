@@ -20,7 +20,7 @@ public class RuleBuilder {
 
     public static final String RULE_PACKAGE = "net.awired.housecream.server.service.rule";
 
-    private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.Event" };
+    private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.*" };
 
     //package net.awired.housecream.server.core.engine
     //
@@ -61,6 +61,7 @@ public class RuleBuilder {
         builder.append("\nrule \"");
         builder.append(rule.getName());
         builder.append("\"\n    when\n");
+        builder.append("$a : Actions( )\n");
         for (Condition condition : rule.getConditions()) {
             builder.append("Event(pointId == ");
             builder.append(condition.getPointId());
@@ -72,8 +73,11 @@ public class RuleBuilder {
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("System.out.println(\"consequence : " + consequence.getOutPointId()
-                    + " will be at state : " + consequence.getValue() + "\");");
+            builder.append("$a.add(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
+                    + consequence.getValue() + "));");
+
+            //            builder.append("System.out.println(\"consequence : " + consequence.getOutPointId()
+            //                    + " will be at state : " + consequence.getValue() + "\");");
             builder.append('\n');
         }
         //consequences

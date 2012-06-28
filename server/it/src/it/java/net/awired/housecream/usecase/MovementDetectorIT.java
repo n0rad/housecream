@@ -16,7 +16,6 @@ import net.awired.housecream.server.it.HcsTestRule;
 import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
-import net.awired.housecream.usecase.InPointCreationIT.SwitchResource;
 import net.awired.restmcu.api.domain.board.RestMcuBoard;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
@@ -33,7 +32,7 @@ public class MovementDetectorIT {
 
     public static CountDownLatch latch = new CountDownLatch(1);
 
-    public static Float outputValue;
+    public static Float outputValue = 0f;
 
     private static RestMcuBoard board;
 
@@ -43,6 +42,12 @@ public class MovementDetectorIT {
     }
 
     public static class OutputLightResource extends RestMcuEmptyPinResource {
+
+        @Override
+        public Float getPinValue(Integer pinId) throws NotFoundException {
+            return outputValue;
+        }
+
         @Override
         public void setPinValue(Integer pinId, Float value) throws NotFoundException, UpdateException {
             if (pinId == 3) {
@@ -65,7 +70,7 @@ public class MovementDetectorIT {
     }
 
     @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule(5879, SwitchResource.class,
+    public static RestServerRule restMcuPin = new RestServerRule(5879, OutputLightResource.class,
             SwitchBoardResource.class);
 
     @Test
@@ -76,6 +81,7 @@ public class MovementDetectorIT {
         inPoint.setName("my pir1");
         inPoint.setUrl("restmcu://127.0.0.1:5879/pin/2");
         Long inPointId = hcs.getInPointResource().createInPoint(inPoint);
+        inPoint.setId(inPointId);
 
         // outpoint
         OutPoint outPoint = new OutPoint();
@@ -107,6 +113,7 @@ public class MovementDetectorIT {
 
         latch.await(10, TimeUnit.SECONDS);
 
+        assertEquals((Float) 1f, hcs.getInPointResource().getPointValue(inPoint.getId()));
         assertEquals((Float) 1f, outputValue);
     }
 }

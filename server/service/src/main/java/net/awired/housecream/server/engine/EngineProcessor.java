@@ -1,5 +1,6 @@
 package net.awired.housecream.server.engine;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.inject.Inject;
 import net.awired.housecream.server.common.domain.Point;
@@ -48,6 +49,12 @@ public class EngineProcessor implements Processor {
             FactHandle insert = ksession.insert(fact);
         }
         ksession.insert(body);
+        Actions actions = new Actions();
+        ArrayList<String> camelUrls = new ArrayList<String>();
+
+        exchange.getIn().setBody(actions);
+        exchange.getIn().setHeader("outputActions", camelUrls);
+        FactHandle insert = ksession.insert(actions);
 
         ksession.fireAllRules();
 

@@ -17,13 +17,13 @@
 		<version>1.13</version>
 	</parent>
 
-    <licenses>
-        <license>
-            <name>AGPL V3</name>
-            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>AGPL V3</name>
+			<url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<modules>
 		<module>server</module>
@@ -41,14 +41,14 @@
 		<ajsl.version>0.5-SNAPSHOT</ajsl.version>
 		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
 
-        <hibernate.version>4.1.4.Final</hibernate.version>
+		<hibernate.version>4.1.4.Final</hibernate.version>
 		<jetty.version>6.1.26</jetty.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
-		<camel.version>2.9.2</camel.version>
+		<camel.version>2.9.3-SNAPSHOT</camel.version>
 		<cxf.version>2.5.2</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
-		
-        <!-- TEST -->		
+
+		<!-- TEST -->
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
 		<jacoco.version>0.5.5.201112152213</jacoco.version>
@@ -90,23 +90,23 @@
 				<type>war</type>
 			</dependency>
 			<dependency>
-                <groupId>net.awired.housecream.server</groupId>
-                <artifactId>housecream-server-webapi</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-webapi</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>net.awired.housecream</groupId>
-                <artifactId>housecream-web</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
+			<dependency>
+				<groupId>net.awired.housecream</groupId>
+				<artifactId>housecream-web</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 
 	<build>
-	   <defaultGoal>clean verify</defaultGoal>
+		<defaultGoal>clean verify</defaultGoal>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -144,6 +144,19 @@
 		</pluginManagement>
 	</build>
 
+
+	<repositories>
+		<repository>
+			<id>apache-snapshot</id>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<url>https://repository.apache.org/content/groups/snapshots/</url>
+		</repository>
+	</repositories>
 
 	<profiles>
 		<profile>
