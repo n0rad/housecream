@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.housecream.server.common.domain.Point;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,8 +19,8 @@ public class StateHolder {
         return states.get(pointId);
     }
 
-    public void setState(Point point, Float currentValue) {
-        states.put(point.getId(), currentValue);
+    public void setState(long pointId, Float currentValue) {
+        states.put(pointId, currentValue);
     }
 
     public List<Object> getFacts() {

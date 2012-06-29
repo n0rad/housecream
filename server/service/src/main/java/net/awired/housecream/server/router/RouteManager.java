@@ -41,7 +41,7 @@ public class RouteManager extends RouteBuilder {
         String routerUrl = houseCreamContext.getConnectorContextPath() + "/router";
         component.updatePointNotification(point, routerUrl);
         Float currentValue = component.getCurrentValue(point, camelContext);
-        stateHolder.setState(point, currentValue);
+        stateHolder.setState(point.getId(), currentValue);
     }
 
     @Override
@@ -54,7 +54,12 @@ public class RouteManager extends RouteBuilder {
         from("seda:eventHolder").process(engineProcessor).split().method(splitter, "split").parallelProcessing()
                 .to("direct:output");
 
-        from("direct:output").dynamicRouter().method(dynamicRouter, "route");
+        from("direct:output").dynamicRouter().method(dynamicRouter, "route").process(new Processor() {
+            @Override
+            public void process(Exchange arg0) throws Exception {
+                System.out.println(arg0);
+            }
+        });
 
         //        .to("log:org.apache.camel.example?level=INFO&showProperties=true&showHeaders=true")
         //                .to("xmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");

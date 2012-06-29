@@ -81,7 +81,6 @@ public class MovementDetectorIT {
         inPoint.setName("my pir1");
         inPoint.setUrl("restmcu://127.0.0.1:5879/pin/2");
         Long inPointId = hcs.getInPointResource().createInPoint(inPoint);
-        inPoint.setId(inPointId);
 
         // outpoint
         OutPoint outPoint = new OutPoint();
@@ -113,7 +112,9 @@ public class MovementDetectorIT {
 
         latch.await(10, TimeUnit.SECONDS);
 
-        assertEquals((Float) 1f, hcs.getInPointResource().getPointValue(inPoint.getId()));
+        assertEquals((Float) 1f, hcs.getInPointResource().getPointValue(inPointId));
+        assertEquals((Float) 1f, hcs.getInPointResource().getPointValue(outPointId));
         assertEquals((Float) 1f, outputValue);
+
     }
 }

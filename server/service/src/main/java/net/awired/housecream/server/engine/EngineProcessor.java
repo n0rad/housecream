@@ -48,15 +48,19 @@ public class EngineProcessor implements Processor {
             log.debug("Inserting fact: " + fact);
             FactHandle insert = ksession.insert(fact);
         }
-        ksession.insert(body);
+        FactHandle eventFact = ksession.insert(body);
         Actions actions = new Actions();
         ArrayList<String> camelUrls = new ArrayList<String>();
 
         exchange.getIn().setBody(actions);
         exchange.getIn().setHeader("outputActions", camelUrls);
-        FactHandle insert = ksession.insert(actions);
+        FactHandle outputFact = ksession.insert(actions);
 
         ksession.fireAllRules();
+
+        ksession.retract(outputFact);
+        ksession.retract(eventFact);
+        stateHolder.setState(body.getPointId(), body.getValue());
 
         logger.close();
 
