@@ -1,32 +1,33 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:camel="http://camel.apache.org/schema/spring"
-       xmlns:cxf="http://camel.apache.org/schema/cxf"
-       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-       xsi:schemaLocation="
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
-       
-       default-autowire="byName">
+
+	default-autowire="byName">
 
 
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
-     
-	<jaxrs:server id="restRouter" address="/" staticSubresourceResolution="true">
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<bean
+		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
+
+	<jaxrs:server id="restRouter" address="/"
+		staticSubresourceResolution="true">
 		<jaxrs:inInterceptors>
-			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
 		</jaxrs:inInterceptors>
 		<jaxrs:outInterceptors>
-			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 		</jaxrs:outInterceptors>
 		<jaxrs:serviceBeans>
-			<ref bean="restMcuNotifyResourceEndPoint"/>
-            <ref bean="inPointService" />
-            <ref bean="outPointService" />
-            <ref bean="ruleService" />
+			<ref bean="restMcuNotifyResourceEndPoint" />
+			<ref bean="inPointService" />
+			<ref bean="outPointService" />
+			<ref bean="ruleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />
@@ -35,42 +36,53 @@
 		<jaxrs:providers>
 			<ref bean="jaxbProvider" />
 			<ref bean="jsonProvider" />
-			<ref bean="ajslExceptionMapper"/>
-			<ref bean="ajslRuntimeExceptionMapper"/>
-			<ref bean="ajslViolationExceptionMapper"/>
+			<ref bean="ajslExceptionMapper" />
+			<ref bean="ajslRuntimeExceptionMapper" />
+			<ref bean="ajslViolationExceptionMapper" />
+			<ref bean="ajslResponseExceptionMapper" />
 		</jaxrs:providers>
 	</jaxrs:server>
-	
-	
-	
-	<bean id="ajslExceptionMapper" class="net.awired.ajsl.web.resource.mapper.AjslExceptionMapper"/>
-	<bean id="ajslRuntimeExceptionMapper" class="net.awired.ajsl.web.resource.mapper.AjslRuntimeExceptionMapper"/>
-	<bean id="ajslViolationExceptionMapper" class="net.awired.ajsl.web.resource.mapper.AjslViolationExceptionMapper"/>
-	
+
+
+
+	<bean id="ajslExceptionMapper" class="net.awired.ajsl.web.resource.mapper.AjslExceptionMapper" />
+	<bean id="ajslRuntimeExceptionMapper"
+		class="net.awired.ajsl.web.resource.mapper.AjslRuntimeExceptionMapper" />
+	<bean id="ajslViolationExceptionMapper"
+		class="net.awired.ajsl.web.resource.mapper.AjslViolationExceptionMapper" />
+	<bean id="ajslResponseExceptionMapper"
+		class="net.awired.ajsl.web.resource.mapper.AjslResponseExceptionMapper">
+		<constructor-arg>
+			<ref bean="jsonProvider" />
+		</constructor-arg>
+	</bean>
+
 	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
 	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.JSONProvider">
-		<property name="supportUnwrapped" value="true"/>
-		<property name="dropRootElement" value="true"/>
+		<property name="supportUnwrapped" value="true" />
+		<property name="dropRootElement" value="true" />
 	</bean>
 
 
-<!--         <cxf:rsClient id="rsClient" address="http://localhost:5879/"
-                serviceClass="net.awired.housecream.server.core.service.web.Toto42" loggingFeatureEnabled="true" />
- -->
- 
- 	<!-- Defined the server endpoint to create the cxf-rs consumer --> 
-  	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router" serviceClass="net.awired.housecream.server.service.web.RestMcuNotifyResourceEndPoint">
-  		<cxf:providers>
-  			<ref bean="jaxbProvider" />
+	<!-- <cxf:rsClient id="rsClient" address="http://localhost:5879/" serviceClass="net.awired.housecream.server.core.service.web.Toto42" 
+		loggingFeatureEnabled="true" /> -->
+
+	<!-- Defined the server endpoint to create the cxf-rs consumer -->
+	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router"
+		serviceClass="net.awired.housecream.server.service.web.RestMcuNotifyResourceEndPoint">
+		<cxf:providers>
+			<ref bean="jaxbProvider" />
 			<ref bean="jsonProvider" />
-			<ref bean="ajslExceptionMapper"/>
-			<ref bean="ajslRuntimeExceptionMapper"/>
-  		</cxf:providers>
-  	</cxf:rsServer>
+			<ref bean="ajslExceptionMapper" />
+			<ref bean="ajslRuntimeExceptionMapper" />
+			<ref bean="ajslViolationExceptionMapper" />
+			<ref bean="ajslResponseExceptionMapper" />
+		</cxf:providers>
+	</cxf:rsServer>
 
 
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
-		<routeBuilder ref="routeManager"/>
+		<routeBuilder ref="routeManager" />
 	</camelContext>
 
 </beans>

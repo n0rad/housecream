@@ -1,5 +1,7 @@
 package net.awired.housecream.server.it;
 
+import java.util.Arrays;
+import net.awired.ajsl.web.resource.mapper.AjslExceptionMapper;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.provider.JSONProvider;
@@ -23,7 +25,7 @@ public class RestServerRule extends ExternalResource {
         jsonProvider.setSupportUnwrapped(true);
         jsonProvider.setDropRootElement(true);
 
-        factory.setProvider(jsonProvider);
+        factory.setProviders(Arrays.asList(jsonProvider, new AjslExceptionMapper()));
 
         factory.setResourceClasses(resources);
         factory.setAddress("http://localhost:" + port + "/");

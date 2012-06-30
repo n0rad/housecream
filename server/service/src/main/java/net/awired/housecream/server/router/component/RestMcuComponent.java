@@ -106,6 +106,7 @@ public class RestMcuComponent implements EndPointComponent {
         int lastPos = outpoint.getUrl().lastIndexOf('/');
         Integer pinId = Integer.valueOf(outpoint.getUrl().substring(lastPos + 1));
 
+        message.setHeader("ACTION", action);
         message.setHeader(OutDynamicRouter.OUT_URL, "cxfrs://" + getBoardUrl(outpoint) + endUrl);
         message.setBody(new Object[] { pinId, action.getValue() });
         return message;

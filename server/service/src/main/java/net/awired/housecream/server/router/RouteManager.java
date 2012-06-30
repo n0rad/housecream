@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import net.awired.housecream.server.HouseCreamContext;
 import net.awired.housecream.server.common.domain.Point;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
+import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.router.component.EndPointComponent;
@@ -19,6 +20,7 @@ public class RouteManager extends RouteBuilder {
 
     private static final String EVENT_DIRECT_HOLDER = "direct:eventHolder";
 
+    @Inject
     private CamelContext camelContext;
 
     @Inject
@@ -54,10 +56,12 @@ public class RouteManager extends RouteBuilder {
         from("seda:eventHolder").process(engineProcessor).split().method(splitter, "split").parallelProcessing()
                 .to("direct:output");
 
-        from("direct:output").dynamicRouter().method(dynamicRouter, "route").process(new Processor() {
+        from("direct:output").inOut().dynamicRouter().method(dynamicRouter, "route").process(new Processor() {
             @Override
             public void process(Exchange arg0) throws Exception {
-                System.out.println(arg0);
+                ConsequenceAction action = arg0.getUnitOfWork().getOriginalInMessage()
+                        .getHeader("ACTION", ConsequenceAction.class);
+                stateHolder.setState(action.getPointId(), action.getValue());
             }
         });
 
