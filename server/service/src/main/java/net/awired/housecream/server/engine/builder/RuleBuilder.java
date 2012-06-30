@@ -2,6 +2,7 @@ package net.awired.housecream.server.engine.builder;
 
 import java.util.Collection;
 import net.awired.housecream.server.common.domain.rule.Condition;
+import net.awired.housecream.server.common.domain.rule.ConditionType;
 import net.awired.housecream.server.common.domain.rule.Consequence;
 import net.awired.housecream.server.common.domain.rule.EventRule;
 import org.drools.builder.KnowledgeBuilder;
@@ -63,7 +64,14 @@ public class RuleBuilder {
         builder.append("\"\n    when\n");
         builder.append("$a : Actions( )\n");
         for (Condition condition : rule.getConditions()) {
-            builder.append("Event(pointId == ");
+            if (condition.getType() == ConditionType.event) {
+                builder.append("Event");
+            } else if (condition.getType() == ConditionType.state) {
+                builder.append("PointStat");
+            } else {
+                throw new RuntimeException("unknown condition type " + condition.getType());
+            }
+            builder.append("(pointId == ");
             builder.append(condition.getPointId());
             builder.append(", value == ");
             builder.append(condition.getValue());

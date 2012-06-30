@@ -1,6 +1,7 @@
 package net.awired.housecream.server.common.domain.rule;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,8 +14,19 @@ public class Condition extends IdEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    private Long pointId;
+    private long pointId;
     private float value;
+    @NotNull
+    private ConditionType type;
+
+    public Condition() {
+    }
+
+    public Condition(long pointId, float value, ConditionType type) {
+        this.pointId = pointId;
+        this.value = value;
+        this.type = type;
+    }
 
     public float getValue() {
         return value;
@@ -24,12 +36,20 @@ public class Condition extends IdEntityImpl<Long> {
         this.value = value;
     }
 
-    public Long getPointId() {
+    public long getPointId() {
         return pointId;
     }
 
-    public void setPointId(Long pointId) {
+    public void setPointId(long pointId) {
         this.pointId = pointId;
+    }
+
+    public ConditionType getType() {
+        return type;
+    }
+
+    public void setType(ConditionType type) {
+        this.type = type;
     }
 
 }

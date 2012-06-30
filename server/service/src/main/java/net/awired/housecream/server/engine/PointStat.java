@@ -4,8 +4,8 @@ import com.google.common.base.Objects;
 
 public class PointStat {
 
-    long pointId;
-    float value;
+    private long pointId;
+    private float value;
 
     @Override
     public String toString() {
