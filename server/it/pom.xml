@@ -15,7 +15,7 @@
 
 	<properties>
 		<jacoco.version>0.5.5.201112152213</jacoco.version>
-		<jacoco.file.path>${project.build.directory}jacoco.data</jacoco.file.path>
+		<jacoco.file.path>${project.build.directory}/jacoco.data</jacoco.file.path>
 		<jacoco.args>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${jacoco.file.path}</jacoco.args>
 
 		<cargo.jvm.args>-XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError
