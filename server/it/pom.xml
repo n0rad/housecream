@@ -246,15 +246,6 @@
 									<cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
 								</properties>
 							</configuration>
-							<container>
-								<containerId>tomcat6x</containerId>
-								<dependencies>
-									<dependency>
-										<groupId>oracle</groupId>
-										<artifactId>oraclepki</artifactId>
-									</dependency>
-								</dependencies>
-							</container>
 						</configuration>
 					</plugin>
 				</plugins>
