@@ -14,6 +14,10 @@
 	</parent>
 
 	<properties>
+		<jacoco.version>0.5.5.201112152213</jacoco.version>
+		<jacoco.file.path>${project.build.directory}jacoco.data</jacoco.file.path>
+		<jacoco.args>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${jacoco.file.path}</jacoco.args>
+
 		<cargo.jvm.args>-XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError
 			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
 	</properties>
@@ -210,6 +214,48 @@
 								</configuration>
 							</execution>
 						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>coverage</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jacoco</groupId>
+					<artifactId>org.jacoco.agent</artifactId>
+					<version>${jacoco.version}</version>
+					<classifier>runtime</classifier>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<argLine>${jacoco.args}</argLine>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<configuration>
+							<configuration>
+								<properties>
+									<cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
+								</properties>
+							</configuration>
+							<container>
+								<containerId>tomcat6x</containerId>
+								<dependencies>
+									<dependency>
+										<groupId>oracle</groupId>
+										<artifactId>oraclepki</artifactId>
+									</dependency>
+								</dependencies>
+							</container>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
