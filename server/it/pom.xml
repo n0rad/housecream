@@ -86,7 +86,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.11</version>
 				<configuration>
 					<systemProperties>
 						<property>
@@ -133,7 +132,7 @@
 							<cargo.servlet.port>${hcs.port}</cargo.servlet.port>
 							<cargo.tomcat.ajp.port>${ajp.port}</cargo.tomcat.ajp.port>
 							<cargo.logging>low</cargo.logging>
-							<cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
+							<cargo.jvmargs>${cargo.jvm.args}</cargo.jvmargs>
 						</properties>
 						<deployables>
 							<deployable>

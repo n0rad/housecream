@@ -172,6 +172,7 @@
 			<id>coverage</id>
 			<properties>
 				<jacoco.args>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${jacoco.file.path}"</jacoco.args>
+                <cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -186,19 +187,8 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
-<!-- 						<configuration>
+ 						<configuration>
 							<argLine>${jacoco.args}</argLine>
-						</configuration>
- -->					</plugin>
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<configuration>
-							<configuration>
-								<properties>
-									<cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
-								</properties>
-							</configuration>
 						</configuration>
 					</plugin>
 				</plugins>
