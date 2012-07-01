@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-core</artifactId>
-	<name>HouseCream Server - Core</name>	
+	<name>HouseCream Server - Core</name>
 
 	<parent>
 		<groupId>net.awired.housecream.server</groupId>
@@ -24,6 +24,7 @@
 			<artifactId>aclm</artifactId>
 			<version>0.2</version>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
@@ -54,7 +55,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>0.9.26</version>
+			<version>${logback.version}</version>
 		</dependency>
 
 		<dependency>

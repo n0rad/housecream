@@ -8,7 +8,6 @@ import java.util.logging.Handler;
 import java.util.logging.LogManager;
 import javax.servlet.ServletContextEvent;
 import net.awired.housecream.server.core.application.common.ApplicationHelper;
-import org.fusesource.jansi.AnsiConsole;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.web.context.ContextLoaderListener;
 import com.google.common.base.Charsets;
@@ -26,8 +25,6 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-
-        AnsiConsole.systemInstall();
 
         java.util.logging.Logger rootLogger = LogManager.getLogManager().getLogger("");
         Handler[] handlers = rootLogger.getHandlers();

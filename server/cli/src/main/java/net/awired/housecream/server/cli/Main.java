@@ -10,13 +10,9 @@ import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.google.common.io.Files;
 
 public class Main {
-    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
-
     private final ArgumentManager argManager = new ArgumentManager(this);
 
     public static void main(String[] args) {
@@ -50,6 +46,8 @@ public class Main {
             cleanDB();
             System.exit(0);
         }
+
+        AnsiConsole.systemInstall();
 
         runServer();
     }

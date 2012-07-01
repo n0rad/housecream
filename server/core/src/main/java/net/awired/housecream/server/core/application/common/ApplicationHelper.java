@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.CharBuffer;
 import java.util.Enumeration;
 import java.util.jar.Manifest;
 import javax.naming.Context;
@@ -15,7 +16,6 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
-import com.google.common.io.CharStreams;
 
 public class ApplicationHelper {
 
@@ -121,13 +121,14 @@ public class ApplicationHelper {
     public static void changeLogLvl() {
         try {
             InputStream logConfStream = ApplicationHelper.class.getResourceAsStream("/housecream-logback.xml");
-            String logConfString = CharStreams.toString(new InputStreamReader(logConfStream));
+            StringBuilder to = new StringBuilder();
+            copy(new InputStreamReader(logConfStream), to);
             LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
             try {
                 JoranConfigurator configurator = new JoranConfigurator();
                 configurator.setContext(lc);
                 lc.reset();
-                configurator.doConfigure(new ByteArrayInputStream(logConfString.getBytes()));
+                configurator.doConfigure(new ByteArrayInputStream(to.toString().getBytes()));
             } catch (JoranException je) {
                 je.printStackTrace();
             }
@@ -139,5 +140,20 @@ public class ApplicationHelper {
         // don't change root lvl as is may put hibernate or jetty in debug
         //        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         //        root.setLevel(loglvl);
+    }
+
+    public static long copy(Readable from, Appendable to) throws IOException {
+        CharBuffer buf = CharBuffer.allocate(0x800);
+        long total = 0;
+        while (true) {
+            int r = from.read(buf);
+            if (r == -1) {
+                break;
+            }
+            buf.flip();
+            to.append(buf, 0, r);
+            total += r;
+        }
+        return total;
     }
 }
