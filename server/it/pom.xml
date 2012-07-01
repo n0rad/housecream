@@ -182,8 +182,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-                <hcs.port>8080</hcs.port>
-                <ajp.port>8009</ajp.port>
+				<hcs.port>8080</hcs.port>
+				<ajp.port>8009</ajp.port>
 			</properties>
 		</profile>
 
@@ -194,6 +194,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>1.7</version>
 						<executions>
 							<execution>
 								<id>reserve-ports</id>
@@ -203,8 +204,8 @@
 								</goals>
 								<configuration>
 									<portNames>
-                                        <portName>hcs.port</portName>
-                                        <portName>ajp.port</portName>
+										<portName>hcs.port</portName>
+										<portName>ajp.port</portName>
 									</portNames>
 								</configuration>
 							</execution>
@@ -214,7 +215,7 @@
 			</build>
 		</profile>
 
-	</profiles>                                        <portName>hcs.port</portName>
-	
+	</profiles>
+
 </project>
 
