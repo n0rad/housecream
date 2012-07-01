@@ -96,7 +96,7 @@
 				<configuration>
 					<systemProperties>
 						<property>
-							<name>hcs.it.port</name>
+							<name>hcs.port</name>
 							<value>${hcs.port}</value>
 						</property>
 					</systemProperties>
