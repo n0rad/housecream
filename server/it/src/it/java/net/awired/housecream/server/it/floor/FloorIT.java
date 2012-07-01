@@ -4,8 +4,10 @@ import net.awired.housecream.server.common.domain.zone.Floor;
 import net.awired.housecream.server.common.resource.FloorResource;
 import net.awired.housecream.server.it.HcsItServer;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class FloorIT {
 
     @Test

@@ -25,6 +25,7 @@ import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
 import net.awired.restmcu.api.resource.test.NotifBuilder;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -106,6 +107,7 @@ public class MovementDetectorIT {
     }
 
     @Test
+    @Ignore
     public void should_toggle_light_state() throws Exception {
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1")
