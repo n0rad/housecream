@@ -13,8 +13,13 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<dependencies>
+	<properties>
+		<cargo.jvm.args>-XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError
+			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
+	</properties>
 
+
+	<dependencies>
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-common</artifactId>
@@ -27,15 +32,15 @@
 
 
 		<dependency>
-		    <groupId>org.apache.cxf</groupId>
-		    <artifactId>cxf-rt-transports-http-jetty</artifactId>
-		    <version>${cxf.version}</version>
-		    <exclusions>
-		    	<exclusion>
-		    		<artifactId>spring-web</artifactId>
-		    		<groupId>org.springframework</groupId>
-		    	</exclusion>
-		    </exclusions>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>${cxf.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -54,29 +59,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-grizzly2</artifactId>
-			<version>1.13-b01</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.13-b01</version>
-		</dependency>
-
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty</artifactId>
-            <version>${jetty.version}</version>
-        </dependency> -->
-
-
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-webapi</artifactId>
@@ -115,7 +97,7 @@
 					<systemProperties>
 						<property>
 							<name>hcs.it.port</name>
-							<value>34567</value>
+							<value>${hcs.port}</value>
 						</property>
 					</systemProperties>
 				</configuration>
@@ -142,15 +124,21 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.1.4</version>
+				<version>1.2.2</version>
 				<configuration>
 					<container>
-						<containerId>jetty8x</containerId>
-						<type>embedded</type>
+						<containerId>tomcat7x</containerId>
+						<artifactInstaller>
+							<groupId>com.googlecode.t7mp</groupId>
+							<artifactId>tomcat</artifactId>
+							<version>7.0.27.A</version>
+						</artifactInstaller>
+						<systemProperties></systemProperties>
 					</container>
 					<configuration>
 						<properties>
-							<cargo.servlet.port>34567</cargo.servlet.port>
+							<cargo.servlet.port>${hcs.port}</cargo.servlet.port>
+							<cargo.tomcat.ajp.port>${ajp.port}</cargo.tomcat.ajp.port>
 							<cargo.logging>low</cargo.logging>
 							<cargo.jvmargs>${cargo.jvm.args}</cargo.jvmargs>
 						</properties>
@@ -186,5 +174,47 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+                <hcs.port>8080</hcs.port>
+                <ajp.port>8009</ajp.port>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>integration</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>reserve-ports</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>reserve-network-port</goal>
+								</goals>
+								<configuration>
+									<portNames>
+                                        <portName>hcs.port</portName>
+                                        <portName>ajp.port</portName>
+									</portNames>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>                                        <portName>hcs.port</portName>
+	
 </project>
 
