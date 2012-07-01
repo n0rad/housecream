@@ -33,7 +33,6 @@
 	</modules>
 
 	<properties>
-		<jacoco.file.path>${java.io.tmpdir}/jacoco-hc.data</jacoco.file.path>
 		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
 		<cargo.jvm.args>-XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError
 			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>

@@ -16,7 +16,7 @@
 	</parent>
 
 	<properties>
-		<jacoco.file.path>/tmp/hcsJacoco.out</jacoco.file.path>
+		<jacoco.file.path>/tmp/jacoco-hc.data</jacoco.file.path>
 	</properties>
 
 	<modules>
