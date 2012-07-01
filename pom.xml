@@ -33,9 +33,10 @@
 	</modules>
 
 	<properties>
+		<jacoco.file.path>${java.io.tmpdir}/jacoco-hc.data</jacoco.file.path>
 		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
-		<cargo.jvm.args>-XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError
-			-XX:HeapDumpPath=/tmp/</cargo.jvm.args>
+		<cargo.jvm.args>-XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError
+			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
 
 		<bootstrap.version>1.0</bootstrap.version>
 		<ajsl.version>0.5-SNAPSHOT</ajsl.version>
@@ -104,11 +105,20 @@
 		</dependencies>
 	</dependencyManagement>
 
-
 	<build>
 		<defaultGoal>clean verify</defaultGoal>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.codehaus.cargo</groupId>
+					<artifactId>cargo-maven2-plugin</artifactId>
+					<version>1.2.2</version>
+				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.11</version>
+                </plugin>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -160,7 +170,7 @@
 
 	<profiles>
 		<profile>
-			<id>itCoverage</id>
+			<id>coverage</id>
 			<properties>
 				<jacoco.args>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${jacoco.file.path}"</jacoco.args>
 			</properties>
@@ -168,7 +178,7 @@
 				<dependency>
 					<groupId>org.jacoco</groupId>
 					<artifactId>org.jacoco.agent</artifactId>
-					<version>0.5.5.201112152213</version>
+					<version>${jacoco.version}</version>
 					<classifier>runtime</classifier>
 				</dependency>
 			</dependencies>
@@ -177,7 +187,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>2.11</version>
 						<configuration>
 							<argLine>${jacoco.args}</argLine>
 						</configuration>
@@ -185,7 +194,6 @@
 					<plugin>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
-						<version>1.1.4</version>
 						<configuration>
 							<configuration>
 								<properties>
