@@ -8,7 +8,7 @@ public class HcsItServer {
     private static final String HCS_PORT_DEFAULT = "8080";
     private static final String HCS_PORT_PROPERTY_NAME = "hcs.port";
 
-    private static final String HCS_PATH_DEFAULT = "/hcs";
+    private static final String HCS_PATH_DEFAULT = "/hcs/ws";
     private static final String HCS_PATH_PROPERTY_NAME = "hcs.path";
 
     public static String getUrl() {
