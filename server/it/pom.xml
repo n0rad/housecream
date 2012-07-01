@@ -188,7 +188,7 @@
 		</profile>
 
 		<profile>
-			<id>integration</id>
+			<id>ci</id>
 			<build>
 				<plugins>
 					<plugin>
