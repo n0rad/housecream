@@ -1,5 +1,7 @@
 package net.awired.housecream.server.router.component;
 
+import java.util.Arrays;
+import java.util.List;
 import javax.ws.rs.core.MediaType;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
@@ -10,6 +12,7 @@ import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.router.ComponentType;
 import net.awired.housecream.server.router.OutDynamicRouter;
 import net.awired.restmcu.api.domain.board.RestMcuBoard;
+import net.awired.restmcu.api.domain.pin.RestMcuPin;
 import net.awired.restmcu.api.resource.client.RestMcuBoardResource;
 import net.awired.restmcu.api.resource.client.RestMcuPinResource;
 import org.apache.camel.CamelContext;
@@ -21,15 +24,17 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.JSONProvider;
 import com.google.common.collect.ImmutableList;
 
+//TODO shouldn't work with Point or any housecream objects
 public class RestMcuComponent implements EndPointComponent {
 
     @Override
     public void updatePointNotification(Point point, String routerUrl) {
         updateNotifyUrl(point, routerUrl);
         // TODO update notify conditions
+        // TOO update name
     }
 
-    public String getBoardUrl(Point point) {
+    private String getBoardUrl(Point point) {
         int indexOf = point.getUrl().indexOf("://");
         int indexOf2 = point.getUrl().indexOf("/", indexOf + 3);
         String host = point.getUrl().substring(ComponentType.RESTMCU.name().length() + 3, indexOf2);
@@ -41,17 +46,35 @@ public class RestMcuComponent implements EndPointComponent {
         return Integer.valueOf(point.getUrl().substring(indexOf + 1));
     }
 
-    private void updateNotifyUrl(Point point, String routerUrl) {
+    private void uodatePin(Point point) {
+        RestMcuPinResource pinResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuPinResource.class,
+                buildProviders());
+
+        RestMcuPin pin = new RestMcuPin();
+        try {
+            pinResource.setPin(getPinId(point), pin);
+        } catch (NotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (UpdateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    private List<Object> buildProviders() {
         JSONProvider jsonProvider = new JSONProvider();
         jsonProvider.setSupportUnwrapped(true);
         jsonProvider.setDropRootElement(true);
 
         AjslResponseExceptionMapper exceptionMapper = new AjslResponseExceptionMapper(jsonProvider);
-        ImmutableList<Object> providers = ImmutableList.of(exceptionMapper, jsonProvider);
+        return Arrays.asList(exceptionMapper, jsonProvider);
+    }
 
-        String boardUrl = getBoardUrl(point);
-        RestMcuBoardResource boardResource = JAXRSClientFactory.create(boardUrl, RestMcuBoardResource.class,
-                providers);
+    private void updateNotifyUrl(Point point, String routerUrl) {
+        RestMcuBoardResource boardResource = JAXRSClientFactory.create(getBoardUrl(point),
+                RestMcuBoardResource.class, buildProviders());
         WebClient.client(boardResource).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
 
         // can be done with camel but its much cleaner with rsclient
@@ -103,12 +126,9 @@ public class RestMcuComponent implements EndPointComponent {
         String endUrl = "?resourceClasses=net.awired.housecream.server.service.web.Toto42&loggingFeatureEnabled=true";
         //        url = "cxfrs://http://localhost:5879/?resourceClasses=net.awired.housecream.server.core.service.web.Toto42&loggingFeatureEnabled=true";
 
-        int lastPos = outpoint.getUrl().lastIndexOf('/');
-        Integer pinId = Integer.valueOf(outpoint.getUrl().substring(lastPos + 1));
-
         message.setHeader("ACTION", action);
         message.setHeader(OutDynamicRouter.OUT_URL, "cxfrs://" + getBoardUrl(outpoint) + endUrl);
-        message.setBody(new Object[] { pinId, action.getValue() });
+        message.setBody(new Object[] { getPinId(outpoint), action.getValue() });
         return message;
     }
 

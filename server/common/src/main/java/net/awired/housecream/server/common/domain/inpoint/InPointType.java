@@ -4,14 +4,14 @@ public enum InPointType {
 
     PUSHBUTTON, //
     DIMMER, //
-    TEMPERATURE, //
-    HUMIDITY, //
-    TILT, //
-    LEVEL, //
-    PIR, //
-    BAROMETRIC, //
-    SMOCK, //
-    LOCK, //
+    TEMPERATURE, // status
+    HUMIDITY, // status
+    TILT, // status
+    LEVEL, // status
+    PIR, // status
+    BAROMETRIC, // status
+    SMOCK, // status
+    LOCK, // status
     SOUND, //
     KEYPAD, // ???????????
     LIGHT, //

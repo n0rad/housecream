@@ -3,6 +3,7 @@ package net.awired.housecream.server.common.domain;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,6 +23,7 @@ public abstract class Point extends IdEntityImpl<Long> {
     //    private List<Coordinate> coverage;
 
     @NotNull
+    @Size(min = 1, max = 20)
     @Column(unique = true)
     private String name; // = "Interrupteur 42";
     //    private String description = "Eclairage principal de la piece";

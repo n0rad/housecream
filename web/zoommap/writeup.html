@@ -1,0 +1,181 @@
+<h2>A jQuery Plugin for Zoomable, Interactive Maps</h2>
+<div class="reference">
+	<p>See some Demos<p>
+	<p>Read the Documentation.</p>
+	<p>Download the Project Zip.</p>
+</div>
+<h2>What is it and why was it built?</h2>
+	<p>
+	A couple of weeks ago we launched a site about Marine Science in North Carolina with one of our design partners, Liaison Design group.  A key part of the project was an interactive map that allowed visitors to find important Marine Science resources in North Carolina.
+	</p>
+	<p>
+	Each location on the map would be represented by a bullet. Clicking the bullet would bring up more information on the location. Since the locations of the bullets tended to be highly clustered, zooming into select subregions was possible.
+	</p>
+	<p>
+	We wanted the experience to be engaging as possible but also easily updatable in the future.  We settled on jQuery as the interface technology to use as it made it simple to build, display and animate the map.  I did a longer writeup on the detailed mechanics of how this worked two weeks ago in one of our most popular posts.  Due to the great feedback we got on it, this is a follow-up with a revised version of the code as a jQuery plugin which should make it easier to integrate into other projects.
+	</p>
+<h2>Demos</h2>
+<p>This project is being used in production on a number of sites.  Below is a listing of a couple.  If you have used this in a project you would like to see listed, let me know.</p>
+<table>
+<tr>
+	<td><a href="http://ncmarinescience.com">NC Marine Science</a></td>
+	<td><a href="http://www.sici.org/about/members/">Sici.org</a></td>
+	<td><a href="http://www.raleigh4u.com/section/interactive-map">Raleigh Photonics</a></td>
+</tr>
+<tr>
+	<td><a href="http://ncmarinescience.com"><img src="ncmarine.jpg" alt="interactive map" /></a></td>
+	<td><a href="http://www.sici.org/about/members/"><img src="sici.jpg" alt="interactive map" /></a></td>
+	<td><a href="http://www.raleigh4u.com/section/interactive-map"><img src="photonics.jpg" alt="interactive map" /></a></td>
+</tr>
+<tr>
+	<td><a href="http://liaisondesigngroup.com/">Liaison Design</a></td>
+	<td><a href="http://www.shadowboxcreative.ca/">Shadowbox Creative</a></td>
+	<td><a href="http://liaisondesigngroup.com/">Liaison Design</a></td>
+</tr>
+</table>
+<h2>Documentation</h2>
+	<h4>Limitations</h4>
+	<p>This was originally developed for one project with very specific requirements. While I have taken the time to generalize that code into a plugin, I have not made it as generic as I would have liked and will do more in the future to improve it given enough interest. Here is a list of its current biggest limitations:</p>
+	<ul>
+		<li><strong>Data Required In Plugin Setup</strong> - Ideally all of the required data would be stored in the html pages that drive the bullets.  This would allow a CMS to more easily generate additional depth levels without needing to play with the javascript.  All that is required in the js now is an array of the sub-regions along with their dimensioning data.</li>
+		<li><strong>Data Accessibility Unaddressed</strong> - The plugin currently does nothing on its own to make content available to search engines and those with disabilities. This is left up to the developer to do, though it shouldn't be too challenging since the plugin requires all of the data to be expressed in html.</li>
+		<li><strong>API</strong> - Right now it is impossible to programatically interact with the map once it is launched. Eventually it will have a simple API to assist in navigation and other manipulations.</li>
+	</ul>
+	<p>Even with these limitations, this is ready for production and is being used on several sites as seen above in the demos.</p>
+	<h4>Instructions</h4>
+	<p>
+	There are four main components required to make the plugin run: the background images, links to pages that contain html data in the correct format, some CSS for style and finally the plugin call.  Below are instructions on each.
+	</p>
+	<h4>1. Background Images</h4>
+	<p>There are very limited requirements on the background images:<p>
+	<ul>
+		<li>They must all be the same size. Sub-region background maps grow to fill the entire map area</li>
+		<li>They should line up. Just prior to zooming, a sub-region map is placed over an area of the main map, if this doesn't line up properly, some of the zooms effect will be lost.</li>
+		<li>The main map should highlight the zoomable regions. The plugin does not otherwise make these obvious.  (Though the css could be edited to add a border or background image to the zoomable region.)</li>
+	</ul>
+	<h4>2. HTML Data</h4>
+	<p>The plugin assumes a certain structure for the html data it loads via AJAX. As long as the basic structure is kept, a developer is free to add any type of content styled however they would like.  Aside from the unavoidable requirements imposed by the animation, all style is isolated to CSS.</p>
+	<p>The HTML format contains information for the location and applied class of the bullets, a convention based link between the bullets and the pop-up content and the content itself.  The html returned should just be a listing of the bullets and popups in the following format:</p>
+	<pre>
+	&lt;a href="javascript:void(0)" id="[POPUP-ID]" class="bullet" rel="[XPOS]-[YPOS]">&nbsp;&lt;/a&gt;
+	&lt;div class="popup" id="[POPUP-ID]-box"&gt; 
+	&nbsp;&nbsp;[ POPUP CONTENT ]
+	&nbsp;&nbsp;&lt;a class="close" href="javascript:void(0)">Close&lt;/a&gt;
+	&lt;/div&gt; 
+	</pre>
+	<p>[POPUP-ID] should be unique for each bullet/popup.  The jQuery uses this along with the "-box" convention to open the correct popup when a bullet is clicked.</p>
+	<h4>3. CSS Style</h4>
+	<p>As much as possible, the plugin is designed to operate exclusively on the DOM, leaving styling up to CSS. A basic css file is included with the demo zip.  Here is some rough minimal css:</p>
+	<pre>
+	#map { position: relative; width: 700px; height: 470px; overflow: hidden; }
+	#returnlink { display: block; position: absolute; bottom: 0; right: 0; }
+
+	#map a.bullet { display: block; position: absolute; width: 10px; height: 10px; background: yellow; }
+	#map img.zoomable { }
+
+	#map div.popup{ display: none; position: absolute; width: 200px; height: 300px; }
+	#map div.popup a.close{ display: block; position: absolute; bottom: 0; right: 0; }
+	</pre>
+	<p>The code above will work just fine as a starting point.  Obviously a lot of embellishment can be added to make the map look as good as the one's Liaison designed in the examples.  Here are some things to note:</p>
+	<ul>
+		<li>The main '#map' container must be positioned absolute or relative.</li>
+		<li>Popups must have 'display: none' set to make sure they don't flicker when they are loaded.</li>
+		<li>Popups must be positioned using CSS.  The jQuery only shows/hides them.</li>
+	</ul>
+	<h4>4. jQuery Plugin Call</h4>
+	<p>The last piece that needs to be put in place is a call to the jQuery zoommap plugin that makes it all happen.  In the call, we must pass the in some settings as well as a data structure that sets up the map and its different zoom levels.  Here is a call for a simple two level map that contains all of the possible settings:</p>
+	<pre>
+	$('#map').zoommap({
+		<em>// Width and Height of the Map</em>
+		width: '500px',
+		height: '580px',
+			
+		<em>//Misc Settings</em>
+		blankImage: 'images/blank.gif',
+		zoomDuration: 1000,
+		bulletWidthOffset: '10px',
+		bulletHeightOffset: '10px',
+		
+		<em>//ids and classes</em>
+		zoomClass: 'zoomable',
+		popupSelector: 'div.popup',
+		popupCloseSelector: 'a.close',
+		
+		<em>//Return to Parent Map Link</em>
+		showReturnLink: true,
+		returnId: 'returnlink',
+		returnText: 'return to previous map',
+		
+		<em>//Initial map to be shown</em>
+		map: {
+			id: 'campus',
+			image: 'images/campus.jpg',
+			data: 'popups/campus.html',
+			maps: [
+			{
+				id: 'quads',
+				parent: 'campus',
+				image: 'images/quads.png',
+				data: 'popups/quads.html',
+				width: '200px',
+				height: '232px',
+				top: '18px',
+				left: '176px'
+			}
+			]
+		}
+	});
+	</pre>
+	<p>Here is a breakdown/description of each of the settings:</p>
+	<ul>
+		<li><strong>width/height</strong> - The width and height of the map container.</li>
+		<li><strong>blankImage</strong> - Path to an (transparent) image that will be used over the zoomable regions until their map is loaded.</li>
+		<li><strong>zoomDuration</strong> - Duration in milliseconds of the map zoom effect.</li>
+		<li><strong>bullet(Width/Height)Offset</strong> - Offsets that allow the coordinates of the bullets to be placed in the center of the target, rather than the corner.</li>
+		<li><strong>zoomClass</strong> - Class that should be applied to the zoomable region imgs.</li>
+		<li><strong>popupSelector</strong> - Selector the plugin should use to find the popups in the html</li>
+		<li><strong>showReturnLink</strong> - Whether a return link should be shown on child maps</li>
+		<li><strong>returnId</strong> - Id to use for the return link.</li>
+		<li><strong>returnText</strong> - Text to be placed in the return link.</li>
+		<li><strong>map</strong> - The top level map that should be shown.</li>
+	</ul>
+	<p>Additionally each map has the following properties and can infinately nest more maps:</p>
+	<ul>
+		<li><strong>id</strong> - Id that should be used for the zoomable region.</li>
+		<li><strong>image</strong> - Path to the image that should be used for the map. This image should be large enough to fill the entire map space.</li>
+		<li><strong>data</strong> - Path to the html data for the maps popups and bullets.</li>
+		<li><strong>width/height</strong> - Width and height of the zoomable region.</li>
+		<li><strong>top/left</strong> - Absolute position of the zoomable region</li>
+		<li><strong>maps</strong> - Children maps.</li>
+	</ul>
+	<p>Here is a minimal call that relies on the default settings:</p>
+	<pre>
+	$('#map').zoommap({
+		width: '500px',
+		height: '580px',
+		blankImage: 'images/blank.gif',		
+		map: {
+			<em>// Map structure</em>
+		}
+	});
+	</pre>
+	<p>And here are the default settings:</p>
+	<pre>
+	settings = $.extend({
+		zoomDuration: 1000,
+		zoomClass: 'zoomable',
+		popupSelector: 'div.popup',
+		popupCloseSelector: 'a.close',
+		bulletWidthOffset: '10px',
+		bulletHeightOffset: '10px',
+		showReturnLink: true,
+		returnId: 'returnlink',
+		returnText: 'Return to Previous Map'
+	}, settings);
+	</pre>
+<h2>Download the Project Zip</h2>
+<p>View the project Demo Here</p>
+<p>Download the project zip.</p>
+<h2>Questions/Comments?</h2>
+<p>This project will be revised in the future and is certainly open to suggestions.  If there are any suggestions or questions, please leave them in the comments.</p>
+

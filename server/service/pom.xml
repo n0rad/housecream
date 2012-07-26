@@ -105,6 +105,22 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.8</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-servlet</artifactId>
 			<version>${camel.version}</version>
@@ -114,11 +130,11 @@
 			<artifactId>camel-mail</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-xmpp</artifactId>
-            <version>${camel.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-xmpp</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
 
 		<!-- Rules -->
 		<dependency>
@@ -137,7 +153,5 @@
 			<version>1.4.2</version>
 		</dependency>
 
-
 	</dependencies>
 </project>
-

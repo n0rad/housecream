@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<error-page>
+		<error-code>404</error-code>
+		<location>/notFoundResource</location>
+	</error-page>
+	<servlet>
+		<servlet-name>ToIndex</servlet-name>
+		<servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ToIndex</servlet-name>
+		<url-pattern>/notFoundResource</url-pattern>
+	</servlet-mapping>
 </web-app>

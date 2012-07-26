@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Online Image Map Editor - Example ExtJS</title>
+<!--[if gte IE 6]>
+<script language="javascript" type="text/javascript" src="../excanvas.js"></script>
+<![endif]-->
+    <link rel="stylesheet" type="text/css" href="example_extjs_files/extjs/resources/css/ext-all.css" />
+    <link rel="stylesheet" href="example_extjs_files/css/imgmap.css" type="text/css">
+
+    <!-- GC -->
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="example_extjs_files/extjs/adapter/ext/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+
+    <script type="text/javascript" src="example_extjs_files/extjs/ext-all.js"></script>
+    
+	<script type="text/javascript" src="../imgmap.js"></script>
+    <script language="javascript" src="example_extjs_files/Ext.ux.ImageMap.js"></script>
+
+	<!-- Common Styles for the examples -->
+	<link rel="stylesheet" type="text/css" href="example_extjs_files/extjs/examples/shared/examples.css" />
+
+    <script language="javascript">
+	var imageMapWin;
+   	 Ext.onReady(function(){
+
+   
+    var button = Ext.get('show-btn');
+	var testMap = document.getElementById('testmap');
+	
+    button.on('click', function(){
+            imageMapWin = new Ext.Window({
+                layout: 'fit',
+                title: 'Image Map Editor',
+                id : 'image_map_editor',
+                closeAction: 'close',
+                width:600,
+                height:400,
+                items: {
+                    xtype: 'imagemappanel'
+                },
+                buttonAlign: 'center',
+                buttons : [
+                	{
+                		text: 'Save',
+                		handler: function(){
+                			imageMapWin.items.get(0).saveMap();
+                			imageMapWin.close();
+                		}
+                	},
+                	{
+                		text: 'Cancel',
+                		handler: function(){
+                			imageMapWin.items.get(0).cleanUp();
+                			imageMapWin.close();
+                		},
+                		scope: this
+                	}
+                ]
+            });
+		imageMapWin.show();
+		imageMapWin.items.get(0).loadImage(testMap);
+        
+    });
+    
+ });
+ </script>
+</head>
+<body>
+
+<p>This example shows how to use imgmap with ExtJs library. Many thanks to Colin Bell. View his
+<a href="http://www.cbell.info/ext/examples/imagemap/index.html"> 
+original implementation.</a></p>
+<input type="button" id="show-btn" value="Edit the image map" /><br /><br />
+<map id="imgmap2009210102921" name="imgmap2009210102921">
+	<area shape="rect" alt="Wikipedia" title="Wikipedia" coords="149,74,291,175" href="http://en.wikipedia.org/wiki/Main_Page" target="_blank" />
+	<area shape="rect" alt="Google Website" title="Google" coords="427,77,650,175" href="http://www.google.co.uk" target="_blank" />
+</map>
+<img id="testmap" src="example_files/sample1.jpg" usemap="#imgmap2009210102921"/>
+</body>
+</html>
+</html>

@@ -1,0 +1,21 @@
+<html>
+<body>
+<div id="c" style="border: solid 1px red; width: 200px; height: 200px"></div>
+
+<script type="text/javascript">
+
+var canvas = document.getElementById('c');
+
+canvas.onmousemove = function (e) {
+	if (e.offsetX < 100) {
+		canvas.style.cursor = 'move';
+	}
+	else {
+		canvas.style.cursor = 'e-resize';
+	}
+	if (opera) opera.postError(canvas.style.cursor);
+	//if (console) console.log(canvas.style.cursor);
+}
+</script>
+</body>
+</html>

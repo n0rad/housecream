@@ -14,6 +14,13 @@
 	</parent>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
+        </dependency>
+
+
 
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
@@ -24,6 +31,11 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Alpha1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.client-bean-validation</groupId>
+			<artifactId>cbv-js</artifactId>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.ajsl</groupId>

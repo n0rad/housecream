@@ -3,6 +3,8 @@ package net.awired.housecream.server.service;
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.persistence.EntityNotFoundException;
+import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.resource.InPointResource;
 import net.awired.housecream.server.engine.EngineProcessor;
@@ -27,6 +29,9 @@ public class InPointService implements InPointResource {
 
     @Inject
     private EngineProcessor engine;
+
+    @Inject
+    private ValidationService validationService;
 
     @Override
     public Long createInPoint(InPoint inPoint) {
@@ -58,6 +63,11 @@ public class InPointService implements InPointResource {
     @Override
     public Float getPointValue(long pointId) throws NotFoundException {
         return stateHolder.getState(pointId);
+    }
+
+    @Override
+    public ClientValidatorInfo getInPointValidator() {
+        return validationService.getValidatorInfo(InPoint.class);
     }
 
 }

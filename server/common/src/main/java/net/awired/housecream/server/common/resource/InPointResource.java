@@ -7,10 +7,15 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 
 @Path("/inpoint")
 public interface InPointResource extends PointResource {
+
+    @GET
+    @Path("/validator")
+    public ClientValidatorInfo getInPointValidator();
 
     @PUT
     Long createInPoint(@Valid InPoint inPoint);

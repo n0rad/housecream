@@ -32,7 +32,7 @@ public class EventConverter {
         ServletRequest request = (ServletRequest) message.get("HTTP.REQUEST");
         String remoteAddr = request.getRemoteAddr();
 
-        String url = "restmcu://" + notif.getSource() + "/pin/" + notif.getPinId();
+        String url = "restmcu://" + notif.getSource() + "/pin/" + notif.getId();
 
         try {
             Event event = new Event();

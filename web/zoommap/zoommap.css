@@ -1,0 +1,8 @@
+#map { position: relative; width: 700px; height: 470px; overflow: hidden; }
+#returnlink { display: block; position: absolute; bottom: 0; right: 0;  color: white; background: blue; padding: 3px;}
+
+#map a.bullet { display: block; position: absolute; width: 20px; height: 20px; background: yellow; text-decoration: none; border: 1px solid red; opacity: .7; z-index: 2; }
+#map img.zoomable { }
+
+#map div.popup{ display: none; position: absolute; width: 200px; top: 100px; left: 150px; background: white; z-index: 3; padding: 10px; border: 2px solid black; }
+#map div.popup a.close{ display: block; position: absolute; bottom: 0; right: 0; }

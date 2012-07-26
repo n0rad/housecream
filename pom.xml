@@ -47,6 +47,7 @@
 		<camel.version>2.9.3-SNAPSHOT</camel.version>
 		<cxf.version>2.5.2</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
+		<jackson.version>1.9.8</jackson.version>
 		
 		<logback.version>0.9.26</logback.version>
 

@@ -9,11 +9,11 @@
 
 	default-autowire="byName">
 
-
 	<bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	<bean
 		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
+	<bean class="net.awired.client.bean.validation.js.service.ValidationService" />
 
 	<jaxrs:server id="restRouter" address="/"
 		staticSubresourceResolution="true">
@@ -28,6 +28,7 @@
 			<ref bean="inPointService" />
 			<ref bean="outPointService" />
 			<ref bean="ruleService" />
+			<ref bean="resourceService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />
@@ -43,8 +44,6 @@
 		</jaxrs:providers>
 	</jaxrs:server>
 
-
-
 	<bean id="ajslExceptionMapper" class="net.awired.ajsl.web.resource.mapper.AjslExceptionMapper" />
 	<bean id="ajslRuntimeExceptionMapper"
 		class="net.awired.ajsl.web.resource.mapper.AjslRuntimeExceptionMapper" />
@@ -57,11 +56,34 @@
 		</constructor-arg>
 	</bean>
 
+
+    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
+    <bean id="jacksonSerializationConfig" class="org.codehaus.jackson.map.SerializationConfig"
+        factory-bean="jacksonObjectMapper" factory-method="getSerializationConfig" />
+    <bean
+        class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jacksonSerializationConfig" />
+        <property name="targetMethod" value="setSerializationInclusion" />
+        <property name="arguments">
+            <list>
+                <value type="org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion">NON_NULL</value>
+            </list>
+        </property>
+    </bean>
+
+
 	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
-	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.JSONProvider">
-		<property name="supportUnwrapped" value="true" />
-		<property name="dropRootElement" value="true" />
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider">
+	   <property name="mapper">
+	       <ref bean="jacksonObjectMapper"/>
+	   </property>
 	</bean>
+
+
+	<!-- <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.JSONProvider"> -->
+	<!-- <property name="supportUnwrapped" value="true" /> -->
+	<!-- <property name="dropRootElement" value="true" /> -->
+	<!-- </bean> -->
 
 
 	<!-- <cxf:rsClient id="rsClient" address="http://localhost:5879/" serviceClass="net.awired.housecream.server.core.service.web.Toto42" 
