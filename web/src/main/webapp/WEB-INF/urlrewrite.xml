@@ -1,7 +1,0 @@
-<!DOCTYPE urlrewrite SYSTEM "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
-<urlrewrite>
-	<rule>
-		<from>/notFoundResource</from>
-		<to type="passthrough">%{context-path}/</to>
-	</rule>
-</urlrewrite>

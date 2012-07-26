@@ -42,7 +42,7 @@
 		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
 
 		<hibernate.version>4.1.4.Final</hibernate.version>
-		<jetty.version>6.1.26</jetty.version>
+		<jetty.version>6.1.14</jetty.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
 		<camel.version>2.9.3-SNAPSHOT</camel.version>
 		<cxf.version>2.5.2</cxf.version>
