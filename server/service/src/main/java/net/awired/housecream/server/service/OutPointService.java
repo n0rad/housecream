@@ -28,16 +28,11 @@ public class OutPointService implements OutPointResource {
     private EngineProcessor engine;
 
     @Override
-    public Long createOutPoint(OutPoint outPoint) {
+    public long createOutPoint(OutPoint outPoint) {
         outPointDao.save(outPoint);
         routeManager.registerPoint(outPoint);
         engine.registerPoint(outPoint);
         return outPoint.getId();
-    }
-
-    @Override
-    public void deleteAllOutPoints() {
-        outPointDao.deleteAll();
     }
 
     @Override

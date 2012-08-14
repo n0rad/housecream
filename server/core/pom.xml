@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-common</artifactId>
+			<artifactId>housecream-server-api</artifactId>
 		</dependency>
 
 		<dependency>

@@ -21,7 +21,7 @@ public enum ComponentType {
     public static EndPointComponent findComponentForPoint(Point point) {
         String urlPrefix = point.getUrlPrefix();
         if (urlPrefix == null) {
-            throw new RuntimeException("prefix not found in point " + point);
+            throw new RuntimeException("prefix not found in point url " + point);
         }
         for (ComponentType componentType : values()) {
             if (urlPrefix.equals(componentType.prefix)) {

@@ -2,7 +2,6 @@ package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.ajsl.persistence.EntityNotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
@@ -12,6 +11,8 @@ import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.router.RouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -34,7 +35,8 @@ public class InPointService implements InPointResource {
     private ValidationService validationService;
 
     @Override
-    public Long createInPoint(InPoint inPoint) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    public long createInPoint(InPoint inPoint) {
         pointDao.save(inPoint);
         routeManager.registerPoint(inPoint);
         engine.registerPoint(inPoint);
@@ -43,21 +45,12 @@ public class InPointService implements InPointResource {
 
     @Override
     public InPoint getInPoint(long inPointId) throws NotFoundException {
-        try {
-            return pointDao.find(inPointId);
-        } catch (EntityNotFoundException e) {
-            throw new NotFoundException("No Point with id : " + inPointId);
-        }
+        return pointDao.find(inPointId);
     }
 
     @Override
     public void deleteInPoint(long inPointId) {
         pointDao.delete(inPointId);
-    }
-
-    @Override
-    public void deleteAllInPoints() {
-        pointDao.deleteAll();
     }
 
     @Override

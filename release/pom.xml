@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-webapi</artifactId>
+			<artifactId>housecream-server-rest</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
@@ -141,7 +141,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>net.awired.housecream.server</groupId>
-					<artifactId>housecream-server-webapi</artifactId>
+					<artifactId>housecream-server-rest</artifactId>
 				</dependency>
 			</dependencies>
 		</profile>

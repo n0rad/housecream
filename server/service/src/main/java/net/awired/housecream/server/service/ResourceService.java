@@ -15,6 +15,14 @@ public class ResourceService {
     @Path("Validator.js")
     @Produces("application/x-javascript")
     public String getValidator() {
+
+        //        File f = new File("/tmp/file.doc");
+        //
+        //        ResponseBuilder response = Response.ok((Object) f);
+        //        response.type(contentType);
+        //        response.header("Content-Disposition", "attachment; filename=\"file.doc\"");
+        //        return response.build();
+
         try {
             return CharStreams.toString(new InputStreamReader(this.getClass().getResourceAsStream("/Validator.js"),
                     "UTF-8"));

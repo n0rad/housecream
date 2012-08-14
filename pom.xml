@@ -47,7 +47,7 @@
 		<camel.version>2.9.3-SNAPSHOT</camel.version>
 		<cxf.version>2.5.2</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
-		<jackson.version>1.9.8</jackson.version>
+		<jackson.version>1.9.9</jackson.version>
 		
 		<logback.version>0.9.26</logback.version>
 
@@ -63,7 +63,7 @@
 
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>housecream-server-common</artifactId>
+				<artifactId>housecream-server-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -88,13 +88,13 @@
 			</dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>housecream-server-webapi</artifactId>
+				<artifactId>housecream-server-rest</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 			</dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>housecream-server-webapi</artifactId>
+				<artifactId>housecream-server-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

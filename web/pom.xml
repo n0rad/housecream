@@ -43,12 +43,12 @@
 			<version>1.7.2</version>
 			<type>war</type>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>net.awired.js</groupId> -->
-		<!-- <artifactId>underscore</artifactId> -->
-		<!-- <version>1.1.6</version> -->
-		<!-- <type>war</type> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>net.awired.js</groupId>
+			<artifactId>underscore</artifactId>
+			<version>1.1.6</version>
+			<type>war</type>
+		</dependency>
 		<dependency>
 			<groupId>net.awired.js</groupId>
 			<artifactId>curl</artifactId>

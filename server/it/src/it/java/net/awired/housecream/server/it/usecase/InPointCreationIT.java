@@ -5,7 +5,7 @@ import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
-import net.awired.housecream.server.it.HcsTestRule;
+import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
@@ -18,7 +18,7 @@ import org.junit.Test;
 public class InPointCreationIT {
 
     @Rule
-    public HcsTestRule hcs = new HcsTestRule();
+    public HcsItServer hcs = new HcsItServer();
     private static RestMcuBoard board;
 
     @Before
@@ -59,7 +59,7 @@ public class InPointCreationIT {
         inPoint.setName("my pir1");
         inPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
 
-        hcs.getInPointResource().createInPoint(inPoint);
+        hcs.inPointResource().createInPoint(inPoint);
 
         assertEquals("http://localhost:8080/hcs/router", board.getNotifyUrl());
     }
@@ -70,9 +70,9 @@ public class InPointCreationIT {
         inPoint.setType(InPointType.PIR);
         inPoint.setName("my pir1");
         inPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
-        Long pointId = hcs.getInPointResource().createInPoint(inPoint);
+        Long pointId = hcs.inPointResource().createInPoint(inPoint);
 
-        Float pointValue = hcs.getInPointResource().getPointValue(pointId);
+        Float pointValue = hcs.inPointResource().getPointValue(pointId);
 
         assertEquals((Float) 1f, pointValue);
     }

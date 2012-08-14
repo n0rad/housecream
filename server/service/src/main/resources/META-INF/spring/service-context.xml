@@ -25,10 +25,15 @@
 		</jaxrs:outInterceptors>
 		<jaxrs:serviceBeans>
 			<ref bean="restMcuNotifyResourceEndPoint" />
-			<ref bean="inPointService" />
-			<ref bean="outPointService" />
-			<ref bean="ruleService" />
-			<ref bean="resourceService" />
+            <ref bean="resourceService" />
+            <ref bean="inPointService" />
+            <ref bean="inPointsService" />
+            <ref bean="outPointService" />
+            <ref bean="outPointsService" />
+            <ref bean="ruleService" />
+            <ref bean="rulesService" />
+            <ref bean="zoneService" />
+            <ref bean="zonesService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />
@@ -56,7 +61,6 @@
 		</constructor-arg>
 	</bean>
 
-
     <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
     <bean id="jacksonSerializationConfig" class="org.codehaus.jackson.map.SerializationConfig"
         factory-bean="jacksonObjectMapper" factory-method="getSerializationConfig" />
@@ -78,13 +82,6 @@
 	       <ref bean="jacksonObjectMapper"/>
 	   </property>
 	</bean>
-
-
-	<!-- <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.JSONProvider"> -->
-	<!-- <property name="supportUnwrapped" value="true" /> -->
-	<!-- <property name="dropRootElement" value="true" /> -->
-	<!-- </bean> -->
-
 
 	<!-- <cxf:rsClient id="rsClient" address="http://localhost:5879/" serviceClass="net.awired.housecream.server.core.service.web.Toto42" 
 		loggingFeatureEnabled="true" /> -->

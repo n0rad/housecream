@@ -16,14 +16,35 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-common</artifactId>
+			<artifactId>housecream-server-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.ajsl</groupId>
 			<artifactId>ajsl-web</artifactId>
 			<version>${ajsl.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>net.awired.ajsl</groupId>
+            <artifactId>ajsl-test</artifactId>
+            <version>${ajsl.version}</version>
+        </dependency>
 
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-bundle-jaxrs</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -38,24 +59,26 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<version>${cxf.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-web</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-core</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.cxf</groupId> -->
+		<!-- <artifactId>cxf-rt-frontend-jaxrs</artifactId> -->
+		<!-- <version>${cxf.version}</version> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>spring-web</artifactId> -->
+		<!-- <groupId>org.springframework</groupId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>spring-core</artifactId> -->
+		<!-- <groupId>org.springframework</groupId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
+
+
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-webapi</artifactId>
+			<artifactId>housecream-server-rest</artifactId>
 			<type>war</type>
 			<scope>provided</scope>
 		</dependency>

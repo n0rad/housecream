@@ -9,7 +9,7 @@ import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.common.domain.rule.Condition;
 import net.awired.housecream.server.common.domain.rule.ConditionType;
 import net.awired.housecream.server.common.domain.rule.EventRule;
-import net.awired.housecream.server.it.HcsTestRule;
+import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
@@ -28,7 +28,7 @@ import org.junit.Test;
 public class SwitchPointCreationIT {
 
     @Rule
-    public HcsTestRule hcs = new HcsTestRule();
+    public HcsItServer hcs = new HcsItServer();
 
     public static CountDownLatch latch = new CountDownLatch(1);
     public static Float outputValue = 0f;
@@ -68,17 +68,17 @@ public class SwitchPointCreationIT {
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1")
                 .url("restmcu://127.0.0.1:5879/pin/2").build();
-        Long inPointId = hcs.getInPointResource().createInPoint(inPoint);
+        Long inPointId = hcs.inPointResource().createInPoint(inPoint);
 
         // rule
         EventRule rule = new EventRule();
         rule.setName("my first rule");
         rule.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
-        hcs.getRuleResource().createRule(rule);
+        hcs.ruleResource().createRule(rule);
 
         RestMcuPinNotification pinNotif = new NotifBuilder().pinId(2).oldValue(0).value(1).source("127.0.0.1:5879")
                 .notify(RestMcuPinNotifyCondition.sup_or_equal, 1).build();
-        hcs.getNotifyResource().pinNotification(pinNotif);
+        hcs.notifyResource().pinNotification(pinNotif);
 
         Thread.sleep(1000);
 

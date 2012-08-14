@@ -1,0 +1,38 @@
+<form class="form-horizontal">
+	<input type="hidden" name="id">
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="name">Zone name</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="name" name="name"> <span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Zone type</label>
+			<div class="controls">
+				<select id="type" name="type">
+					<option></option>
+					<option value="PIR">Land</option>
+					<option value="PIR">Building</option>
+					<option value="PIR">Floor</option>
+					<option value="PIR">Room</option>
+					<option value="PIR">Area</option>
+				</select> <span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="fileInput">File input</label>
+			<div class="controls">
+				<input class="input-file" id="fileInput" type="file">
+			</div>
+		</div>
+
+		<div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="Save changes" /> <a class="pushState btn"
+				href="<%= rootUrl %>/admin/zone">Cancel</a>
+			<div class="progress progress-striped active">
+				<div class="bar" style="width: 0%"></div>
+			</div>
+		</div>
+	</fieldset>
+</form>

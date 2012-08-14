@@ -32,9 +32,4 @@ public class RuleService implements RuleResource {
         return rule; //TODO return id
     }
 
-    @Override
-    public void deleteAllRules() {
-        ruleDao.deleteAll();
-    }
-
 }

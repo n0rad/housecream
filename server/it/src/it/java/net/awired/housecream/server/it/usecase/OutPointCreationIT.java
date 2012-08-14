@@ -5,7 +5,7 @@ import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 import net.awired.housecream.server.common.domain.outPoint.OutPointType;
-import net.awired.housecream.server.it.HcsTestRule;
+import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
@@ -18,7 +18,7 @@ import org.junit.Test;
 public class OutPointCreationIT {
 
     @Rule
-    public HcsTestRule hcs = new HcsTestRule();
+    public HcsItServer hcs = new HcsItServer();
     private static RestMcuBoard board;
 
     @Before
@@ -59,9 +59,9 @@ public class OutPointCreationIT {
         outPoint.setName("my light");
         outPoint.setUrl("restmcu://127.0.0.1:5879/pin/4");
 
-        Long pointId = hcs.getOutPointResource().createOutPoint(outPoint);
+        Long pointId = hcs.outPointResource().createOutPoint(outPoint);
 
-        Float pointValue = hcs.getOutPointResource().getPointValue(pointId);
+        Float pointValue = hcs.outPointResource().getPointValue(pointId);
 
         assertEquals((Float) 1f, pointValue);
     }

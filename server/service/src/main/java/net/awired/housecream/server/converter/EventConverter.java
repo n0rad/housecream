@@ -3,7 +3,7 @@ package net.awired.housecream.server.converter;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;
-import net.awired.ajsl.persistence.EntityNotFoundException;
+import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.engine.Event;
 import net.awired.housecream.server.storage.dao.InPointDao;
@@ -40,7 +40,7 @@ public class EventConverter {
             event.setPointId(findFromUrl.getId());
             event.setValue(notif.getValue());
             return event;
-        } catch (EntityNotFoundException e) {
+        } catch (NotFoundException e) {
             throw new RuntimeException("Not found", e);
         }
 
