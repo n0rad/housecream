@@ -14,14 +14,4 @@ public class Floor extends Zone {
 
     public static final String ZONE_TYPE_NAME = "floor";
 
-    //    private long buildingId;
-    //
-    //    public long getBuildingId() {
-    //        return buildingId;
-    //    }
-    //
-    //    public void setBuildingId(long buildingId) {
-    //        this.buildingId = buildingId;
-    //    }
-
 }

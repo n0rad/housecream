@@ -11,7 +11,9 @@ import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.JAXRSBindingFactory;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 public class HcsItContext {
 
@@ -43,9 +45,9 @@ public class HcsItContext {
         outLogger.setPrettyLogging(true);
         outLogger.setOutputLocation("<stderr>");
 
+        ObjectMapper restfullObjectMapper = new ObjectMapper().setSerializationInclusion(Include.NON_NULL);
         jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
-        jacksonJaxbJsonProvider.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_NULL_PROPERTIES,
-                false);
+        jacksonJaxbJsonProvider.setMapper(restfullObjectMapper);
     }
 
     public <T> T buildResourceProxy(Class<T> clazz, HcsItSession session) {

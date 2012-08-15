@@ -14,8 +14,4 @@ public class Building extends Zone {
 
     public static final String ZONE_TYPE_NAME = "building";
 
-    //    public long getLandId() {
-    //        return parentId;
-    //    }
-
 }

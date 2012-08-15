@@ -14,14 +14,4 @@ public class Field extends Zone {
 
     public static final String ZONE_TYPE_NAME = "field";
 
-    //    private long landId;
-    //
-    //    public Long getLandId() {
-    //        return landId;
-    //    }
-    //
-    //    public void setLandId(Long landId) {
-    //        this.landId = landId;
-    //    }
-
 }

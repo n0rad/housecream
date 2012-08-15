@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.ProtectionDomain;
+import net.awired.ajsl.core.io.FileUtils;
 import net.awired.housecream.server.core.application.common.ApplicationHelper;
 import org.fusesource.jansi.AnsiConsole;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import com.google.common.io.Files;
 
 public class Main {
     private final ArgumentManager argManager = new ArgumentManager(this);
@@ -54,7 +54,7 @@ public class Main {
         String home = ApplicationHelper.findHomeDir();
         try {
             System.out.println("clearing database in home folder : " + home);
-            Files.deleteRecursively(new File(home + "/db"));
+            FileUtils.deleteRecursively(new File(home + "/db"));
         } catch (IOException e) {
         }
         System.exit(0);

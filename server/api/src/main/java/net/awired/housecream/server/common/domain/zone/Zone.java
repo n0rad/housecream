@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @XmlRootElement(name = "zone")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlSeeAlso({ Area.class, Building.class, Floor.class, Land.class, Room.class })
+@XmlSeeAlso({ Area.class, Building.class, Floor.class, Land.class, Room.class, Field.class })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Area.class, name = Area.ZONE_TYPE_NAME),
         @JsonSubTypes.Type(value = Building.class, name = Building.ZONE_TYPE_NAME),
