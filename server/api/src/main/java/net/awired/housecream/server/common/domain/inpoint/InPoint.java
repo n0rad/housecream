@@ -13,11 +13,15 @@ import net.awired.housecream.server.common.domain.Point;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @Entity
 @NamedQueries({ @NamedQuery(name = InPoint.QUERY_BY_URL, //
-query = "SELECT i FROM InPoint i where url = :" + InPoint.QUERY_PARAM_URL) })
+query = "SELECT i FROM InPoint i where url = :" + InPoint.QUERY_PARAM_URL), //
+        @NamedQuery(name = InPoint.QUERY_BY_ZONE, //
+        query = "SELECT i FROM InPoint i where zoneId = :" + InPoint.QUERY_PARAM_ZONE_ID) })
 public class InPoint extends Point {
 
     public static final String QUERY_BY_URL = "QUERY_BY_URL";
+    public static final String QUERY_BY_ZONE = "QUERY_BY_ZONE";
     public static final String QUERY_PARAM_URL = "QUERY_PARAM_URL";
+    public static final String QUERY_PARAM_ZONE_ID = "QUERY_PARAM_ZONE_ID";
 
     //    private Date lastUpdate; // input only
 

@@ -1,14 +1,14 @@
-define([ 'jquery', 'hcw/view/index/Index' ],
-function($, Index) {
+define([ 'jquery',  'hcw/controller/ZoneController'],
+function($, ZoneController) {
 	"use strict";
 
 	function IndexCommand(rootUrl) {
-		this.Index = new Index(rootUrl, $('#content'));
+		this.zoneController = new ZoneController();
 	}
 
 	IndexCommand.prototype = {
 		run : function() {
-			this.Index.displayIndex();
+			this.zoneController.displayZone();
 		},
 	};
 

@@ -1,29 +1,23 @@
-define(['hcw/service/ZoneService', 'hcw/view/admin/zone/ZoneForm', 'hcw/view/admin/zone/ZoneTable'], 
-function(ZoneService, ZoneForm, ZoneTable) {
+define(['hcw/service/ZoneService', 'hcw/view/index/Zone', 'hcw/view/index/Index', 'hcw/view/index/Action'], 
+function(ZoneService, Zone, Index, Action) {
 	
 	function ZoneController(rootUrl, context) {
+		this.rootUrl = rootUrl;
+		this.context = $(context);
 		this.zoneService = new ZoneService("/hcs");
-		this.zoneForm = new ZoneForm(context);
-		this.zoneTable = new ZoneTable(rootUrl, context);
+//		this.zoneTable = new ZoneTable(rootUrl, context);
 	}
-	
+
 	ZoneController.prototype = {
-			displayForm : function(zoneId) {
-				var self = this;
-				this.zoneService.getZone(zoneId, function(data) {
-					self.zoneForm.displayForm(data);
-				});
-			},
-			
-			displayNewForm : function() {
-				this.zoneForm.displayForm();
-			},
-	
-			displayTable : function() {
-				var self = this;
-				this.zoneService.getZones(function(data) {
-					self.zoneTable.displayTable(data);
-				});
+			displayZone : function(zoneId) {
+				var index = new Index(this.rootUrl, this.context);
+				index.displayIndex();
+
+				var zone = new Zone(this.rootUrl, $("#content", this.context));
+				zone.displayZone(zoneId);
+				
+				var action = new Action(this.rootUrl, $("#widget", this.context));
+				action.displayActions(zoneId);
 			}
 	};
 	

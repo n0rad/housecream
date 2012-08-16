@@ -32,6 +32,8 @@ public abstract class Point extends IdEntityImpl<Long> {
     @Column(unique = true)
     private String url;
 
+    private long zoneId;
+
     //    private Device device;
 
     ////////////////////////
@@ -78,6 +80,14 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     public String getUrl() {
         return url;
+    }
+
+    public long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(long zoneId) {
+        this.zoneId = zoneId;
     }
 
 }

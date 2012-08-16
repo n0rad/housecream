@@ -1,4 +1,4 @@
-define([ 'jquery', 'hcw/view/admin/AdminLayout', 'hcw/controller/InPointController', 'hcw/controller/ZoneController' ],
+define([ 'jquery', 'hcw/view/admin/AdminLayout', 'hcw/controller/AdminInPointController', 'hcw/controller/AdminZoneController' ],
 function($, AdminLayout, InPointController, ZoneController) {
 	"use strict";
 	

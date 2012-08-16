@@ -4,8 +4,10 @@ import java.util.List;
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.zone.Zone;
 import net.awired.housecream.server.common.resource.ZoneResource;
+import net.awired.housecream.server.storage.dao.InPointDao;
 import net.awired.housecream.server.storage.dao.ZoneDao;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
@@ -19,10 +21,13 @@ public class ZoneService implements ZoneResource {
     @Inject
     private ZoneDao zoneDao;
 
+    @Inject
+    private InPointDao inPointDao;
+
     @Override
     public ClientValidatorInfo getZoneValidator() {
         // TODO Auto-generated method stub
-        return null;
+        return null; // TODO handle inheritance
     }
 
     @Override
@@ -47,5 +52,10 @@ public class ZoneService implements ZoneResource {
         //        attachments.get(0).getDataHandler().get
         //        body.getAllAttachments().get(0).getDataHandler().getInputStream()
         return "SALUT";
+    }
+
+    @Override
+    public List<InPoint> inpoints(long zoneId) {
+        return inPointDao.findByZone(zoneId);
     }
 }

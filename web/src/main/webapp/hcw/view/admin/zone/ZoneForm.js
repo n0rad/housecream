@@ -1,8 +1,10 @@
-define(['jquery', 'bootstrapValidator', 'ajsl/view', 'ajsl/event', 'text!./ZoneForm.html' ],
-function($, bv, view, event, ZoneTemplate) {
+define(['jquery', 'bootstrapValidator', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html' ],
+function($, bv, view, event, ZoneService, ZoneTemplate) {
 	
-	function ZoneForm(context) {
+	function ZoneForm(rootUrl, context) {
 		this.context = $(context);
+		this.zoneService = new ZoneService("/hcs");
+		this.rootUrl = rootUrl;
 		
 		this.events = {
 				'|submit' : function(e) {
@@ -52,12 +54,69 @@ function($, bv, view, event, ZoneTemplate) {
 
 			};
 	}
-
+	
 	ZoneForm.prototype = {
 		displayForm : function(data) {
-			this.context.html(ZoneTemplate);
+			this.context.html(_.template(ZoneTemplate, {rootUrl: this.rootUrl}));
 //			view.rebuildFormRec(this.context, data);
 			event.register(this.events, this.context);
+			$('.dropdown-toggle', this.context).dropdown();
+
+			
+			var display = function(strings, data, currentParent) {
+				var flag = false;
+				for (var i = 0; i < data.length; i++) {
+					if ((!currentParent && !data[i].parentId) || (currentParent && data[i].parentId == currentParent.id)) {
+						if (!flag && currentParent) {
+							strings.push('<ul class="nav nav-list">');
+							flag = true;
+						}
+						strings.push('<li><a href="#" data-id="' + data[i].id + '"><i class="icon-pencil"></i> ' + data[i].name + '</a></li>');
+						display(strings, data, data[i]);
+					}
+				}
+				if (flag) {
+					strings.push('</ul>');
+				}
+			};
+			
+			var selectGroup = $('.parentId', this.context);
+			var select = $("SELECT", selectGroup);
+			this.zoneService.getZones(function(zones) {
+				for (var i = 0; i < zones.zones.length; i++) {
+					select.append('<option value="' + zones.zones[i].id + '">' + zones.zones[i].name + '</option>');
+				}
+
+				var ul = $("UL", selectGroup);
+
+				var res = [];
+				display(res, zones.zones);
+				ul.append(res.join(""));
+				$('A', ul).bind('click', function(e) {
+					var childs = $('A.btn', selectGroup).children();
+					$('A.btn', selectGroup).text($(this).text()).append(childs);
+					
+					$('LI', selectGroup).removeClass('active');
+					$(this).parent().addClass('active');
+					e.preventDefault();
+					select.val($(this).data("id"));
+				});
+
+				select.bind('change', function() {
+					$('LI', selectGroup).removeClass('active');					
+					var current = $('A:data(id=' + this.value + ')', selectGroup);
+					current.parent().addClass('active');
+
+					var childs = $('A.btn', selectGroup).children();
+					$('A.btn', selectGroup).text(current.text()).append(childs);
+				});
+
+				
+				view.rebuildFormRec(this.context, data);
+
+				
+			});
+			
 		}
 	};
 

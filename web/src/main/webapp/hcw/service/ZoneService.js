@@ -16,6 +16,12 @@ function($) {
 				$.getJSON(this.rootUrl + '/ws/zone/' + zoneId, {}, function(data) {
 					callback(data);
 				});
+			},
+			
+			getInPoints : function(zoneId, callback) {
+				$.getJSON(this.rootUrl + '/ws/zone/' + zoneId + '/inpoints', {zoneId : zoneId}, function(data) {
+					callback(data);
+				});				
 			}
 	};
 	

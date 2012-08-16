@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'text!./Index.html', 'text!./Action.html', 'text!./Zone.html' ],
-function($, _, IndexTemplate, ActionTpl, ZoneTpl) {
+define(['jquery', 'underscore', 'text!./Index.html' ],
+function($, _, IndexTemplate) {
 	
 	function Index(rootUrl, context) {
 		this.context = $(context);
@@ -9,9 +9,6 @@ function($, _, IndexTemplate, ActionTpl, ZoneTpl) {
 	Index.prototype = {
 			displayIndex : function() {
 				this.context.html(IndexTemplate);
-				$("#widget", this.context).html(_.template(ActionTpl, {rootUrl : this.rootUrl}));
-				$("#content", this.context).html(_.template(ZoneTpl, {rootUrl : this.rootUrl}));
-		        $('.dropdown-toggle', this.context).dropdown();
 			}
 	};
 	
