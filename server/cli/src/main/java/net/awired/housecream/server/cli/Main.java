@@ -6,11 +6,11 @@ import java.net.URL;
 import java.security.ProtectionDomain;
 import net.awired.ajsl.core.io.FileUtils;
 import net.awired.housecream.server.core.application.common.ApplicationHelper;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.fusesource.jansi.AnsiConsole;
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
 
 public class Main {
     private final ArgumentManager argManager = new ArgumentManager(this);
@@ -81,12 +81,16 @@ public class Main {
         context.setServer(server);
         context.setContextPath(argManager.contextPath.getParamOneValue());
 
+        //        context.addServlet(DefaultServlet.class, "/");
+        //        final ServletHolder jsp = context.addServlet(JspServlet.class, "*.jsp");
+        //        jsp.setInitParameter("classpath", context.getClassPath());
+
         ProtectionDomain protectionDomain = Main.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
         context.setDescriptor(location.toExternalForm() + "/WEB-INF/web.xml");
         context.setWar(location.toExternalForm());
 
-        server.addHandler(context);
+        server.setHandler(context);
         try {
             server.start();
             server.setStopAtShutdown(true);
