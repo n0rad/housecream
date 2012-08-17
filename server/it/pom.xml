@@ -174,7 +174,7 @@
 						<deployables>
 							<deployable>
 								<groupId>net.awired.housecream.server</groupId>
-								<artifactId>housecream-server-webapi</artifactId>
+								<artifactId>housecream-server-rest</artifactId>
 								<type>war</type>
 								<properties>
 									<context>hcs</context>

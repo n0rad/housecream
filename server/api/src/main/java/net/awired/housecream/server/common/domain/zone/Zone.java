@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Floor.class, name = Floor.ZONE_TYPE_NAME),
         @JsonSubTypes.Type(value = Land.class, name = Land.ZONE_TYPE_NAME),
         @JsonSubTypes.Type(value = Room.class, name = Room.ZONE_TYPE_NAME),
-        @JsonSubTypes.Type(value = Field.class, name = Field.ZONE_TYPE_NAME), })
+        @JsonSubTypes.Type(value = Field.class, name = Field.ZONE_TYPE_NAME) })
 public abstract class Zone extends NestedSetEntityImpl<Long> {
 
     private String name;
