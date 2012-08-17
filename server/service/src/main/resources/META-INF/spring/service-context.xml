@@ -25,15 +25,15 @@
 		</jaxrs:outInterceptors>
 		<jaxrs:serviceBeans>
 			<ref bean="restMcuNotifyResourceEndPoint" />
-            <ref bean="resourceService" />
-            <ref bean="inPointService" />
-            <ref bean="inPointsService" />
-            <ref bean="outPointService" />
-            <ref bean="outPointsService" />
-            <ref bean="ruleService" />
-            <ref bean="rulesService" />
-            <ref bean="zoneService" />
-            <ref bean="zonesService" />
+			<ref bean="resourceService" />
+			<ref bean="inPointService" />
+			<ref bean="inPointsService" />
+			<ref bean="outPointService" />
+			<ref bean="outPointsService" />
+			<ref bean="ruleService" />
+			<ref bean="rulesService" />
+			<ref bean="zoneService" />
+			<ref bean="zonesService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />
@@ -61,24 +61,25 @@
 		</constructor-arg>
 	</bean>
 
-    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
-    <bean
-        class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetObject" ref="objectMapper" />
-        <property name="targetMethod" value="setSerializationInclusion" />
-        <property name="arguments">
-            <list>
-                <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
-            </list>
-        </property>
-    </bean>
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="objectMapper" />
+		<property name="targetMethod" value="setSerializationInclusion" />
+		<property name="arguments">
+			<list>
+				<value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+			</list>
+		</property>
+	</bean>
 
 
 	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
-	<bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
-	   <property name="mapper">
-	       <ref bean="objectMapper"/>
-	   </property>
+	<bean id="jsonProvider"
+		class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
+		<property name="mapper">
+			<ref bean="objectMapper" />
+		</property>
 	</bean>
 
 	<!-- <cxf:rsClient id="rsClient" address="http://localhost:5879/" serviceClass="net.awired.housecream.server.core.service.web.Toto42" 

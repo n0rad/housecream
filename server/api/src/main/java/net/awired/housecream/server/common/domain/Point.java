@@ -2,6 +2,7 @@ package net.awired.housecream.server.common.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,6 +33,7 @@ public abstract class Point extends IdEntityImpl<Long> {
     @Column(unique = true)
     private String url;
 
+    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     private long zoneId;
 
     //    private Device device;

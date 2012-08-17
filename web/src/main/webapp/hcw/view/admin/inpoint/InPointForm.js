@@ -1,5 +1,5 @@
-define(['jquery', 'bootstrapValidator', 'ajsl/view', 'ajsl/event', 'text!./InPointForm.html' ],
-function($, bv, view, event, InPointTemplate) {
+define(['jquery', 'bootstrapValidator', 'ajsl/view', 'ajsl/event', 'text!./InPointForm.html', 'hcw/service/ZoneService' ],
+function($, bv, view, event, InPointTemplate, ZoneService) {
 	
 	var validatorInfo = {};
 	$.getJSON('/hcs/ws/inpoint/validator.json', {}, function(data) {
@@ -8,6 +8,7 @@ function($, bv, view, event, InPointTemplate) {
 
 	function Inpoint(rootUrl, context) {
 		this.context = $(context);
+		this.zoneService = new ZoneService("/hcs");
 		this.rootUrl = rootUrl;
 
 		this.events = {
@@ -40,8 +41,13 @@ function($, bv, view, event, InPointTemplate) {
 	Inpoint.prototype = {
 		displayForm : function(data) {
 			this.context.html(_.template(InPointTemplate, {rootUrl : this.rootUrl}));
+			
 			view.rebuildFormRec(this.context, data);
 			event.register(this.events, this.context);
+			this.zoneService.getZones(function(zones) {
+				$('.zoneId', this.context).bootstrapSelect(zones.zones);
+				view.rebuildFormRec(this.context, data);
+			});
 		}
 	};
 

@@ -57,6 +57,7 @@ body {
 <script type="text/javascript" src="<%=request.getContextPath( )%>/ajsl-utils.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath( )%>/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.dataSelector.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.bootstrap.select.js"></script>
 <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
 
 <!-- script type="text/javascript" src="<%=request.getContextPath( )%>/history.js"></script -->
