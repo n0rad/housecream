@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogManager;
 import javax.servlet.ServletContextEvent;
+import net.awired.ajsl.core.io.FileUtils;
 import net.awired.housecream.server.core.application.common.ApplicationHelper;
 import org.fusesource.jansi.AnsiConsole;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -68,7 +69,7 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
             if (lines.size() > 0 && !lines.get(0).equals(currentVersion)) {
                 System.out.println("Version of DB is " + lines.get(0) + " but currently running " + currentVersion
                         + " DB will be dropped");
-                Files.deleteRecursively(new File(home + "/db"));
+                FileUtils.deleteRecursively(new File(home + "/db"));
             }
         } catch (IOException e) {
             // no file found will not do anything

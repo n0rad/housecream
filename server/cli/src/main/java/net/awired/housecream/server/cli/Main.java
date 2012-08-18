@@ -62,8 +62,8 @@ public class Main {
 
     public void printInfo() {
         ApplicationHelper.getVersion(null);
-        System.out.println("HouseCream version : " + ApplicationHelper.getVersion());
-        System.out.println("HouseCream home : " + ApplicationHelper.findHomeDir());
+        System.out.println("Housecream version : " + ApplicationHelper.getVersion());
+        System.out.println("Housecream home : " + ApplicationHelper.findHomeDir());
         // TODO list plugin founds
     }
 

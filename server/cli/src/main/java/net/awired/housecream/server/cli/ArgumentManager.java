@@ -26,6 +26,7 @@ class ArgumentManager extends CliArgumentManager {
 
     public ArgumentManager(Main main) {
         super("housecream");
+        getUsageDisplayer().setUsageShort(true);
 
         // -d
         displayFile = new CliOneParamArgument<FileInfoEnum>('d', new CliParamEnum<FileInfoEnum>("file",
@@ -60,7 +61,7 @@ class ArgumentManager extends CliArgumentManager {
         // -v
         info = new CliNoParamArgument('v');
         info.setName("version");
-        info.setDescription("Print HouseCream information and exit");
+        info.setDescription("Print Housecream information and exit");
         addArg(info);
 
         // -r
@@ -74,7 +75,7 @@ class ArgumentManager extends CliArgumentManager {
         });
         rootFolder.setParamOneDefValue(new File("~/.housecream"));
         rootFolder.setName("home");
-        rootFolder.setDescription("HouseCream root folder");
+        rootFolder.setDescription("Housecream root folder");
         addArg(rootFolder);
 
         // -l

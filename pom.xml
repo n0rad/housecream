@@ -5,7 +5,7 @@
 
 	<groupId>net.awired.housecream</groupId>
 	<artifactId>housecream</artifactId>
-	<name>HouseCream</name>
+	<name>Housecream</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://housecream.awired.net</url>

@@ -5,7 +5,7 @@
 	<artifactId>housecream-release</artifactId>
 	<packaging>war</packaging>
 
-	<name>HouseCream Release</name>
+	<name>Housecream Release</name>
 
     <parent>
         <groupId>net.awired.housecream</groupId>

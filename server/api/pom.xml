@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>housecream-server-api</artifactId>
-	<name>HouseCream Server - API</name>
+	<name>Housecream Server - API</name>
 
 	<parent>
 		<groupId>net.awired.housecream.server</groupId>

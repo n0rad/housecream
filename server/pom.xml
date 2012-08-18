@@ -5,7 +5,7 @@
 
 	<groupId>net.awired.housecream.server</groupId>
 	<artifactId>housecream-server</artifactId>
-	<name>HouseCream Server</name>
+	<name>Housecream Server</name>
 	<packaging>pom</packaging>
 
 	<parent>
