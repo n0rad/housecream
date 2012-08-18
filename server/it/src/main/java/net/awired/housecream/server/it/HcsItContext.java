@@ -68,9 +68,9 @@ public class HcsItContext {
         factory.setBus(sf.getBus());
         manager.registerBindingFactory(JAXRSBindingFactory.JAXRS_BINDING_ID, factory);
         T service = sf.create(clazz);
-        //        if (session.isJson()) {
-        WebClient.client(service).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
-        //        }
+        if (session.isJson()) {
+            WebClient.client(service).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
+        }
         return service;
     }
 }

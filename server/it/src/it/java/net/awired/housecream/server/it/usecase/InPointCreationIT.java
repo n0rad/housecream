@@ -3,10 +3,10 @@ package net.awired.housecream.server.it.usecase;
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
+import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
 import net.awired.restmcu.api.domain.board.RestMcuBoard;
@@ -49,7 +49,7 @@ public class InPointCreationIT {
     }
 
     @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule(5879, SwitchResource.class,
+    public static RestServerRule restMcuPin = new RestServerRule("http://localhost:5879/", SwitchResource.class,
             SwitchBoardResource.class);
 
     @Test

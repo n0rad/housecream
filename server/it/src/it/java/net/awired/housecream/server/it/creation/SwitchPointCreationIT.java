@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.concurrent.CountDownLatch;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
+import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.common.domain.rule.Condition;
 import net.awired.housecream.server.common.domain.rule.ConditionType;
 import net.awired.housecream.server.common.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
@@ -61,7 +61,8 @@ public class SwitchPointCreationIT {
     }
 
     @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule(5879, PinResource.class, BoardResource.class);
+    public static RestServerRule restMcuPin = new RestServerRule("http://localhost:5879/", PinResource.class,
+            BoardResource.class);
 
     @Test
     public void should_update_restmcu_when_adding_rule() throws Exception {

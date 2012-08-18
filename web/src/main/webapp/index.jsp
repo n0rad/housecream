@@ -59,6 +59,8 @@ body {
 <script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.dataSelector.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.bootstrap.select.js"></script>
 <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath( )%>/js/bootstrap.js"></script>
+    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
 
 <!-- script type="text/javascript" src="<%=request.getContextPath( )%>/history.js"></script -->
 
@@ -104,10 +106,5 @@ body {
         </footer>
     </div>
 
-    <script type="text/javascript" src="<%=request.getContextPath( )%>/js/bootstrap.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-    <script type="text/javascript">
-        $('.dropdown-toggle').dropdown();
-    </script>
 </body>
 </html>

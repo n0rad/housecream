@@ -11,6 +11,8 @@ import com.google.common.io.CharStreams;
 @Path("/resources")
 public class ResourceService {
 
+    boolean b = false;
+
     @GET
     @Path("Validator.js")
     @Produces("application/x-javascript")

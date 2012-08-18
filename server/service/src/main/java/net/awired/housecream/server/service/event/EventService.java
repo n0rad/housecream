@@ -1,41 +1,24 @@
 package net.awired.housecream.server.service.event;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.DefaultHandler;
+import javax.inject.Inject;
+import net.awired.housecream.server.engine.Event;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventService {
 
-    private Server server = null;
+    @Inject
+    private EventWebSocketService eventWebSocketService;
 
-    @PostConstruct
-    public void init() {
+    @Async
+    public void saveEventAsync(Event event) {
         try {
-            server = new Server(8888);
-
-            HcwWebSocketHandler hcwWebSocketHandler = new HcwWebSocketHandler();
-            hcwWebSocketHandler.setHandler(new DefaultHandler());
-            server.setHandler(hcwWebSocketHandler);
-
-            server.start();
-
-        } catch (Throwable e) {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    @PreDestroy
-    public void destroy() {
-        if (server != null) {
-            try {
-                server.stop();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        eventWebSocketService.sendEvent(event);
     }
 
 }

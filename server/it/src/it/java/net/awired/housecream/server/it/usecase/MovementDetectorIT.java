@@ -5,6 +5,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
+import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.common.domain.outPoint.OutPoint;
@@ -14,7 +15,6 @@ import net.awired.housecream.server.common.domain.rule.ConditionType;
 import net.awired.housecream.server.common.domain.rule.Consequence;
 import net.awired.housecream.server.common.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.RestServerRule;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
@@ -73,7 +73,7 @@ public class MovementDetectorIT {
     }
 
     @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule(5879, OutputLightResource.class,
+    public static RestServerRule restMcuPin = new RestServerRule("http://localhost:5879/", OutputLightResource.class,
             SwitchBoardResource.class);
 
     @Test

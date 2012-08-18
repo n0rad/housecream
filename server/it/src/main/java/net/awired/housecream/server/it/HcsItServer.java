@@ -15,6 +15,8 @@ public class HcsItServer extends LoggingRule {
 
     private HcsItContext context = new HcsItContext();
 
+    //    private WebSocketClientFactory factory;
+
     public InPointResource inPointResource() {
         return context.buildResourceProxy(InPointResource.class, new HcsItSession());
     }
@@ -53,16 +55,36 @@ public class HcsItServer extends LoggingRule {
         return context.buildResourceProxy(HcRestMcuNotifyResource.class, new HcsItSession());
     }
 
+    //    public HcwWebSocket connectToWebSocket() {
+    //        WebSocketClient client = factory.newWebSocketClient();
+    //
+    //        HcwWebSocket socket = new HcwWebSocket(client);
+    //        try {
+    //            client.open(new URI("ws://localhost:8888"), socket, 10, TimeUnit.SECONDS);
+    //            return socket;
+    //        } catch (Exception e) {
+    //            throw new RuntimeException(e);
+    //        }
+    //    }
+
     @Override
     public void before() throws Throwable {
         inPointsResource().deleteAllInPoints();
         outPointsResource().deleteAllOutPoints();
         rulesResource().deleteAllRules();
         zonesResource().deleteAllZones();
+
+        //        factory = new WebSocketClientFactory();
+        //        factory.setBufferSize(4096);
+        //        factory.start();
     }
 
     @Override
     protected void after() {
+        try {
+            //            factory.stop();
+        } catch (Exception e) {
+        }
     }
 
 }

@@ -14,61 +14,35 @@ define([], function() {
 	}
 
 	EventService.prototype = {
-		join : function(name) {
-			this._username = name;
-			// var location = document.location.toString().replace('http://',
-			// 'ws://').replace('https://', 'wss://');
-			var location = "ws://localhost:8081/";
-			this._ws = new WebSocket(location);
-			this._ws.onopen = this._onopen;
-			this._ws.onmessage = this._onmessage;
-			this._ws.onclose = this._onclose;
-			this._ws.onerror = this._onerror;
-		},
-
-		chat : function(text) {
-			if (text != null && text.length > 0)
-				room._send(room._username, text);
-		},
+//		join : function(name) {
+//			this._username = name;
+//			// var location = document.location.toString().replace('http://',
+//			// 'ws://').replace('https://', 'wss://');
+//			var location = "ws://localhost:8081/";
+//			this._ws = new WebSocket(location);
+//			this._ws.onopen = this._onopen;
+//			this._ws.onmessage = this._onmessage;
+//			this._ws.onclose = this._onclose;
+//			this._ws.onerror = this._onerror;
+//		},
 
 		_onopen : function() {
-			room._send(room._username, 'has joined!');
+			console.info("open");
 		},
 
 		_onmessage : function(m) {
-			if (m.data) {
-				var c = m.data.indexOf(':');
-				var from = m.data.substring(0, c).replace('<', '&lt;').replace('>', '&gt;');
-				var text = m.data.substring(c + 1).replace('<', '&lt;').replace('>', '&gt;');
-
-				var chat = $('chat');
-				var spanFrom = document.createElement('span');
-				spanFrom.className = 'from';
-				spanFrom.innerHTML = from + ':&nbsp;';
-				var spanText = document.createElement('span');
-				spanText.className = 'text';
-				spanText.innerHTML = text;
-				var lineBreak = document.createElement('br');
-				chat.appendChild(spanFrom);
-				chat.appendChild(spanText);
-				chat.appendChild(lineBreak);
-				chat.scrollTop = chat.scrollHeight - chat.clientHeight;
-			}
+			console.info("message" + m);
 		},
 
 		_onclose : function(m) {
-			this._ws = null;
+			console.info("close");
 		},
 
 		_onerror : function(e) {
+			console.info("error");
 			alert(e);
 		},
 
-		_send : function(user, message) {
-			user = user.replace(':', '_');
-			if (this._ws)
-				this._ws.send(user + ':' + message);
-		}
 	};
 
 	return EventService;

@@ -3,6 +3,7 @@ package net.awired.housecream.server.common.domain.inpoint;
 public enum InPointType {
 
     PUSHBUTTON, //
+    SWITCH, //
     DIMMER, //
     TEMPERATURE, // status
     HUMIDITY, // status
@@ -15,6 +16,12 @@ public enum InPointType {
     SOUND, //
     KEYPAD, // ???????????
     LIGHT, //
+
+    VOLTAGE, //
+    CURRENT, //
+
+    //    TIMER, // ??????
+    //    VOICE, // ??????
 
     ;
     // private ValueType values; // range

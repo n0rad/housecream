@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.inject.Inject;
 import net.awired.housecream.server.common.domain.Point;
+import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.drools.KnowledgeBase;
@@ -29,13 +30,17 @@ public class EngineProcessor implements Processor {
     @Inject
     private StateHolder stateHolder;
 
-    public void registerPoint(Point point) {
+    @Inject
+    private EventService eventService;
 
+    public void registerPoint(Point point) {
+        //TODO IT
     }
 
     @Override
     public void process(Exchange exchange) throws Exception {
         Event body = exchange.getIn().getBody(Event.class);
+        eventService.saveEventAsync(body);
 
         final StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
         ksession.addEventListener(new DebugAgendaEventListener());
