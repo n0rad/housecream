@@ -3,6 +3,7 @@ package net.awired.housecream.server.engine;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.inject.Inject;
+import net.awired.housecream.server.common.domain.Event;
 import net.awired.housecream.server.common.domain.Point;
 import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.Exchange;

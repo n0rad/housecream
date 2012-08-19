@@ -1,7 +1,7 @@
 package net.awired.housecream.server.service.event;
 
 import javax.inject.Inject;
-import net.awired.housecream.server.engine.Event;
+import net.awired.housecream.server.common.domain.Event;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 

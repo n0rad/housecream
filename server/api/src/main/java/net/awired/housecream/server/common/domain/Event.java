@@ -1,4 +1,4 @@
-package net.awired.housecream.server.engine;
+package net.awired.housecream.server.common.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import com.google.common.base.Objects;

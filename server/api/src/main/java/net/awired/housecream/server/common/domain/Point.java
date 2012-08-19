@@ -44,7 +44,7 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     ////////////////////
 
-    public String getUrlPrefix() {
+    public String extractUrlPrefix() {
         if (url == null) {
             return null;
         }

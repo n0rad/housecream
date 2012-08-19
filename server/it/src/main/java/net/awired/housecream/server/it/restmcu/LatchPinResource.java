@@ -5,7 +5,7 @@ import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.restmcu.api.domain.pin.RestMcuPin;
 import net.awired.restmcu.api.resource.client.RestMcuPinResource;
 
-public class EmptyPinResource implements RestMcuPinResource {
+public class LatchPinResource implements RestMcuPinResource {
 
     @Override
     public RestMcuPin getPin(Integer pinId) throws NotFoundException {

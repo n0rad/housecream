@@ -3,7 +3,7 @@ package net.awired.housecream.server.it;
 public class HcsItSession {
 
     private String sessionId;
-    private boolean json = false;
+    private boolean json = true;
 
     public boolean isJson() {
         return json;

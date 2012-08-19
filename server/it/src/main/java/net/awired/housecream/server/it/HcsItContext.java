@@ -31,7 +31,7 @@ public class HcsItContext {
     private static final String HCS_PATH_DEFAULT = "/hcs/ws";
     private static final String HCS_PATH_PROPERTY_NAME = "hcs.path";
 
-    public static String getUrl() {
+    public String getUrl() {
         return "http://" + System.getProperty(HCS_HOST_PROPERTY_NAME, HCS_HOST_DEFAULT) //
                 + ":" + System.getProperty(HCS_PORT_PROPERTY_NAME, HCS_PORT_DEFAULT) //
                 + System.getProperty(HCS_PATH_PROPERTY_NAME, HCS_PATH_DEFAULT);

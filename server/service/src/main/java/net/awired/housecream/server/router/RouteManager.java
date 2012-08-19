@@ -1,7 +1,7 @@
 package net.awired.housecream.server.router;
 
 import javax.inject.Inject;
-import net.awired.housecream.server.HouseCreamContext;
+import net.awired.housecream.server.HousecreamContext;
 import net.awired.housecream.server.common.domain.Point;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.engine.ConsequenceAction;
@@ -27,7 +27,7 @@ public class RouteManager extends RouteBuilder {
     private EngineProcessor engineProcessor;
 
     @Inject
-    private HouseCreamContext houseCreamContext;
+    private HousecreamContext houseCreamContext;
 
     @Inject
     private StateHolder stateHolder;
@@ -40,7 +40,7 @@ public class RouteManager extends RouteBuilder {
 
     public void registerPoint(Point point) {
         EndPointComponent component = ComponentType.findComponentForPoint(point);
-        String routerUrl = houseCreamContext.getConnectorContextPath() + "/router";
+        String routerUrl = houseCreamContext.getConnectorContextPath() + "/ws/router";
         component.updatePointNotification(point, routerUrl);
         Float currentValue = component.getCurrentValue(point, camelContext);
         stateHolder.setState(point.getId(), currentValue);

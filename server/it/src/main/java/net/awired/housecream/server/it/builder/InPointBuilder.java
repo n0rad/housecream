@@ -8,13 +8,20 @@ public class InPointBuilder {
     private String name;
     private InPointType type;
     private String url;
+    private Long zoneId;
 
     public InPoint build() {
         InPoint inPoint = new InPoint();
         inPoint.setName(name);
         inPoint.setType(type);
         inPoint.setUrl(url);
+        inPoint.setZoneId(zoneId);
         return inPoint;
+    }
+
+    public InPointBuilder zoneId(long zoneId) {
+        this.zoneId = zoneId;
+        return this;
     }
 
     public InPointBuilder name(String name) {
