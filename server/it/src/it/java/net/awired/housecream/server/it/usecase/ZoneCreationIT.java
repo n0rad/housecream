@@ -11,6 +11,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.apache.cxf.jaxrs.impl.MetadataMap;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,7 @@ public class ZoneCreationIT {
     }
 
     @Test
+    @Ignore("need the upload part of form first")
     public void should_create_zone2() throws Exception {
         ZoneResource zoneResource = hcs.zoneResource();
         // TODO Auto-generated method stub

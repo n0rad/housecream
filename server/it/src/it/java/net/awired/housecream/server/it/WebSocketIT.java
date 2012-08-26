@@ -1,7 +1,6 @@
 package net.awired.housecream.server.it;
 
 import static net.awired.housecream.server.common.domain.inpoint.InPointType.PIR;
-import static net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition.sup_or_equal;
 import static org.junit.Assert.assertEquals;
 import java.util.List;
 import net.awired.ajsl.test.RestServerRule;
@@ -13,6 +12,7 @@ import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
+import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class WebSocketIT {
         long inpointId = hcs.inPointResource().createInPoint(inPoint);
         HcwWebSocket webSocketConnection = hcs.webSocketConnection();
         RestMcuPinNotification notif = new RestMcuPinNotification(2, 0f, 1f, "127.0.0.1:5879", new RestMcuPinNotify(
-                sup_or_equal, 1f));
+                RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1f));
 
         hcs.notifyResource().pinNotification(notif);
 

@@ -11,8 +11,7 @@ import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.router.ComponentType;
 import net.awired.housecream.server.router.OutDynamicRouter;
-import net.awired.restmcu.api.domain.board.RestMcuBoard;
-import net.awired.restmcu.api.domain.pin.RestMcuPin;
+import net.awired.restmcu.api.domain.board.RestMcuBoardSettings;
 import net.awired.restmcu.api.resource.client.RestMcuBoardResource;
 import net.awired.restmcu.api.resource.client.RestMcuPinResource;
 import org.apache.camel.CamelContext;
@@ -50,16 +49,17 @@ public class RestMcuComponent implements EndPointComponent {
         RestMcuPinResource pinResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuPinResource.class,
                 buildProviders());
 
-        RestMcuPin pin = new RestMcuPin();
-        try {
-            pinResource.setPin(getPinId(point), pin);
-        } catch (NotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UpdateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //TODO
+        //        RestMcuPin pin = new RestMcuPin();
+        //        try {
+        //            pinResource.setPinSettings(getPinId(point), pin);
+        //        } catch (NotFoundException e) {
+        //            // TODO Auto-generated catch block
+        //            e.printStackTrace();
+        //        } catch (UpdateException e) {
+        //            // TODO Auto-generated catch block
+        //            e.printStackTrace();
+        //        }
 
     }
 
@@ -81,10 +81,10 @@ public class RestMcuComponent implements EndPointComponent {
         //        ProducerTemplate createProducerTemplate = camelContext.createProducerTemplate();
         //        createProducerTemplate.request();
 
-        RestMcuBoard board = boardResource.getBoard();
-        board.setNotifyUrl(routerUrl);
+        RestMcuBoardSettings settings = new RestMcuBoardSettings();
+        settings.setNotifyUrl(routerUrl);
         try {
-            boardResource.setBoard(board);
+            boardResource.setBoardSettings(settings);
         } catch (UpdateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

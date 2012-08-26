@@ -59,8 +59,11 @@ body {
 <script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.dataSelector.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.bootstrap.select.js"></script>
 <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath( )%>/js/bootstrap.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath( )%>/js/bootstrap.js"></script>
+<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.noty.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.noty.layout.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath( )%>/jquery.noty.theme.js"></script>
 
 <!-- script type="text/javascript" src="<%=request.getContextPath( )%>/history.js"></script -->
 

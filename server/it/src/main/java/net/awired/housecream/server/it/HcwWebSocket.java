@@ -28,7 +28,9 @@ public class HcwWebSocket implements WebSocket.OnTextMessage {
     }
 
     public List<Event> awaitEvents() throws InterruptedException {
-        eventsLatchCount.await(10, TimeUnit.SECONDS);
+        if (!eventsLatchCount.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("Countdown timeout");
+        }
         return events;
     }
 
@@ -65,6 +67,7 @@ public class HcwWebSocket implements WebSocket.OnTextMessage {
     public void onMessage(String text) {
         try {
             this.events.add(objectMapper.readValue(text, Event.class));
+            eventsLatchCount.countDown();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

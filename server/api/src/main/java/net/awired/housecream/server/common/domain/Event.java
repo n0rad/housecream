@@ -8,6 +8,8 @@ public class Event {
     private long pointId;
     private float value;
 
+    //    private Severity severity; // INFORM, (ERROR, WARNING), ALERT, DYNAMIC... 
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this) //

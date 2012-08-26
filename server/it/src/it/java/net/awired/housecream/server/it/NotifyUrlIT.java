@@ -5,11 +5,10 @@ import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.zone.Land;
-import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
-import net.awired.restmcu.api.domain.board.RestMcuBoard;
+import net.awired.restmcu.api.domain.board.RestMcuBoardSettings;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -29,8 +28,8 @@ public class NotifyUrlIT {
                 .url("restmcu://127.0.0.1:5879/pin/2").build();
         hcs.inPointResource().createInPoint(inPoint);
 
-        RestMcuBoard awaitSet = restMcu.getResource(LatchBoardResource.class).awaitSet();
+        RestMcuBoardSettings settings = restMcu.getResource(LatchBoardResource.class).awaitUpdateSettings();
 
-        assertEquals(hcs.context().getUrl() + "/router", awaitSet.getNotifyUrl());
+        assertEquals(hcs.context().getUrl() + "/router", settings.getNotifyUrl());
     }
 }

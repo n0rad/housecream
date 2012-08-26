@@ -3,6 +3,7 @@ package net.awired.housecream.server.it.restmcu;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.restmcu.api.domain.pin.RestMcuPin;
+import net.awired.restmcu.api.domain.pin.RestMcuPinSettings;
 import net.awired.restmcu.api.resource.client.RestMcuPinResource;
 
 public class LatchPinResource implements RestMcuPinResource {
@@ -13,7 +14,14 @@ public class LatchPinResource implements RestMcuPinResource {
     }
 
     @Override
-    public void setPin(Integer pinId, RestMcuPin pin) throws NotFoundException, UpdateException {
+    public RestMcuPinSettings getPinSettings(Integer pinId) throws NotFoundException, UpdateException {
+        return null;
+    }
+
+    @Override
+    public void setPinSettings(Integer pinId, RestMcuPinSettings pinSettings) throws NotFoundException,
+            UpdateException {
+
     }
 
     @Override

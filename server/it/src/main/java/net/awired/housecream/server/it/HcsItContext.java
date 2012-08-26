@@ -48,6 +48,8 @@ public class HcsItContext {
         ObjectMapper restfullObjectMapper = new ObjectMapper().setSerializationInclusion(Include.NON_NULL);
         jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
         jacksonJaxbJsonProvider.setMapper(restfullObjectMapper);
+
+        responseExceptionMapper = new AjslResponseExceptionMapper(jacksonJaxbJsonProvider);
     }
 
     public <T> T buildResourceProxy(Class<T> clazz, HcsItSession session) {

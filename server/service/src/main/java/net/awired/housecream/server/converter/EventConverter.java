@@ -1,6 +1,5 @@
 package net.awired.housecream.server.converter;
 
-import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
@@ -21,7 +20,7 @@ public class EventConverter {
     private InPointDao inPointDao;
 
     @Converter
-    public Event toEvent(MessageContentsList contents, Exchange exchange) throws IOException {
+    public Event toEvent(MessageContentsList contents, Exchange exchange) {
         if (!(contents.get(0) instanceof RestMcuPinNotification)) {
             throw new RuntimeException("Cannot handle this kind of message" + contents.get(0));
         }

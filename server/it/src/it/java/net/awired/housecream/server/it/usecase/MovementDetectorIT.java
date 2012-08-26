@@ -1,10 +1,6 @@
 package net.awired.housecream.server.it.usecase;
 
-import static org.junit.Assert.assertEquals;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.ajsl.core.lang.exception.UpdateException;
+import static org.junit.Assert.fail;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
@@ -17,14 +13,11 @@ import net.awired.housecream.server.common.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
-import net.awired.housecream.server.it.restmcu.RestMcuEmptyBoardResource;
-import net.awired.housecream.server.it.restmcu.RestMcuEmptyPinResource;
-import net.awired.restmcu.api.domain.board.RestMcuBoard;
+import net.awired.housecream.server.it.restmcu.LatchBoardResource;
+import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
 import net.awired.restmcu.api.resource.test.NotifBuilder;
-import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,47 +27,9 @@ public class MovementDetectorIT {
     @Rule
     public HcsItServer hcs = new HcsItServer();
 
-    public static CountDownLatch latch = new CountDownLatch(1);
-
-    public static Float outputValue = 0f;
-
-    private static RestMcuBoard board;
-
-    @Before
-    public void before() {
-        board = new RestMcuBoard();
-    }
-
-    public static class OutputLightResource extends RestMcuEmptyPinResource {
-        @Override
-        public Float getPinValue(Integer pinId) throws NotFoundException {
-            return outputValue;
-        }
-
-        @Override
-        public void setPinValue(Integer pinId, Float value) throws NotFoundException, UpdateException {
-            if (pinId == 3) {
-                outputValue = value;
-                latch.countDown();
-            }
-        }
-    }
-
-    public static class SwitchBoardResource extends RestMcuEmptyBoardResource {
-        @Override
-        public RestMcuBoard getBoard() {
-            return board;
-        }
-
-        @Override
-        public void setBoard(RestMcuBoard board2) throws UpdateException {
-            board = board2;
-        }
-    }
-
-    @ClassRule
-    public static RestServerRule restMcuPin = new RestServerRule("http://localhost:5879/", OutputLightResource.class,
-            SwitchBoardResource.class);
+    @Rule
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchBoardResource.class,
+            LatchPinResource.class);
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
@@ -96,14 +51,15 @@ public class MovementDetectorIT {
         hcs.ruleResource().createRule(rule);
 
         RestMcuPinNotification pinNotif = new NotifBuilder().pinId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(RestMcuPinNotifyCondition.sup_or_equal, 1).build();
+                .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build();
         hcs.notifyResource().pinNotification(pinNotif);
 
-        latch.await(10, TimeUnit.SECONDS);
-
-        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
-        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
-        assertEquals((Float) 1f, outputValue);
+        //        latch.await(10, TimeUnit.SECONDS);
+        //
+        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
+        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
+        //        assertEquals((Float) 1f, outputValue);
+        fail();
     }
 
     @Test
@@ -137,35 +93,36 @@ public class MovementDetectorIT {
 
         //notif
         RestMcuPinNotification pinNotif = new NotifBuilder().pinId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(RestMcuPinNotifyCondition.sup_or_equal, 1).build();
+                .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build();
         hcs.notifyResource().pinNotification(pinNotif);
 
-        latch.await(10, TimeUnit.SECONDS);
-        latch = new CountDownLatch(1);
-
-        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
-        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
-        assertEquals((Float) 1f, outputValue);
-
-        hcs.notifyResource().pinNotification(
-                new NotifBuilder().pinId(2).oldValue(1).value(0).source("127.0.0.1:5879")
-                        .notify(RestMcuPinNotifyCondition.sup_or_equal, 1).build());
-
-        Thread.sleep(500);
-
-        assertEquals((Float) 0f, hcs.inPointResource().getPointValue(inPointId));
-        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
-        assertEquals((Float) 1f, outputValue);
-
-        hcs.notifyResource().pinNotification(
-                new NotifBuilder().pinId(2).oldValue(1).value(1).source("127.0.0.1:5879")
-                        .notify(RestMcuPinNotifyCondition.sup_or_equal, 1).build());
-
-        latch.await(10, TimeUnit.SECONDS);
-
-        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
-        assertEquals((Float) 0f, hcs.inPointResource().getPointValue(outPointId));
-        assertEquals((Float) 0f, outputValue);
+        //        latch.await(10, TimeUnit.SECONDS);
+        //        latch = new CountDownLatch(1);
+        //
+        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
+        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
+        //        assertEquals((Float) 1f, outputValue);
+        //
+        //        hcs.notifyResource().pinNotification(
+        //                new NotifBuilder().pinId(2).oldValue(1).value(0).source("127.0.0.1:5879")
+        //                        .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build());
+        //
+        //        Thread.sleep(500);
+        //
+        //        assertEquals((Float) 0f, hcs.inPointResource().getPointValue(inPointId));
+        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
+        //        assertEquals((Float) 1f, outputValue);
+        //
+        //        hcs.notifyResource().pinNotification(
+        //                new NotifBuilder().pinId(2).oldValue(1).value(1).source("127.0.0.1:5879")
+        //                        .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build());
+        //
+        //        latch.await(10, TimeUnit.SECONDS);
+        //
+        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
+        //        assertEquals((Float) 0f, hcs.inPointResource().getPointValue(outPointId));
+        //        assertEquals((Float) 0f, outputValue);
+        fail();
 
     }
 }

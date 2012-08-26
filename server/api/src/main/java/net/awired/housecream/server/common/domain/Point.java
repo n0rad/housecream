@@ -34,7 +34,7 @@ public abstract class Point extends IdEntityImpl<Long> {
     private String url;
 
     @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
-    private long zoneId;
+    private long zoneId; //TODO validate existance of zone
 
     //    private Device device;
 
