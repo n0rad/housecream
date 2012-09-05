@@ -11,11 +11,11 @@ import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
+import net.awired.housecream.server.it.restmcu.NotifBuilder;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
 import net.awired.restmcu.api.domain.pin.RestMcuPinSettings;
-import net.awired.restmcu.api.resource.test.NotifBuilder;
 import org.junit.Rule;
 import org.junit.Test;
 

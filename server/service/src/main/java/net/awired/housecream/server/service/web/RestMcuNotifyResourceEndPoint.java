@@ -19,4 +19,10 @@ public class RestMcuNotifyResourceEndPoint implements RestMcuNotifyResource {
     public void boardNotification(RestMcuBoardNotification boardNotification) {
     }
 
+    @Override
+    public long getPosixTime() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 }

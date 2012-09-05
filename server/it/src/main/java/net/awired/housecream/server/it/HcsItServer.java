@@ -3,6 +3,7 @@ package net.awired.housecream.server.it;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 import net.awired.ajsl.test.LoggingRule;
+import net.awired.ajsl.test.RestContext;
 import net.awired.housecream.server.common.resource.HcRestMcuNotifyResource;
 import net.awired.housecream.server.common.resource.InPointResource;
 import net.awired.housecream.server.common.resource.InPointsResource;
@@ -17,50 +18,63 @@ import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
 public class HcsItServer extends LoggingRule {
 
-    private HcsItContext context = new HcsItContext();
+    RestContext context = new RestContext();
 
     private WebSocketClientFactory factory;
 
     public InPointResource inPointResource() {
-        return context.buildResourceProxy(InPointResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(InPointResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public InPointsResource inPointsResource() {
-        return context.buildResourceProxy(InPointsResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(InPointsResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public OutPointsResource outPointsResource() {
-        return context.buildResourceProxy(OutPointsResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(OutPointsResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public OutPointResource outPointResource() {
-        return context.buildResourceProxy(OutPointResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(OutPointResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public RulesResource rulesResource() {
-        return context.buildResourceProxy(RulesResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(RulesResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public RuleResource ruleResource() {
-        HcsItSession session = new HcsItSession();
-        session.setJson(true);
-        return context.buildResourceProxy(RuleResource.class, session);
+        HcsItSession hcsItSession = new HcsItSession();
+        hcsItSession.setJson(true);
+        return context.prepareClient(RuleResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public ZoneResource zoneResource() {
-        return context.buildResourceProxy(ZoneResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(ZoneResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public ZonesResource zonesResource() {
-        return context.buildResourceProxy(ZonesResource.class, new HcsItSession());
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(ZonesResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public HcRestMcuNotifyResource notifyResource() {
-        return context.buildResourceProxy(HcRestMcuNotifyResource.class, new HcsItSession());
-    }
-
-    public HcsItContext context() {
-        return context;
+        HcsItSession hcsItSession = new HcsItSession();
+        return context.prepareClient(HcRestMcuNotifyResource.class, HcsItContext.getUrl(),
+                hcsItSession.getSessionId(), hcsItSession.isJson());
     }
 
     public HcwWebSocket webSocketConnection() {

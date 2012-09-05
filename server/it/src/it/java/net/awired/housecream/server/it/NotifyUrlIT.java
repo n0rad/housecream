@@ -30,6 +30,6 @@ public class NotifyUrlIT {
 
         RestMcuBoardSettings settings = restMcu.getResource(LatchBoardResource.class).awaitUpdateSettings();
 
-        assertEquals(hcs.context().getUrl() + "/router", settings.getNotifyUrl());
+        assertEquals(HcsItContext.getUrl() + "/router", settings.getNotifyUrl());
     }
 }
