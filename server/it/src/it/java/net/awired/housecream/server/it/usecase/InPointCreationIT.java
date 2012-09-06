@@ -5,6 +5,7 @@ import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
 import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import org.junit.Rule;
@@ -21,6 +22,8 @@ public class InPointCreationIT {
 
     @Test
     public void should_update_notify_url_when_create_point() throws Exception {
+        restmcu.getResource(LatchPinResource.class).pin(3, new PinInfoBuilder().value(1).build());
+
         InPoint inPoint = new InPoint();
         inPoint.setType(InPointType.PIR);
         inPoint.setName("my pir1");
@@ -35,6 +38,8 @@ public class InPointCreationIT {
 
     @Test
     public void should_access_current_state_after_creation() throws Exception {
+        restmcu.getResource(LatchPinResource.class).pin(3, new PinInfoBuilder().value(1).build());
+
         InPoint inPoint = new InPoint();
         inPoint.setType(InPointType.PIR);
         inPoint.setName("my pir1");

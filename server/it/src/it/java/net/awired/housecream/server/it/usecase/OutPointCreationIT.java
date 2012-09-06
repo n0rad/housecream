@@ -5,6 +5,7 @@ import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.outPoint.OutPoint;
 import net.awired.housecream.server.common.domain.outPoint.OutPointType;
 import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import org.junit.Rule;
@@ -21,6 +22,8 @@ public class OutPointCreationIT {
 
     @Test
     public void should_update_notify_url_when_create_point() throws Exception {
+        restmcu.getResource(LatchPinResource.class).pin(4, new PinInfoBuilder().value(1).build());
+
         OutPoint outPoint = new OutPoint();
         outPoint.setType(OutPointType.LIGHT);
         outPoint.setName("my light");

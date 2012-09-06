@@ -8,6 +8,7 @@ import net.awired.housecream.server.common.domain.Event;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.zone.Land;
 import net.awired.housecream.server.it.builder.InPointBuilder;
+import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
@@ -22,11 +23,13 @@ public class WebSocketIT {
     public HcsItServer hcs = new HcsItServer();
 
     @Rule
-    public RestServerRule restMcu = new RestServerRule("http://localhost:5879/", LatchPinResource.class,
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchPinResource.class,
             LatchBoardResource.class);
 
     @Test
     public void should_notify_client_on_event_received() throws Exception {
+        restmcu.getResource(LatchPinResource.class).pin(2, new PinInfoBuilder().value(1).build());
+
         long landId = hcs.zoneResource().createZone(new Land());
         InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
                 .url("restmcu://127.0.0.1:5879/pin/2").build();

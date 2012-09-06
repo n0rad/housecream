@@ -8,7 +8,7 @@ public class InPointBuilder {
     private String name;
     private InPointType type;
     private String url;
-    private Long zoneId;
+    private long zoneId;
 
     public InPoint build() {
         InPoint inPoint = new InPoint();

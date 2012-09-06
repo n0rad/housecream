@@ -21,7 +21,6 @@ public class RestMcuNotifyResourceEndPoint implements RestMcuNotifyResource {
 
     @Override
     public long getPosixTime() {
-        // TODO Auto-generated method stub
         return 0;
     }
 

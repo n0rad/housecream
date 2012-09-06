@@ -13,6 +13,7 @@ import net.awired.housecream.server.common.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
+import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
@@ -32,15 +33,19 @@ public class MovementDetectorIT {
             LatchPinResource.class);
 
     @Test
+    @Ignore
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
+        restmcu.getResource(LatchPinResource.class).pin(2, new PinInfoBuilder().value(1).build());
+        restmcu.getResource(LatchPinResource.class).pin(3, new PinInfoBuilder().value(1).build());
+
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1")
-                .url("restmcu://127.0.0.1:5879/pin/2").build();
+                .url("restmcu://127.0.0.1:5879/pin/2").zoneId(42).build();
         Long inPointId = hcs.inPointResource().createInPoint(inPoint);
 
         // outpoint
         OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT)
-                .url("restmcu://127.0.0.1:5879/pin/3").build();
+                .url("restmcu://127.0.0.1:5879/pin/3").zoneId(42).build();
         Long outPointId = hcs.outPointResource().createOutPoint(outPoint);
 
         // rule

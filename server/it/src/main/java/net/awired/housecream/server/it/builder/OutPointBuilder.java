@@ -8,12 +8,14 @@ public class OutPointBuilder {
     private String url;
     private OutPointType type;
     private String name;
+    private long zoneId;
 
     public OutPoint build() {
         OutPoint outPoint = new OutPoint();
         outPoint.setName(name);
         outPoint.setType(type);
         outPoint.setUrl(url);
+        outPoint.setZoneId(zoneId);
         return outPoint;
     }
 
@@ -31,4 +33,10 @@ public class OutPointBuilder {
         this.name = name;
         return this;
     }
+
+    public OutPointBuilder zoneId(long zoneId) {
+        this.zoneId = zoneId;
+        return this;
+    }
+
 }
