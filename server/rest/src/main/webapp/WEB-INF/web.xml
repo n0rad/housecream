@@ -21,6 +21,15 @@
 		<listener-class>net.awired.housecream.server.webapi.application.HousecreamContextLoaderListener</listener-class>
 	</listener>
 
+	<filter>
+		<filter-name>connectorIdentifierFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>connectorIdentifierFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
@@ -46,18 +55,18 @@
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>server.html</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
-        <error-code>404</error-code>
-        <location>/notFoundResource</location>
-    </error-page>
-    <servlet>
-        <servlet-name>ToIndex</servlet-name>
-        <servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ToIndex</servlet-name>
-        <url-pattern>/notFoundResource</url-pattern>
-    </servlet-mapping>
+		<error-code>404</error-code>
+		<location>/notFoundResource</location>
+	</error-page>
+	<servlet>
+		<servlet-name>ToIndex</servlet-name>
+		<servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ToIndex</servlet-name>
+		<url-pattern>/notFoundResource</url-pattern>
+	</servlet-mapping>
 
 </web-app>

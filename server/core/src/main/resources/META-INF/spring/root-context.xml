@@ -17,6 +17,18 @@
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<!-- 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> -->
+<!-- 		<property name="searchContextAttributes" value="true" /> -->
+<!-- 		<property name="contextOverride" value="true" /> -->
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location">
+			<value>${HOUSECREAM_HOME}/config.properties</value>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath*:META-INF/spring/*.properties</value>
@@ -24,15 +36,16 @@
 		</property>
 		<property name="propertiesArray">
 			<list>
-<!-- 				<bean factory-bean="housecreamApplication" factory-method="housecreamProperties" /> -->
+				<!-- <bean factory-bean="housecreamApplication" factory-method="housecreamProperties" 
+					/> -->
 			</list>
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="false" />
 	</bean>
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 </beans>

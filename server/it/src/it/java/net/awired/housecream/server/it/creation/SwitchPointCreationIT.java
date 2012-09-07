@@ -1,5 +1,6 @@
 package net.awired.housecream.server.it.creation;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
@@ -55,12 +56,12 @@ public class SwitchPointCreationIT {
         assertEquals("http://localhost:8080/hcs/ws/", restmcu.getResource(LatchBoardResource.class)
                 .getBoardSettings().getNotifyUrl());
         RestMcuPinSettings pinSettings = restmcu.getResource(LatchPinResource.class).getPinSettings(2);
-        assertEquals(2, pinSettings.getNotifies().size());
-        assertEquals(new RestMcuPinNotify(RestMcuPinNotifyCondition.INF_OR_EQUAL, 0), pinSettings.getNotifies()
-                .get(0));
-        assertEquals(new RestMcuPinNotify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1), pinSettings.getNotifies()
-                .get(1));
-        assertEquals("my pir1", pinSettings.getName());
-    }
+        assertThat(pinSettings.getNotifies().size()).isEqualTo(2);
+        assertThat(pinSettings.getNotifies().get(0)).isEqualTo(
+                new RestMcuPinNotify(RestMcuPinNotifyCondition.INF_OR_EQUAL, 0));
+        assertThat(pinSettings.getNotifies().get(1)).isEqualTo(
+                new RestMcuPinNotify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1));
 
+        assertThat(pinSettings.getName()).isEqualTo("my pir1");
+    }
 }

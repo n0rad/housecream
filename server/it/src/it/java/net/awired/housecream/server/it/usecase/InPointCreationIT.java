@@ -1,9 +1,10 @@
 package net.awired.housecream.server.it.usecase;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.common.domain.inpoint.InPoint;
 import net.awired.housecream.server.common.domain.inpoint.InPointType;
+import net.awired.housecream.server.it.HcsItContext;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
@@ -32,8 +33,8 @@ public class InPointCreationIT {
 
         hcs.inPointResource().createInPoint(inPoint);
 
-        assertEquals("http://localhost:8080/hcs/ws/router", restmcu.getResource(LatchBoardResource.class)
-                .getBoardSettings().getNotifyUrl());
+        assertThat(restmcu.getResource(LatchBoardResource.class).getBoardSettings().getNotifyUrl()).isEqualTo(
+                HcsItContext.getUrl() + "/router");
     }
 
     @Test
@@ -49,6 +50,6 @@ public class InPointCreationIT {
 
         Float pointValue = hcs.inPointResource().getPointValue(pointId);
 
-        assertEquals((Float) 1f, pointValue);
+        assertThat(pointValue).isEqualTo(1f);
     }
 }

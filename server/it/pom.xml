@@ -77,6 +77,11 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<version>${festassert.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
