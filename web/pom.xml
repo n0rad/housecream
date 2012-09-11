@@ -90,25 +90,25 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>net.awired.jstest</groupId>
-				<artifactId>jstest-maven-plugin</artifactId>
-				<version>0.1-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<amdPreloads>
-						<amdPreload>main</amdPreload>
-					</amdPreloads>
-					<coverage>true</coverage>
-					<runnerType>CURL</runnerType>
-				</configuration>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>net.awired.jstest</groupId> -->
+<!-- 				<artifactId>jstest-maven-plugin</artifactId> -->
+<!-- 				<version>0.1-SNAPSHOT</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<goals> -->
+<!-- 							<goal>test</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 				<configuration> -->
+<!-- 					<amdPreloads> -->
+<!-- 						<amdPreload>main</amdPreload> -->
+<!-- 					</amdPreloads> -->
+<!-- 					<coverage>true</coverage> -->
+<!-- 					<runnerType>CURL</runnerType> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 
