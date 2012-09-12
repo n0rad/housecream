@@ -1,6 +1,6 @@
 package net.awired.housecream.server.router;
 
-import net.awired.housecream.server.common.domain.Point;
+import net.awired.housecream.server.api.domain.Point;
 import net.awired.housecream.server.router.component.EndPointComponent;
 import net.awired.housecream.server.router.component.RestMcuComponent;
 

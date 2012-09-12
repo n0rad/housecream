@@ -1,7 +1,7 @@
 package net.awired.housecream.server.it.builder;
 
-import net.awired.housecream.server.common.domain.inpoint.InPoint;
-import net.awired.housecream.server.common.domain.inpoint.InPointType;
+import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.inpoint.InPointType;
 
 public class InPointBuilder {
 

@@ -1,10 +1,10 @@
 package net.awired.housecream.server.it;
 
-import static net.awired.housecream.server.common.domain.inpoint.InPointType.PIR;
+import static net.awired.housecream.server.api.domain.inpoint.InPointType.PIR;
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.server.common.domain.inpoint.InPoint;
-import net.awired.housecream.server.common.domain.zone.Land;
+import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;

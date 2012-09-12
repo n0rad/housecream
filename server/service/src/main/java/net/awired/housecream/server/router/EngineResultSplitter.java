@@ -3,7 +3,7 @@ package net.awired.housecream.server.router;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import net.awired.housecream.server.common.domain.outPoint.OutPoint;
+import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.engine.Actions;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.router.component.EndPointComponent;

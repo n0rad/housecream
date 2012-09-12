@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import net.awired.housecream.server.common.domain.Event;
+import net.awired.housecream.server.api.domain.Event;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;

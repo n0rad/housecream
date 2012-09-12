@@ -1,7 +1,7 @@
 package net.awired.housecream.server.it.builder;
 
-import net.awired.housecream.server.common.domain.outPoint.OutPoint;
-import net.awired.housecream.server.common.domain.outPoint.OutPointType;
+import net.awired.housecream.server.api.domain.outPoint.OutPoint;
+import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 
 public class OutPointBuilder {
 

@@ -1,10 +1,10 @@
 package net.awired.housecream.server.engine.builder;
 
 import java.util.Collection;
-import net.awired.housecream.server.common.domain.rule.Condition;
-import net.awired.housecream.server.common.domain.rule.ConditionType;
-import net.awired.housecream.server.common.domain.rule.Consequence;
-import net.awired.housecream.server.common.domain.rule.EventRule;
+import net.awired.housecream.server.api.domain.rule.Condition;
+import net.awired.housecream.server.api.domain.rule.ConditionType;
+import net.awired.housecream.server.api.domain.rule.Consequence;
+import net.awired.housecream.server.api.domain.rule.EventRule;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;

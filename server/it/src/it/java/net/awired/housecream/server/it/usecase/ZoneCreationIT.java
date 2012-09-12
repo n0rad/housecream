@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.mail.internet.InternetHeaders;
 import javax.ws.rs.core.MultivaluedMap;
-import net.awired.housecream.server.common.resource.ZoneResource;
+import net.awired.housecream.server.api.resource.ZoneResource;
 import net.awired.housecream.server.it.HcsItServer;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.ContentDisposition;

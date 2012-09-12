@@ -2,8 +2,8 @@ package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.housecream.server.common.domain.outPoint.OutPoint;
-import net.awired.housecream.server.common.resource.OutPointResource;
+import net.awired.housecream.server.api.domain.outPoint.OutPoint;
+import net.awired.housecream.server.api.resource.OutPointResource;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.router.RouteManager;

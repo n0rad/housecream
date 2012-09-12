@@ -2,8 +2,8 @@ package net.awired.housecream.server.service;
 
 import java.util.Collection;
 import javax.inject.Inject;
-import net.awired.housecream.server.common.domain.rule.EventRule;
-import net.awired.housecream.server.common.resource.RuleResource;
+import net.awired.housecream.server.api.domain.rule.EventRule;
+import net.awired.housecream.server.api.resource.RuleResource;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.builder.RuleBuilder;
 import net.awired.housecream.server.storage.dao.RuleDao;

@@ -2,8 +2,8 @@ package net.awired.housecream.server.it.usecase;
 
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.server.common.domain.outPoint.OutPoint;
-import net.awired.housecream.server.common.domain.outPoint.OutPointType;
+import net.awired.housecream.server.api.domain.outPoint.OutPoint;
+import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;

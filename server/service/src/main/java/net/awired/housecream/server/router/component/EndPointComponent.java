@@ -1,7 +1,7 @@
 package net.awired.housecream.server.router.component;
 
-import net.awired.housecream.server.common.domain.Point;
-import net.awired.housecream.server.common.domain.outPoint.OutPoint;
+import net.awired.housecream.server.api.domain.Point;
+import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Message;

@@ -2,8 +2,8 @@ package net.awired.housecream.server.router;
 
 import javax.inject.Inject;
 import net.awired.housecream.server.HousecreamContext;
-import net.awired.housecream.server.common.domain.Point;
-import net.awired.housecream.server.common.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.Point;
+import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
@@ -68,8 +68,8 @@ public class RouteManager extends RouteBuilder {
         //        .to("log:org.apache.camel.example?level=INFO&showProperties=true&showHeaders=true")
         //                .to("xmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
 
-        from("xmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
-                .to("seda:eventHolder");
+        //        from("xmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
+        //                .to("seda:eventHolder");
 
     }
 

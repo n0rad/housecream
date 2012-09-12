@@ -2,8 +2,8 @@ package net.awired.housecream.server.it.usecase;
 
 import static org.fest.assertions.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.server.common.domain.inpoint.InPoint;
-import net.awired.housecream.server.common.domain.inpoint.InPointType;
+import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.it.HcsItContext;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.PinInfoBuilder;

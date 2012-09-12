@@ -3,7 +3,7 @@ package net.awired.housecream.server.it.proxy;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import net.awired.housecream.server.common.domain.Point;
+import net.awired.housecream.server.api.domain.Point;
 
 public class PointProxy<T> extends ProxyClass<T> {
 

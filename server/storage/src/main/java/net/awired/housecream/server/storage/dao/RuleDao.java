@@ -1,7 +1,7 @@
 package net.awired.housecream.server.storage.dao;
 
 import net.awired.ajsl.persistence.dao.impl.GenericDaoImpl;
-import net.awired.housecream.server.common.domain.rule.EventRule;
+import net.awired.housecream.server.api.domain.rule.EventRule;
 import org.springframework.stereotype.Repository;
 
 @Repository
