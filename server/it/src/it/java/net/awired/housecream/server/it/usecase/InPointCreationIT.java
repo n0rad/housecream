@@ -6,7 +6,9 @@ import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.it.HcsItContext;
 import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.PinInfoBuilder;
+import net.awired.housecream.server.it.builder.zone.LandBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchPinResource;
 import org.junit.Rule;
@@ -24,12 +26,9 @@ public class InPointCreationIT {
     @Test
     public void should_update_notify_url_when_create_point() throws Exception {
         restmcu.getResource(LatchPinResource.class).pin(3, new PinInfoBuilder().value(1).build());
-
-        InPoint inPoint = new InPoint();
-        inPoint.setType(InPointType.PIR);
-        inPoint.setName("my pir1");
-        inPoint.setZoneId(42);
-        inPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
+        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
+                .url("restmcu://127.0.0.1:5879/pin/3").build();
 
         hcs.inPointResource().createInPoint(inPoint);
 
@@ -40,12 +39,9 @@ public class InPointCreationIT {
     @Test
     public void should_access_current_state_after_creation() throws Exception {
         restmcu.getResource(LatchPinResource.class).pin(3, new PinInfoBuilder().value(1).build());
-
-        InPoint inPoint = new InPoint();
-        inPoint.setType(InPointType.PIR);
-        inPoint.setName("my pir1");
-        inPoint.setZoneId(42);
-        inPoint.setUrl("restmcu://127.0.0.1:5879/pin/3");
+        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
+                .url("restmcu://127.0.0.1:5879/pin/3").build();
         Long pointId = hcs.inPointResource().createInPoint(inPoint);
 
         Float pointValue = hcs.inPointResource().getPointValue(pointId);
