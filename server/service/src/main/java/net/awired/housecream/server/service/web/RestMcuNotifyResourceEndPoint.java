@@ -3,7 +3,7 @@ package net.awired.housecream.server.service.web;
 import javax.ws.rs.Path;
 import net.awired.housecream.server.api.resource.HcRestMcuNotifyResource;
 import net.awired.restmcu.api.domain.board.RestMcuBoardNotification;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class RestMcuNotifyResourceEndPoint implements RestMcuNotifyResource {
 
     @Override
-    public void pinNotification(RestMcuPinNotification pinNotification) {
+    public void lineNotification(RestMcuLineNotification pinNotification) {
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.awired.housecream.server.api.resource;
 
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,7 +20,7 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 public interface ZoneResource {
     @GET
     @Path("/validator")
-    public ClientValidatorInfo getZoneValidator();
+    public Map<String, ClientValidatorInfo> getZoneValidator();
 
     @PUT
     long createZone(@Valid Zone zone) throws RuntimeException;

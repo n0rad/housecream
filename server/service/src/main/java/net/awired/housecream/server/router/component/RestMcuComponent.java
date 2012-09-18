@@ -13,7 +13,7 @@ import net.awired.housecream.server.router.ComponentType;
 import net.awired.housecream.server.router.OutDynamicRouter;
 import net.awired.restmcu.api.domain.board.RestMcuBoardSettings;
 import net.awired.restmcu.api.resource.client.RestMcuBoardResource;
-import net.awired.restmcu.api.resource.client.RestMcuPinResource;
+import net.awired.restmcu.api.resource.client.RestMcuLineResource;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Message;
 import org.apache.camel.component.cxf.common.message.CxfConstants;
@@ -40,13 +40,13 @@ public class RestMcuComponent implements EndPointComponent {
         return "http://" + host;
     }
 
-    public int getPinId(Point point) {
+    public int getLineId(Point point) {
         int indexOf = point.getUrl().lastIndexOf("/");
         return Integer.valueOf(point.getUrl().substring(indexOf + 1));
     }
 
     private void uodatePin(Point point) {
-        RestMcuPinResource pinResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuPinResource.class,
+        RestMcuLineResource pinResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuLineResource.class,
                 buildProviders());
 
         //TODO
@@ -100,13 +100,13 @@ public class RestMcuComponent implements EndPointComponent {
         AjslResponseExceptionMapper exceptionMapper = new AjslResponseExceptionMapper(jsonProvider);
         ImmutableList<Object> providers = ImmutableList.of(exceptionMapper, jsonProvider);
 
-        RestMcuPinResource boardResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuPinResource.class,
+        RestMcuLineResource boardResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuLineResource.class,
                 providers);
         WebClient.client(boardResource).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
 
         Float f;
         try {
-            f = boardResource.getPinValue(getPinId(point));
+            f = boardResource.getLineValue(getLineId(point));
             return f;
         } catch (NotFoundException e) {
             // TODO Auto-generated catch block
@@ -128,7 +128,7 @@ public class RestMcuComponent implements EndPointComponent {
 
         message.setHeader("ACTION", action);
         message.setHeader(OutDynamicRouter.OUT_URL, "cxfrs://" + getBoardUrl(outpoint) + endUrl);
-        message.setBody(new Object[] { getPinId(outpoint), action.getValue() });
+        message.setBody(new Object[] { getLineId(outpoint), action.getValue() });
         return message;
     }
 

@@ -12,13 +12,13 @@ import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
+import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
-import net.awired.housecream.server.it.builder.PinInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchPinResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,13 +30,13 @@ public class MovementDetectorIT {
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchBoardResource.class,
-            LatchPinResource.class);
+            LatchLineResource.class);
 
     @Test
     @Ignore
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
-        restmcu.getResource(LatchPinResource.class).pin(2, new PinInfoBuilder().value(1).build());
-        restmcu.getResource(LatchPinResource.class).pin(3, new PinInfoBuilder().value(1).build());
+        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
+        restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1")
@@ -55,9 +55,9 @@ public class MovementDetectorIT {
         rule.getConsequences().add(new Consequence(outPointId, 1));
         hcs.ruleResource().createRule(rule);
 
-        RestMcuPinNotification pinNotif = new NotifBuilder().pinId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build();
-        hcs.notifyResource().pinNotification(pinNotif);
+        RestMcuLineNotification pinNotif = new NotifBuilder().lineId(2).oldValue(0).value(1).source("127.0.0.1:5879")
+                .notify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1).build();
+        hcs.notifyResource().lineNotification(pinNotif);
 
         //        latch.await(10, TimeUnit.SECONDS);
         //
@@ -97,9 +97,9 @@ public class MovementDetectorIT {
         hcs.ruleResource().createRule(rule2);
 
         //notif
-        RestMcuPinNotification pinNotif = new NotifBuilder().pinId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build();
-        hcs.notifyResource().pinNotification(pinNotif);
+        RestMcuLineNotification pinNotif = new NotifBuilder().lineId(2).oldValue(0).value(1).source("127.0.0.1:5879")
+                .notify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1).build();
+        hcs.notifyResource().lineNotification(pinNotif);
 
         //        latch.await(10, TimeUnit.SECONDS);
         //        latch = new CountDownLatch(1);

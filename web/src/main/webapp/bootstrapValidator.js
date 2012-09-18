@@ -11,7 +11,14 @@ function(Validator) {
 
 	return {
 		
+		getValidator : function() {
+			return validator;
+		},
+		
 		isValidDisplayedForm : function(form, formData, validatorInfo) {
+			if (!validatorInfo) {
+				return true;
+			}
 			this.clearViolations(form);
 			var violations = validator.validate(formData, validatorInfo.properties);
 			this.displayViolations(validator, validatorInfo, violations, form);
@@ -20,6 +27,9 @@ function(Validator) {
 		
 		isValidDisplayedFormElement : function(formElem, elemData, validatorInfo) {
 			this.clearViolation(formElem);
+			if (!validatorInfo) {
+				return true;
+			}
 			var violations = validator.validateValue(elemData, validatorInfo.properties, formElem.name);
 			this.displayViolations(validator, validatorInfo, violations, formElem.form);
 			return violations.length == 0;

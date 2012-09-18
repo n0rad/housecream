@@ -5,7 +5,7 @@
 		var select = $("SELECT", context);
 
 		for ( var i = 0; i < nestedSets.length; i++) {
-			select.append('<option value="' + nestedSets[i].id + '">' + nestedSets[i].name + '</option>');
+			select.append('<option value="' + nestedSets[i].id + '" data-type="' + nestedSets[i].type + '">' + nestedSets[i].name + '</option>');
 		}
 
 		var ul = $("UL", context);

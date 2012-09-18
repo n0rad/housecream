@@ -10,14 +10,14 @@ import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
-import net.awired.housecream.server.it.builder.PinInfoBuilder;
+import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchPinResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
-import net.awired.restmcu.api.domain.pin.RestMcuPinSettings;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition;
+import net.awired.restmcu.api.domain.line.RestMcuLineSettings;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,13 +28,13 @@ public class SwitchPointCreationIT {
     public HcsItServer hcs = new HcsItServer();
 
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchPinResource.class,
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchLineResource.class,
             LatchBoardResource.class);
 
     @Test
     @Ignore
     public void should_update_restmcu_when_adding_rule() throws Exception {
-        restmcu.getResource(LatchPinResource.class).pin(2, new PinInfoBuilder().value(1).build());
+        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1")
@@ -47,20 +47,20 @@ public class SwitchPointCreationIT {
         rule.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
         hcs.ruleResource().createRule(rule);
 
-        RestMcuPinNotification pinNotif = new NotifBuilder().pinId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build();
-        hcs.notifyResource().pinNotification(pinNotif);
+        RestMcuLineNotification pinNotif = new NotifBuilder().lineId(2).oldValue(0).value(1).source("127.0.0.1:5879")
+                .notify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1).build();
+        hcs.notifyResource().lineNotification(pinNotif);
 
         Thread.sleep(1000);
 
         assertEquals("http://localhost:8080/hcs/ws/", restmcu.getResource(LatchBoardResource.class)
                 .getBoardSettings().getNotifyUrl());
-        RestMcuPinSettings pinSettings = restmcu.getResource(LatchPinResource.class).getPinSettings(2);
+        RestMcuLineSettings pinSettings = restmcu.getResource(LatchLineResource.class).getLineSettings(2);
         assertThat(pinSettings.getNotifies().size()).isEqualTo(2);
         assertThat(pinSettings.getNotifies().get(0)).isEqualTo(
-                new RestMcuPinNotify(RestMcuPinNotifyCondition.INF_OR_EQUAL, 0));
+                new RestMcuLineNotify(RestMcuLineNotifyCondition.INF_OR_EQUAL, 0));
         assertThat(pinSettings.getNotifies().get(1)).isEqualTo(
-                new RestMcuPinNotify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1));
+                new RestMcuLineNotify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1));
 
         assertThat(pinSettings.getName()).isEqualTo("my pir1");
     }

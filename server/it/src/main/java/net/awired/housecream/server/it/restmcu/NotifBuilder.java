@@ -1,8 +1,8 @@
 package net.awired.housecream.server.it.restmcu;
 
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotification;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotify;
-import net.awired.restmcu.api.domain.pin.RestMcuPinNotifyCondition;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition;
 
 public class NotifBuilder {
 
@@ -10,10 +10,10 @@ public class NotifBuilder {
     private String source;
     private float value;
     private float oldValue;
-    private RestMcuPinNotify notify;
+    private RestMcuLineNotify notify;
 
-    public RestMcuPinNotification build() {
-        RestMcuPinNotification pinNotif = new RestMcuPinNotification();
+    public RestMcuLineNotification build() {
+        RestMcuLineNotification pinNotif = new RestMcuLineNotification();
         pinNotif.setId(pinId);
         pinNotif.setSource(source);
         pinNotif.setValue(value);
@@ -22,8 +22,8 @@ public class NotifBuilder {
         return pinNotif;
     }
 
-    public NotifBuilder pinId(int pinId) {
-        this.pinId = pinId;
+    public NotifBuilder lineId(int lineId) {
+        this.pinId = lineId;
         return this;
     }
 
@@ -42,8 +42,8 @@ public class NotifBuilder {
         return this;
     }
 
-    public NotifBuilder notify(RestMcuPinNotifyCondition supOrEqual, int i) {
-        this.notify = new RestMcuPinNotify(supOrEqual, i);
+    public NotifBuilder notify(RestMcuLineNotifyCondition supOrEqual, int i) {
+        this.notify = new RestMcuLineNotify(supOrEqual, i);
         return this;
     }
 }

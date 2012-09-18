@@ -6,10 +6,10 @@ import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
-import net.awired.housecream.server.it.builder.PinInfoBuilder;
+import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchPinResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -20,11 +20,11 @@ public class OutPointCreationIT {
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchBoardResource.class,
-            LatchPinResource.class);
+            LatchLineResource.class);
 
     @Test
     public void should_update_notify_url_when_create_point() throws Exception {
-        restmcu.getResource(LatchPinResource.class).pin(4, new PinInfoBuilder().value(1).build());
+        restmcu.getResource(LatchLineResource.class).line(4, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         OutPoint outPoint = new OutPointBuilder().type(OutPointType.LIGHT).name("myLight").zoneId(landId)
                 .url("restmcu://127.0.0.1:5879/pin/4").build();

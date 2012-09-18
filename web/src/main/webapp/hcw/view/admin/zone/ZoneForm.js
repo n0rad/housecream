@@ -1,5 +1,23 @@
-define(['jquery', 'bootstrapValidator', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html' ],
+define(['jquery', 'HcValidator', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html' ],
 function($, bv, view, event, ZoneService, ZoneTemplate) {
+
+	
+	var types = ['Land', 'Building', 'Floor', 'Room', 'Area'];
+	var validatorsInfoByParent = {};
+	$.getJSON('/hcs/ws/zone/validator.json', {}, function(data) {
+		for (var type in data) {
+			   var obj = data[type];
+			   var parent = types[types.indexOf(type) - 1];
+			   validatorsInfoByParent[parent] = obj;
+			}
+	});
+	function findValidator(form) {
+		var parentType = form.find("Select[name=parentId]").find("option:selected").data('type');	
+		if (!parentType){
+			return validatorsInfoByParent['Land'];
+		}
+		return validatorsInfoByParent[parentType.ucFirst()];
+	}
 	
 	function ZoneForm(rootUrl, context) {
 		this.context = $(context);
@@ -9,47 +27,29 @@ function($, bv, view, event, ZoneService, ZoneTemplate) {
 		this.events = {
 				'|submit' : function(e) {
 					e.preventDefault();
-				
-					var data = new FormData();
-					jQuery.each($('#fileInput', this)[0].files, function(i, file) {
-					    data.append('file-'+i, file);
-					});
-					
-					var self = this; 
-					
-					progressHandlerFunction = function(e) {
-						var loaded = Math.round((e.loaded / e.total) * 100); // on calcul le pourcentage de progression
-						var $bar = $('.progress .bar', self);
-						
-//						if ($bar.width()==400) {
-//					        clearInterval(progress);
-//					        $('.progress').removeClass('active');
-//					    } else {
-//					        $bar.width($bar.width()+40);
-//					    }
-						$bar.width(loaded + '%');
-					    $bar.text(loaded + "%");
-					};
-					
-					$.ajax({
-					    url: "/hcs/ws/zone/test",
-					    data: data,
-					    cache: false,
-					    contentType: false,
-					    processData: false,
-					    type: 'POST',
-					    xhr: function() {
-					        myXhr = $.ajaxSettings.xhr();
-					        if(myXhr.upload){
-					            myXhr.upload.addEventListener('progress',progressHandlerFunction, false);
-					        }
-					        return myXhr;
-					    },
-					    success: function(data){
-//					        alert(data);
-					    }
-					});
-					
+					var formData = $(this).toObject({skipEmpty : false});
+					if (bv.isValidDisplayedForm(this, formData, findValidator($(this)))) {
+						$.ajax({
+							  url: "/hcs/ws/zone",
+							  headers: { 
+							        Accept : "application/json; charset=utf-8",
+							        "Content-Type": "application/json; charset=utf-8"
+							  },
+							  type: "PUT", 
+//							  dataType: 'json',
+							  data: JSON.stringify(formData),
+							  success: function(res) {
+								  var dd;
+							  },
+							  error : function(jqXHR, textStatus, errorThrown) {
+								  var ss;
+							  }
+							});
+					}
+				},
+		
+				'input[type=text], input[type=hidden], checkbox, select, textarea|keyup,blur,change' : function() {
+					bv.isValidDisplayedFormElement(this, $(this).toObject({skipEmpty : false}), findValidator($(this).closest("form")));
 				}
 
 			};
