@@ -1,11 +1,8 @@
 package net.awired.housecream.server.router.component;
 
-import java.util.Arrays;
-import java.util.List;
-import javax.ws.rs.core.MediaType;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
-import net.awired.ajsl.web.resource.mapper.AjslResponseExceptionMapper;
+import net.awired.ajsl.web.rest.RestContext;
 import net.awired.housecream.server.api.domain.Point;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.engine.ConsequenceAction;
@@ -18,10 +15,6 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.Message;
 import org.apache.camel.component.cxf.common.message.CxfConstants;
 import org.apache.camel.impl.DefaultMessage;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.jaxrs.provider.JSONProvider;
-import com.google.common.collect.ImmutableList;
 
 //TODO shouldn't work with Point or any housecream objects
 public class RestMcuComponent implements EndPointComponent {
@@ -45,9 +38,7 @@ public class RestMcuComponent implements EndPointComponent {
         return Integer.valueOf(point.getUrl().substring(indexOf + 1));
     }
 
-    private void uodatePin(Point point) {
-        RestMcuLineResource pinResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuLineResource.class,
-                buildProviders());
+    private void updatePin(Point point) {
 
         //TODO
         //        RestMcuPin pin = new RestMcuPin();
@@ -63,19 +54,13 @@ public class RestMcuComponent implements EndPointComponent {
 
     }
 
-    private List<Object> buildProviders() {
-        JSONProvider jsonProvider = new JSONProvider();
-        jsonProvider.setSupportUnwrapped(true);
-        jsonProvider.setDropRootElement(true);
-
-        AjslResponseExceptionMapper exceptionMapper = new AjslResponseExceptionMapper(jsonProvider);
-        return Arrays.asList(exceptionMapper, jsonProvider);
-    }
-
     private void updateNotifyUrl(Point point, String routerUrl) {
-        RestMcuBoardResource boardResource = JAXRSClientFactory.create(getBoardUrl(point),
-                RestMcuBoardResource.class, buildProviders());
-        WebClient.client(boardResource).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
+        RestMcuBoardResource boardResource = new RestContext().prepareClient(RestMcuBoardResource.class,
+                getBoardUrl(point), null, true);
+
+        //        RestMcuBoardResource boardResource = JAXRSClientFactory.create(getBoardUrl(point),
+        //                RestMcuBoardResource.class, buildProviders());
+        //        WebClient.client(boardResource).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
 
         // can be done with camel but its much cleaner with rsclient
         //        ProducerTemplate createProducerTemplate = camelContext.createProducerTemplate();
@@ -93,16 +78,8 @@ public class RestMcuComponent implements EndPointComponent {
 
     @Override
     public Float getCurrentValue(Point point, CamelContext camelContext) {
-        JSONProvider jsonProvider = new JSONProvider();
-        jsonProvider.setSupportUnwrapped(true);
-        jsonProvider.setDropRootElement(true);
-
-        AjslResponseExceptionMapper exceptionMapper = new AjslResponseExceptionMapper(jsonProvider);
-        ImmutableList<Object> providers = ImmutableList.of(exceptionMapper, jsonProvider);
-
-        RestMcuLineResource boardResource = JAXRSClientFactory.create(getBoardUrl(point), RestMcuLineResource.class,
-                providers);
-        WebClient.client(boardResource).accept(MediaType.APPLICATION_JSON_TYPE).type(MediaType.APPLICATION_JSON_TYPE);
+        RestMcuLineResource boardResource = new RestContext().prepareClient(RestMcuLineResource.class,
+                getBoardUrl(point), null, true);
 
         Float f;
         try {

@@ -44,7 +44,7 @@
 		<hibernate.version>4.1.4.Final</hibernate.version>
 		<jetty.version>8.1.5.v20120716</jetty.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
-		<camel.version>2.9.3-SNAPSHOT</camel.version>
+		<camel.version>2.10.1</camel.version>
 		<cxf.version>2.6.1</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<jackson.version>2.0.5</jackson.version>
@@ -157,20 +157,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-
-	<repositories>
-		<repository>
-			<id>apache-snapshot</id>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<url>https://repository.apache.org/content/groups/snapshots/</url>
-		</repository>
-	</repositories>
 
 	<profiles>
 		<profile>

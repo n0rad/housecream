@@ -3,7 +3,7 @@ package net.awired.housecream.server.it;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 import net.awired.ajsl.test.LoggingRule;
-import net.awired.ajsl.test.RestContext;
+import net.awired.ajsl.web.rest.RestContext;
 import net.awired.housecream.server.api.resource.HcRestMcuNotifyResource;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.InPointsResource;
