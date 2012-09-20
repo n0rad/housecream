@@ -1,6 +1,5 @@
-define(['jquery', 'HcValidator', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html' ],
-function($, bv, view, event, ZoneService, ZoneTemplate) {
-
+define(['jquery', 'restFormHandler', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html' ],
+function($, restFormHandler, view, event, ZoneService, ZoneTemplate) {
 	
 	var types = ['Land', 'Building', 'Floor', 'Room', 'Area'];
 	var validatorsInfoByParent = {};
@@ -11,15 +10,20 @@ function($, bv, view, event, ZoneService, ZoneTemplate) {
 			   validatorsInfoByParent[parent] = obj;
 			}
 	});
+	function findParentType(form) {
+		return $(form).find("Select[name=parentId]").find("option:selected").data('type');			
+	}
+	
 	function findValidator(form) {
-		var parentType = form.find("Select[name=parentId]").find("option:selected").data('type');	
+		var parentType = findParentType(form);
 		if (!parentType){
 			return validatorsInfoByParent['Land'];
 		}
 		return validatorsInfoByParent[parentType.ucFirst()];
 	}
-	
+
 	function ZoneForm(rootUrl, context) {
+		var self = this;
 		this.context = $(context);
 		this.zoneService = new ZoneService("/hcs");
 		this.rootUrl = rootUrl;
@@ -28,28 +32,23 @@ function($, bv, view, event, ZoneService, ZoneTemplate) {
 				'|submit' : function(e) {
 					e.preventDefault();
 					var formData = $(this).toObject({skipEmpty : false});
-					if (bv.isValidDisplayedForm(this, formData, findValidator($(this)))) {
-						$.ajax({
-							  url: "/hcs/ws/zone",
-							  headers: { 
-							        Accept : "application/json; charset=utf-8",
-							        "Content-Type": "application/json; charset=utf-8"
-							  },
-							  type: "PUT", 
-//							  dataType: 'json',
-							  data: JSON.stringify(formData),
-							  success: function(res) {
-								  var dd;
-							  },
-							  error : function(jqXHR, textStatus, errorThrown) {
-								  var ss;
-							  }
-							});
+					var parentType = findParentType(this);
+					var type;
+					if (parentType) {
+						type = types[types.indexOf(parentType.ucFirst()) + 1];
+					} else {
+						type = 'land';
 					}
+					formData.type = type.lcFirst();
+
+					restFormHandler.handleSubmit(this, rootUrl, "/hcs/ws/zone", findValidator(this), formData, function() {
+						  var url = self.rootUrl + '/admin/zone';
+						  History.pushState(null, url, url);
+					});
 				},
 		
 				'input[type=text], input[type=hidden], checkbox, select, textarea|keyup,blur,change' : function() {
-					bv.isValidDisplayedFormElement(this, $(this).toObject({skipEmpty : false}), findValidator($(this).closest("form")));
+					restFormHandler.handleFormElementChange(this, findValidator($(this).closest("form")));
 				}
 
 			};

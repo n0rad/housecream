@@ -44,6 +44,12 @@ function(Validator) {
 			}
 		},
 		
+		displayGlobalViolation : function(text, form) {
+			var group = $('.form-actions .control-group', form);
+			group.addClass('error');
+			$('.help-inline', group).html(text);
+		},
+		
 		clearViolations : function(form) {
 			$('.control-group.error', form).removeClass('error').find('.help-inline').html('');
 		},
