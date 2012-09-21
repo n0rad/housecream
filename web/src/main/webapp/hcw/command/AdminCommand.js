@@ -1,5 +1,5 @@
-define([ 'jquery', 'hcw/view/admin/AdminLayout', 'hcw/controller/AdminInPointController', 'hcw/controller/AdminZoneController' ],
-function($, AdminLayout, InPointController, ZoneController) {
+define([ 'jquery', 'hcw/view/admin/AdminLayout', 'hcw/controller/AdminInPointController', 'hcw/controller/AdminOutPointController', 'hcw/controller/AdminZoneController' ],
+function($, AdminLayout, InPointController, OutPointController, ZoneController) {
 	"use strict";
 	
 
@@ -18,6 +18,18 @@ function($, AdminLayout, InPointController, ZoneController) {
 				new InPointController(self.rootUrl, $('#current')).displayInPointTable();
 			}
 		};
+
+		this.outpoint = function(params, outPointId) {
+			self.adminLayout.displayAdmin();
+			if (outPointId == 'new') {
+				new OutPointController(self.rootUrl, $('#current')).displayNewOutPointForm();
+			} else if (outPointId) {
+				new OutPointController(self.rootUrl, $('#current')).displayOutPointForm(outPointId);
+			} else {
+				new OutPointController(self.rootUrl, $('#current')).displayOutPointTable();
+			}
+		};
+
 		
 		this.zone = function(params, zoneId) {
 			self.adminLayout.displayAdmin();

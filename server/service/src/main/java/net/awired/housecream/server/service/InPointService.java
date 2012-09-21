@@ -11,10 +11,12 @@ import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.router.RouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
+@Transactional
 public class InPointService implements InPointResource {
 
     @Inject
@@ -33,7 +35,6 @@ public class InPointService implements InPointResource {
     private ValidationService validationService;
 
     @Override
-    //    @Transactional(propagation = Propagation.REQUIRED)
     public long createInPoint(InPoint inPoint) {
         pointDao.save(inPoint);
         routeManager.registerPoint(inPoint);

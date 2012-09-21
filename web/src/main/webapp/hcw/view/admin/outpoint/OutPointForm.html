@@ -1,0 +1,52 @@
+<form class="form-horizontal">
+	<input type="hidden" name="id">
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="name">Point name</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="name" name="name"> <span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="url">Url</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="url" name="url">
+				<p class="help-block">Camel url to access the point</p>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Point type</label>
+			<div class="controls">
+				<select id="type" name="type">
+					<option></option>
+                    <% _.each(types, function(type) { %>                    
+                       <option value="type"><%= type %></option>
+                    <% }); %>
+				</select> <span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Zone</label>
+			<div class="zoneId controls">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle btn-success input-xlarge" data-toggle="dropdown" href="#"> Zone <span
+						class="caret" style="float: right;"></span>
+					</a> <select class="hide" name="zoneId"><option value=""></option></select>
+					<ul class="dropdown-menu">
+						<li><a href="" data-id=""><strong>Zone</strong></a></li>
+					</ul>
+					<span class="help-inline"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="Save changes" /> <a class="pushState btn"
+				href="<%= rootUrl %>/admin/inpoint">Cancel</a>
+
+			<div class="control-group error">
+				<span class="help-inline"></span>
+			</div>
+		</div>
+	</fieldset>
+</form>

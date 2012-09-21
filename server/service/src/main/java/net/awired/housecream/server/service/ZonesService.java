@@ -8,10 +8,12 @@ import net.awired.housecream.server.api.domain.zone.Zones;
 import net.awired.housecream.server.api.resource.ZonesResource;
 import net.awired.housecream.server.storage.dao.ZoneDao;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
+@Transactional
 public class ZonesService implements ZonesResource {
 
     @Inject

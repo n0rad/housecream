@@ -19,7 +19,9 @@
 			<div class="controls">
 				<select id="type" name="type">
 					<option></option>
-					<option value="PIR">PIR</option>
+                    <% _.each(types, function(type) { %>					
+					   <option value="type"><%= type %></option>
+                    <% }); %>
 				</select> <span class="help-inline"></span>
 			</div>
 		</div>
@@ -131,6 +133,11 @@
 		<div class="form-actions">
 			<input type="submit" class="btn btn-primary" value="Save changes" /> <a class="pushState btn"
 				href="<%= rootUrl %>/admin/inpoint">Cancel</a>
+				
+            <div class="control-group error">
+                <span class="help-inline"></span>
+            </div>
+				
 		</div>
 	</fieldset>
 </form>

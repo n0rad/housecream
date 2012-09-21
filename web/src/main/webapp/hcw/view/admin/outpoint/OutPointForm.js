@@ -1,12 +1,12 @@
-define(['jquery', 'restFormHandler', 'ajsl/view', 'ajsl/event', 'text!./InPointForm.html', 'hcw/service/ZoneService' ],
-function($, restFormHandler, view, event, InPointTemplate, ZoneService) {
+define(['jquery', 'restFormHandler', 'ajsl/view', 'ajsl/event', 'text!./OutPointForm.html', 'hcw/service/ZoneService' ],
+function($, restFormHandler, view, event, OutPointTemplate, ZoneService) {
 	
 	var validatorInfo = {};
-	$.getJSON('/hcs/ws/inpoint/validator.json', {}, function(data) {
+	$.getJSON('/hcs/ws/outpoint/validator.json', {}, function(data) {
 		validatorInfo = data;
 	});
-	
-	function Inpoint(rootUrl, context) {
+
+	function Outpoint(rootUrl, context) {
 		this.context = $(context);
 		this.zoneService = new ZoneService("/hcs");
 		this.rootUrl = rootUrl;
@@ -15,7 +15,7 @@ function($, restFormHandler, view, event, InPointTemplate, ZoneService) {
 			'|submit' : function(e) {
 				e.preventDefault();
 				var formData = $(this).toObject({skipEmpty : false});
-				restFormHandler.handleSubmit(this, rootUrl, "/hcs/ws/inpoint", validatorInfo, formData, function() {
+				restFormHandler.handleSubmit(this, rootUrl, "/hcs/ws/outpoint", validatorInfo, formData, function() {
 					  var url = self.rootUrl + '/admin/inpoint';
 					  History.pushState(null, url, url);
 				});
@@ -27,12 +27,12 @@ function($, restFormHandler, view, event, InPointTemplate, ZoneService) {
 		};
 	}
 
-	Inpoint.prototype = {
+	Outpoint.prototype = {
 		displayForm : function(data) {
 			var self = this;
-			$.getJSON('/hcs/ws/inpoints/types.json', {}, function(inPointTypes) { //TODO use when.js
-				var tplData = {rootUrl : self.rootUrl, types : inPointTypes};
-				self.context.html(_.template(InPointTemplate, tplData));
+			$.getJSON('/hcs/ws/outpoints/types.json', {}, function(outPointTypes) { //TODO use when.js
+				var tplData = {rootUrl : self.rootUrl, types : outPointTypes};				
+				self.context.html(_.template(OutPointTemplate, tplData));
 				
 				view.rebuildFormRec(self.context, data);
 				event.register(self.events, self.context);
@@ -44,5 +44,5 @@ function($, restFormHandler, view, event, InPointTemplate, ZoneService) {
 		}
 	};
 
-	return Inpoint;
+	return Outpoint;
 });

@@ -1,17 +1,21 @@
 package net.awired.housecream.server.service;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import net.awired.ajsl.persistence.entity.Order;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
+@Transactional
 public class InPointsService implements InPointsResource {
 
     @Inject
@@ -28,6 +32,11 @@ public class InPointsService implements InPointsResource {
         List<InPoint> inPointsFiltered = inPointDao.findFiltered(length, start, search, searchProperties, orders);
         Long count = inPointDao.findFilteredCount(search, searchProperties);
         return new InPoints(inPointsFiltered, count);
+    }
+
+    @Override
+    public List<InPointType> getInPointTypes() {
+        return Arrays.asList(InPointType.values());
     }
 
 }

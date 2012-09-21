@@ -1,10 +1,11 @@
 define(['bootstrapValidator'], 
 function(bootstrapValidator) {
 
-	zoneParentType = function(obj, attributes) {
+	noValidation = function(obj, attributes) {
 		return true;
 	};
-	bootstrapValidator.getValidator().registerConstraint('net.awired.housecream.server.api.validator.ZoneParentType', zoneParentType);
-
+	bootstrapValidator.getValidator().registerConstraint('net.awired.housecream.server.api.validator.ZoneParentType', noValidation);
+	bootstrapValidator.getValidator().registerConstraint('net.awired.ajsl.persistence.validator.ForeignId', noValidation);
+	
 	return bootstrapValidator;
 });

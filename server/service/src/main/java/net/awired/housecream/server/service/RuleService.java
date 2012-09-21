@@ -9,10 +9,12 @@ import net.awired.housecream.server.engine.builder.RuleBuilder;
 import net.awired.housecream.server.storage.dao.RuleDao;
 import org.drools.definition.KnowledgePackage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
+@Transactional
 public class RuleService implements RuleResource {
 
     @Inject
