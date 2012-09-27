@@ -1,21 +1,29 @@
 <div class="tabbable">
 	<!-- Only required for left/right tabs -->
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#tab1" data-toggle="tab">In Points</a></li>
-		<li><a href="#tab2" data-toggle="tab">Out Points</a></li>
+		<li class="active"><a href="#inPoints" data-toggle="tab">In Points</a></li>
+		<li><a href="#outPoints" data-toggle="tab">Out Points</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane active" id="tab1">
+		<div class="tab-pane active" id="inPoints">
             <% _.each(inPoints, function(point) { %>
 	            <button class="btn btn-inverse btn-toolbar btn-large">
 	               <%= point.id %>
-	               <%= point.type %>
+                   <%= point.type %>
+                   <%= point.value %>
 <!-- 	                <img src="<%= rootUrl %>/img/icon/iconset-promo.png" alt=""> -->
 	            </button>
             <% }); %>
 		</div>
-		<div class="tab-pane" id="tab2">
-			<p>hi, dfgfdgdgd dfg dfg </p>
+		<div class="tab-pane" id="outPoints">
+            <% _.each(outPoints, function(point) { %>
+                <button class="btn btn-inverse btn-toolbar btn-large">
+                   <%= point.id %>
+                   <%= point.type %>
+                   <%= point.value %>
+<!--                    <img src="<%= rootUrl %>/img/icon/iconset-promo.png" alt=""> -->
+                </button>
+            <% }); %>
 		</div>
 	</div>
 </div>

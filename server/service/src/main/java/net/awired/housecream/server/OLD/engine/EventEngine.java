@@ -2,7 +2,7 @@ package net.awired.housecream.server.OLD.engine;
 
 import java.util.Collection;
 import net.awired.housecream.server.OLD.rule.RuleRunner;
-import net.awired.housecream.server.engine.PointStat;
+import net.awired.housecream.server.api.domain.PointState;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
@@ -20,7 +20,7 @@ public class EventEngine {
 
     public static void main(String[] args) {
 
-        Object[] facts = { AlarmMode.NORMAL, new PointStat(1, 1f), new PointStat(2, 1f) };
+        Object[] facts = { AlarmMode.NORMAL, new PointState(1, 1f), new PointState(2, 1f) };
         String[] rules = new String[] { "/net/awired/housecream/server/core/engine/hcs.drl" };
 
         //

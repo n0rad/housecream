@@ -7,6 +7,7 @@ function($, restFormHandler, view, event, OutPointTemplate, ZoneService) {
 	});
 
 	function Outpoint(rootUrl, context) {
+		var self = this;
 		this.context = $(context);
 		this.zoneService = new ZoneService("/hcs");
 		this.rootUrl = rootUrl;
@@ -16,7 +17,7 @@ function($, restFormHandler, view, event, OutPointTemplate, ZoneService) {
 				e.preventDefault();
 				var formData = $(this).toObject({skipEmpty : false});
 				restFormHandler.handleSubmit(this, rootUrl, "/hcs/ws/outpoint", validatorInfo, formData, function() {
-					  var url = self.rootUrl + '/admin/inpoint';
+					  var url = self.rootUrl + '/admin/outpoint';
 					  History.pushState(null, url, url);
 				});
 			},

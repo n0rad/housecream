@@ -11,8 +11,12 @@ function($, _, ActionTpl, ZoneService) {
 	Action.prototype = {
 		displayActions : function(zoneId) {
 			var self = this;
-			zoneService.getInPoints(zoneId, function(inPoints) {
-				self.context.html(_.template(ActionTpl, {rootUrl : self.rootUrl, inPoints : inPoints}));
+
+			zoneService.getOutPoints(zoneId, function(outPoints) { //TODO use when
+				zoneService.getInPoints(zoneId, function(inPoints) {
+					var tplVars = {rootUrl : self.rootUrl, inPoints : inPoints, outPoints : outPoints};
+					self.context.html(_.template(ActionTpl, tplVars));
+				});
 			});
 		}
 	};

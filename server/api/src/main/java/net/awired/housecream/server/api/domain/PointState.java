@@ -1,8 +1,8 @@
-package net.awired.housecream.server.engine;
+package net.awired.housecream.server.api.domain;
 
 import com.google.common.base.Objects;
 
-public class PointStat {
+public class PointState {
 
     private long pointId;
     private float value;
@@ -15,7 +15,7 @@ public class PointStat {
                 .toString();
     }
 
-    public PointStat(long pointId, float value) {
+    public PointState(long pointId, float value) {
         this.pointId = pointId;
         this.value = value;
     }

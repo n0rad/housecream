@@ -13,11 +13,6 @@ public class EventService {
 
     @Async
     public void saveEventAsync(Event event) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         eventWebSocketService.sendEvent(event);
     }
 

@@ -5,18 +5,27 @@ import net.awired.housecream.server.api.domain.inpoint.InPointType;
 
 public class InPointBuilder {
 
+    private Long id;
     private String name;
     private InPointType type;
     private String url;
-    private long zoneId;
+    private Long zoneId;
 
     public InPoint build() {
         InPoint inPoint = new InPoint();
+        inPoint.setId(id);
         inPoint.setName(name);
         inPoint.setType(type);
         inPoint.setUrl(url);
-        inPoint.setZoneId(zoneId);
+        if (zoneId != null) {
+            inPoint.setZoneId(zoneId);
+        }
         return inPoint;
+    }
+
+    public InPointBuilder id(long id) {
+        this.id = id;
+        return this;
     }
 
     public InPointBuilder zoneId(long zoneId) {

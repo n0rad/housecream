@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
@@ -40,6 +41,10 @@ public interface ZoneResource {
 
     @GET
     @Path("/{id}/inpoints")
-    public List<InPoint> inpoints(@PathParam("id") long zoneId);
+    public List<InPoint> inPoints(@PathParam("id") long zoneId);
+
+    @GET
+    @Path("/{id}/outpoints")
+    public List<OutPoint> outPoints(@PathParam("id") long zoneId);
 
 }

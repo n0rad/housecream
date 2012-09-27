@@ -20,7 +20,7 @@
 				<select id="type" name="type">
 					<option></option>
                     <% _.each(types, function(type) { %>                    
-                       <option value="type"><%= type %></option>
+                       <option value="<%= type %>"><%= type %></option>
                     <% }); %>
 				</select> <span class="help-inline"></span>
 			</div>
@@ -42,7 +42,7 @@
 
 		<div class="form-actions">
 			<input type="submit" class="btn btn-primary" value="Save changes" /> <a class="pushState btn"
-				href="<%= rootUrl %>/admin/inpoint">Cancel</a>
+				href="<%= rootUrl %>/admin/outpoint">Cancel</a>
 
 			<div class="control-group error">
 				<span class="help-inline"></span>

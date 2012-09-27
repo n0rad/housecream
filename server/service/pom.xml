@@ -127,22 +127,6 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>com.fasterxml.jackson.jaxrs</groupId> -->
-		<!-- <artifactId>jackson-jaxrs-json-provider</artifactId> -->
-		<!-- <version>${jackson.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.codehaus.jackson</groupId> -->
-		<!-- <artifactId>jackson-xc</artifactId> -->
-		<!-- <version>${jackson.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.codehaus.jackson</groupId> -->
-		<!-- <artifactId>jackson-mapper-asl</artifactId> -->
-		<!-- <version>${jackson.version}</version> -->
-		<!-- </dependency> -->
-
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-servlet</artifactId>
@@ -175,6 +159,13 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.2</version>
 		</dependency>
+
+        <dependency>
+            <groupId>net.awired.housecream.server</groupId>
+            <artifactId>housecream-server-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
 
 	</dependencies>
 </project>

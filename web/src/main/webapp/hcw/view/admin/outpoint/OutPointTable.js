@@ -20,7 +20,7 @@ function($, _, event, OutPointService, OutPointTableTemplate, deleteFormTemplate
 					event.register({
 						'|submit' : function(e) {
 							e.preventDefault();
-							outPointService.deleteInPoint($("input[name=id]", this).val(), function() {
+							outPointService.deleteOutPoint($("input[name=id]", this).val(), function() {
 								tr.remove();
 								form.modal('hide');								
 							});

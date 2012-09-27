@@ -11,7 +11,7 @@ public class HousecreamContext {
     @Inject
     private ServletContext context;
 
-    private Integer port;
+    private Integer port = 8080;
     private String ip;
 
     public void provideSampleConnection(String ip, int port) {

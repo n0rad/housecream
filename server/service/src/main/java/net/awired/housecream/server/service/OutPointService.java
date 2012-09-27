@@ -55,7 +55,9 @@ public class OutPointService implements OutPointResource {
 
     @Override
     public OutPoint getOutPoint(long outPointId) throws NotFoundException {
-        return pointDao.find(outPointId);
+        OutPoint find = pointDao.find(outPointId);
+        find.setValue(stateHolder.getState(outPointId));
+        return find;
     }
 
     @Override

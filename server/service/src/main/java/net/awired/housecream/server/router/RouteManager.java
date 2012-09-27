@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import net.awired.housecream.server.HousecreamContext;
 import net.awired.housecream.server.api.domain.Point;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.resource.HcRestMcuNotifyResource;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
@@ -40,7 +41,8 @@ public class RouteManager extends RouteBuilder {
 
     public void registerPoint(Point point) {
         EndPointComponent component = ComponentType.findComponentForPoint(point);
-        String routerUrl = houseCreamContext.getConnectorContextPath() + "/ws/router";
+        String routerUrl = houseCreamContext.getConnectorContextPath() + "/ws/router"
+                + HcRestMcuNotifyResource.INNER_ROUTE_CONTEXT;
         component.updatePointNotification(point, routerUrl);
         Float currentValue = component.getCurrentValue(point, camelContext);
         stateHolder.setState(point.getId(), currentValue);
@@ -48,6 +50,7 @@ public class RouteManager extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+
         from("cxfrs://bean://restMcuNotifyEndPoint").inOnly("seda:eventHolder");
 
         //        from("seda:eventHolder").process(engineProcessor).recipientList(header("outputActions"))

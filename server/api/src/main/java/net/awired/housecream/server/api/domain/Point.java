@@ -2,6 +2,7 @@ package net.awired.housecream.server.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,12 +12,8 @@ import javax.xml.bind.annotation.XmlElement;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
 import net.awired.ajsl.persistence.validator.ForeignId;
 
-/**
- * A capture or command point (temperature, switch, ...)
- */
-//@XmlRootElement
-@XmlAccessorType(XmlAccessType.PROPERTY)
 @MappedSuperclass
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public abstract class Point extends IdEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -27,8 +24,11 @@ public abstract class Point extends IdEntityImpl<Long> {
     @NotNull
     @Size(min = 1, max = 20)
     @Column(unique = true)
-    private String name; // = "Interrupteur 42";
-    //    private String description = "Eclairage principal de la piece";
+    private String name;
+
+    @Column
+    @Size(min = 0, max = 100)
+    private String description;
 
     @NotNull
     @Column(unique = true)
@@ -38,13 +38,12 @@ public abstract class Point extends IdEntityImpl<Long> {
     @ForeignId(daoName = "zoneDao")
     private long zoneId;
 
+    @Transient
+    private Float value;
+
     //    private Device device;
 
     ////////////////////////
-
-    //    private Area area;
-
-    ////////////////////
 
     public String extractUrlPrefix() {
         if (url == null) {
@@ -92,6 +91,22 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     public void setZoneId(long zoneId) {
         this.zoneId = zoneId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Float getValue() {
+        return value;
+    }
+
+    public void setValue(Float value) {
+        this.value = value;
     }
 
 }

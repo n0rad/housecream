@@ -20,7 +20,7 @@
 				<select id="type" name="type">
 					<option></option>
                     <% _.each(types, function(type) { %>					
-					   <option value="type"><%= type %></option>
+					   <option value="<%= type %>"><%= type %></option>
                     <% }); %>
 				</select> <span class="help-inline"></span>
 			</div>

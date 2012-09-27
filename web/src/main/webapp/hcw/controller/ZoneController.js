@@ -10,6 +10,15 @@ function(ZoneService, Zone, Index, Action) {
 
 	ZoneController.prototype = {
 			displayZone : function(zoneId) {
+				var self = this;
+				if (!zoneId) {
+					this.zoneService.getZones(function(zones) {
+						var url = self.rootUrl + '/zone/' + zones.zones[0].id;
+						History.pushState(null, url, url);
+					});
+					return;
+				}
+				
 				var index = new Index(this.rootUrl, this.context);
 				index.displayIndex();
 

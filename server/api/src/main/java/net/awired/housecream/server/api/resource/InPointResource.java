@@ -28,4 +28,8 @@ public interface InPointResource extends PointResource {
     @Path("{id}")
     void deleteInPoint(@PathParam("id") long inPointId);
 
+    //    @GET
+    //    @Path("{id}/value")
+    //    Float getInPointValue(@PathParam("id") long inPointId);
+
 }

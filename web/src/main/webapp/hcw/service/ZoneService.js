@@ -17,7 +17,13 @@ function($) {
 					callback(data);
 				});
 			},
-			
+
+			getOutPoints : function(zoneId, callback) {
+				$.getJSON(this.rootUrl + '/ws/zone/' + zoneId + '/outpoints', {zoneId : zoneId}, function(data) {
+					callback(data);
+				});				
+			},
+
 			getInPoints : function(zoneId, callback) {
 				$.getJSON(this.rootUrl + '/ws/zone/' + zoneId + '/inpoints', {zoneId : zoneId}, function(data) {
 					callback(data);

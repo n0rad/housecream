@@ -9,8 +9,8 @@ import net.awired.restmcu.api.resource.client.RestMcuBoardResource;
 
 public class LatchBoardResource implements RestMcuBoardResource {
 
-    private RestMcuBoard board = new RestMcuBoard();
-    private RestMcuBoardSettings boardSettings = new RestMcuBoardSettings();
+    public final RestMcuBoard board = new RestMcuBoard();
+    public final RestMcuBoardSettings boardSettings = new RestMcuBoardSettings();
 
     private CountDownLatch setLatch = new CountDownLatch(1);
 
@@ -37,7 +37,18 @@ public class LatchBoardResource implements RestMcuBoardResource {
 
     @Override
     public void setBoardSettings(RestMcuBoardSettings boardSettings) throws UpdateException {
-        this.boardSettings = boardSettings;
+        if (boardSettings.getIp() != null) {
+            this.boardSettings.setIp(boardSettings.getIp());
+        }
+        if (boardSettings.getName() != null) {
+            this.boardSettings.setName(boardSettings.getName());
+        }
+        if (boardSettings.getNotifyUrl() != null) {
+            this.boardSettings.setNotifyUrl(boardSettings.getNotifyUrl());
+        }
+        if (boardSettings.getPort() != null) {
+            this.boardSettings.setPort(boardSettings.getPort());
+        }
         setLatch.countDown();
     }
 

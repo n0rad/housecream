@@ -7,6 +7,7 @@ function($, restFormHandler, view, event, InPointTemplate, ZoneService) {
 	});
 	
 	function Inpoint(rootUrl, context) {
+		var self = this;
 		this.context = $(context);
 		this.zoneService = new ZoneService("/hcs");
 		this.rootUrl = rootUrl;

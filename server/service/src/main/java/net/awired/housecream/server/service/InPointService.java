@@ -44,7 +44,9 @@ public class InPointService implements InPointResource {
 
     @Override
     public InPoint getInPoint(long inPointId) throws NotFoundException {
-        return pointDao.find(inPointId);
+        InPoint point = pointDao.find(inPointId);
+        point.setValue(stateHolder.getState(inPointId));
+        return point;
     }
 
     @Override

@@ -48,12 +48,12 @@
 		<cxf.version>2.6.1</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<jackson.version>2.0.5</jackson.version>
-		
+
 		<guava.version>13.0</guava.version>
 		<logback.version>0.9.26</logback.version>
 
 		<!-- TEST -->
-        <festassert.version>1.4</festassert.version>
+		<festassert.version>1.4</festassert.version>
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
 		<jacoco.version>0.5.5.201112152213</jacoco.version>
@@ -62,12 +62,17 @@
 
 	<dependencyManagement>
 		<dependencies>
-
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
 				<artifactId>housecream-server-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>net.awired.housecream.server</groupId>
+                <artifactId>housecream-server-api</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+            </dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
 				<artifactId>housecream-server-core</artifactId>
@@ -109,6 +114,27 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+            <scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<version>${festassert.version}</version>
+            <scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<defaultGoal>clean verify</defaultGoal>
 		<pluginManagement>
@@ -118,11 +144,11 @@
 					<artifactId>cargo-maven2-plugin</artifactId>
 					<version>1.2.2</version>
 				</plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.11</version>
-                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.11</version>
+				</plugin>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -163,7 +189,7 @@
 			<id>coverage</id>
 			<properties>
 				<jacoco.args>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${jacoco.file.path}"</jacoco.args>
-                <cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
+				<cargo.jvmargs>${jacoco.args} ${cargo.jvm.args}</cargo.jvmargs>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -178,7 +204,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
- 						<configuration>
+						<configuration>
 							<argLine>${jacoco.args}</argLine>
 						</configuration>
 					</plugin>

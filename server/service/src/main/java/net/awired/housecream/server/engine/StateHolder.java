@@ -1,15 +1,18 @@
 package net.awired.housecream.server.engine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.housecream.server.api.domain.PointState;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StateHolder {
 
-    private HashMap<Long, Float> states = new HashMap<Long, Float>();
+    private Map<Long, Float> states = Collections.synchronizedMap(new HashMap<Long, Float>());
 
     //TODO should be point instead of id
     public Float getState(long pointId) throws NotFoundException {
@@ -24,9 +27,12 @@ public class StateHolder {
     }
 
     public List<Object> getFacts() {
-        ArrayList<Object> arrayList = new ArrayList<Object>();
+        List<Object> arrayList = new ArrayList<Object>();
         for (Long key : states.keySet()) {
-            arrayList.add(new PointStat(key, states.get(key)));
+            Float value = states.get(key);
+            if (value != null) {
+                arrayList.add(new PointState(key, value));
+            }
         }
         return arrayList;
     }

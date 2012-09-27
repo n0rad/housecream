@@ -16,7 +16,7 @@ public class LatchLineResource implements RestMcuLineResource {
         public float value;
     }
 
-    private Map<Integer, LineInfo> lines = new HashMap<Integer, LatchLineResource.LineInfo>();
+    public Map<Integer, LineInfo> lines = new HashMap<Integer, LatchLineResource.LineInfo>();
 
     public void line(int lineId, LineInfo lineInfo) {
         lines.put(lineId, lineInfo);
