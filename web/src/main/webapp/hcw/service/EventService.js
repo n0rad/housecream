@@ -6,6 +6,10 @@ define([], function() {
 		if (!window.WebSocket) {
 			alert("WebSocket not supported by this browser");
 		}
+		
+		this.registerEventHandler = function(callback) {
+			self.eventHandler = callback;
+		};
 
 		this.join = function() {
 			var location = "ws://localhost:8888/"; //TODO wss
@@ -22,26 +26,9 @@ define([], function() {
 
 		this._onmessage = function(m) {
 			var event = $.parseJSON(m.data);
-			
-			noty({layout: 'bottomRight', text: m.data, timeout: 10000});
-			
-//			$('.ex8.error').click(function() {
-//				noty({layout: 'bottomRight', text: error_note, type: 'error'});
-//				return false;
-//			});
-//			
-//			$('.ex8.success').click(function() {
-//				noty({layout: 'bottomRight', text: success_note, type: 'success'});
-//				return false;
-//			});
-//			
-//			$('.ex8.information').click(function() {
-//				noty({layout: 'bottomRight', text: information_note, type: 'information'});
-//				return false;
-//			});
-			
-			
-			console.info("message" + m);
+			if (self.eventHandler) {
+				self.eventHandler(event);
+			}
 		};
 
 		this._onclose = function(m) {

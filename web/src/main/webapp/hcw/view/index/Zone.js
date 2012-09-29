@@ -1,8 +1,7 @@
 define(['jquery', 'underscore', 'text!./Zone.html', 'hcw/service/ZoneService', 'hcw/service/EventService'],
-function($, _, ZoneTpl, ZoneService, EventService) {
+function($, _, ZoneTpl, ZoneService) {
 	
 	
-	var eventService = new EventService();
 	var zoneService = new ZoneService('/hcs');
 	
 	function Zone(rootUrl, context) {

@@ -80,7 +80,6 @@ public class RestMcuComponent implements EndPointComponent {
     public Float getCurrentValue(Point point, CamelContext camelContext) {
         RestMcuLineResource boardResource = new RestContext().prepareClient(RestMcuLineResource.class,
                 getBoardUrl(point), null, true);
-
         Float f;
         try {
             f = boardResource.getLineValue(getLineId(point));
