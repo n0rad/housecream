@@ -1,10 +1,9 @@
 package net.awired.housecream.server.api.domain.zone;
 
-import javax.activation.MimeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,10 +31,10 @@ public abstract class Zone extends NestedSetEntityImpl<Long> {
 
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(unique = true)
     private String name;
 
-    private MimeType imageMime;
+    private String imageMime;
+    @Lob
     private byte[] image;
 
     //    @ElementCollection
@@ -75,11 +74,11 @@ public abstract class Zone extends NestedSetEntityImpl<Long> {
         this.name = name;
     }
 
-    public MimeType getImageMime() {
+    public String getImageMime() {
         return imageMime;
     }
 
-    public void setImageMime(MimeType imageMime) {
+    public void setImageMime(String imageMime) {
         this.imageMime = imageMime;
     }
 

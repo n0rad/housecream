@@ -37,6 +37,7 @@
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.generate_statistics">true</prop>
 				<prop key="hibernate.jdbc.batch_size">0</prop>
+				<prop key="hibernate.validator.apply_to_ddl">false</prop>
 				
 				<prop key="hibernate.connection.url">${database.url}</prop>
 				<prop key="hibernate.connection.username">${database.username}</prop>

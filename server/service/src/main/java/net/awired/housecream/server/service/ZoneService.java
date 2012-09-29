@@ -1,8 +1,11 @@
 package net.awired.housecream.server.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.activation.DataHandler;
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
@@ -26,6 +29,7 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import com.google.common.io.ByteStreams;
 
 @Service
 @Validated
@@ -76,11 +80,18 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
-    public String upload(MultipartBody body) {
+    public void uploadImage(long zoneId, MultipartBody body) throws NotFoundException {
         List<Attachment> allAttachments = body.getAllAttachments();
-        //        attachments.get(0).getDataHandler().get
-        //        body.getAllAttachments().get(0).getDataHandler().getInputStream()
-        return "SALUT";
+        Zone zone = zoneDao.find(zoneId);
+        DataHandler dataHandler = allAttachments.get(0).getDataHandler();
+        try {
+            InputStream inputStream = dataHandler.getInputStream();
+            zone.setImage(ByteStreams.toByteArray(inputStream));
+            zone.setImageMime(dataHandler.getContentType());
+            zoneDao.save(zone);
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read data", e);
+        }
     }
 
     @Override

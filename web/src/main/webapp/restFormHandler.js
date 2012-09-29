@@ -16,10 +16,12 @@ function($, bv) {
 					  },
 					  type: "PUT", 
 					  data: JSON.stringify(dataObject),
-					  success: function() {
+					  success: function(data, textStatus, jqXHR) {
 						  $('.form-actions', form).find('.control-group').addClass('success')
 						  	.find('.help-inline').html('Success');
-						  setTimeout(success, 1000);
+						  setTimeout(function() {
+							  success(data);
+						  }, 1000);
 					  },
 					  error : function(jqXHR, textStatus, errorThrown) {
 						  bv.displayGlobalViolation($.parseJSON(jqXHR.responseText).message, form);

@@ -37,6 +37,7 @@
             <tr>
                 <th width="30px"></th>
                 <th>Name</th>
+                <th>img</th>
                 <th width="100px">Actions</th>
             </tr>
         </thead>
@@ -45,6 +46,7 @@
             <tr>
                 <td class="selector"><input type="checkbox" name="id" value="<%= zone.id %>" /></td>
                 <td class="name"><%= zone.name %></td>
+                <td><img height="20px" src="data:<%= zone.imageMime %>;base64,<%= zone.image %>"></td>
                 <td class="actions">
                     <a class="btn btn-success btn-mini" href="#"> <i class="icon-zoom-in icon-white"></i></a>
                     <a class="pushState btn btn-info btn-mini" href="<%= rootUrl %>/admin/zone/<%= zone.id %>"> <i

@@ -35,16 +35,16 @@ public interface ZoneResource {
     void deleteZone(@PathParam("id") long zoneId);
 
     @POST
-    @Path("/test")
+    @Path("/{id}/image")
     @Consumes("multipart/form-data")
-    public String upload(MultipartBody body);
+    void uploadImage(@PathParam("id") long zoneId, MultipartBody body) throws NotFoundException;
 
     @GET
     @Path("/{id}/inpoints")
-    public List<InPoint> inPoints(@PathParam("id") long zoneId);
+    List<InPoint> inPoints(@PathParam("id") long zoneId);
 
     @GET
     @Path("/{id}/outpoints")
-    public List<OutPoint> outPoints(@PathParam("id") long zoneId);
+    List<OutPoint> outPoints(@PathParam("id") long zoneId);
 
 }

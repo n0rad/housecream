@@ -76,7 +76,7 @@ public class ZoneCreationIT {
         Attachment att = new Attachment(resourceAsStream, headers);
 
         MultipartBody body = new MultipartBody(att);
-        zoneResource.upload(body);
+        //        zoneResource.uploadImage(zoneId, body);
         //        MultipartBody body2 = client.post(body, MultipartBody.class);
     }
 }
