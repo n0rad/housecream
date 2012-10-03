@@ -347,15 +347,7 @@ function(ImageMapTpl) {
 	function gui_htmlChanged(str) {
 		var out = document.getElementById('dd_output').value;
 		if (document.getElementById('html_container')) {
-			if (out == 'css') {
-				document.getElementById('html_container').value = output_css();
-			}
-			else if (out == 'wiki') {
-				document.getElementById('html_container').value = output_wiki();
-			}
-			else {
-				document.getElementById('html_container').value = str;
-			}
+			document.getElementById('html_container').value = str;
 		}
 	}
 
@@ -437,22 +429,6 @@ function(ImageMapTpl) {
 		gui_toggleMore();
 	}
 
-	/**
-	 *	Toggles fieldset visibility by changing the className.
-	 *	External css needed with the appropriate classnames. 
-	 *	@date	2006.10.24. 22:13:34
-	 *	@author	Adam Maschek (maschek@freemail.hu)
-	 */
-	function toggleFieldset(fieldset, on) {
-		if (fieldset) {
-			if (fieldset.className == 'fieldset_off' || on == 1) {
-				fieldset.className = '';
-			}
-			else {
-				fieldset.className = 'fieldset_off';
-			}
-		}
-	}
 
 	function gui_selectArea(obj) {
 		gui_row_select(obj.aid, true, false);
@@ -489,65 +465,10 @@ function(ImageMapTpl) {
 		var temp, i;
 		var clipboard_enabled = (window.clipboardData || typeof air == 'object');
 		var output = document.getElementById('dd_output').value;
-		if (output == 'css') {
-			//css output selected
-			for (i=0; i<myimgmap.areas.length; i++) {
-				if (myimgmap.areas[i] && myimgmap.areas[i].shape != 'rect' && myimgmap.areas[i].shape != 'undefined') {
-					var others = true;
-					break;
-				}
-			}
-			if (others) {
-				if (!confirm('CSS maps only support rectangles. Are you sure you want to transform all your areas to rectangles?')) {
-					output = outputmode;
-					return false;
-				}
-				else {
-					//transform old areas
-					for (i = 0; i < props.length; i++) {
-						if (props[i] && props[i].getElementsByTagName('select')[0].value != 'rect' && myimgmap.areas[i].shape != 'undefined') {
-							var coords = props[i].getElementsByTagName('input')[2].value;
-							coords = myimgmap._normCoords(coords, 'rect', 'from'+myimgmap.areas[i].shape);
-							myimgmap.areas[i].shape = 'rect';
-							myimgmap._recalculate(i, coords);
-							myimgmap.areas[i].lastInput = coords;
-							//dropdown and new coords will be set when setmaphtml is called,see below
-						}
-					}
-				}
-			}
-			else if (myimgmap.areas.length > 0 && !confirm('CSS maps only support rectangles. Are you sure you want to use this output mode?')) {
-				output = outputmode;
-				return false;
-			}
-			temp = 'This is the generated image map HTML + CSS code. ';
-			temp+= 'Click into the textarea below and press Ctrl+C to copy the code to your clipboard. ';
-			if (clipboard_enabled) {
-				temp+= 'Alternatively you can use the clipboard icon on the right. ';
-				temp+= '<img src="example1_files/clipboard.gif" onclick="gui_toClipBoard()" style="float: right; margin: 4px; cursor: pointer;"/>';
-			}
-			temp+= 'Please note, that you have to use a positioned container to make use of the absolute coordinates ';
-			temp+= '(<a href="http://css-tricks.com/absolute-positioning-inside-relative-positioning/">read more</a>).'; 
-		}
-		else if (output == 'wiki') {
-			temp = 'This is the generated image map Wiki code to use with MediaWiki ImageMap extension. ';
-			temp+= 'Click into the textarea below and press Ctrl+C to copy the code to your clipboard. ';
-			if (clipboard_enabled) {
-				temp+= 'Alternatively you can use the clipboard icon on the right. ';
-				temp+= '<img src="example1_files/clipboard.gif" onclick="gui_toClipBoard()" style="float: right; margin: 4px; cursor: pointer;"/>';
-			}
-			temp+= 'Please note, that you might need to change the Image url ';
-			temp+= '(<a href="http://www.mediawiki.org/wiki/Extension:ImageMap">read more</a>).'; 
-		}
-		else {
-			temp = 'This is the generated image map HTML code. ';
-			temp+= 'Click into the textarea below and press Ctrl+C to copy the code to your clipboard. ';
-			if (clipboard_enabled) {
-				temp+= 'Alternatively you can use the clipboard icon on the right. ';
-				temp+= '<img src="example1_files/clipboard.gif" onclick="gui_toClipBoard()" style="float: right; margin: 4px; cursor: pointer;"/>';
-			}
-			temp+= 'Please note, that you have to attach this code to your image, via the usemap property ';
-			temp+= '(<a href="http://www.htmlhelp.com/reference/html40/special/map.html">read more</a>). '; 
+		temp = 'This is the generated image map HTML code. ';
+		if (clipboard_enabled) {
+			temp+= 'Alternatively you can use the clipboard icon on the right. ';
+			temp+= '<img src="example1_files/clipboard.gif" onclick="gui_toClipBoard()" style="float: right; margin: 4px; cursor: pointer;"/>';
 		}
 		document.getElementById('output_help').innerHTML = temp;
 		//this will reload areas and sets dropdown restrictions
@@ -581,62 +502,6 @@ function(ImageMapTpl) {
 	}
 
 
-	/** INIT SECTION **************************************************************/
-
-
-
-	/** OUTPUT FUNCTIONS **********************************************************/
-
-	/**
-	 *	Just grab the areas array and do whatever you wish.
-	 */
-	function output_css() {
-		var html, coords, top, left, width, height;
-		html = '<div class="imgmap_css_container" id="'+myimgmap.getMapId()+'">';
-		
-		//foreach areas
-		for (var i=0; i<myimgmap.areas.length; i++) {
-			if (myimgmap.areas[i]) {
-				if (myimgmap.areas[i].shape && myimgmap.areas[i].shape != 'undefined') {
-					coords = myimgmap.areas[i].lastInput;
-					top = myimgmap.areas[i].style.top;
-					left = myimgmap.areas[i].style.left;
-					width = myimgmap.areas[i].style.width;
-					height = myimgmap.areas[i].style.height;
-					html+= '<a style="position: absolute; top: '+top+'; left: '+left+'; width: '+width+'; height: '+height+';" '+
-						' alt="' + myimgmap.areas[i].aalt + '"' +
-						' title="' + myimgmap.areas[i].aalt + '"' +
-						' href="' +	myimgmap.areas[i].ahref + '"' +
-						' target="' + myimgmap.areas[i].atarget + '" ><em>' + myimgmap.areas[i].atitle + '</em></a>';
-				}
-			}
-		}
-		html+= myimgmap.waterMark + '</div>';
-		return html;
-
-	}
-
-
-	function output_wiki() {
-		var html, coords;
-		html = '<imagemap>';
-		if (typeof myimgmap.pic != 'undefined') {
-			html+= 'Image:' + myimgmap.pic.src + '|' + myimgmap.pic.title + '\n';
-		}
-		
-		//foreach areas
-		for (var i=0; i<myimgmap.areas.length; i++) {
-			if (myimgmap.areas[i]) {
-				if (myimgmap.areas[i].shape && myimgmap.areas[i].shape != 'undefined') {
-					coords = myimgmap.areas[i].lastInput.split(',').join(' ');
-					html+= myimgmap.areas[i].shape + ' ' + coords + ' [[' + myimgmap.areas[i].ahref + '|' + myimgmap.areas[i].aalt + ']]\n';
-				}
-			}
-		}
-		html+= '#' + myimgmap.waterMark + '\n</imagemap>';
-		return html;
-	}
-
 	
 	
 	
@@ -665,7 +530,6 @@ function(ImageMapTpl) {
 				bounding_box : false
 				});
 
-				//array of form elements
 				props = [];
 				outputmode = 'imgmap';
 //				gui_outputChanged();
