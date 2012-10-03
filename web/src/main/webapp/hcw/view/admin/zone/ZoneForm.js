@@ -1,5 +1,6 @@
-define(['jquery', 'restFormHandler', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html' ],
-function($, restFormHandler, view, event, ZoneService, ZoneTemplate) {
+define(['jquery', 'restFormHandler', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html', 
+        '../imagemap/ImageMap'],
+function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 	
 	var types = ['Land', 'Building', 'Floor', 'Room', 'Area'];
 	var validatorsInfoByParent = {};
@@ -108,6 +109,7 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate) {
 			}
 			this.context.html(_.template(ZoneTemplate, {rootUrl: this.rootUrl, zone: data}));
 			event.register(this.events, this.context);
+			new ImageMap($('.imageMap', this.context)).display();
 
 			this.zoneService.getZones(function(zones) {
 				$('.parentId', this.context).bootstrapSelect(zones.zones);
