@@ -1,27 +1,22 @@
 <!--[if gte IE 6]>
 <script language="javascript" type="text/javascript" src="excanvas.js"></script>
 <![endif]-->
-<form id="img_area_form">
-	<iframe id="iframe_uploader" name="uploader" src="example1_files/upload.php" scrolling="no" noresize="noresize"
-		frameborder="no" width="240" height="24"></iframe>
-	<a href="javascript:gui_loadImage(window.frames['uploader'].document.getElementById('src').getAttribute('rel'))"
-		class="source_accept">accept</a><input type="txt" id="source_url2" value="http://"> <a
-		href="javascript:gui_loadImage(document.getElementById('source_url2').value)" class="source_accept">accept</a>
-	<select id="source_url3">
-		<option value="example1_files/sample1.jpg">sample 1</option>
-	</select> <a href="javascript:gui_loadImage(document.getElementById('source_url3').value);" class="source_accept">accept</a>
-	<img src="example1_files/add.gif" onclick="myimgmap.addNewArea()" alt="Add new area" title="Add new area" /> <img
-		src="example1_files/delete.gif" onclick="myimgmap.removeArea(myimgmap.currentid)" alt="Delete selected area"
-		title="Delete selected area" /> <img src="example1_files/zoom.gif" id="i_preview" onclick="myimgmap.togglePreview();"
-		alt="Preview image map" title="Preview image map" /> <img src="example1_files/html.gif" onclick="gui_htmlShow()"
-		alt="Get image map HTML" title="Get image map HTML" /> <label for="dd_zoom">Zoom:</label> <select
-		onchange="gui_zoom(this)" id="dd_zoom">
+    <button class="btn btn-mini btn-primary" type="button" onclick="myimgmap.addNewArea()">add</button>
+    <button class="btn btn-mini btn-primary" type="button" onclick="myimgmap.removeArea(myimgmap.currentid)">delete</button>
+    <button class="btn btn-mini btn-primary" type="button" id="i_preview" onclick="myimgmap.togglePreview()">preview</button>
+    <button class="btn btn-mini btn-primary" type="button" onclick="gui_htmlShow()">html</button>
+
+	<label for="dd_zoom">Zoom:</label>
+	<select onchange="gui_zoom(this)" id="dd_zoom">
 		<option value='0.25'>25%</option>
 		<option value='0.5'>50%</option>
 		<option value='1' selected="1">100%</option>
 		<option value='2'>200%</option>
 		<option value='3'>300%</option>
-	</select> <label for="dd_output">Output:</label> <select id="dd_output" onchange="return gui_outputChanged(this)">
+	</select>
+	
+	<label for="dd_output">Output:</label>
+	<select id="dd_output" onchange="return gui_outputChanged(this)">
 		<option value='imagemap'>Standard imagemap</option>
 		<option value='css'>CSS imagemap</option>
 	</select> 
@@ -33,9 +28,8 @@
 		<option value='%h'>Label with href</option>
 		<option value='%c'>Label with coords</option>
 	</select>
-	<div id="form_container" style="clear: both;"></div>
+	<div id="form_container"></div>
 	<div id="pic_container"></div>
 	<div id="status_container"></div>
 	<div id="output_help"></div>
 	<textarea id="html_container"></textarea>
-</form>

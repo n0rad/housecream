@@ -667,7 +667,6 @@ function(ImageMapTpl) {
 
 				//array of form elements
 				props = [];
-				imgroot = 'example1_files/';
 				outputmode = 'imgmap';
 //				gui_outputChanged();
 

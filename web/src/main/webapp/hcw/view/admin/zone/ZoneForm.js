@@ -88,10 +88,6 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 						    }
 						});
 
-						
-						
-						
-						
 					});
 				},
 		
