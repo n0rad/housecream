@@ -30,6 +30,9 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 		this.rootUrl = rootUrl;
 		
 		this.events = {
+				'Select[name=parentId]|change' : function() {
+					self.imageMap.changeImage('http://localhost:8080/hcs/ws/zone/1/image');
+				},
 				'|submit' : function(e) {
 					e.preventDefault();
 					var form = $(this);
@@ -105,7 +108,8 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 			}
 			this.context.html(_.template(ZoneTemplate, {rootUrl: this.rootUrl, zone: data}));
 			event.register(this.events, this.context);
-			new ImageMap($('.imageMap', this.context)).display();
+			this.imageMap = new ImageMap($('.imageMap', this.context));
+			this.imageMap.display();
 
 			this.zoneService.getZones(function(zones) {
 				$('.parentId', this.context).bootstrapSelect(zones.zones);

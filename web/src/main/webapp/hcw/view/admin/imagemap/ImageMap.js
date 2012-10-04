@@ -1,11 +1,11 @@
-define(['jquery', 'ajsl/event', 'text!./ImageMap.html', 'js!./imgmap.js', 'js!./lang_en.js'], 
-function($, event, ImageMapTpl) {
+define(['jquery', 'underscore', 'ajsl/event', 'text!./ImageMap.html', 'text!./ImageMapRow.html', 'js!./imgmap.js', 'js!./lang_en.js'], 
+function($, _, event, ImageMapTpl, ImageMapRow) {
 	
 	
 
 	/** GLOBALS SECTION ***********************************************************/
 
-	var myimgmap, props, outputmode, imgroot;
+	var myimgmap, props, outputmode;
 
 	/** FUNCTION SECTION **********************************************************/
 
@@ -72,19 +72,19 @@ function($, event, ImageMapTpl) {
 		props[id].style.background = '#e7e7e7';
 	}
 
-	/**
-	 *	Handles delete keypress when focus is on the leading checkbox/radio.
-	 *	@author	adam 
-	 */
-	function gui_cb_keydown(e) {
-		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
-		var key = (myimgmap.isMSIE) ? event.keyCode : e.keyCode;
-		//alert(key);
-		if (key == 46) {
-			//delete pressed
-			myimgmap.removeArea(myimgmap.currentid);
-		}
-	}
+//	/**
+//	 *	Handles delete keypress when focus is on the leading checkbox/radio.
+//	 *	@author	adam 
+//	 */
+//	function gui_cb_keydown(e) {
+//		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
+//		var key = (myimgmap.isMSIE) ? event.keyCode : e.keyCode;
+//		//alert(key);
+//		if (key == 46) {
+//			//delete pressed
+//			myimgmap.removeArea(myimgmap.currentid);
+//		}
+//	}
 
 	/**
 	 *	Unchecks all checboxes/radios.
@@ -177,8 +177,6 @@ function($, event, ImageMapTpl) {
 	/**
 	 *	Called when one of the properties change, and the recalculate function
 	 *	must be called.
-	 *	@date	2006.10.24. 22:42:02
-	 *	@author	Adam Maschek (adam.maschek(at)gmail.com)
 	 */
 	function gui_input_change(e) {
 		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
@@ -220,63 +218,63 @@ function($, event, ImageMapTpl) {
 		}
 	}
 
-	/**
-	 *	Called from imgmap when a new area is added.
-	 */
-	function gui_addArea(id) {
-		//var id = props.length;
-		//id = 1;
-		props[id] = document.createElement('DIV');
-		document.getElementById('form_container').appendChild(props[id]);
-
-		props[id].id        = 'img_area_' + id;
-		props[id].aid       = id;
-		props[id].className = 'img_area';
-		//hook ROW event handlers
-		myimgmap.addEvent(props[id], 'mouseover', gui_row_mouseover);
-		myimgmap.addEvent(props[id], 'mouseout',  gui_row_mouseout);
-		myimgmap.addEvent(props[id], 'click',     gui_row_click);
-		var temp = '<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/>';
-		//temp+= '<input type="checkbox" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
-		//could be checkbox in the future
-		temp+= '<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
-		temp+= '<select name="img_shape" class="img_shape">';
-		temp+= '<option value="rect">rectangle</option>';
-		if (document.getElementById('dd_output').value != 'css') {
-			temp+= '<option value="circle">circle</option>';
-			temp+= '<option value="poly">polygon</option>';
-			temp+= '<option value="bezier1">bezier</option>';
-		}
-		temp+= '</select>';
-		temp+= 'Coords: <input type="text" name="img_coords" class="img_coords" value="">';
-		temp+= 'Href: <input type="text" name="img_href" class="img_href" value="">';
-		temp+= 'Alt: <input type="text" name="img_alt" class="img_alt" value="">';
-		temp+= 'Target: <select name="img_target" class="img_target">';
-		temp+= '<option value=""  >&lt;not set&gt;</option>';
-		temp+= '<option value="_self"  >this window</option>';
-		temp+= '<option value="_blank" >new window</option>';
-		temp+= '<option value="_top"   >top window</option>';
-		temp+= '</select>';
-		props[id].innerHTML = temp;
-		//hook more event handlers to individual inputs
-		
-		myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
-		myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
-		myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
-		myimgmap.addEvent(props[id].getElementsByTagName('input')[3],  'change', gui_input_change);
-		myimgmap.addEvent(props[id].getElementsByTagName('input')[4],  'change', gui_input_change);
-		myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_input_change);
-		myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_input_change);
-		if (myimgmap.isSafari) {
-			//need these for safari
-			myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
-			myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_row_click);
-		}
-		//set shape as nextshape if set
-		if (myimgmap.nextShape) {props[id].getElementsByTagName('select')[0].value = myimgmap.nextShape;}
-		//alert(this.props[id].parentNode.innerHTML);
-		gui_row_select(id, true);
-	}
+//	/**
+//	 *	Called from imgmap when a new area is added.
+//	 */
+//	function gui_addArea(id) {
+//		//var id = props.length;
+//		//id = 1;
+//		props[id] = document.createElement('DIV');
+//		document.getElementById('form_container').appendChild(props[id]);
+//
+//		props[id].id        = 'img_area_' + id;
+//		props[id].aid       = id;
+//		props[id].className = 'img_area';
+//		//hook ROW event handlers
+//		myimgmap.addEvent(props[id], 'mouseover', gui_row_mouseover);
+//		myimgmap.addEvent(props[id], 'mouseout',  gui_row_mouseout);
+//		myimgmap.addEvent(props[id], 'click',     gui_row_click);
+//		var temp = '<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/>';
+//		//temp+= '<input type="checkbox" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
+//		//could be checkbox in the future
+//		temp+= '<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
+//		temp+= '<select name="img_shape" class="img_shape">';
+//		temp+= '<option value="rect">rectangle</option>';
+//		if (document.getElementById('dd_output').value != 'css') {
+//			temp+= '<option value="circle">circle</option>';
+//			temp+= '<option value="poly">polygon</option>';
+//			temp+= '<option value="bezier1">bezier</option>';
+//		}
+//		temp+= '</select>';
+//		temp+= 'Coords: <input type="text" name="img_coords" class="img_coords" value="">';
+////		temp+= 'Href: <input type="text" name="img_href" class="img_href" value="">';
+////		temp+= 'Alt: <input type="text" name="img_alt" class="img_alt" value="">';
+////		temp+= 'Target: <select name="img_target" class="img_target">';
+//		temp+= '<option value=""  >&lt;not set&gt;</option>';
+//		temp+= '<option value="_self"  >this window</option>';
+//		temp+= '<option value="_blank" >new window</option>';
+//		temp+= '<option value="_top"   >top window</option>';
+//		temp+= '</select>';
+//		props[id].innerHTML = temp;
+//		//hook more event handlers to individual inputs
+//		
+//		myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
+//		myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
+//		myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
+////		myimgmap.addEvent(props[id].getElementsByTagName('input')[3],  'change', gui_input_change);
+////		myimgmap.addEvent(props[id].getElementsByTagName('input')[4],  'change', gui_input_change);
+//		myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_input_change);
+////		myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_input_change);
+//		if (myimgmap.isSafari) {
+//			//need these for safari
+//			myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
+////			myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_row_click);
+//		}
+//		//set shape as nextshape if set
+//		if (myimgmap.nextShape) {props[id].getElementsByTagName('select')[0].value = myimgmap.nextShape;}
+//		//alert(this.props[id].parentNode.innerHTML);
+//		gui_row_select(id, true);
+//	}
 
 	/**
 	 *	Called from imgmap when an area was removed.
@@ -295,49 +293,6 @@ function($, event, ImageMapTpl) {
 			catch (err) {
 				//alert('noparent');
 			}
-		}
-	}
-
-	/**
-	 *	Called from imgmap when mode changed to a given value (preview or normal)
-	 */
-	function gui_modeChanged(mode) {
-		var nodes, i;
-		if (mode == 1) {
-			//preview mode
-			if (document.getElementById('html_container')) {
-				document.getElementById('html_container').disabled = true;
-			}
-			//disable form elements (inputs and selects)
-			nodes = document.getElementById('form_container').getElementsByTagName("input");
-			for (i=0; i<nodes.length; i++) {
-				nodes[i].disabled = true;
-			}
-			nodes = document.getElementById('form_container').getElementsByTagName("select");
-			for (i=0; i<nodes.length; i++) {
-				nodes[i].disabled = true;
-			}
-			document.getElementById('i_preview').src = imgroot + 'edit.gif';
-			document.getElementById('dd_zoom').disabled = true;
-			document.getElementById('dd_output').disabled = true;
-		}
-		else {
-			//normal mode
-			if (document.getElementById('html_container')) {
-				document.getElementById('html_container').disabled = false;
-			}
-			//enable form elements (inputs and selects)
-			nodes = document.getElementById('form_container').getElementsByTagName("input");
-			for (i=0; i<nodes.length; i++) {
-				nodes[i].disabled = false;
-			}
-			nodes = document.getElementById('form_container').getElementsByTagName("select");
-			for (i=0; i<nodes.length; i++) {
-				nodes[i].disabled = false;
-			}
-			document.getElementById('i_preview').src = imgroot + 'zoom.gif';
-			document.getElementById('dd_zoom').disabled = false;
-			document.getElementById('dd_output').disabled = false;
 		}
 	}
 
@@ -392,17 +347,17 @@ function($, event, ImageMapTpl) {
 		document.getElementById('html_container').focus();
 	}
 
-	/**
-	 *	Change the labeling mode directly in imgmap config then repaint all areas.
-	 */
-	function changelabeling(obj) {
-		myimgmap.config.label = obj.value;
-		myimgmap._repaintAll();
-	}
+//	/**
+//	 *	Change the labeling mode directly in imgmap config then repaint all areas.
+//	 */
+//	function changelabeling(obj) {
+//		myimgmap.config.label = obj.value;
+//		myimgmap._repaintAll();
+//	}
 
-	function gui_selectArea(obj) {
-		gui_row_select(obj.aid, true, false);
-	}
+//	function gui_selectArea(obj) {
+//		gui_row_select(obj.aid, true, false);
+//	}
 
 //	function gui_loadImage(src) {
 //		//reset zoom dropdown
@@ -452,38 +407,106 @@ function($, event, ImageMapTpl) {
 				myimgmap.config.bounding_box = myimgmap.config.bounding_box ? false : true;
 				myimgmap.relaxAllAreas();
 			},
-			'.preview|click' : function() {
-				myimgmap.togglePreview();
+			'.labeling|change' : function() {
+				myimgmap.config.label = $(this).val();
+				myimgmap._repaintAll();
+			},
+			'.imgmapadd|click' : function() {
+				myimgmap.addNewArea();
+			},
+			'.imgmapdel|click' : function() {
+				 myimgmap.removeArea(myimgmap.currentid);
 			}
 		};
 		
 		this.imgMapCallbacks = {
-				'onStatusMessage' : function(str) {
+				onStatusMessage : function(str) {
 					$('#status_container', self.context).text(str);
 				},
-				'onHtmlChanged'   : function(str) {
-					gui_htmlChanged(str);
+				onHtmlChanged : function(str) {
+//					gui_htmlChanged(str);
 				},
-				'onModeChanged'   : function(mode) {
-					gui_modeChanged(mode);vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+				onAddArea : function(id)  {
+//					myimgmap.removeArea
+//					myimgmap.areas[obj.parentNode.aid].lastInput)
+//					myimgmap._recalculate(obj.parentNode.aid, obj.value);
+
+//					props[id].id        = 'img_area_' + id;
+//					props[id].aid       = id;
+//					props[id].className = 'img_area';
+//
+//					$('#form_container', self.context).append(_.template(ImageMapRow, {id : id}));
+//					
+//					return;
+					
+					//var id = props.length;
+					//id = 1;
+					props[id] = document.createElement('DIV');
+					document.getElementById('form_container').appendChild(props[id]);
+
+					props[id].id        = 'img_area_' + id;
+					props[id].aid       = id;
+					props[id].className = 'img_area';
+					//hook ROW event handlers
+					myimgmap.addEvent(props[id], 'mouseover', gui_row_mouseover);
+					myimgmap.addEvent(props[id], 'mouseout',  gui_row_mouseout);
+					myimgmap.addEvent(props[id], 'click',     gui_row_click);
+					var temp = '<input type="text"  name="img_id" class="img_id input-mini" value="' + id + '" readonly="1"/>';
+					//temp+= '<input type="checkbox" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
+					//could be checkbox in the future
+					temp+= '<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
+					temp+= '<select name="img_shape" class="img_shape input-small">';
+					temp+= '<option value="rect">rectangle</option>';
+					temp+= '<option value="circle">circle</option>';
+					temp+= '<option value="poly">polygon</option>';
+					temp+= '<option value="bezier1">bezier</option>';
+					temp+= '</select>';
+					temp+= 'Coords: <input type="text" name="img_coords" class="img_coords" value="">';
+//					temp+= 'Href: <input type="text" name="img_href" class="img_href" value="">';
+//					temp+= 'Alt: <input type="text" name="img_alt" class="img_alt" value="">';
+//					temp+= 'Target: <select name="img_target" class="img_target">';
+//					temp+= '<option value=""  >&lt;not set&gt;</option>';
+//					temp+= '<option value="_self"  >this window</option>';
+//					temp+= '<option value="_blank" >new window</option>';
+//					temp+= '<option value="_top"   >top window</option>';
+//					temp+= '</select>';
+					props[id].innerHTML = temp;
+					//hook more event handlers to individual inputs
+					
+//					myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
+//					myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
+					myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
+//					myimgmap.addEvent(props[id].getElementsByTagName('input')[3],  'change', gui_input_change);
+//					myimgmap.addEvent(props[id].getElementsByTagName('input')[4],  'change', gui_input_change);
+					myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_input_change);
+//					myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_input_change);
+					if (myimgmap.isSafari) {
+						//need these for safari
+						myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
+//						myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_row_click);
+					}
+					//set shape as nextshape if set
+					if (myimgmap.nextShape) {props[id].getElementsByTagName('select')[0].value = myimgmap.nextShape;}
+					//alert(this.props[id].parentNode.innerHTML);
+					gui_row_select(id, true);					
 				},
-				'onAddArea'       : function(id)  {
-					gui_addArea(id);
+				onRemoveArea : function(id)  {
+//					gui_removeArea(id);
 				},
-				'onRemoveArea'    : function(id)  {
-					gui_removeArea(id);
+				onAreaChanged : function(obj) {
+//					gui_areaChanged(obj);
 				},
-				'onAreaChanged'   : function(obj) {
-					gui_areaChanged(obj);
-				},
-				'onSelectArea'    : function(obj) {
-					gui_selectArea(obj);
+				onSelectArea : function(obj) {
+					gui_row_select(obj.aid, true, false);
 				}
 		};
 		
 	}
 
 	ImageMap.prototype = {
+			changeImage : function(url) {
+				myimgmap.loadImage(url);
+			},
 			display : function() {
 				this.context.append(ImageMapTpl);
 				event.register(this.events, this.context);
@@ -491,13 +514,13 @@ function($, event, ImageMapTpl) {
 				myimgmap = new imgmap({
 					mode : "editor",
 					custom_callbacks : {
-						'onStatusMessage' : this.imgMapCallbacks.onStatusMessage,//to display status messages on gui
-						'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},//to display updated html on gui
-						'onModeChanged'   : function(mode) {gui_modeChanged(mode);},//to switch normal and preview modes on gui
-						'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
-						'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
+						'onStatusMessage' : this.imgMapCallbacks.onStatusMessage,
+						'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},
+//						'onModeChanged'   : this.imgMapCallbacks.onModeChanged,
+						'onAddArea'       : this.imgMapCallbacks.onAddArea,
+						'onRemoveArea'    : function(id)  {gui_removeArea(id);},
 						'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},
-						'onSelectArea'    : function(obj) {gui_selectArea(obj);}//to select form element when an area is clicked
+						'onSelectArea'    : this.imgMapCallbacks.onSelectArea
 					},
 					pic_container: document.getElementById('pic_container'),
 					bounding_box : false

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import javax.activation.DataHandler;
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
@@ -95,6 +96,12 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
+    public Response getImage(long zoneId) throws NotFoundException {
+        Zone find = zoneDao.find(zoneId);
+        return Response.ok(find.getImage()).type(find.getImageMime()).build();
+    }
+
+    @Override
     public List<InPoint> inPoints(long zoneId) {
         List<InPoint> findByZone = inPointDao.findByZone(zoneId);
         for (InPoint inPoint : findByZone) {
@@ -121,4 +128,5 @@ public class ZoneService implements ZoneResource {
 
         return findByZone;
     }
+
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
@@ -38,6 +39,10 @@ public interface ZoneResource {
     @Path("/{id}/image")
     @Consumes("multipart/form-data")
     void uploadImage(@PathParam("id") long zoneId, MultipartBody body) throws NotFoundException;
+
+    @GET
+    @Path("/{id}/image")
+    Response getImage(@PathParam("id") long zoneId) throws NotFoundException;
 
     @GET
     @Path("/{id}/inpoints")
