@@ -351,15 +351,15 @@ function($, event, ImageMapTpl) {
 		}
 	}
 
-	/**
-	 *	Called from imgmap with new status string.
-	 */
-	function gui_statusMessage(str) {
-		if (document.getElementById('status_container')) {
-			document.getElementById('status_container').innerHTML = str;
-		}
-		window.defaultStatus = str;//for IE
-	}
+//	/**
+//	 *	Called from imgmap with new status string.
+//	 */
+//	function gui_statusMessage(str) {
+//		if (document.getElementById('status_container')) {
+//			document.getElementById('status_container').innerHTML = str;
+//		}
+//		window.defaultStatus = str;//for IE
+//	}
 
 	function gui_areaChanged(area) {
 		var id = area.aid;
@@ -528,7 +528,7 @@ function($, event, ImageMapTpl) {
 		
 		this.imgMapCallbacks = {
 				'onStatusMessage' : function(str) {
-					gui_statusMessage(str);
+					$('#status_container', self.context).text(str);
 				},
 				'onHtmlChanged'   : function(str) {
 					gui_htmlChanged(str);
@@ -561,7 +561,7 @@ function($, event, ImageMapTpl) {
 				myimgmap = new imgmap({
 					mode : "editor",
 					custom_callbacks : {
-						'onStatusMessage' : function(str) {gui_statusMessage(str);},//to display status messages on gui
+						'onStatusMessage' : this.imgMapCallbacks.onStatusMessage,//to display status messages on gui
 						'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},//to display updated html on gui
 						'onModeChanged'   : function(mode) {gui_modeChanged(mode);},//to switch normal and preview modes on gui
 						'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
