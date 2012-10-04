@@ -3,9 +3,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 	
 	var myimgmap, props;
 
-	/**
-	 *	Handles mouseover on props row.
-	 */
 	function gui_row_mouseover(e) {
 		if (myimgmap.is_drawing) {return;}//exit if in drawing state
 		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
@@ -15,9 +12,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 		myimgmap.highlightArea(obj.aid);
 	}
 
-	/**
-	 *	Handles mouseout on props row.
-	 */
 	function gui_row_mouseout(e) {
 		if (myimgmap.is_drawing) {return;}//exit if in drawing state
 		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
@@ -26,31 +20,25 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 		myimgmap.blurArea(obj.aid);
 	}
 
-	/**
-	 *	Handles click on props row.
-	 */
 	function gui_row_click(e) {
 		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
 		var obj = (myimgmap.isMSIE) ? window.event.srcElement : e.currentTarget;
-		//var multiple = (e.originalTarget.name == 'img_active');
-		//myimgmap.log(e.originalTarget);
 		if (typeof obj.aid == 'undefined') {obj = obj.parentNode;}
-		//gui_row_select(obj.aid, false, multiple);
 		gui_row_select(obj.aid, false, false);
 		myimgmap.currentid = obj.aid;
 	}
 
-	/**
-	 *	Handles click on a property row.
-	 *	@author	Adam Maschek (adam.maschek(at)gmail.com)
-	 *	@date	2006-06-06 16:55:29
-	 */
 	function gui_row_select(id, setfocus, multiple) {
 		if (myimgmap.is_drawing) {return;}//exit if in drawing state
 		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
 		if (!document.getElementById('img_active_'+id)) {return;}
-		//if (!multiple) 
-		gui_cb_unselect_all();
+
+		for (var i = 0; i < props.length; i++) {
+			if (props[i]) {
+				document.getElementById('img_active_'+i).checked = false;
+			}
+		}
+
 		document.getElementById('img_active_'+id).checked = 1;
 		if (setfocus) {
 			document.getElementById('img_active_'+id).focus();
@@ -65,58 +53,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 		props[id].style.background = '#e7e7e7';
 	}
 
-	/**
-	 *	Unchecks all checboxes/radios.
-	 */
-	function gui_cb_unselect_all() {
-		for (var i = 0; i < props.length; i++) {
-			if (props[i]) {
-				document.getElementById('img_active_'+i).checked = false;
-			}
-		}
-	}
-
-	/**
-	 *	Gets the position of the cursor in the input box.
-	 *	@author	Diego Perlini
-	 *	@url	http://javascript.nwbox.com/cursor_position/
-	 */
-	function getSelectionStart(obj) {
-		if (obj.createTextRange) {
-			var r = document.selection.createRange().duplicate();
-			r.moveEnd('character', obj.value.length);
-			if (r.text === '') {return obj.value.length;}
-			return obj.value.lastIndexOf(r.text);
-		}
-		else {
-			return obj.selectionStart;
-		}
-	}
-
-	/**
-	 *	Sets the position of the cursor in the input box.
-	 *	@link	http://www.codingforums.com/archive/index.php/t-90176.html
-	 */
-	function setSelectionRange(obj, start, end) {
-		if (typeof end == "undefined") {end = start;}
-		if (obj.setSelectionRange) {
-			obj.focus(); // to make behaviour consistent with IE
-			obj.setSelectionRange(start, end);
-		}
-		else if (obj.createTextRange) {
-			var range = obj.createTextRange();
-			range.collapse(true);
-			range.moveEnd('character', end);
-			range.moveStart('character', start);
-			range.select();
-		}
-	}
-
-
-	/**
-	 *	Called when one of the properties change, and the recalculate function
-	 *	must be called.
-	 */
 	function gui_input_change(e) {
 		if (myimgmap.viewmode === 1) {return;}//exit if preview mode
 		if (myimgmap.is_drawing) {return;}//exit if drawing
@@ -157,36 +93,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 		}
 	}
 
-	/**
-	 *	Called from imgmap when an area was removed.
-	 */
-	function gui_removeArea(id) {
-		if (props[id]) {
-			//shall we leave the last one?
-			var pprops = props[id].parentNode;
-			pprops.removeChild(props[id]);
-			var lastid = pprops.lastChild.aid;
-			props[id] = null;
-			try {
-				gui_row_select(lastid, true);
-				myimgmap.currentid = lastid;
-			}
-			catch (err) {
-				//alert('noparent');
-			}
-		}
-	}
-
-	/**
-	 *	Called from imgmap with the new html code when changed.
-	 */
-	function gui_htmlChanged(str) {
-		var out = document.getElementById('dd_output').value;
-		if (document.getElementById('html_container')) {
-			document.getElementById('html_container').value = str;
-		}
-	}
-
 	function gui_areaChanged(area) {
 		var id = area.aid;
 		if (props[id]) {
@@ -196,36 +102,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 			if (area.aalt)    {props[id].getElementsByTagName('input')[4].value  = area.aalt;}
 			if (area.atarget) {props[id].getElementsByTagName('select')[1].value = area.atarget;}
 		}
-	}
-
-
-	/**
-	 *	Called when the grand HTML code loses focus, and the changes must be reflected.
-	 */
-	function gui_htmlBlur() {
-		var elem = document.getElementById('html_container');
-		var oldvalue = elem.getAttribute('oldvalue');
-		if (oldvalue != elem.value && document.getElementById('dd_output').value == 'imagemap') {
-			//dirty
-			myimgmap.setMapHTML(elem.value);
-		}
-	}
-
-
-	/**
-	 *	Called when the optional html container gets focus.
-	 *	We need to memorize its old value in order to be able to
-	 *	detect changes in the code that needs to be reflected.
-	 */
-	function gui_htmlFocus() {
-		var elem = document.getElementById('html_container');
-		elem.setAttribute('oldvalue', elem.value);
-		elem.select();
-	}
-
-	function gui_htmlShow() {
-		toggleFieldset(document.getElementById('fieldset_html'), 1);
-		document.getElementById('html_container').focus();
 	}
 
 	function gui_outputChanged() {
@@ -238,8 +114,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 //		outputmode = output;
 		return true;
 	}
-
-	
 	
 	
 	function ImageMap(context) {
@@ -281,9 +155,10 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 					$('#status_container', self.context).text(str);
 				},
 				onHtmlChanged : function(str) {
-//					gui_htmlChanged(str);
+					document.getElementById('html_container').value = str;
 				},
 				onAddArea : function(id)  {
+//					myimgmap.setMapHTML(elem.value);
 //					myimgmap.removeArea
 //					myimgmap.areas[obj.parentNode.aid].lastInput)
 //					myimgmap._recalculate(obj.parentNode.aid, obj.value);
@@ -335,7 +210,12 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 					gui_row_select(id, true);					
 				},
 				onRemoveArea : function(id)  {
-//					gui_removeArea(id);
+					var pprops = props[id].parentNode;
+					pprops.removeChild(props[id]);
+					var lastid = pprops.lastChild.aid;
+					props[id] = null;
+					gui_row_select(lastid, true);
+					myimgmap.currentid = lastid;
 				},
 				onAreaChanged : function(obj) {
 //					gui_areaChanged(obj);
@@ -359,10 +239,10 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 					mode : "editor",
 					custom_callbacks : {
 						'onStatusMessage' : this.imgMapCallbacks.onStatusMessage,
-						'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},
+						'onHtmlChanged'   : this.imgMapCallbacks.onHtmlChanged,
 //						'onModeChanged'   : this.imgMapCallbacks.onModeChanged,
 						'onAddArea'       : this.imgMapCallbacks.onAddArea,
-						'onRemoveArea'    : function(id)  {gui_removeArea(id);},
+						'onRemoveArea'    : this.imgMapCallbacks.onRemoveArea,
 						'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},
 						'onSelectArea'    : this.imgMapCallbacks.onSelectArea
 					},
@@ -374,9 +254,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 				props = [];
 //				outputmode = 'imgmap';
 //				gui_outputChanged();
-
-//				myimgmap.addEvent(document.getElementById('html_container'), 'blur',  gui_htmlBlur);
-//				myimgmap.addEvent(document.getElementById('html_container'), 'focus', gui_htmlFocus);
 
 				myimgmap.loadImage('http://localhost:8080/hcw/hcw/view/admin/imagemap/example1_files/sample1.jpg');
 				
