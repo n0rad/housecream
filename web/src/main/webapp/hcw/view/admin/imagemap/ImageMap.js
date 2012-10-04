@@ -365,8 +365,6 @@ function($, event, ImageMapTpl) {
 
 	/**
 	 *	Called when the grand HTML code loses focus, and the changes must be reflected.
-	 *	@date	2006.10.24. 22:51:20
-	 *	@author	Adam Maschek (adam.maschek(at)gmail.com)
 	 */
 	function gui_htmlBlur() {
 		var elem = document.getElementById('html_container');
@@ -382,8 +380,6 @@ function($, event, ImageMapTpl) {
 	 *	Called when the optional html container gets focus.
 	 *	We need to memorize its old value in order to be able to
 	 *	detect changes in the code that needs to be reflected.
-	 *	@date	20-02-2007 17:51:16
-	 *	@author Adam Maschek (adam.maschek(at)gmail.com)
 	 */
 	function gui_htmlFocus() {
 		var elem = document.getElementById('html_container');
@@ -403,22 +399,6 @@ function($, event, ImageMapTpl) {
 		myimgmap.config.label = obj.value;
 		myimgmap._repaintAll();
 	}
-
-//	/**
-//	 *	Change the bounding box mode straight in imgmap config then relax all areas.
-//	 *	(Relax just repaints the borders and opacity.)
-//	 */
-//	function toggleBoundingBox(obj) {
-//		obj.checked = !obj.checked;
-//		obj.innerHTML = '&nbsp; bounding box';
-//		if (obj.checked) {
-//			obj.innerHTML = '&raquo; bounding box';
-//		}
-//		myimgmap.config.bounding_box = obj.checked;
-//		myimgmap.relaxAllAreas();
-//		gui_toggleMore();
-//	}
-
 
 	function gui_selectArea(obj) {
 		gui_row_select(obj.aid, true, false);
@@ -471,6 +451,9 @@ function($, event, ImageMapTpl) {
 			'.bounding|click' : function() {
 				myimgmap.config.bounding_box = myimgmap.config.bounding_box ? false : true;
 				myimgmap.relaxAllAreas();
+			},
+			'.preview|click' : function() {
+				myimgmap.togglePreview();
 			}
 		};
 		
@@ -482,7 +465,7 @@ function($, event, ImageMapTpl) {
 					gui_htmlChanged(str);
 				},
 				'onModeChanged'   : function(mode) {
-					gui_modeChanged(mode);
+					gui_modeChanged(mode);vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 				},
 				'onAddArea'       : function(id)  {
 					gui_addArea(id);

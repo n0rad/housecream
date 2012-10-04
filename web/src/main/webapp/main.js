@@ -2,7 +2,7 @@ define(['require', //
         'js!Underscore.js!order', //
 //        'js!jquery-1.7.2.js!order', //
         'js!jquery.toObject.js!order', //
-        'js!http://balupton.github.com/history.js/scripts/bundled/html4+html5/jquery.history.js!order', //
+        'js!jquery.history.js!order', //
         'js!/hcs/ws/resources/Validator.js'
         
 //        'css!jquery/jquery.marquee.min.css',
