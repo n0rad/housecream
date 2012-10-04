@@ -18,9 +18,11 @@
 	<select id="dd_output" onchange="return gui_outputChanged(this)">
 		<option value='imagemap'>Standard imagemap</option>
 		<option value='css'>CSS imagemap</option>
-	</select> 
-	<a href="" onclick="toggleBoundingBox(this); return false;">&nbsp; bounding box</a> <select
-		onchange="changelabeling(this)">
+	</select>
+	 
+    <button class="btn btn-mini btn-primary bounding" type="button">bounding box</button>
+	
+	<select onchange="changelabeling(this)">
 		<option value=''>No labeling</option>
 		<option value='%n' selected='1'>Label with numbers</option>
 		<option value='%a'>Label with alt text</option>

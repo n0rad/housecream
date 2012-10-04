@@ -351,16 +351,6 @@ function($, event, ImageMapTpl) {
 		}
 	}
 
-//	/**
-//	 *	Called from imgmap with new status string.
-//	 */
-//	function gui_statusMessage(str) {
-//		if (document.getElementById('status_container')) {
-//			document.getElementById('status_container').innerHTML = str;
-//		}
-//		window.defaultStatus = str;//for IE
-//	}
-
 	function gui_areaChanged(area) {
 		var id = area.aid;
 		if (props[id]) {
@@ -414,93 +404,48 @@ function($, event, ImageMapTpl) {
 		myimgmap._repaintAll();
 	}
 
-	/**
-	 *	Change the bounding box mode straight in imgmap config then relax all areas.
-	 *	(Relax just repaints the borders and opacity.)
-	 */
-	function toggleBoundingBox(obj) {
-		obj.checked = !obj.checked;
-		obj.innerHTML = '&nbsp; bounding box';
-		if (obj.checked) {
-			obj.innerHTML = '&raquo; bounding box';
-		}
-		myimgmap.config.bounding_box = obj.checked;
-		myimgmap.relaxAllAreas();
-		gui_toggleMore();
-	}
+//	/**
+//	 *	Change the bounding box mode straight in imgmap config then relax all areas.
+//	 *	(Relax just repaints the borders and opacity.)
+//	 */
+//	function toggleBoundingBox(obj) {
+//		obj.checked = !obj.checked;
+//		obj.innerHTML = '&nbsp; bounding box';
+//		if (obj.checked) {
+//			obj.innerHTML = '&raquo; bounding box';
+//		}
+//		myimgmap.config.bounding_box = obj.checked;
+//		myimgmap.relaxAllAreas();
+//		gui_toggleMore();
+//	}
 
 
 	function gui_selectArea(obj) {
 		gui_row_select(obj.aid, true, false);
 	}
 
-//	function gui_zoom() {
-//		var scale = document.getElementById('dd_zoom').value;
+//	function gui_loadImage(src) {
+//		//reset zoom dropdown
+//		document.getElementById('dd_zoom').value = '1';
 //		var pic = document.getElementById('pic_container').getElementsByTagName('img')[0];
-//		if (typeof pic == 'undefined') {return false;}
-//		if (typeof pic.oldwidth == 'undefined' || !pic.oldwidth) {
-//			pic.oldwidth = pic.width;
+//		if (typeof pic != 'undefined') {
+//			//delete already existing pic
+//			pic.parentNode.removeChild(pic);
+//			delete myimgmap.pic;
 //		}
-//		if (typeof pic.oldheight == 'undefined' || !pic.oldheight) {
-//			pic.oldheight = pic.height;
-//		}
-//		pic.width  = pic.oldwidth * scale;
-//		pic.height = pic.oldheight * scale;
-//		myimgmap.scaleAllAreas(scale);
+//		myimgmap.loadImage(src);
 //	}
-
-	function gui_loadImage(src) {
-		//reset zoom dropdown
-		document.getElementById('dd_zoom').value = '1';
-		var pic = document.getElementById('pic_container').getElementsByTagName('img')[0];
-		if (typeof pic != 'undefined') {
-			//delete already existing pic
-			pic.parentNode.removeChild(pic);
-			delete myimgmap.pic;
-		}
-		myimgmap.loadImage(src);
-	}
 
 	function gui_outputChanged() {
 		var temp, i;
-		var clipboard_enabled = (window.clipboardData || typeof air == 'object');
 		var output = document.getElementById('dd_output').value;
 		temp = 'This is the generated image map HTML code. ';
-		if (clipboard_enabled) {
-			temp+= 'Alternatively you can use the clipboard icon on the right. ';
-			temp+= '<img src="example1_files/clipboard.gif" onclick="gui_toClipBoard()" style="float: right; margin: 4px; cursor: pointer;"/>';
-		}
 		document.getElementById('output_help').innerHTML = temp;
 		//this will reload areas and sets dropdown restrictions
 		myimgmap.setMapHTML(myimgmap.getMapHTML());
 		outputmode = output;
 		return true;
 	}
-
-
-	/**
-	 *	Tries to copy imagemap output or text parameter to the clipboard.
-	 *	If in special environment (eg AIR), use specific functions. 
-	 *	@date	2006.10.24. 22:14:12
-	 *	@param	text	Text to copy, otherwise html_container will be used.
-	 */
-	function gui_toClipBoard(text) {
-		if (typeof text == 'undefined') {text = document.getElementById('html_container').value;}
-		try {
-			if (window.clipboardData) {
-				// IE send-to-clipboard method.
-				window.clipboardData.setData('Text', text);
-			}
-			else if (typeof air == 'object') {
-				air.Clipboard.generalClipboard.clear();
-				air.Clipboard.generalClipboard.setData("air:text", text, false);
-			}
-		}
-		catch (err) {
-			myimgmap.log("Unable to set clipboard data", 1);
-		}
-	}
-
 
 	
 	
@@ -512,7 +457,6 @@ function($, event, ImageMapTpl) {
 		this.events = {
 			'.imageMapZoom|change' : function() {
 				var scale = $(this).val();
-//				var pic = document.getElementById('pic_container').getElementsByTagName('img')[0];
 				var pic = $('#pic_container IMG', self.context)[0];
 				if (typeof pic.oldwidth == 'undefined' || !pic.oldwidth) {
 					pic.oldwidth = pic.width;
@@ -523,7 +467,11 @@ function($, event, ImageMapTpl) {
 				pic.width  = pic.oldwidth * scale;
 				pic.height = pic.oldheight * scale;
 				myimgmap.scaleAllAreas(scale);				
-			}	
+			},
+			'.bounding|click' : function() {
+				myimgmap.config.bounding_box = myimgmap.config.bounding_box ? false : true;
+				myimgmap.relaxAllAreas();
+			}
 		};
 		
 		this.imgMapCallbacks = {
@@ -557,7 +505,6 @@ function($, event, ImageMapTpl) {
 				this.context.append(ImageMapTpl);
 				event.register(this.events, this.context);
 
-				//instantiate the imgmap component, setting up some basic config values
 				myimgmap = new imgmap({
 					mode : "editor",
 					custom_callbacks : {
