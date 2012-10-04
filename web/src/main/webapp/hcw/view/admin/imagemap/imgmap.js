@@ -337,7 +337,7 @@ imgmap.prototype.setup = function(config) {
 	}
 	if (typeof imgmapStrings == 'undefined') {
 		//language file might have already been loaded (ex highlighter mode)
-		this.loadScript(this.config.baseroot + 'lang_' + this.config.lang + '.js');
+		//this.loadScript(this.config.baseroot + 'lang_' + this.config.lang + '.js');
 	}
 	
 	//check event hooks

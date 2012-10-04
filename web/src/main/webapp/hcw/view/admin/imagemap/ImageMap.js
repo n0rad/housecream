@@ -1,5 +1,5 @@
-define(['text!./ImageMap.html', 'js!./imgmap.js'], 
-function(ImageMapTpl) {
+define(['jquery', 'ajsl/event', 'text!./ImageMap.html', 'js!./imgmap.js', 'js!./lang_en.js'], 
+function($, event, ImageMapTpl) {
 	
 	
 
@@ -434,20 +434,20 @@ function(ImageMapTpl) {
 		gui_row_select(obj.aid, true, false);
 	}
 
-	function gui_zoom() {
-		var scale = document.getElementById('dd_zoom').value;
-		var pic = document.getElementById('pic_container').getElementsByTagName('img')[0];
-		if (typeof pic == 'undefined') {return false;}
-		if (typeof pic.oldwidth == 'undefined' || !pic.oldwidth) {
-			pic.oldwidth = pic.width;
-		}
-		if (typeof pic.oldheight == 'undefined' || !pic.oldheight) {
-			pic.oldheight = pic.height;
-		}
-		pic.width  = pic.oldwidth * scale;
-		pic.height = pic.oldheight * scale;
-		myimgmap.scaleAllAreas(scale);
-	}
+//	function gui_zoom() {
+//		var scale = document.getElementById('dd_zoom').value;
+//		var pic = document.getElementById('pic_container').getElementsByTagName('img')[0];
+//		if (typeof pic == 'undefined') {return false;}
+//		if (typeof pic.oldwidth == 'undefined' || !pic.oldwidth) {
+//			pic.oldwidth = pic.width;
+//		}
+//		if (typeof pic.oldheight == 'undefined' || !pic.oldheight) {
+//			pic.oldheight = pic.height;
+//		}
+//		pic.width  = pic.oldwidth * scale;
+//		pic.height = pic.oldheight * scale;
+//		myimgmap.scaleAllAreas(scale);
+//	}
 
 	function gui_loadImage(src) {
 		//reset zoom dropdown
@@ -508,27 +508,71 @@ function(ImageMapTpl) {
 	function ImageMap(context) {
 		var self = this;
 		this.context = context;
+		
+		this.events = {
+			'.imageMapZoom|change' : function() {
+				var scale = $(this).val();
+//				var pic = document.getElementById('pic_container').getElementsByTagName('img')[0];
+				var pic = $('#pic_container IMG', self.context)[0];
+				if (typeof pic.oldwidth == 'undefined' || !pic.oldwidth) {
+					pic.oldwidth = pic.width;
+				}
+				if (typeof pic.oldheight == 'undefined' || !pic.oldheight) {
+					pic.oldheight = pic.height;
+				}
+				pic.width  = pic.oldwidth * scale;
+				pic.height = pic.oldheight * scale;
+				myimgmap.scaleAllAreas(scale);				
+			}	
+		};
+		
+		this.imgMapCallbacks = {
+				'onStatusMessage' : function(str) {
+					gui_statusMessage(str);
+				},
+				'onHtmlChanged'   : function(str) {
+					gui_htmlChanged(str);
+				},
+				'onModeChanged'   : function(mode) {
+					gui_modeChanged(mode);
+				},
+				'onAddArea'       : function(id)  {
+					gui_addArea(id);
+				},
+				'onRemoveArea'    : function(id)  {
+					gui_removeArea(id);
+				},
+				'onAreaChanged'   : function(obj) {
+					gui_areaChanged(obj);
+				},
+				'onSelectArea'    : function(obj) {
+					gui_selectArea(obj);
+				}
+		};
+		
 	}
 
 	ImageMap.prototype = {
 			display : function() {
 				this.context.append(ImageMapTpl);
+				event.register(this.events, this.context);
 
 				//instantiate the imgmap component, setting up some basic config values
 				myimgmap = new imgmap({
-				mode : "editor",
-				custom_callbacks : {
-					'onStatusMessage' : function(str) {gui_statusMessage(str);},//to display status messages on gui
-					'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},//to display updated html on gui
-					'onModeChanged'   : function(mode) {gui_modeChanged(mode);},//to switch normal and preview modes on gui
-					'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
-					'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
-					'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},
-					'onSelectArea'    : function(obj) {gui_selectArea(obj);}//to select form element when an area is clicked
-				},
-				pic_container: document.getElementById('pic_container'),
-				bounding_box : false
+					mode : "editor",
+					custom_callbacks : {
+						'onStatusMessage' : function(str) {gui_statusMessage(str);},//to display status messages on gui
+						'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},//to display updated html on gui
+						'onModeChanged'   : function(mode) {gui_modeChanged(mode);},//to switch normal and preview modes on gui
+						'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
+						'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
+						'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},
+						'onSelectArea'    : function(obj) {gui_selectArea(obj);}//to select form element when an area is clicked
+					},
+					pic_container: document.getElementById('pic_container'),
+					bounding_box : false
 				});
+				myimgmap.strings = imgmapStrings;
 
 				props = [];
 				outputmode = 'imgmap';
