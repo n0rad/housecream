@@ -48,8 +48,6 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 
 					restFormHandler.handleSubmit(this, rootUrl, "/hcs/ws/zone", findValidator(this), formData, function(res) {
 						
-						
-						
 						var data = new FormData();
 						jQuery.each($('#zoneimg', form)[0].files, function(i, file) {
 						    data.append('file-'+i, file);
@@ -113,6 +111,7 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 
 			this.zoneService.getZones(function(zones) {
 				$('.parentId', this.context).bootstrapSelect(zones.zones);
+				
 				view.rebuildFormRec(this.context, data);
 			});
 			

@@ -38,11 +38,11 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 			if (self.myimgmap.viewmode === 1) {return;}//exit if preview mode
 			var obj = (self.myimgmap.isMSIE) ? window.event.srcElement : e.currentTarget;
 			if (typeof obj.aid == 'undefined') {obj = obj.parentNode;}
-			gui_row_select(obj.aid, false, false);
+			gui_row_select(obj.aid);
 			self.myimgmap.currentid = obj.aid;
 		}
 
-		function gui_row_select(id, setfocus, multiple) {
+		function gui_row_select(id) {
 			if (self.myimgmap.is_drawing) {return;}//exit if in drawing state
 			if (self.myimgmap.viewmode === 1) {return;}//exit if preview mode
 			if (!document.getElementById('img_active_'+id)) {return;}
@@ -54,9 +54,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 			}
 
 			document.getElementById('img_active_'+id).checked = 1;
-			if (setfocus) {
-				document.getElementById('img_active_'+id).focus();
-			}
 			//remove all background styles
 			for (var i = 0; i < self.props.length; i++) {
 				if (self.props[i]) {
@@ -76,7 +73,7 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 			else if (obj.name == 'img_alt')    {self.myimgmap.areas[id].aalt    = obj.value;}
 			else if (obj.name == 'img_title')  {self.myimgmap.areas[id].atitle  = obj.value;}
 			else if (obj.name == 'img_target') {self.myimgmap.areas[id].atarget = obj.value;}
-			else if (obj.name == 'img_shape') {
+			else if (obj.name == 'parentZoneCoordinatesShape') {
 				if (self.myimgmap.areas[id].shape != obj.value && self.myimgmap.areas[id].shape != 'undefined') {
 					//shape changed, adjust coords intelligently inside _normCoords
 					var coords = '';
@@ -166,16 +163,15 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 					self.myimgmap.addEvent(self.props[id], 'mouseover', gui_row_mouseover);
 					self.myimgmap.addEvent(self.props[id], 'mouseout',  gui_row_mouseout);
 					self.myimgmap.addEvent(self.props[id], 'click',     gui_row_click);
-					var temp = '<input type="text"  name="img_id" class="img_id input-mini" value="' + id + '" readonly="1"/>';
-					//temp+= '<input type="checkbox" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
-					temp+= '<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
-					temp+= '<select name="img_shape" class="img_shape input-small">';
+					var temp = '<input type="text" class="input-mini" value="' + id + '" readonly="1"/>';
+					temp+= '<input type="radio" id="img_active_'+id+'" value="'+id+'">';
+					temp+= '<select name="parentZoneCoordinatesShape" class="input-small">';
 					temp+= '<option value="rect">rectangle</option>';
 					temp+= '<option value="circle">circle</option>';
 					temp+= '<option value="poly">polygon</option>';
 					temp+= '<option value="bezier1">bezier</option>';
 					temp+= '</select>';
-					temp+= 'Coords: <input type="text" name="img_coords" class="img_coords" value="">';
+					temp+= 'Coords: <input type="text" name="parentZoneCoordinates" class="parentZoneCoordinates" value="">';
 					self.props[id].innerHTML = temp;
 					//hook more event handlers to individual inputs
 					
@@ -187,14 +183,14 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 					}
 					//set shape as nextshape if set
 					if (self.myimgmap.nextShape) {self.props[id].getElementsByTagName('select')[0].value = self.myimgmap.nextShape;}
-					gui_row_select(id, true);					
+					gui_row_select(id);					
 				},
 				onRemoveArea : function(id)  {
 					var pprops = self.props[id].parentNode;
-					pprops.removeChild(self.props[id]);
 					var lastid = pprops.lastChild.aid;
+					pprops.removeChild(self.props[id]);
 					self.props[id] = null;
-					gui_row_select(lastid, true);
+					gui_row_select(lastid);
 					self.myimgmap.currentid = lastid;
 				},
 				onAreaChanged : function(area) {
@@ -207,11 +203,11 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 					}
 				},
 				onSelectArea : function(obj) {
-					gui_row_select(obj.aid, true, false);
+					gui_row_select(obj.aid);
 				}
 		};
 
-		this;changeImage = function(url) {
+		this.changeImage = function(url) {
 			self.myimgmap.loadImage(url);
 		};
 		this.display = function() {

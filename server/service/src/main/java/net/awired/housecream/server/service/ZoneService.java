@@ -66,7 +66,7 @@ public class ZoneService implements ZoneResource {
 
     @Override
     public long createZone(Zone zone) {
-        zoneDao.persist(zone);
+        zoneDao.save(zone);
         return zone.getId();
     }
 

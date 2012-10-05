@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import net.awired.ajsl.persistence.entity.NestedSetEntityImpl;
+import net.awired.housecream.server.api.domain.CoordinateShape;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -37,12 +38,10 @@ public abstract class Zone extends NestedSetEntityImpl<Long> {
     @Lob
     private byte[] image;
 
-    //    @ElementCollection
-    //    private List<Coordinate> coverage;
-    //    private List<Coordinate> location;
-    //
-    //    private List<Point> points;
-    //    private Integer ordering;
+    private CoordinateShape parentZoneCoordinatesShape;
+    private String parentZoneCoordinates;
+
+    // TODO   private Integer ordering;
 
     @Override
     @XmlElement
@@ -88,5 +87,21 @@ public abstract class Zone extends NestedSetEntityImpl<Long> {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public CoordinateShape getParentZoneCoordinatesShape() {
+        return parentZoneCoordinatesShape;
+    }
+
+    public void setParentZoneCoordinatesShape(CoordinateShape parentZoneCoordinatesShape) {
+        this.parentZoneCoordinatesShape = parentZoneCoordinatesShape;
+    }
+
+    public String getParentZoneCoordinates() {
+        return parentZoneCoordinates;
+    }
+
+    public void setParentZoneCoordinates(String parentZoneCoordinates) {
+        this.parentZoneCoordinates = parentZoneCoordinates;
     }
 }
