@@ -36,7 +36,8 @@ function($, _, ZoneTpl, ZoneService) {
 	Zone.prototype = {
 			displayZone : function(zoneId) {
 				var self = this;
-				this.context.html(_.template(ZoneTpl, {rootUrl : this.rootUrl}));
+				var img = 'http://localhost:8080/hcs/ws/zone/' + zoneId + '/image';
+				this.context.html(_.template(ZoneTpl, {rootUrl : this.rootUrl, zoneImg : img}));
 				zoneService.getZones(function(zones) {
 					var res = [];
 					buildZoneRec(self.rootUrl, res, zones.zones, zoneId);
