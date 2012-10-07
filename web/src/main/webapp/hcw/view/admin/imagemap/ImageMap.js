@@ -22,7 +22,6 @@ function($, _, event, ImageMapTpl, ImageMapRow) {
 			if (self.myimgmap.viewmode === 1) {return;}//exit if preview mode
 			var obj = (self.myimgmap.isMSIE) ? window.event.srcElement : e.currentTarget;
 			if (typeof obj.aid == 'undefined') {obj = obj.parentNode;}
-			//console.log(obj.aid);
 			self.myimgmap.highlightArea(obj.aid);
 		}
 

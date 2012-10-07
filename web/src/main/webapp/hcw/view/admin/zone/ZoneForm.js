@@ -31,7 +31,12 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 		
 		this.events = {
 				'Select[name=parentId]|change' : function() {
-					self.imageMap.changeImage('http://localhost:8080/hcs/ws/zone/1/image');
+					if ($(this).val() !== "") {
+						$('.imageMap', self.context).show();
+					} else {
+						$('.imageMap', self.context).hide();						
+					}
+					self.imageMap.changeImage('http://localhost:8080/hcs/ws/zone/' + $(this).val() + '/image');
 				},
 				'|submit' : function(e) {
 					e.preventDefault();
