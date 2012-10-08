@@ -101,7 +101,7 @@ body {
         </div>
     </div>
     <div class="container-fluid">
-        <div id="content" class="row-fluid"></div>
+        <div id="container" class="row-fluid"></div>
         <footer>
             <p>
                 <strong>© <a href="http://housecream.awired.net">Housecream</a></strong>

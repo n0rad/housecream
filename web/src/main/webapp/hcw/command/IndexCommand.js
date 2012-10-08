@@ -3,7 +3,7 @@ function($, ZoneController) {
 	"use strict";
 
 	function IndexCommand(rootUrl) {
-		this.zoneController = new ZoneController(rootUrl, $('#content'));
+		this.zoneController = new ZoneController(rootUrl, $('#container'));
 	}
 
 	IndexCommand.prototype = {

@@ -5,7 +5,7 @@ function($, AdminLayout, InPointController, OutPointController, ZoneController) 
 
 	function AdminCommand(rootUrl) {
 		var self = this;
-		this.adminLayout = new AdminLayout(rootUrl, $('#content'));
+		this.adminLayout = new AdminLayout(rootUrl, $('#container'));
 		this.rootUrl = rootUrl;
 
 		this.inpoint = function(params, inPointId) {
