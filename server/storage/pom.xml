@@ -19,6 +19,11 @@
 			<artifactId>housecream-server-api</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>net.awired.housecream.plugins</groupId>
+            <artifactId>housecream-plugins-mail</artifactId>
+        </dependency>
+
 
 
 		<dependency>

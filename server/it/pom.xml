@@ -28,6 +28,11 @@
 			<artifactId>ajsl-test</artifactId>
 			<version>${ajsl.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.awired.restmcu</groupId>
+			<artifactId>restmcu-api</artifactId>
+			<version>${restmcu.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -72,8 +77,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-            <groupId>net.awired.housecream.server</groupId>
-            <artifactId>housecream-server-api</artifactId>
+			<groupId>net.awired.housecream.server</groupId>
+			<artifactId>housecream-server-api</artifactId>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>

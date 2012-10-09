@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.engine.Actions;
 import net.awired.housecream.server.engine.ConsequenceAction;
-import net.awired.housecream.server.router.component.EndPointComponent;
+import net.awired.housecream.server.service.PluginService;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.apache.camel.Body;
 import org.apache.camel.Message;
@@ -18,15 +18,19 @@ public class EngineResultSplitter {
     @Inject
     private OutPointDao outputDao;
 
+    @Inject
+    private PluginService pluginService;
+
     public List<Message> split(@Body Actions actions) throws Exception {
         ArrayList<Message> res = new ArrayList<Message>();
 
         for (ConsequenceAction action : actions.getActions()) {
             OutPoint outpoint = outputDao.find(action.getPointId());
 
-            EndPointComponent component = ComponentType.findComponentForPoint(outpoint);
-            Message message = component.buildOutputMessage(action, outpoint);
-            res.add(message);
+            //            outpoint.getPref!ix();
+            //            HousecreamPlugin plugin = pluginService.getPluginFromPrefix(null);
+            //            Message message = plugin.buildOutputMessage(action, outpoint);
+            //            res.add(message);
         }
 
         return res;

@@ -4,11 +4,10 @@ import javax.inject.Inject;
 import net.awired.housecream.server.HousecreamContext;
 import net.awired.housecream.server.api.domain.Point;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
-import net.awired.housecream.server.api.resource.HcRestMcuNotifyResource;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
-import net.awired.housecream.server.router.component.EndPointComponent;
+import net.awired.housecream.server.service.PluginService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -39,13 +38,15 @@ public class RouteManager extends RouteBuilder {
     @Inject
     private OutDynamicRouter dynamicRouter;
 
+    @Inject
+    private PluginService pluginService;
+
     public void registerPoint(Point point) {
-        EndPointComponent component = ComponentType.findComponentForPoint(point);
-        String routerUrl = houseCreamContext.getConnectorContextPath() + "/ws/router"
-                + HcRestMcuNotifyResource.INNER_ROUTE_CONTEXT;
-        component.updatePointNotification(point, routerUrl);
-        Float currentValue = component.getCurrentValue(point, camelContext);
-        stateHolder.setState(point.getId(), currentValue);
+        //        HousecreamPlugin plugin = pluginService.getPluginFromPrefix(point);
+        //        String routerUrl = houseCreamContext.getConnectorContextPath() + "/ws/router";
+        //        plugin.updatePointNotification(point, routerUrl);
+        //        Float currentValue = plugin.getCurrentValue(point, camelContext);
+        //        stateHolder.setState(point.getId(), currentValue);
     }
 
     @Override

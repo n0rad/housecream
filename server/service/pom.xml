@@ -22,12 +22,11 @@
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-core</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>net.awired.housecream.plugins</groupId>
+            <artifactId>housecream-plugins-api</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-web</artifactId>
-			<version>${ajsl.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -93,33 +92,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-cxf</artifactId>
-			<version>${camel.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-context</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-beans</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-asm</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-web</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-core</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
@@ -127,21 +100,11 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-servlet</artifactId>
-			<version>${camel.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-mail</artifactId>
-			<version>${camel.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-xmpp</artifactId>
-			<version>${camel.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.camel</groupId> -->
+<!-- 			<artifactId>camel-servlet</artifactId> -->
+<!-- 			<version>${camel.version}</version> -->
+<!-- 		</dependency> -->
 
 		<!-- Rules -->
 		<dependency>

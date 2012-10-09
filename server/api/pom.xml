@@ -66,11 +66,6 @@
 			<version>${ajsl.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.restmcu</groupId>
-			<artifactId>restmcu-api</artifactId>
-			<version>${restmcu.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>

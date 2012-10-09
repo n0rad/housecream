@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.concurrent.TimeUnit;
 import net.awired.ajsl.test.LoggingRule;
 import net.awired.ajsl.web.rest.RestContext;
-import net.awired.housecream.server.api.resource.HcRestMcuNotifyResource;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.api.resource.OutPointResource;
@@ -13,6 +12,7 @@ import net.awired.housecream.server.api.resource.RuleResource;
 import net.awired.housecream.server.api.resource.RulesResource;
 import net.awired.housecream.server.api.resource.ZoneResource;
 import net.awired.housecream.server.api.resource.ZonesResource;
+import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
 import org.eclipse.jetty.websocket.WebSocketClient;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
@@ -71,10 +71,10 @@ public class HcsItServer extends LoggingRule {
                 hcsItSession.isJson());
     }
 
-    public HcRestMcuNotifyResource notifyResource() {
+    public RestMcuNotifyResource notifyResource() {
         HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(HcRestMcuNotifyResource.class, HcsItContext.getUrl(),
-                hcsItSession.getSessionId(), hcsItSession.isJson());
+        return context.prepareClient(RestMcuNotifyResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
+                hcsItSession.isJson());
     }
 
     public HcwWebSocket webSocketConnection() {

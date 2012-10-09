@@ -26,9 +26,14 @@
 	</licenses>
 
 	<modules>
-		<module>server</module>
-		<module>web</module>
+        <module>camel/restmcu</module>
 
+        <module>plugins/api</module>
+        <module>plugins/restmcu</module>
+        <module>plugins/mail</module>
+
+        <module>server</module>
+		<module>web</module>
 		<module>release</module>
 	</modules>
 
@@ -104,13 +109,38 @@
 				<artifactId>housecream-server-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>net.awired.housecream</groupId>
 				<artifactId>housecream-web</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 			</dependency>
+
+            <!-- CAMEL -->
+            <dependency>
+                <groupId>net.awired.housecream.camel</groupId>
+                <artifactId>housecream-camel-restmcu</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- PLUGINS -->
+            <dependency>
+                <groupId>net.awired.housecream.plugins</groupId>
+                <artifactId>housecream-plugins-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.awired.housecream.plugins</groupId>
+                <artifactId>housecream-plugins-restmcu</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.awired.housecream.plugins</groupId>
+                <artifactId>housecream-plugins-mail</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            
 		</dependencies>
 	</dependencyManagement>
 
