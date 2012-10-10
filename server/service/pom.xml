@@ -26,6 +26,13 @@
             <groupId>net.awired.housecream.plugins</groupId>
             <artifactId>housecream-plugins-api</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>net.awired.ajsl</groupId>
+            <artifactId>ajsl-web</artifactId>
+            <version>${ajsl.version}</version>
+        </dependency>
+
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -45,6 +52,11 @@
 			<version>${jetty.version}</version>
 		</dependency>
         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
@@ -61,33 +73,13 @@
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
 			<version>${camel.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-beans</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
+ 			<exclusions>
 				<exclusion>
 					<artifactId>spring-aop</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>spring-context</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-asm</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-expression</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
 					<artifactId>spring-tx</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-core</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
 			</exclusions>

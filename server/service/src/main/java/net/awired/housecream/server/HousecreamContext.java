@@ -6,6 +6,7 @@ import net.awired.ajsl.core.io.NetworkUtils;
 import org.springframework.stereotype.Component;
 
 @Component
+@Deprecated
 public class HousecreamContext {
 
     @Inject

@@ -52,7 +52,7 @@ public class RouteManager extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("cxfrs://bean://restMcuNotifyEndPoint").inOnly("seda:eventHolder");
+        //        from("cxfrs://bean://restMcuNotifyEndPoint").inOnly("seda:eventHolder");
 
         //        from("seda:eventHolder").process(engineProcessor).recipientList(header("outputActions"))
         //                .onPrepare(new OuptutPreProcessor()).parallelProcessing();

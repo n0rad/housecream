@@ -29,7 +29,6 @@
 			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 		</jaxrs:outInterceptors>
 		<jaxrs:serviceBeans>
-			<ref bean="restMcuNotifyResourceEndPoint" />
 			<ref bean="resourceService" />
 			<ref bean="inPointService" />
 			<ref bean="inPointsService" />
@@ -86,23 +85,6 @@
 			<ref bean="objectMapper" />
 		</property>
 	</bean>
-
-	<!-- <cxf:rsClient id="rsClient" address="http://localhost:5879/" serviceClass="net.awired.housecream.server.core.service.web.Toto42" 
-		loggingFeatureEnabled="true" /> -->
-
-	<!-- Defined the server endpoint to create the cxf-rs consumer -->
-	<cxf:rsServer id="restMcuNotifyEndPoint" address="/router"
-		serviceClass="net.awired.housecream.server.service.web.RestMcuNotifyResourceEndPoint">
-		<cxf:providers>
-			<ref bean="jaxbProvider" />
-			<ref bean="jsonProvider" />
-			<ref bean="ajslExceptionMapper" />
-			<ref bean="ajslRuntimeExceptionMapper" />
-			<ref bean="ajslValidationExceptionMapper" />
-			<ref bean="ajslResponseExceptionMapper" />
-		</cxf:providers>
-	</cxf:rsServer>
-
 
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
 		<routeBuilder ref="routeManager" />

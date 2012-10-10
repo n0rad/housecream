@@ -22,6 +22,7 @@ public class RestMcuCamelNotifyResource implements RestMcuNotifyResource {
 
     @Override
     public void lineNotification(RestMcuLineNotification pinNotification) {
+        //TODO check remote address to be sure it match the source
         Exchange camelExchange = endpoint.createExchange(ExchangePattern.InOnly);
         Message in = camelExchange.getIn();
         in.setBody(pinNotification);
@@ -34,6 +35,7 @@ public class RestMcuCamelNotifyResource implements RestMcuNotifyResource {
 
     @Override
     public void boardNotification(RestMcuBoardNotification boardNotification) {
+        //TODO check remote address to be sure it match the source
         Exchange camelExchange = endpoint.createExchange(ExchangePattern.InOnly);
         Message in = camelExchange.getIn();
         in.setBody(boardNotification);
