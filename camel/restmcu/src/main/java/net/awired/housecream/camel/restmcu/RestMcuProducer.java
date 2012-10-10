@@ -32,7 +32,7 @@ public class RestMcuProducer extends DefaultProducer {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Float value = (Float) exchange.getIn().getBody();
+        Float value = exchange.getIn().getBody(Float.class);
         restMcuClient.setLineValue(lineId, value);
     }
 

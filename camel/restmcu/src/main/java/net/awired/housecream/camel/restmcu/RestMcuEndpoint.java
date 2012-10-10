@@ -1,5 +1,6 @@
 package net.awired.housecream.camel.restmcu;
 
+import java.net.URI;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -28,11 +29,21 @@ public class RestMcuEndpoint extends DefaultEndpoint {
 
     @Override
     public Consumer createConsumer(Processor processor) throws Exception {
-        return new RestMcuPoolConsumer(this, processor);
+        return new RestMcuConsumer(this, processor);
     }
 
     @Override
     public boolean isSingleton() {
         return true;
     }
+
+    public String getRestMcuUrl() {
+        URI uri = getEndpointConfiguration().getURI();
+        String url = "http://" + uri.getHost();
+        if (uri.getPort() != -1) {
+            url += ":" + uri.getPort();
+        }
+        return url;
+    }
+
 }

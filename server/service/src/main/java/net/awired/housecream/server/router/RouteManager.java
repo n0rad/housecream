@@ -69,6 +69,18 @@ public class RouteManager extends RouteBuilder {
             }
         });
 
+        //        ConsumerTemplate createConsumerTemplate = context.createConsumerTemplate();
+        //        createConsumerTemplate.
+
+        //        ProducerTemplate template = context.createProducerTemplate();
+        //
+        //        // Send to a specific queue
+        //        template.sendBody("activemq:MyQueue", "<hello>world!</hello>");
+        //
+        //        // Send with a body and header 
+        //        template.sendBodyAndHeader("activemq:MyQueue", "<hello>world!</hello>", "CustomerRating", "Gold");
+        //        template.send("activemq:MyQueue", new MyProcessor());
+
         //        .to("log:org.apache.camel.example?level=INFO&showProperties=true&showHeaders=true")
         //                .to("xmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
 
