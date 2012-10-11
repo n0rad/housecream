@@ -35,13 +35,17 @@ public class InPointsService implements InPointsResource {
     public void postConstruct() {
         List<InPoint> findAll = inPointDao.findAll();
         for (InPoint inPoint : findAll) {
-            routeManager.registerPoint(inPoint);
+            routeManager.registerPointRoute(inPoint);
         }
     }
 
     @Override
     public void deleteAllInPoints() {
-        inPointDao.deleteAll();
+        List<InPoint> findAll = inPointDao.findAll();
+        for (InPoint point : findAll) {
+            routeManager.removePointRoute(point);
+            inPointDao.delete(point.getId());
+        }
     }
 
     @Override

@@ -2,14 +2,15 @@ package net.awired.housecream.server.it.usecase;
 
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.test.RestServerRule;
+import net.awired.housecream.camel.restmcu.LatchBoardResource;
+import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.LineInfoBuilder;
+import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
-import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchLineResource;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -19,10 +20,11 @@ public class OutPointCreationIT {
     public HcsItServer hcs = new HcsItServer();
 
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchBoardResource.class,
-            LatchLineResource.class);
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchBoardResource(),
+            new LatchLineResource());
 
     @Test
+    @Ignore("not ready yet")
     public void should_update_notify_url_when_create_point() throws Exception {
         restmcu.getResource(LatchLineResource.class).line(4, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());

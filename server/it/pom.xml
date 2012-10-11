@@ -82,6 +82,11 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>net.awired.housecream.camel</groupId>
+            <artifactId>housecream-camel-restmcu</artifactId>
+            <type>test-jar</type>
+        </dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

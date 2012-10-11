@@ -35,13 +35,17 @@ public class OutPointsService implements OutPointsResource {
     public void postConstruct() {
         List<OutPoint> findAll = outPointDao.findAll();
         for (OutPoint outPoint : findAll) {
-            routeManager.registerPoint(outPoint);
+            routeManager.registerPointRoute(outPoint);
         }
     }
 
     @Override
     public void deleteAllOutPoints() {
-        outPointDao.deleteAll();
+        List<OutPoint> findAll = outPointDao.findAll();
+        for (OutPoint point : findAll) {
+            routeManager.removePointRoute(point);
+            outPointDao.delete(point.getId());
+        }
     }
 
     @Override

@@ -3,6 +3,8 @@ package net.awired.housecream.server.it.creation;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import net.awired.ajsl.test.RestServerRule;
+import net.awired.housecream.camel.restmcu.LatchBoardResource;
+import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.rule.Condition;
@@ -11,8 +13,6 @@ import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.LineInfoBuilder;
-import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
@@ -28,8 +28,8 @@ public class SwitchPointCreationIT {
     public HcsItServer hcs = new HcsItServer();
 
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", LatchLineResource.class,
-            LatchBoardResource.class);
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchLineResource(),
+            new LatchBoardResource());
 
     @Test
     @Ignore
@@ -49,7 +49,7 @@ public class SwitchPointCreationIT {
 
         RestMcuLineNotification pinNotif = new NotifBuilder().lineId(2).oldValue(0).value(1).source("127.0.0.1:5879")
                 .notify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1).build();
-        hcs.notifyResource().lineNotification(pinNotif);
+        restmcu.getResource(LatchBoardResource.class).buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif);
 
         Thread.sleep(1000);
 

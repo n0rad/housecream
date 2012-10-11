@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it.builder;
 
-import net.awired.housecream.server.it.restmcu.LatchLineResource.LineInfo;
+import net.awired.housecream.camel.restmcu.LatchLineResource.LineInfo;
 import net.awired.restmcu.api.domain.line.RestMcuLine;
 import net.awired.restmcu.api.domain.line.RestMcuLineSettings;
 

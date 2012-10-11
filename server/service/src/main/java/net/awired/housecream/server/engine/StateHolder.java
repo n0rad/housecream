@@ -16,9 +16,9 @@ public class StateHolder {
 
     //TODO should be point instead of id
     public Float getState(long pointId) throws NotFoundException {
-        if (!states.containsKey(pointId)) {
-            throw new NotFoundException("No state for point with Id " + pointId);
-        }
+        //        if (!states.containsKey(pointId)) {
+        //            throw new NotFoundException("No state for point with Id " + pointId);
+        //        }
         return states.get(pointId);
     }
 

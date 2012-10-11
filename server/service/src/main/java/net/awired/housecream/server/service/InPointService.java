@@ -37,7 +37,7 @@ public class InPointService implements InPointResource {
     @Override
     public long createInPoint(InPoint inPoint) {
         pointDao.save(inPoint);
-        routeManager.registerPoint(inPoint);
+        routeManager.registerPointRoute(inPoint);
         engine.registerPoint(inPoint);
         return inPoint.getId();
     }
@@ -51,7 +51,13 @@ public class InPointService implements InPointResource {
 
     @Override
     public void deleteInPoint(long inPointId) {
-        pointDao.delete(inPointId);
+        try {
+            InPoint point = pointDao.find(inPointId);
+            routeManager.removePointRoute(point);
+            pointDao.delete(point.getId());
+        } catch (NotFoundException e) {
+            // nothing to do if trying to remove a point that is already not there
+        }
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.awired.housecream.server.api.resource.RuleResource;
 import net.awired.housecream.server.api.resource.RulesResource;
 import net.awired.housecream.server.api.resource.ZoneResource;
 import net.awired.housecream.server.api.resource.ZonesResource;
-import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
 import org.eclipse.jetty.websocket.WebSocketClient;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
@@ -68,12 +67,6 @@ public class HcsItServer extends LoggingRule {
     public ZonesResource zonesResource() {
         HcsItSession hcsItSession = new HcsItSession();
         return context.prepareClient(ZonesResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
-    }
-
-    public RestMcuNotifyResource notifyResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(RestMcuNotifyResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
                 hcsItSession.isJson());
     }
 

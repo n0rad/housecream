@@ -27,6 +27,12 @@
             <artifactId>housecream-plugins-api</artifactId>
         </dependency>
         
+        <!-- plugins -->
+        <dependency>
+            <groupId>net.awired.housecream.plugins</groupId>
+            <artifactId>housecream-plugins-restmcu</artifactId>        
+        </dependency>
+        
         <dependency>
             <groupId>net.awired.ajsl</groupId>
             <artifactId>ajsl-web</artifactId>

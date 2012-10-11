@@ -27,7 +27,7 @@ public class EngineResultSplitter {
         for (ConsequenceAction action : actions.getActions()) {
             OutPoint outpoint = outputDao.find(action.getPointId());
 
-            //            outpoint.getPref!ix();
+            //            outpoint.getPrefix();
             //            HousecreamPlugin plugin = pluginService.getPluginFromPrefix(null);
             //            Message message = plugin.buildOutputMessage(action, outpoint);
             //            res.add(message);

@@ -38,7 +38,7 @@ public class OutPointService implements OutPointResource {
     @Override
     public long createOutPoint(OutPoint outPoint) {
         pointDao.save(outPoint);
-        routeManager.registerPoint(outPoint);
+        routeManager.registerPointRoute(outPoint);
         engine.registerPoint(outPoint);
         return outPoint.getId();
     }
@@ -62,6 +62,12 @@ public class OutPointService implements OutPointResource {
 
     @Override
     public void deleteOutPoint(long outPointId) {
-        pointDao.delete(outPointId);
+        try {
+            OutPoint point = pointDao.find(outPointId);
+            routeManager.removePointRoute(point);
+            pointDao.delete(point.getId());
+        } catch (NotFoundException e) {
+            // nothing to do if trying to remove a point that is already not there
+        }
     }
 }
