@@ -83,7 +83,6 @@ public class RouteManager extends RouteBuilder {
                 stateHolder.setState(action.getPointId(), action.getValue());
             }
         });
-
     }
 
 }

@@ -2,7 +2,6 @@ package net.awired.housecream.server.it.restmcu;
 
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
-import net.awired.ajsl.web.rest.RestContext;
 import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
@@ -23,8 +22,7 @@ public class EmulatorLineResource extends LatchLineResource {
     }
 
     private void notifyChange(Integer lineId, Float oldValue) {
-        RestMcuNotifyResource client = new RestContext().prepareClient(RestMcuNotifyResource.class, boardResource
-                .getBoardSettings().getNotifyUrl(), null, true);
+        RestMcuNotifyResource client = boardResource.buildNotifyProxyFromNotifyUrl();
 
         RestMcuLineNotification lineNotification = new RestMcuLineNotification();
         lineNotification.setId(lineId);

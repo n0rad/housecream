@@ -47,6 +47,7 @@ public class RestMcuConsumer extends DefaultConsumer {
     @Override
     protected void doStop() throws Exception {
         server.stop();
+        server.destroy();
         super.doStop();
     }
 

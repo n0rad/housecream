@@ -22,22 +22,30 @@
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-core</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>net.awired.housecream.plugins</groupId>
-            <artifactId>housecream-plugins-api</artifactId>
-        </dependency>
-        
-        <!-- plugins -->
-        <dependency>
-            <groupId>net.awired.housecream.plugins</groupId>
-            <artifactId>housecream-plugins-restmcu</artifactId>        
-        </dependency>
-        
-        <dependency>
-            <groupId>net.awired.ajsl</groupId>
-            <artifactId>ajsl-web</artifactId>
-            <version>${ajsl.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>net.awired.housecream.plugins</groupId>
+			<artifactId>housecream-plugins-api</artifactId>
+		</dependency>
+
+		<!-- plugins -->
+		<dependency>
+			<groupId>net.awired.housecream.plugins</groupId>
+			<artifactId>housecream-plugins-restmcu</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.housecream.plugins</groupId>
+			<artifactId>housecream-plugins-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.housecream.plugins</groupId>
+			<artifactId>housecream-plugins-xmpp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.awired.ajsl</groupId>
+			<artifactId>ajsl-web</artifactId>
+			<version>${ajsl.version}</version>
+		</dependency>
 
 
 		<dependency>
@@ -57,16 +65,16 @@
 			<artifactId>jetty-websocket</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
 
 		<!-- camel -->
@@ -79,7 +87,7 @@
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
 			<version>${camel.version}</version>
- 			<exclusions>
+			<exclusions>
 				<exclusion>
 					<artifactId>spring-aop</artifactId>
 					<groupId>org.springframework</groupId>
@@ -98,11 +106,11 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.camel</groupId> -->
-<!-- 			<artifactId>camel-servlet</artifactId> -->
-<!-- 			<version>${camel.version}</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.camel</groupId> -->
+		<!-- <artifactId>camel-servlet</artifactId> -->
+		<!-- <version>${camel.version}</version> -->
+		<!-- </dependency> -->
 
 		<!-- Rules -->
 		<dependency>
@@ -121,12 +129,12 @@
 			<version>1.4.2</version>
 		</dependency>
 
-        <dependency>
-            <groupId>net.awired.housecream.server</groupId>
-            <artifactId>housecream-server-api</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>net.awired.housecream.server</groupId>
+			<artifactId>housecream-server-api</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 </project>

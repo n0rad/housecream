@@ -31,6 +31,7 @@
         <module>plugins/api</module>
         <module>plugins/restmcu</module>
         <module>plugins/mail</module>
+        <module>plugins/xmpp</module>
 
         <module>server</module>
 		<module>web</module>
@@ -143,6 +144,11 @@
             <dependency>
                 <groupId>net.awired.housecream.plugins</groupId>
                 <artifactId>housecream-plugins-mail</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.awired.housecream.plugins</groupId>
+                <artifactId>housecream-plugins-xmpp</artifactId>
                 <version>${project.version}</version>
             </dependency>
             

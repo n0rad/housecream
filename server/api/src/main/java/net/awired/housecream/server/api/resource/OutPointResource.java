@@ -24,8 +24,11 @@ public interface OutPointResource extends PointResource {
     @Path("{id}")
     void deleteOutPoint(@PathParam("id") long outPointId);
 
+    @PUT
+    @Path("{id}/value")
+    void setValue(@PathParam("id") long outPointId, Float value);
+
     @GET
     @Path("/validator")
-    public ClientValidatorInfo getOutPointValidator();
-
+    ClientValidatorInfo getOutPointValidator();
 }
