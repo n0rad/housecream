@@ -29,6 +29,10 @@ public class LatchLineResource implements RestMcuLineResource {
         return lines.get(lineId);
     }
 
+    public void resetValueLatch(int lineId) {
+        lines.get(lineId).valueLatch = new CountDownLatch(1);
+    }
+
     public float awaitLineValue(int lineId) throws InterruptedException {
         LineInfo lineInfo = lines.get(lineId);
         if (!lineInfo.valueLatch.await(10, TimeUnit.SECONDS)) {

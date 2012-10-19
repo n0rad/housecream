@@ -40,6 +40,7 @@ public class EngineProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+
         Event body = exchange.getIn().getBody(Event.class);
         eventService.saveEventAsync(body);
 
@@ -66,6 +67,7 @@ public class EngineProcessor implements Processor {
 
         ksession.retract(outputFact);
         ksession.retract(eventFact);
+        Collection<FactHandle> factHandles = ksession.getFactHandles();
         stateHolder.setState(body.getPointId(), body.getValue());
 
         logger.close();

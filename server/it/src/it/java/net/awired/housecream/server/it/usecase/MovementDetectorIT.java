@@ -2,7 +2,6 @@ package net.awired.housecream.server.it.usecase;
 
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.fail;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.camel.restmcu.LatchBoardResource;
 import net.awired.housecream.camel.restmcu.LatchLineResource;
@@ -69,8 +68,11 @@ public class MovementDetectorIT {
 
     @Test
     public void should_toggle_light_state() throws Exception {
-        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
-        restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
+        LatchLineResource lineResource = restmcu.getResource(LatchLineResource.class);
+        LatchBoardResource boardResource = restmcu.getResource(LatchBoardResource.class);
+
+        lineResource.line(2, new LineInfoBuilder().value(1).build());
+        lineResource.line(3, new LineInfoBuilder().value(1).build());
 
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
 
@@ -100,50 +102,23 @@ public class MovementDetectorIT {
         rule2.getConsequences().add(new Consequence(outPointId, 0));
         hcs.ruleResource().createRule(rule2);
 
-        //notif
-        RestMcuLineNotification pinNotif = new NotifBuilder().lineId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(SUP_OR_EQUAL, 1).build();
-        LatchBoardResource boardResource = restmcu.getResource(LatchBoardResource.class);
-        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif);
+        RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)
+                .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();
+        RestMcuLineNotification pinNotif0 = new NotifBuilder().lineId(2).oldValue(1).value(0)
+                .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();
 
-        assertThat(boardResource.awaitUpdateSettings().getNotifyUrl()).isNotNull();
-        assertThat(restmcu.getResource(LatchLineResource.class).awaitLineValue(3)).isEqualTo(1);
+        //notif
+        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
+        assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
 
         //notif2
-        RestMcuLineNotification pinNotif2 = new NotifBuilder().lineId(2).oldValue(1).value(0)
-                .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();
-        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif2);
+        lineResource.resetValueLatch(3);
+        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
+        assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
 
-        assertThat(boardResource.awaitUpdateSettings().getNotifyUrl()).isNotNull();
-        assertThat(restmcu.getResource(LatchLineResource.class).awaitLineValue(3)).isEqualTo(0);
-
-        //        latch.await(10, TimeUnit.SECONDS);
-        //        latch = new CountDownLatch(1);
-        //
-        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
-        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
-        //        assertEquals((Float) 1f, outputValue);
-        //
-        //        hcs.notifyResource().pinNotification(
-        //                new NotifBuilder().pinId(2).oldValue(1).value(0).source("127.0.0.1:5879")
-        //                        .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build());
-        //
-        //        Thread.sleep(500);
-        //
-        //        assertEquals((Float) 0f, hcs.inPointResource().getPointValue(inPointId));
-        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(outPointId));
-        //        assertEquals((Float) 1f, outputValue);
-        //
-        //        hcs.notifyResource().pinNotification(
-        //                new NotifBuilder().pinId(2).oldValue(1).value(1).source("127.0.0.1:5879")
-        //                        .notify(RestMcuPinNotifyCondition.SUP_OR_EQUAL, 1).build());
-        //
-        //        latch.await(10, TimeUnit.SECONDS);
-        //
-        //        assertEquals((Float) 1f, hcs.inPointResource().getPointValue(inPointId));
-        //        assertEquals((Float) 0f, hcs.inPointResource().getPointValue(outPointId));
-        //        assertEquals((Float) 0f, outputValue);
-        fail();
-
+        //notif3
+        lineResource.resetValueLatch(3);
+        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
+        assertThat(lineResource.awaitLineValue(3)).isEqualTo(1);
     }
 }

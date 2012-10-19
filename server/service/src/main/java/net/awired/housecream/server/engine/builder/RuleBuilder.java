@@ -92,19 +92,19 @@ public class RuleBuilder {
         }
 
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("not ConsequenceAction(pointId == ");
-            builder.append(consequence.getOutPointId());
-            builder.append(") from $a\n");
+            //            builder.append("not ConsequenceAction(pointId == (long)");
+            //            builder.append(consequence.getOutPointId());
+            //            builder.append(") from $a\n");
+            builder.append("not Flag(pointId == " + consequence.getOutPointId() + ")\n");
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
             builder.append("$a.add(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
-                    + consequence.getValue() + "));");
-
+                    + consequence.getValue() + "));\n");
+            builder.append("insert(new Flag(" + consequence.getOutPointId() + ") );\n");
             //            builder.append("System.out.println(\"consequence : " + consequence.getOutPointId()
             //                    + " will be at state : " + consequence.getValue() + "\");");
-            builder.append('\n');
         }
         //consequences
         builder.append("end\n");
