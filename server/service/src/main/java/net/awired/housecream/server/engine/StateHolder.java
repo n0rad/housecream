@@ -37,4 +37,8 @@ public class StateHolder {
         return arrayList;
     }
 
+    public void removeState(long pointId) {
+        states.remove(pointId);
+    }
+
 }

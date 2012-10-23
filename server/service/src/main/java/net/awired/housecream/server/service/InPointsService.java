@@ -44,6 +44,7 @@ public class InPointsService implements InPointsResource {
         List<InPoint> findAll = inPointDao.findAll();
         for (InPoint point : findAll) {
             routeManager.removePointRoute(point);
+            stateHolder.removeState(point.getId());
             inPointDao.delete(point.getId());
         }
     }

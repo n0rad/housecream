@@ -44,6 +44,7 @@ public class OutPointsService implements OutPointsResource {
         List<OutPoint> findAll = outPointDao.findAll();
         for (OutPoint point : findAll) {
             routeManager.removePointRoute(point);
+            stateHolder.removeState(point.getId());
             outPointDao.delete(point.getId());
         }
     }

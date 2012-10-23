@@ -1,8 +1,11 @@
 package net.awired.housecream.server.engine.builder;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import java.util.Arrays;
 import java.util.Collection;
 import net.awired.housecream.server.api.domain.Event;
+import net.awired.housecream.server.api.domain.PointState;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
@@ -86,14 +89,16 @@ public class RuleBuilderTest {
 
         engineProcessor.process(exchange);
 
-        System.out.println();
+        assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(0f);
 
-        exchange = buildExchange(0f);
+        exchange = buildExchange(1f);
 
+        when(stateHolder.getFacts()).thenReturn(Arrays.asList((Object) new PointState(43, 0f)));
         engineProcessor.process(exchange);
 
+        assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
 

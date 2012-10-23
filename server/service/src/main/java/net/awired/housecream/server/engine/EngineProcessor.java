@@ -2,6 +2,7 @@ package net.awired.housecream.server.engine;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.inject.Inject;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.Point;
@@ -51,22 +52,26 @@ public class EngineProcessor implements Processor {
         // setup the audit logging
         KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "hcs.droolsLogs");
 
+        List<FactHandle> factHandlers = new ArrayList<FactHandle>();
         for (Object fact : stateHolder.getFacts()) {
             log.debug("Inserting fact: " + fact);
-            FactHandle insert = ksession.insert(fact);
+            factHandlers.add(ksession.insert(fact));
         }
         FactHandle eventFact = ksession.insert(body);
         Actions actions = new Actions();
-        ArrayList<String> camelUrls = new ArrayList<String>();
+        //        ArrayList<String> camelUrls = new ArrayList<String>();
 
         exchange.getIn().setBody(actions);
-        exchange.getIn().setHeader("outputActions", camelUrls);
+        //        exchange.getIn().setHeader("outputActions", camelUrls);
         FactHandle outputFact = ksession.insert(actions);
 
         ksession.fireAllRules();
 
         ksession.retract(outputFact);
         ksession.retract(eventFact);
+        for (FactHandle fh : factHandlers) {
+            ksession.retract(fh);
+        }
         Collection<FactHandle> factHandles = ksession.getFactHandles();
         stateHolder.setState(body.getPointId(), body.getValue());
 
