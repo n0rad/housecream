@@ -16,6 +16,7 @@ import org.drools.event.rule.DebugAgendaEventListener;
 import org.drools.event.rule.DebugWorkingMemoryEventListener;
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.drools.logger.KnowledgeRuntimeLoggerFactory;
+import org.drools.runtime.ClassObjectFilter;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.FactHandle;
 import org.slf4j.Logger;
@@ -58,16 +59,21 @@ public class EngineProcessor implements Processor {
             factHandlers.add(ksession.insert(fact));
         }
         FactHandle eventFact = ksession.insert(body);
-        Actions actions = new Actions();
+        //        Actions actions = new Actions();
         //        ArrayList<String> camelUrls = new ArrayList<String>();
 
-        exchange.getIn().setBody(actions);
         //        exchange.getIn().setHeader("outputActions", camelUrls);
-        FactHandle outputFact = ksession.insert(actions);
+        //      FactHandle outputFact = ksession.insert(actions);
 
-        ksession.fireAllRules();
+        int fireAllRules = ksession.fireAllRules();
+        System.out.println("Rule fired : " + fireAllRules);
 
-        ksession.retract(outputFact);
+        Collection objects = ksession.getObjects(new ClassObjectFilter(ConsequenceAction.class));
+        Actions body2 = new Actions();
+        body2.getActions().addAll(objects);
+        exchange.getIn().setBody(body2);
+
+        //        ksession.retract(outputFact);
         ksession.retract(eventFact);
         for (FactHandle fh : factHandlers) {
             ksession.retract(fh);

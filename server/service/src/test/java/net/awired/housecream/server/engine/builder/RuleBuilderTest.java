@@ -2,6 +2,7 @@ package net.awired.housecream.server.engine.builder;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import net.awired.housecream.server.api.domain.Event;
@@ -84,24 +85,26 @@ public class RuleBuilderTest {
         Collection<KnowledgePackage> build2 = ruleBuilder.build(rule2);
         engineProcessor.registerPackages(build);
         engineProcessor.registerPackages(build2);
-
+        when(stateHolder.getFacts()).thenReturn(new ArrayList<Object>(),
+                Arrays.asList((Object) new PointState(43, 0f), new PointState(42, 1f)));
+        //                , Arrays.asList((Object) new PointState(43, 1f)
         Exchange exchange = buildExchange(1f);
-
         engineProcessor.process(exchange);
-
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(0f);
 
         exchange = buildExchange(1f);
-
-        when(stateHolder.getFacts()).thenReturn(Arrays.asList((Object) new PointState(43, 0f)));
         engineProcessor.process(exchange);
-
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
 
+        //        exchange = buildExchange(1f);
+        //        engineProcessor.process(exchange);
+        //        assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
+        //        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
+        //        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(0f);
     }
 
     private Exchange buildExchange(float value) {

@@ -72,7 +72,6 @@ public class RuleBuilder {
         builder.append("\nrule \"");
         builder.append(rule.getName());
         builder.append("\"\n    when\n");
-        builder.append("$a : Actions( )\n");
         for (Condition condition : rule.getConditions()) {
             if (condition.getType() == ConditionType.event) {
                 builder.append("Event");
@@ -94,15 +93,17 @@ public class RuleBuilder {
         for (Consequence consequence : rule.getConsequences()) {
             builder.append("not ConsequenceAction(pointId == (long)");
             builder.append(consequence.getOutPointId());
-            builder.append(") from $a\n");
+            builder.append(")\n");
             //            builder.append("not Flag(pointId == " + consequence.getOutPointId() + ")\n");
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("$a.add(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
+            //            builder.append("$a.add(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
+            //                    + consequence.getValue() + "));\n");
+
+            builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
                     + consequence.getValue() + "));\n");
-            //            builder.append("insert(new Flag(" + consequence.getOutPointId() + ") );\n");
             //            builder.append("System.out.println(\"consequence : " + consequence.getOutPointId()
             //                    + " will be at state : " + consequence.getValue() + "\");");
         }

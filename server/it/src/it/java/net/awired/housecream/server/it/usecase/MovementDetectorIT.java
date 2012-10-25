@@ -107,18 +107,24 @@ public class MovementDetectorIT {
         RestMcuLineNotification pinNotif0 = new NotifBuilder().lineId(2).oldValue(1).value(0)
                 .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();
 
-        //notif
+        //notif button pushed
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
         assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
 
-        //notif2
-        lineResource.resetValueLatch(3);
+        //notif button released
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
-        assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
 
-        //notif3
+        //notif button pushed
         lineResource.resetValueLatch(3);
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
         assertThat(lineResource.awaitLineValue(3)).isEqualTo(1);
+
+        //notif button released
+        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
+
+        //notif button pushed
+        lineResource.resetValueLatch(3);
+        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
+        assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
     }
 }
