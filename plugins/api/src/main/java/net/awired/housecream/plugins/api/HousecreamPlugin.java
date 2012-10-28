@@ -15,4 +15,6 @@ public interface HousecreamPlugin {
     //
     Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(ConsequenceAction action, OutPoint outpoint);
 
+    boolean isCommand();
+
 }

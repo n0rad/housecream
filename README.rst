@@ -18,6 +18,7 @@ web // command
 xmpp // command
 x10 // event
 knx // event
+ssh // command
 
 out
 ===
@@ -30,6 +31,7 @@ x10 // event
 knx // event
 log // notif
 nagios // notif
+snmp // notif
 DB // notif
 ssh ? 
 file ?

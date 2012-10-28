@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.awired.housecream.plugins</groupId>
-	<artifactId>housecream-plugins-xmpp</artifactId>
-	<name>Housecream Plugins - Xmpp</name>
+	<groupId>net.awired.housecream.camel</groupId>
+	<artifactId>housecream-camel-axmpp</artifactId>
+	<name>Housecream Camel - AXMPP</name>
 
 	<parent>
 		<groupId>net.awired.housecream</groupId>
@@ -14,21 +14,33 @@
 		<relativePath>../../</relativePath>
 	</parent>
 
+
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.housecream.plugins</groupId>
-			<artifactId>housecream-plugins-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.housecream.camel</groupId>
-			<artifactId>housecream-camel-axmpp</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<version>${camel.version}</version>
 		</dependency>
 
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-xmpp</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+
+		<!-- TESTS -->
+		<dependency>
+			<groupId>net.awired.ajsl</groupId>
+			<artifactId>ajsl-test</artifactId>
+			<version>${ajsl.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-xmpp</artifactId>
+			<artifactId>camel-test</artifactId>
 			<version>${camel.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

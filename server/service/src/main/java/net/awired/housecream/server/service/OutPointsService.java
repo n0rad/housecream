@@ -11,7 +11,7 @@ import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 import net.awired.housecream.server.api.domain.outPoint.OutPoints;
 import net.awired.housecream.server.api.resource.OutPointsResource;
 import net.awired.housecream.server.engine.StateHolder;
-import net.awired.housecream.server.router.RouteManager;
+import net.awired.housecream.server.router.StaticRouteManager;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,21 +29,21 @@ public class OutPointsService implements OutPointsResource {
     private StateHolder stateHolder;
 
     @Inject
-    private RouteManager routeManager;
+    private StaticRouteManager routeManager;
 
     @PostConstruct
     public void postConstruct() {
         List<OutPoint> findAll = outPointDao.findAll();
-        for (OutPoint outPoint : findAll) {
-            routeManager.registerPointRoute(outPoint);
-        }
+        //        for (OutPoint outPoint : findAll) {
+        //            routeManager.registerPointRoute(outPoint);
+        //        }
     }
 
     @Override
     public void deleteAllOutPoints() {
         List<OutPoint> findAll = outPointDao.findAll();
         for (OutPoint point : findAll) {
-            routeManager.removePointRoute(point);
+            //            routeManager.removeInRoute(point);
             stateHolder.removeState(point.getId());
             outPointDao.delete(point.getId());
         }

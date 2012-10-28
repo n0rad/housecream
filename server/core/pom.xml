@@ -20,12 +20,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.awired.aclm</groupId>
-			<artifactId>aclm</artifactId>
-			<version>0.2</version>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>

@@ -87,7 +87,7 @@
 	</bean>
 
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
-		<routeBuilder ref="routeManager" />
+		<routeBuilder ref="staticRouteManager" />
 	</camelContext>
 
 </beans>

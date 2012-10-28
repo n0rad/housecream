@@ -1,4 +1,4 @@
-package net.awired.housecream.server.converter;
+package net.awired.housecream.plugins.restmcu;
 
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
@@ -10,7 +10,7 @@ import org.apache.camel.Converter;
 import org.apache.camel.Exchange;
 
 @Converter
-public class EventConverter {
+public class RestMcuNotifToEventConverter {
 
     @Inject
     private InPointDaoInterface inPointDao;

@@ -21,7 +21,9 @@ public class Main {
 
     public void run(String[] args) {
         AnsiConsole.systemInstall();
-        argManager.parse(args);
+        if (!argManager.parse(args)) {
+            return;
+        }
 
         System.setProperty(ApplicationHelper.HOME_KEY, ApplicationHelper.findHomeDir());
         System.setProperty(ApplicationHelper.LOG_HOUSECREAM_AWIRED, argManager.logLevel.getParamOneValue().toString());

@@ -69,4 +69,9 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(ConsequenceAction action, OutPoint outpoint) {
         return new Pair<Object, Map<String, Object>>(action.getValue(), null);
     }
+
+    @Override
+    public boolean isCommand() {
+        return false;
+    }
 }

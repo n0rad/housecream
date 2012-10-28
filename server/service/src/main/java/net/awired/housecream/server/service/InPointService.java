@@ -8,7 +8,7 @@ import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
-import net.awired.housecream.server.router.RouteManager;
+import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class InPointService implements InPointResource {
     private InPointDao pointDao;
 
     @Inject
-    private RouteManager routeManager;
+    private DynamicRouteManager routeManager;
 
     @Inject
     private StateHolder stateHolder;
@@ -37,7 +37,7 @@ public class InPointService implements InPointResource {
     @Override
     public long createInPoint(InPoint inPoint) {
         pointDao.save(inPoint);
-        routeManager.registerPointRoute(inPoint);
+        routeManager.registerInRoute(inPoint);
         engine.registerPoint(inPoint);
         return inPoint.getId();
     }
@@ -53,7 +53,7 @@ public class InPointService implements InPointResource {
     public void deleteInPoint(long inPointId) {
         try {
             InPoint point = pointDao.find(inPointId);
-            routeManager.removePointRoute(point);
+            routeManager.removeInRoute(point);
             pointDao.delete(point.getId());
         } catch (NotFoundException e) {
             // nothing to do if trying to remove a point that is already not there

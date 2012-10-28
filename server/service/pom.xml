@@ -41,6 +41,11 @@
 			<artifactId>housecream-plugins-xmpp</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>net.awired.aclm</groupId>
+            <artifactId>aclm</artifactId>
+            <version>${aclm.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>net.awired.ajsl</groupId>
 			<artifactId>ajsl-web</artifactId>

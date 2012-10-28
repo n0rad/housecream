@@ -11,7 +11,7 @@ import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.engine.StateHolder;
-import net.awired.housecream.server.router.RouteManager;
+import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +29,13 @@ public class InPointsService implements InPointsResource {
     private StateHolder stateHolder;
 
     @Inject
-    private RouteManager routeManager;
+    private DynamicRouteManager routeManager;
 
     @PostConstruct
     public void postConstruct() {
         List<InPoint> findAll = inPointDao.findAll();
         for (InPoint inPoint : findAll) {
-            routeManager.registerPointRoute(inPoint);
+            routeManager.registerInRoute(inPoint);
         }
     }
 
@@ -43,7 +43,7 @@ public class InPointsService implements InPointsResource {
     public void deleteAllInPoints() {
         List<InPoint> findAll = inPointDao.findAll();
         for (InPoint point : findAll) {
-            routeManager.removePointRoute(point);
+            routeManager.removeInRoute(point);
             stateHolder.removeState(point.getId());
             inPointDao.delete(point.getId());
         }

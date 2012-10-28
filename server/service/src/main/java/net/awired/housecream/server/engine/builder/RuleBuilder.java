@@ -24,25 +24,6 @@ public class RuleBuilder {
     private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.*",
             "net.awired.housecream.server.api.domain.*" };
 
-    //package net.awired.housecream.server.core.engine
-    //
-    //rule "light on"  
-    //    when
-    //        PointStat(PointId == 1, value == 1)
-    //        PointStat(PointId == 2, value == 0)
-    //    then
-    //        System.out.println("turn on the light 42");
-    //end
-
-    //rule "my first rule2"
-    //    when
-    //$a : Actions( )
-    //not Event(pointId == 262) || Event(pointId == 262, value == 1.0)
-    //PointState(pointId == 143, value == 1.0)
-    //    then
-    //$a.add(new ConsequenceAction((long)143,(float)0.0));
-    //end
-
     public Collection<KnowledgePackage> build(EventRule rule) {
         final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 
@@ -94,21 +75,13 @@ public class RuleBuilder {
             builder.append("not ConsequenceAction(pointId == (long)");
             builder.append(consequence.getOutPointId());
             builder.append(")\n");
-            //            builder.append("not Flag(pointId == " + consequence.getOutPointId() + ")\n");
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            //            builder.append("$a.add(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
-            //                    + consequence.getValue() + "));\n");
-
             builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
                     + consequence.getValue() + "));\n");
-            //            builder.append("System.out.println(\"consequence : " + consequence.getOutPointId()
-            //                    + " will be at state : " + consequence.getValue() + "\");");
         }
-        // builder.append("modify( $a );");
-        //consequences
         builder.append("end\n");
         return builder.toString();
     }

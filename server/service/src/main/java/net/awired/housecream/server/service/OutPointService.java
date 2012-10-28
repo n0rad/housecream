@@ -9,7 +9,7 @@ import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
-import net.awired.housecream.server.router.RouteManager;
+import net.awired.housecream.server.router.StaticRouteManager;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class OutPointService implements OutPointResource {
     private StateHolder stateHolder;
 
     @Inject
-    private RouteManager routeManager;
+    private StaticRouteManager routeManager;
 
     @Inject
     private EngineProcessor engine;
@@ -39,7 +39,7 @@ public class OutPointService implements OutPointResource {
     public long createOutPoint(OutPoint outPoint) {
         pointDao.save(outPoint);
         engine.registerPoint(outPoint);
-        routeManager.registerPointRoute(outPoint);
+        //        routeManager.registerPointRoute(outPoint);
         return outPoint.getId();
     }
 
@@ -64,7 +64,7 @@ public class OutPointService implements OutPointResource {
     public void deleteOutPoint(long outPointId) {
         try {
             OutPoint point = pointDao.find(outPointId);
-            routeManager.removePointRoute(point);
+            //            routeManager.removePointRoute(point);
             pointDao.delete(point.getId());
         } catch (NotFoundException e) {
             // nothing to do if trying to remove a point that is already not there

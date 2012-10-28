@@ -15,7 +15,7 @@ public class ComponentRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        routeDefinition = from(point.getUrl()).to(RouteManager.EVENT_HOLDER_QUEUE);
+        routeDefinition = from(point.getUrl()).to(StaticRouteManager.EVENT_HOLDER_QUEUE);
     }
 
     public RouteDefinition getRouteDefinition() {
