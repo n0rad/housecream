@@ -1,4 +1,4 @@
-package net.awired.housecream.server.it.usecase;
+package net.awired.housecream.server.it;
 
 import static org.fest.assertions.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;

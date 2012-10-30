@@ -29,18 +29,13 @@ public class EngineResultSplitter {
 
     public List<Message> split(@Body Actions actions) throws Exception {
         ArrayList<Message> res = new ArrayList<Message>();
-
         for (ConsequenceAction action : actions.getActions()) {
             OutPoint outpoint = outputDao.find(action.getPointId());
-
-            String prefix = outpoint.extractUrlPrefix();
-
-            HousecreamPlugin plugin = pluginService.getPluginFromPrefix(prefix);
+            HousecreamPlugin plugin = pluginService.getPluginFromPrefix(outpoint.extractUrlPrefix());
             Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, outpoint);
             Message outMessage = outRouter.buildMessage(bodyAndHeaders, outpoint, action);
             res.add(outMessage);
         }
-
         return res;
     }
 

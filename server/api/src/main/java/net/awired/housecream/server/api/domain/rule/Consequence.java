@@ -15,6 +15,7 @@ public class Consequence extends IdEntityImpl<Long> {
 
     private long outPointId;
     private float value;
+    private long delayMili;
 
     public Consequence() {
     }
@@ -38,5 +39,13 @@ public class Consequence extends IdEntityImpl<Long> {
 
     public void setOutPointId(long outPointId) {
         this.outPointId = outPointId;
+    }
+
+    public long getDelayMili() {
+        return delayMili;
+    }
+
+    public void setDelayMili(long delayMili) {
+        this.delayMili = delayMili;
     }
 }

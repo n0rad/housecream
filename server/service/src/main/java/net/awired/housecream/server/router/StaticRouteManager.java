@@ -30,20 +30,28 @@ public class StaticRouteManager extends RouteBuilder {
     @Inject
     private CommandProcessor commandProcessor;
 
+    @Inject
+    private ConsequenceDelayer delayer;
+
     @Override
     public void configure() throws Exception {
 
-        from(EVENT_HOLDER_QUEUE).process(engineProcessor).split().method(splitter, "split").parallelProcessing()
+        from(EVENT_HOLDER_QUEUE) //
+                .process(engineProcessor) //
+                .split().method(splitter, "split").parallelProcessing() //
+                .delay().method(delayer, "calculateDelay") //
                 .to("direct:output");
 
-        from("direct:output").inOut().dynamicRouter().method(dynamicRouter, "route").process(new Processor() {
-            @Override
-            public void process(Exchange arg0) throws Exception {
-                ConsequenceAction action = arg0.getUnitOfWork().getOriginalInMessage()
-                        .getHeader("ACTION", ConsequenceAction.class);
-                stateHolder.setState(action.getPointId(), action.getValue());
-            }
-        });
+        from("direct:output").inOut() //
+                .dynamicRouter().method(dynamicRouter, "route") //
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange arg0) throws Exception {
+                        ConsequenceAction action = arg0.getUnitOfWork().getOriginalInMessage()
+                                .getHeader("ACTION", ConsequenceAction.class);
+                        stateHolder.setState(action.getPointId(), action.getValue());
+                    }
+                });
 
         from("direct:command").process(commandProcessor);
 

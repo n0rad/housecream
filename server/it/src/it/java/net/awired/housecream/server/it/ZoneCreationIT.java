@@ -1,4 +1,4 @@
-package net.awired.housecream.server.it.usecase;
+package net.awired.housecream.server.it;
 
 import java.io.InputStream;
 import java.util.ArrayList;

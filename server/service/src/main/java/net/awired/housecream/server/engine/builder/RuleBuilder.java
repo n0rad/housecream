@@ -80,7 +80,7 @@ public class RuleBuilder {
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
             builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
-                    + consequence.getValue() + "));\n");
+                    + consequence.getValue() + ", " + consequence.getDelayMili() + "));\n");
         }
         builder.append("end\n");
         return builder.toString();

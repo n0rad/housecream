@@ -6,10 +6,12 @@ public class ConsequenceAction {
 
     private final long pointId;
     private final float value;
+    private final long delayMili;
 
-    public ConsequenceAction(long pointId, float value) {
+    public ConsequenceAction(long pointId, float value, long delayMili) {
         this.pointId = pointId;
         this.value = value;
+        this.delayMili = delayMili;
     }
 
     @Override
@@ -56,6 +58,10 @@ public class ConsequenceAction {
 
     public float getValue() {
         return value;
+    }
+
+    public long getDelayMili() {
+        return delayMili;
     }
 
 }
