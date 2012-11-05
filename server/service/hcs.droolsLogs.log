@@ -1,55 +1,35 @@
 <object-stream>
-<org.drools.audit.event.ObjectLogEvent>
-  <type>1</type>
-  <factId>1</factId>
-  <objectToString>PointState{pointId=43, value=0.0}</objectToString>
-</org.drools.audit.event.ObjectLogEvent>
-<org.drools.audit.event.ObjectLogEvent>
-  <type>1</type>
-  <factId>2</factId>
-  <objectToString>PointState{pointId=42, value=1.0}</objectToString>
-</org.drools.audit.event.ObjectLogEvent>
 <org.drools.audit.event.ActivationLogEvent>
   <type>4</type>
-  <activationId>my first rule [1, 3]</activationId>
+  <activationId>my first rule [1]</activationId>
   <rule>my first rule</rule>
   <declarations></declarations>
 </org.drools.audit.event.ActivationLogEvent>
 <org.drools.audit.event.ObjectLogEvent>
   <type>1</type>
-  <factId>3</factId>
-  <objectToString>Event{pointId=42, value=1.0}</objectToString>
+  <factId>1</factId>
+  <objectToString>Event{pointId=44, value=1.0}</objectToString>
 </org.drools.audit.event.ObjectLogEvent>
 <org.drools.audit.event.ActivationLogEvent>
   <type>6</type>
-  <activationId>my first rule [1, 3]</activationId>
+  <activationId>my first rule [1]</activationId>
   <rule>my first rule</rule>
   <declarations></declarations>
 </org.drools.audit.event.ActivationLogEvent>
 <org.drools.audit.event.ObjectLogEvent>
   <type>1</type>
-  <factId>4</factId>
-  <objectToString>ConsequenceAction{pointId=43, value=1.0}</objectToString>
+  <factId>2</factId>
+  <objectToString>ConsequenceAction{pointId=45, value=1.0}</objectToString>
 </org.drools.audit.event.ObjectLogEvent>
 <org.drools.audit.event.ActivationLogEvent>
   <type>7</type>
-  <activationId>my first rule [1, 3]</activationId>
+  <activationId>my first rule [1]</activationId>
   <rule>my first rule</rule>
   <declarations></declarations>
 </org.drools.audit.event.ActivationLogEvent>
 <org.drools.audit.event.ObjectLogEvent>
   <type>3</type>
-  <factId>3</factId>
-  <objectToString>Event{pointId=42, value=1.0}</objectToString>
-</org.drools.audit.event.ObjectLogEvent>
-<org.drools.audit.event.ObjectLogEvent>
-  <type>3</type>
   <factId>1</factId>
-  <objectToString>PointState{pointId=43, value=0.0}</objectToString>
-</org.drools.audit.event.ObjectLogEvent>
-<org.drools.audit.event.ObjectLogEvent>
-  <type>3</type>
-  <factId>2</factId>
-  <objectToString>PointState{pointId=42, value=1.0}</objectToString>
+  <objectToString>Event{pointId=44, value=1.0}</objectToString>
 </org.drools.audit.event.ObjectLogEvent>
 </object-stream>

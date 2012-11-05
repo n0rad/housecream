@@ -1,10 +1,12 @@
 package net.awired.housecream.server.router;
 
 import javax.inject.Inject;
+import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.command.CommandProcessor;
 import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateHolder;
+import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -33,16 +35,25 @@ public class StaticRouteManager extends RouteBuilder {
     @Inject
     private ConsequenceDelayer delayer;
 
+    @Inject
+    private ConsequenceProcessor consequenceProcessor;
+
+    @Inject
+    private EventService eventService;
+
     @Override
     public void configure() throws Exception {
 
         from(EVENT_HOLDER_QUEUE) //
+                .transform(body(Event.class)) //
+                .bean(eventService, "saveEventAsync") //
                 .process(engineProcessor) //
                 .split().method(splitter, "split").parallelProcessing() //
                 .delay().method(delayer, "calculateDelay") //
                 .to("direct:output");
 
         from("direct:output").inOut() //
+                .process(consequenceProcessor) //
                 .dynamicRouter().method(dynamicRouter, "route") //
                 .process(new Processor() {
                     @Override

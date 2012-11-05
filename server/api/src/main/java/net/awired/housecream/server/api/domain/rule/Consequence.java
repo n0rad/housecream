@@ -25,6 +25,11 @@ public class Consequence extends IdEntityImpl<Long> {
         this.value = value;
     }
 
+    public Consequence(long outPointId, float value, long delayMili) {
+        this(outPointId, value);
+        this.delayMili = delayMili;
+    }
+
     public float getValue() {
         return value;
     }

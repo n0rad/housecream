@@ -19,6 +19,7 @@ public class ConsequenceAction {
         return Objects.toStringHelper(this) //
                 .add("pointId", pointId) //
                 .add("value", value) //
+                .add("delayMili", delayMili) //
                 .toString();
     }
 
