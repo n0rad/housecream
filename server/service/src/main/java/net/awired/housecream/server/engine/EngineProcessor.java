@@ -72,9 +72,11 @@ public class EngineProcessor implements Processor {
     }
 
     public void setPointState(long pointId, Float currentValue) {
+        log.debug("Set point state pointId={}, value={}", pointId, currentValue);
         PointState state = new PointState(pointId, currentValue);
         FactHandle factHandler = ksession.insert(state);
         states.put(state.getPointId(), new Pair<PointState, FactHandle>(state, factHandler));
+        logCurrentFacts();
     }
 
     public float getPointState(long pointId) throws NotFoundException {
@@ -86,16 +88,33 @@ public class EngineProcessor implements Processor {
     }
 
     public void removePointState(long pointId) {
+        log.debug("Removing point state for id : {}" + pointId);
         Pair<PointState, FactHandle> pair = states.get(pointId);
         if (pair != null) {
             ksession.retract(pair.right);
         }
         states.remove(pointId);
+        logCurrentFacts();
     }
 
     public boolean removeConsequenceFromState(Consequence consequence) {
+        log.debug("Removing consequence from facts : {}", consequence);
         FactHandle factHandle = ksession.getFactHandle(consequence);
         ksession.retract(factHandle);
+        logCurrentFacts();
         return factHandle != null;
+    }
+
+    private void logCurrentFacts() {
+        if (!log.isDebugEnabled()) {
+            return;
+        }
+        for (long key : states.keySet()) {
+            log.debug("point state : " + states.get(key).left);
+        }
+        Collection<Object> objects = ksession.getObjects();
+        for (Object object : objects) {
+            log.debug("fact : " + object);
+        }
     }
 }
