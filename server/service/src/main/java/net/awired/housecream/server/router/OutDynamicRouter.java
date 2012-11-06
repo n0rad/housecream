@@ -3,7 +3,7 @@ package net.awired.housecream.server.router;
 import java.util.Map;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
-import net.awired.housecream.server.engine.ConsequenceAction;
+import net.awired.housecream.server.api.domain.rule.Consequence;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
@@ -24,11 +24,11 @@ public class OutDynamicRouter {
     private static final String OUT_URL = "outUrl";
 
     public Message buildMessage(Pair<Object, Map<String, Object>> bodyAndHeaders, OutPoint outpoint,
-            ConsequenceAction action) {
+            Consequence action) {
         DefaultMessage message = new DefaultMessage();
         message.setHeaders(bodyAndHeaders.right);
         message.setBody(bodyAndHeaders.left);
-        message.setHeader("ACTION", action);
+        message.setHeader(OutEndProcessor.CONSEQUENCE_HEADER, action);
         message.setHeader(OutDynamicRouter.OUT_URL, outpoint.getUrl());
         return message;
 

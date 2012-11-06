@@ -1,19 +1,14 @@
 package net.awired.housecream.server.engine.builder;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import net.awired.housecream.server.api.domain.Event;
-import net.awired.housecream.server.api.domain.PointState;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.engine.Actions;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
@@ -31,16 +26,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class RuleBuilderTest {
 
     @Mock
-    private StateHolder stateHolder;
-
-    @Mock
     private EventService eventService;
 
     @InjectMocks
     private RuleBuilder ruleBuilder = new RuleBuilder();
 
     @InjectMocks
-    private EngineProcessor engineProcessor = new EngineProcessor();
+    private EngineProcessor engine = new EngineProcessor();
 
     @Test
     public void should_build_rule() throws Exception {
@@ -51,7 +43,7 @@ public class RuleBuilderTest {
         rule.getConsequences().add(new Consequence(45, 1));
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
 
-        engineProcessor.registerPackages(build);
+        engine.registerPackages(build);
 
         Exchange exchange = new DefaultExchange((CamelContext) null);
         Message in = new DefaultMessage();
@@ -61,9 +53,9 @@ public class RuleBuilderTest {
         in.setBody(e);
         exchange.setIn(in);
 
-        engineProcessor.process(exchange);
+        engine.process(exchange);
 
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(45);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(45);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
     }
 
@@ -83,21 +75,21 @@ public class RuleBuilderTest {
         rule2.getConditions().add(new Condition(43, 1, ConditionType.state));
         rule2.getConsequences().add(new Consequence(43, 0));
         Collection<KnowledgePackage> build2 = ruleBuilder.build(rule2);
-        engineProcessor.registerPackages(build);
-        engineProcessor.registerPackages(build2);
-        when(stateHolder.getFacts()).thenReturn(new ArrayList<Object>(),
-                Arrays.asList((Object) new PointState(43, 0f), new PointState(42, 1f)));
-        //                , Arrays.asList((Object) new PointState(43, 1f)
+        engine.registerPackages(build);
+        engine.registerPackages(build2);
+        //        when(engine.getFacts()).thenReturn(new ArrayList<Object>(),
+        //                Arrays.asList((Object) new PointState(43, 0f), new PointState(42, 1f)));
+        //        //                , Arrays.asList((Object) new PointState(43, 1f)
         Exchange exchange = buildExchange(1f);
-        engineProcessor.process(exchange);
+        engine.process(exchange);
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(0f);
 
         exchange = buildExchange(1f);
-        engineProcessor.process(exchange);
+        engine.process(exchange);
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getPointId()).isEqualTo(43);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
 
         //        exchange = buildExchange(1f);

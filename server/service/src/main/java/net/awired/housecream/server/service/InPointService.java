@@ -7,7 +7,6 @@ import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
@@ -26,9 +25,6 @@ public class InPointService implements InPointResource {
     private DynamicRouteManager routeManager;
 
     @Inject
-    private StateHolder stateHolder;
-
-    @Inject
     private EngineProcessor engine;
 
     @Inject
@@ -38,14 +34,13 @@ public class InPointService implements InPointResource {
     public long createInPoint(InPoint inPoint) {
         pointDao.save(inPoint);
         routeManager.registerInRoute(inPoint);
-        engine.registerPoint(inPoint);
         return inPoint.getId();
     }
 
     @Override
     public InPoint getInPoint(long inPointId) throws NotFoundException {
         InPoint point = pointDao.find(inPointId);
-        point.setValue(stateHolder.getState(inPointId));
+        point.setValue(engine.getPointState(inPointId));
         return point;
     }
 
@@ -62,7 +57,7 @@ public class InPointService implements InPointResource {
 
     @Override
     public Float getPointValue(long pointId) throws NotFoundException {
-        return stateHolder.getState(pointId);
+        return engine.getPointState(pointId);
     }
 
     @Override

@@ -3,7 +3,7 @@ package net.awired.housecream.server.service;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
-import net.awired.housecream.server.engine.StateHolder;
+import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class OutPointServiceTest {
     private OutPointDao outPointDao;
 
     @Mock
-    private StateHolder stateHolder;
+    private EngineProcessor engine;
 
     @InjectMocks
     private OutPointService service;
@@ -28,7 +28,7 @@ public class OutPointServiceTest {
     public void should_set_value_before_return() throws Exception {
         OutPoint value = new OutPointBuilder().build();
         when(outPointDao.find(42L)).thenReturn(value);
-        when(stateHolder.getState(42L)).thenReturn(44.44f);
+        when(engine.getPointState(42L)).thenReturn(44.44f);
 
         OutPoint outPoint = service.getOutPoint(42L);
 

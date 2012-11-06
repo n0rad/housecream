@@ -35,4 +35,5 @@ public class PointState {
     public void setPointId(long pointId) {
         this.pointId = pointId;
     }
+
 }

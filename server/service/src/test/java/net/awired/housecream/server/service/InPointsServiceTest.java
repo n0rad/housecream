@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
-import net.awired.housecream.server.engine.StateHolder;
+import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class InPointsServiceTest {
     private InPointDao inPointDao;
 
     @Mock
-    private StateHolder stateHolder;
+    private EngineProcessor engine;
 
     @InjectMocks
     private InPointsService service;
@@ -31,7 +31,7 @@ public class InPointsServiceTest {
     public void should_add_value_before_return() throws Exception {
         List<InPoint> value = Arrays.asList(new InPointBuilder().id(43).build());
         when(inPointDao.findFiltered(null, null, null, null, null)).thenReturn(value);
-        when(stateHolder.getState(43)).thenReturn(42f);
+        when(engine.getPointState(43)).thenReturn(42f);
 
         InPoints inPoints = service.getInPoints(null, null, null, null, null);
 

@@ -8,7 +8,6 @@ import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.router.StaticRouteManager;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.springframework.stereotype.Service;
@@ -24,9 +23,6 @@ public class OutPointService implements OutPointResource {
     private OutPointDao pointDao;
 
     @Inject
-    private StateHolder stateHolder;
-
-    @Inject
     private StaticRouteManager routeManager;
 
     @Inject
@@ -38,14 +34,13 @@ public class OutPointService implements OutPointResource {
     @Override
     public long createOutPoint(OutPoint outPoint) {
         pointDao.save(outPoint);
-        engine.registerPoint(outPoint);
         //        routeManager.registerPointRoute(outPoint);
         return outPoint.getId();
     }
 
     @Override
     public Float getPointValue(long pointId) throws NotFoundException {
-        return stateHolder.getState(pointId);
+        return engine.getPointState(pointId);
     }
 
     @Override
@@ -56,7 +51,7 @@ public class OutPointService implements OutPointResource {
     @Override
     public OutPoint getOutPoint(long outPointId) throws NotFoundException {
         OutPoint find = pointDao.find(outPointId);
-        find.setValue(stateHolder.getState(outPointId));
+        find.setValue(engine.getPointState(outPointId));
         return find;
     }
 

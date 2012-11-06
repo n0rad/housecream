@@ -22,7 +22,7 @@ public class RuleBuilder {
     public static final String RULE_PACKAGE = "net.awired.housecream.server.service.rule";
 
     private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.*",
-            "net.awired.housecream.server.api.domain.*" };
+            "net.awired.housecream.server.api.domain.*", "net.awired.housecream.server.api.domain.rule.*" };
 
     public Collection<KnowledgePackage> build(EventRule rule) {
         final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
@@ -72,15 +72,16 @@ public class RuleBuilder {
         }
 
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("not ConsequenceAction(pointId == (long)");
+            builder.append("not Consequence(outPointId == (long)");
             builder.append(consequence.getOutPointId());
             builder.append(")\n");
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
-                    + consequence.getValue() + ", " + consequence.getDelayMili() + "));\n");
+            builder.append("insert(new Consequence((long)" + consequence.getOutPointId() + ",(float)"
+                    + consequence.getValue() + ", " + consequence.getDelayMili() + ", "
+                    + consequence.getTriggerType() + "));\n");
         }
         builder.append("end\n");
         return builder.toString();

@@ -21,7 +21,7 @@ import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.api.domain.zone.Room;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import net.awired.housecream.server.api.resource.ZoneResource;
-import net.awired.housecream.server.engine.StateHolder;
+import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import net.awired.housecream.server.storage.dao.ZoneDao;
@@ -50,7 +50,7 @@ public class ZoneService implements ZoneResource {
     private ValidationService validationService;
 
     @Inject
-    private StateHolder stateHolder;
+    private EngineProcessor engine;
 
     @Override
     public Map<String, ClientValidatorInfo> getZoneValidator() {
@@ -106,7 +106,7 @@ public class ZoneService implements ZoneResource {
         List<InPoint> findByZone = inPointDao.findByZone(zoneId);
         for (InPoint inPoint : findByZone) {
             try {
-                inPoint.setValue(stateHolder.getState(inPoint.getId()));
+                inPoint.setValue(engine.getPointState(inPoint.getId()));
             } catch (NotFoundException e) {
                 // nothing to do if we don't have the value in holder
             }
@@ -120,7 +120,7 @@ public class ZoneService implements ZoneResource {
         List<OutPoint> findByZone = outPointDao.findByZone(zoneId);
         for (OutPoint outPoint : findByZone) {
             try {
-                outPoint.setValue(stateHolder.getState(outPoint.getId()));
+                outPoint.setValue(engine.getPointState(outPoint.getId()));
             } catch (NotFoundException e) {
                 // nothing to do if we don't have the value in holder
             }

@@ -3,12 +3,8 @@ package net.awired.housecream.server.router;
 import javax.inject.Inject;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.command.CommandProcessor;
-import net.awired.housecream.server.engine.ConsequenceAction;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.engine.StateHolder;
 import net.awired.housecream.server.service.event.EventService;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -18,16 +14,10 @@ public class StaticRouteManager extends RouteBuilder {
     public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder";
 
     @Inject
-    private EngineProcessor engineProcessor;
-
-    @Inject
-    private StateHolder stateHolder;
+    private EngineProcessor engine;
 
     @Inject
     private EngineResultSplitter splitter;
-
-    @Inject
-    private OutDynamicRouter dynamicRouter;
 
     @Inject
     private CommandProcessor commandProcessor;
@@ -41,13 +31,19 @@ public class StaticRouteManager extends RouteBuilder {
     @Inject
     private EventService eventService;
 
+    @Inject
+    private OutDynamicRouter dynamicRouter;
+
+    @Inject
+    private OutEndProcessor endProcessor;
+
     @Override
     public void configure() throws Exception {
 
         from(EVENT_HOLDER_QUEUE) //
                 .transform(body(Event.class)) //
                 .bean(eventService, "saveEventAsync") //
-                .process(engineProcessor) //
+                .process(engine) //
                 .split().method(splitter, "split").parallelProcessing() //
                 .delay().method(delayer, "calculateDelay") //
                 .to("direct:output");
@@ -55,14 +51,7 @@ public class StaticRouteManager extends RouteBuilder {
         from("direct:output").inOut() //
                 .process(consequenceProcessor) //
                 .dynamicRouter().method(dynamicRouter, "route") //
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange arg0) throws Exception {
-                        ConsequenceAction action = arg0.getUnitOfWork().getOriginalInMessage()
-                                .getHeader("ACTION", ConsequenceAction.class);
-                        stateHolder.setState(action.getPointId(), action.getValue());
-                    }
-                });
+                .process(endProcessor);
 
         from("direct:command").process(commandProcessor);
 

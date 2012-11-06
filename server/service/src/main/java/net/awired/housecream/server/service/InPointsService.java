@@ -10,7 +10,7 @@ import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.resource.InPointsResource;
-import net.awired.housecream.server.engine.StateHolder;
+import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class InPointsService implements InPointsResource {
     private InPointDao inPointDao;
 
     @Inject
-    private StateHolder stateHolder;
+    private EngineProcessor engine;
 
     @Inject
     private DynamicRouteManager routeManager;
@@ -44,7 +44,7 @@ public class InPointsService implements InPointsResource {
         List<InPoint> findAll = inPointDao.findAll();
         for (InPoint point : findAll) {
             routeManager.removeInRoute(point);
-            stateHolder.removeState(point.getId());
+            engine.removePointState(point.getId());
             inPointDao.delete(point.getId());
         }
     }
@@ -55,7 +55,7 @@ public class InPointsService implements InPointsResource {
         List<InPoint> inPointsFiltered = inPointDao.findFiltered(length, start, search, searchProperties, orders);
         for (InPoint inPoint : inPointsFiltered) {
             try {
-                inPoint.setValue(stateHolder.getState(inPoint.getId()));
+                inPoint.setValue(engine.getPointState(inPoint.getId()));
             } catch (NotFoundException e) {
                 // nothing to do if we don't have the value in holder
             }

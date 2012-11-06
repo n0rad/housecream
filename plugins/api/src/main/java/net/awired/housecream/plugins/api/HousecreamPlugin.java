@@ -3,7 +3,7 @@ package net.awired.housecream.plugins.api;
 import java.util.Map;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
-import net.awired.housecream.server.engine.ConsequenceAction;
+import net.awired.housecream.server.api.domain.rule.Consequence;
 
 public interface HousecreamPlugin {
 
@@ -13,7 +13,7 @@ public interface HousecreamPlugin {
     //
     //    Float getCurrentValue(Point point, CamelContext camelContext);
     //
-    Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(ConsequenceAction action, OutPoint outpoint);
+    Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, OutPoint outpoint);
 
     boolean isCommand();
 
