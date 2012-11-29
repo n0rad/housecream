@@ -5,6 +5,7 @@ import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
+import net.awired.housecream.server.api.domain.rule.TriggerType;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
@@ -21,8 +22,9 @@ public class RuleBuilder {
 
     public static final String RULE_PACKAGE = "net.awired.housecream.server.service.rule";
 
-    private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.*",
-            "net.awired.housecream.server.api.domain.*", "net.awired.housecream.server.api.domain.rule.*" };
+    private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.*", //
+            "net.awired.housecream.server.api.domain.*", //
+            "net.awired.housecream.server.api.domain.rule.*" };
 
     public Collection<KnowledgePackage> build(EventRule rule) {
         final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
@@ -52,7 +54,13 @@ public class RuleBuilder {
 
         builder.append("\nrule \"");
         builder.append(rule.getName());
-        builder.append("\"\n    when\n");
+        builder.append("\"\n");
+        if (rule.getSalience() != null) {
+            builder.append("salience ");
+            builder.append(rule.getSalience());
+            builder.append('\n');
+        }
+        builder.append("    when\n");
         for (Condition condition : rule.getConditions()) {
             if (condition.getType() == ConditionType.event) {
                 builder.append("Event");
@@ -81,9 +89,16 @@ public class RuleBuilder {
         for (Consequence consequence : rule.getConsequences()) {
             builder.append("insert(new Consequence((long)" + consequence.getOutPointId() + ",(float)"
                     + consequence.getValue() + ", " + consequence.getDelayMili() + ", "
-                    + consequence.getTriggerType() + "));\n");
+                    + buildTriggerJavaType(consequence.getTriggerType()) + "));\n");
         }
         builder.append("end\n");
         return builder.toString();
+    }
+
+    private String buildTriggerJavaType(TriggerType triggerType) {
+        if (triggerType == null) {
+            return "null";
+        }
+        return "TriggerType." + triggerType;
     }
 }

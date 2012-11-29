@@ -1,9 +1,11 @@
 package net.awired.housecream.camel.restmcu;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.restmcu.api.domain.line.RestMcuLine;
@@ -16,6 +18,7 @@ public class LatchLineResource implements RestMcuLineResource {
         public RestMcuLineSettings settings;
         public RestMcuLine description;
         public float value;
+        public Date dateLatch;
         public CountDownLatch valueLatch = new CountDownLatch(1);
     }
 
@@ -31,6 +34,7 @@ public class LatchLineResource implements RestMcuLineResource {
 
     public void resetValueLatch(int lineId) {
         lines.get(lineId).valueLatch = new CountDownLatch(1);
+        lines.get(lineId).dateLatch = null;
     }
 
     public float awaitLineValue(int lineId) throws InterruptedException {
@@ -39,6 +43,14 @@ public class LatchLineResource implements RestMcuLineResource {
             throw new RuntimeException("Countdown timeout");
         }
         return lineInfo.value;
+    }
+
+    public Pair<Float, Date> awaitLineValueAndDate(int lineId) throws InterruptedException {
+        LineInfo lineInfo = lines.get(lineId);
+        if (!lineInfo.valueLatch.await(10, TimeUnit.SECONDS)) {
+            throw new RuntimeException("Countdown timeout");
+        }
+        return new Pair<Float, Date>(lineInfo.value, lineInfo.dateLatch);
     }
 
     @Override
@@ -93,6 +105,7 @@ public class LatchLineResource implements RestMcuLineResource {
         }
         lineInfo.value = value;
         lineInfo.valueLatch.countDown();
+        lineInfo.dateLatch = new Date();
     }
 
 }

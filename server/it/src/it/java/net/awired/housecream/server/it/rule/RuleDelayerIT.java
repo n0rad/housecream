@@ -34,7 +34,7 @@ public class RuleDelayerIT {
             new LatchLineResource());
 
     @Test
-    public void should_retrigger_in_time() throws Exception {
+    public void should_delay_the_consequence() throws Exception {
         LatchLineResource lineResource = restmcu.getResource(LatchLineResource.class);
         LatchBoardResource boardResource = restmcu.getResource(LatchBoardResource.class);
 

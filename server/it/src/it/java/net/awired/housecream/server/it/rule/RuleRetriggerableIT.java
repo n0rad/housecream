@@ -2,6 +2,8 @@ package net.awired.housecream.server.it.rule;
 
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static org.fest.assertions.Assertions.assertThat;
+import java.util.Date;
+import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.camel.restmcu.LatchBoardResource;
 import net.awired.housecream.camel.restmcu.LatchLineResource;
@@ -13,6 +15,7 @@ import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
+import net.awired.housecream.server.api.domain.rule.TriggerType;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.LineInfoBuilder;
@@ -57,40 +60,33 @@ public class RuleRetriggerableIT {
         rule.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
         rule.getConditions().add(new Condition(outPointId, 0, ConditionType.state));
         rule.getConsequences().add(new Consequence(outPointId, 1));
+        rule.getConsequences().add(new Consequence(outPointId, 0, 5000, TriggerType.RETRIGGER));
         hcs.ruleResource().createRule(rule);
-
-        // rule 2
-        EventRule rule2 = new EventRule();
-        rule2.setName("my first rule2");
-        rule2.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
-        rule2.getConditions().add(new Condition(outPointId, 1, ConditionType.state));
-        rule2.getConsequences().add(new Consequence(outPointId, 0));
-        hcs.ruleResource().createRule(rule2);
 
         RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)
                 .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();
         RestMcuLineNotification pinNotif0 = new NotifBuilder().lineId(2).oldValue(1).value(0)
                 .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();
 
-        //notif button pushed
-        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
-        assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
-
-        //notif button released
-        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
+        Date startPush = new Date();
 
         //notif button pushed
-        lineResource.resetValueLatch(3);
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
         assertThat(lineResource.awaitLineValue(3)).isEqualTo(1);
+        lineResource.resetValueLatch(3);
 
         //notif button released
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
 
-        //notif button pushed
-        lineResource.resetValueLatch(3);
+        // wait 3s and repush the button
+        Thread.sleep(3000);
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
-        assertThat(lineResource.awaitLineValue(3)).isEqualTo(0);
-    }
 
+        //notif button released
+        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
+
+        Pair<Float, Date> awaitLineValueAndDate = lineResource.awaitLineValueAndDate(3);
+        assertThat(awaitLineValueAndDate.left).isEqualTo(0);
+        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(8000).isLessThan(9000);
+    }
 }

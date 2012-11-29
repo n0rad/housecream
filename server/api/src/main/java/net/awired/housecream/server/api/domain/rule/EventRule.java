@@ -25,6 +25,8 @@ public class EventRule extends IdEntityImpl<Long> {
     @Column(unique = true)
     private String name;
 
+    private Integer salience;
+
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "RULE_ID", nullable = false)
@@ -57,5 +59,13 @@ public class EventRule extends IdEntityImpl<Long> {
 
     public void setConsequences(List<Consequence> consequences) {
         this.consequences = consequences;
+    }
+
+    public Integer getSalience() {
+        return salience;
+    }
+
+    public void setSalience(Integer salience) {
+        this.salience = salience;
     }
 }

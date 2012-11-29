@@ -39,6 +39,10 @@ public class EngineProcessor implements Processor {
     private final StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
     private KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "hcs.droolsLogs");
 
+    public EngineProcessor() {
+        //        System.setProperty("drools.assertBehaviour", "identity");
+    }
+
     @PostConstruct
     protected void postConstruct() {
         ksession.addEventListener(new DebugAgendaEventListener());
@@ -54,6 +58,9 @@ public class EngineProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         Event event = exchange.getIn().getBody(Event.class);
+        log.debug("Asking to processing event : {}", event);
+        logCurrentFacts();
+        log.debug("Start processing event : {}", event);
         FactHandle eventFact = ksession.insert(event);
         try {
             ksession.fireAllRules();
@@ -61,6 +68,7 @@ public class EngineProcessor implements Processor {
             Actions actions = new Actions();
             actions.getActions().addAll(objects);
             exchange.getIn().setBody(actions);
+            logCurrentFacts();
         } finally {
             ksession.retract(eventFact);
             setPointState(event.getPointId(), event.getValue());
@@ -74,15 +82,20 @@ public class EngineProcessor implements Processor {
     public void setPointState(long pointId, Float currentValue) {
         log.debug("Set point state pointId={}, value={}", pointId, currentValue);
         PointState state = new PointState(pointId, currentValue);
+        //TODO may be a problem as we insert before remove
         FactHandle factHandler = ksession.insert(state);
-        states.put(state.getPointId(), new Pair<PointState, FactHandle>(state, factHandler));
+        Pair<PointState, FactHandle> previous = states.put(state.getPointId(), new Pair<PointState, FactHandle>(
+                state, factHandler));
+        if (previous != null) {
+            ksession.retract(previous.right);
+        }
         logCurrentFacts();
     }
 
     public float getPointState(long pointId) throws NotFoundException {
         Pair<PointState, FactHandle> pair = states.get(pointId);
         if (pair == null) {
-            throw new NotFoundException("point state not found for pointId : " + pointId);
+            throw new NotFoundException("Point state not found for pointId : " + pointId);
         }
         return pair.left.getValue();
     }
@@ -110,11 +123,11 @@ public class EngineProcessor implements Processor {
             return;
         }
         for (long key : states.keySet()) {
-            log.debug("point state : " + states.get(key).left);
+            log.debug("Point state : " + states.get(key).left);
         }
         Collection<Object> objects = ksession.getObjects();
         for (Object object : objects) {
-            log.debug("fact : " + object);
+            log.debug("Fact : " + object);
         }
     }
 }
