@@ -4,12 +4,14 @@ import static net.awired.housecream.server.api.domain.rule.TriggerType.NON_RETRI
 import static org.fest.assertions.Assertions.assertThat;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.List;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
+import net.awired.housecream.server.engine.Action;
 import net.awired.housecream.server.engine.Actions;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.service.event.EventService;
@@ -97,7 +99,7 @@ public class RuleBuilderTest {
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
 
-        engine.removeConsequenceFromState(exchange.getIn().getBody(Actions.class).getActions().get(0)); // remove action
+        engine.findAndRemoveActionFromFacts(exchange.getIn().getBody(Actions.class).getActions().get(0)); // remove action
         engine.setPointState(43, 1f); // save new state
 
         exchange = buildExchange(1f);
@@ -125,8 +127,7 @@ public class RuleBuilderTest {
         engine.process(exchange);
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(2);
 
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).contains(delayed0);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).contains(direct1);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions()).containsOnly(delayed0, direct1);
 
         engine.setPointState(43, 1f);
 
@@ -136,12 +137,11 @@ public class RuleBuilderTest {
     }
 
     @Test
-    public void should_handle_retrigger() throws Exception {
+    public void should_handle_retrigger_before_end_of_delay() throws Exception {
         // rule
         EventRule rule = new EventRule();
         rule.setName("Retrigger 43 on push on 42");
         rule.getConditions().add(new Condition(42, 1, ConditionType.event));
-        rule.getConditions().add(new Condition(43, 0, ConditionType.state));
         Consequence direct1 = new Consequence(43, 1);
         Consequence delayed0 = new Consequence(43, 0, 1000, TriggerType.RETRIGGER);
         rule.getConsequences().add(direct1);
@@ -151,18 +151,18 @@ public class RuleBuilderTest {
 
         Exchange exchange = buildExchange(1f);
         engine.process(exchange);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(2);
-
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).contains(delayed0);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).contains(direct1);
+        List<Action> actions = exchange.getIn().getBody(Actions.class).getActions();
+        assertThat(actions).hasSize(2);
+        assertThat(actions).contains(delayed0, direct1);
+        Action currentDelayAction = actions.get(actions.indexOf(delayed0));
 
         engine.setPointState(43, 1f);
 
         exchange = buildExchange(1f);
         engine.process(exchange);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(43);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(0f);
+        assertThat(actions).hasSize(2);
+        assertThat(actions).contains(delayed0, direct1);
+        assertThat(engine.findAndRemoveActionFromFacts(currentDelayAction)).isFalse();
     }
 
     private Exchange buildExchange(float value) {

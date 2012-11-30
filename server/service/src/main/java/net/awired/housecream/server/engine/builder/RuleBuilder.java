@@ -80,18 +80,29 @@ public class RuleBuilder {
         }
 
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("not Consequence(outPointId == (long)");
-            builder.append(consequence.getOutPointId());
-            builder.append(")\n");
+            if (consequence.getTriggerType() == TriggerType.RETRIGGER) {
+                builder.append("$retrigger" + consequence.getId() + ":");
+                builder.append("Action(outPointId == (long)");
+                builder.append(consequence.getOutPointId());
+                builder.append(")\n");
+            } else {
+                builder.append("not ConsequenceAction(outPointId == (long)");
+                builder.append(consequence.getOutPointId());
+                builder.append(")\n");
+            }
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("insert(new Consequence((long)" + consequence.getOutPointId() + ",(float)"
+            if (consequence.getTriggerType() == TriggerType.RETRIGGER) {
+                builder.append("retract($retrigger" + consequence.getId() + ");\n");
+            }
+            builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
                     + consequence.getValue() + ", " + consequence.getDelayMili() + ", "
                     + buildTriggerJavaType(consequence.getTriggerType()) + "));\n");
         }
         builder.append("end\n");
+
         return builder.toString();
     }
 

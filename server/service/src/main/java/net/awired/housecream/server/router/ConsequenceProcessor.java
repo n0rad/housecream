@@ -5,8 +5,8 @@ import javax.inject.Inject;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
-import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
+import net.awired.housecream.server.engine.Action;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.service.PluginService;
 import net.awired.housecream.server.storage.dao.OutPointDao;
@@ -36,19 +36,19 @@ public class ConsequenceProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Consequence consequence = exchange.getIn().getBody(Consequence.class);
+        Action action = exchange.getIn().getBody(Action.class);
 
-        boolean found = engine.removeConsequenceFromState(consequence);
-        if (consequence.getTriggerType() == TriggerType.NON_RETRIGGER && found) {
+        boolean found = engine.findAndRemoveActionFromFacts(action);
+        if (action.getTriggerType() == TriggerType.NON_RETRIGGER && found) {
             exchange.setProperty(Exchange.ROUTE_STOP, Boolean.TRUE);
-            log.debug("Stop routing message for retrigger that was removed from facts : {}", consequence);
+            log.debug("Stop routing message for retrigger that was removed from facts : {}", action);
             return;
         }
 
-        OutPoint outpoint = outputDao.find(consequence.getOutPointId());
+        OutPoint outpoint = outputDao.find(action.getOutPointId());
         HousecreamPlugin plugin = pluginService.getPluginFromPrefix(outpoint.extractUrlPrefix());
-        Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(consequence, outpoint);
-        Message outMessage = outRouter.buildMessage(bodyAndHeaders, outpoint, consequence);
+        Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, outpoint);
+        Message outMessage = outRouter.buildMessage(bodyAndHeaders, outpoint, action);
 
         exchange.setIn(outMessage);
     }

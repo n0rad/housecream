@@ -10,7 +10,6 @@ import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.PointState;
-import net.awired.housecream.server.api.domain.rule.Consequence;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.drools.KnowledgeBase;
@@ -41,6 +40,7 @@ public class EngineProcessor implements Processor {
 
     public EngineProcessor() {
         //        System.setProperty("drools.assertBehaviour", "identity");
+        //        drools.consequenceExceptionHandler = <qualified class name>
     }
 
     @PostConstruct
@@ -55,6 +55,11 @@ public class EngineProcessor implements Processor {
         ksession.dispose();
     }
 
+    @SuppressWarnings("unchecked")
+    private static <T> Collection<T> cast(Collection<?> p, Class<T> t) {
+        return (Collection<T>) p;
+    }
+
     @Override
     public void process(Exchange exchange) throws Exception {
         Event event = exchange.getIn().getBody(Event.class);
@@ -64,9 +69,15 @@ public class EngineProcessor implements Processor {
         FactHandle eventFact = ksession.insert(event);
         try {
             ksession.fireAllRules();
-            Collection objects = ksession.getObjects(new ClassObjectFilter(Consequence.class));
+            Collection<FactHandle> consequenceHandlers = cast(
+                    ksession.getFactHandles(new ClassObjectFilter(ConsequenceAction.class)), FactHandle.class);
             Actions actions = new Actions();
-            actions.getActions().addAll(objects);
+            for (FactHandle consequenceHandler : consequenceHandlers) {
+                Action action = new Action((ConsequenceAction) ksession.getObject(consequenceHandler));
+                actions.add(action);
+                ksession.insert(action);
+                ksession.retract(consequenceHandler);
+            }
             exchange.getIn().setBody(actions);
             logCurrentFacts();
         } finally {
@@ -110,9 +121,9 @@ public class EngineProcessor implements Processor {
         logCurrentFacts();
     }
 
-    public boolean removeConsequenceFromState(Consequence consequence) {
-        log.debug("Removing consequence from facts : {}", consequence);
-        FactHandle factHandle = ksession.getFactHandle(consequence);
+    public boolean findAndRemoveActionFromFacts(Action action) {
+        log.debug("Removing action from facts : {}", action);
+        FactHandle factHandle = ksession.getFactHandle(action);
         ksession.retract(factHandle);
         logCurrentFacts();
         return factHandle != null;

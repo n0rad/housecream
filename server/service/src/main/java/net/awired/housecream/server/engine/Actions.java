@@ -2,12 +2,11 @@ package net.awired.housecream.server.engine;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.awired.housecream.server.api.domain.rule.Consequence;
 import com.google.common.base.Objects;
 
 public class Actions {
 
-    private final List<Consequence> actions = new ArrayList<Consequence>();
+    private final List<Action> actions = new ArrayList<Action>();
 
     @Override
     public String toString() {
@@ -16,11 +15,11 @@ public class Actions {
                 .toString();
     }
 
-    public void add(Consequence action) {
+    public void add(Action action) {
         actions.add(action);
     }
 
-    public List<Consequence> getActions() {
+    public List<Action> getActions() {
         return actions;
     }
 
