@@ -60,7 +60,7 @@ public class RuleRetriggerableIT {
         rule.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
         rule.getConditions().add(new Condition(outPointId, 0, ConditionType.state));
         rule.getConsequences().add(new Consequence(outPointId, 1));
-        rule.getConsequences().add(new Consequence(outPointId, 0, 5000, TriggerType.RETRIGGER));
+        rule.getConsequences().add(new Consequence(outPointId, 0, 7000, TriggerType.RETRIGGER));
         hcs.ruleResource().createRule(rule);
 
         RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)
@@ -87,6 +87,6 @@ public class RuleRetriggerableIT {
 
         Pair<Float, Date> awaitLineValueAndDate = lineResource.awaitLineValueAndDate(3);
         assertThat(awaitLineValueAndDate.left).isEqualTo(0);
-        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(8000).isLessThan(9000);
+        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(7000).isLessThan(7400);
     }
 }

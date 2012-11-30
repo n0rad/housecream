@@ -39,7 +39,7 @@ public class ConsequenceProcessor implements Processor {
         Action action = exchange.getIn().getBody(Action.class);
 
         boolean found = engine.findAndRemoveActionFromFacts(action);
-        if (action.getTriggerType() == TriggerType.NON_RETRIGGER && found) {
+        if (action.getTriggerType() == TriggerType.RETRIGGER && !found) {
             exchange.setProperty(Exchange.ROUTE_STOP, Boolean.TRUE);
             log.debug("Stop routing message for retrigger that was removed from facts : {}", action);
             return;

@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DynamicRouteManager extends RouteBuilder {
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
     @Inject
     private ModelCamelContext camelContext;
 
     @Inject
     private PluginService pluginService;
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private Map<String, RouteDefinition> pointRoutes = Collections
             .synchronizedMap(new HashMap<String, RouteDefinition>());

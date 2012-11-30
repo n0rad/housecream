@@ -64,7 +64,7 @@ public class EngineProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Event event = exchange.getIn().getBody(Event.class);
         log.debug("Asking to processing event : {}", event);
-        logCurrentFacts();
+        logCurrentFacts("before fire rules");
         log.debug("Start processing event : {}", event);
         FactHandle eventFact = ksession.insert(event);
         try {
@@ -79,7 +79,7 @@ public class EngineProcessor implements Processor {
                 ksession.retract(consequenceHandler);
             }
             exchange.getIn().setBody(actions);
-            logCurrentFacts();
+            logCurrentFacts("after fired rules");
         } finally {
             ksession.retract(eventFact);
             setPointState(event.getPointId(), event.getValue());
@@ -100,7 +100,7 @@ public class EngineProcessor implements Processor {
         if (previous != null) {
             ksession.retract(previous.right);
         }
-        logCurrentFacts();
+        logCurrentFacts("after add point state");
     }
 
     public float getPointState(long pointId) throws NotFoundException {
@@ -118,7 +118,7 @@ public class EngineProcessor implements Processor {
             ksession.retract(pair.right);
         }
         states.remove(pointId);
-        logCurrentFacts();
+        logCurrentFacts("after removing point state");
     }
 
     public boolean findAndRemoveActionFromFacts(Action action) {
@@ -127,14 +127,15 @@ public class EngineProcessor implements Processor {
         if (factHandle != null) {
             ksession.retract(factHandle);
         }
-        logCurrentFacts();
+        logCurrentFacts("after find and remove");
         return factHandle != null;
     }
 
-    private void logCurrentFacts() {
+    private void logCurrentFacts(String info) {
         if (!log.isDebugEnabled()) {
             return;
         }
+        log.debug("FACTS: " + info);
         for (long key : states.keySet()) {
             log.debug("Point state : " + states.get(key).left);
         }

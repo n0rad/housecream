@@ -48,7 +48,7 @@ public class StaticRouteManager extends RouteBuilder {
                 .delay().method(delayer, "calculateDelay") //
                 .to("direct:output");
 
-        from("direct:output").inOut() //
+        from("direct:output") //
                 .process(consequenceProcessor) //
                 .dynamicRouter().method(dynamicRouter, "route") //
                 .process(endProcessor);
