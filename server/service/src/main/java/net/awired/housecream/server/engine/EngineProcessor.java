@@ -122,9 +122,11 @@ public class EngineProcessor implements Processor {
     }
 
     public boolean findAndRemoveActionFromFacts(Action action) {
-        log.debug("Removing action from facts : {}", action);
+        log.debug("Find and removing action from facts : {}", action);
         FactHandle factHandle = ksession.getFactHandle(action);
-        ksession.retract(factHandle);
+        if (factHandle != null) {
+            ksession.retract(factHandle);
+        }
         logCurrentFacts();
         return factHandle != null;
     }

@@ -43,22 +43,13 @@ public class RuleBuilder {
 
     private String generateDrl(EventRule rule) {
         StringBuilder builder = new StringBuilder(300);
-        builder.append("package ");
-        builder.append(RULE_PACKAGE);
-        builder.append(";\n\n");
+        builder.append("package " + RULE_PACKAGE + ";\n\n");
         for (String importClass : IMPORTS) {
-            builder.append("import ");
-            builder.append(importClass);
-            builder.append(";\n");
+            builder.append("import " + importClass + ";\n");
         }
-
-        builder.append("\nrule \"");
-        builder.append(rule.getName());
-        builder.append("\"\n");
+        builder.append("\nrule \"" + rule.getName() + "\"\n");
         if (rule.getSalience() != null) {
-            builder.append("salience ");
-            builder.append(rule.getSalience());
-            builder.append('\n');
+            builder.append("salience " + rule.getSalience() + '\n');
         }
         builder.append("    when\n");
         for (Condition condition : rule.getConditions()) {
@@ -80,28 +71,31 @@ public class RuleBuilder {
         }
 
         for (Consequence consequence : rule.getConsequences()) {
-            if (consequence.getTriggerType() == TriggerType.RETRIGGER) {
-                builder.append("$retrigger" + consequence.getId() + ":");
-                builder.append("Action(outPointId == (long)");
-                builder.append(consequence.getOutPointId());
-                builder.append(")\n");
-            } else {
-                builder.append("not ConsequenceAction(outPointId == (long)");
-                builder.append(consequence.getOutPointId());
-                builder.append(")\n");
-            }
+            builder.append("not ConsequenceAction(outPointId == (long)");
+            builder.append(consequence.getOutPointId());
+            builder.append(")\n");
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            if (consequence.getTriggerType() == TriggerType.RETRIGGER) {
-                builder.append("retract($retrigger" + consequence.getId() + ");\n");
-            }
             builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
                     + consequence.getValue() + ", " + consequence.getDelayMili() + ", "
                     + buildTriggerJavaType(consequence.getTriggerType()) + "));\n");
         }
         builder.append("end\n");
+
+        for (Consequence consequence : rule.getConsequences()) {
+            if (consequence.getTriggerType() == TriggerType.RETRIGGER) {
+                builder.append("\nrule \"" + rule.getName() + "-RETRIGGER" + consequence.getId() + "\"\n");
+                builder.append("salience 10\n");
+                builder.append("    when\n");
+                builder.append("$retrigger:");
+                builder.append("Action(outPointId == (long)" + consequence.getOutPointId() + ")\n");
+                builder.append("    then\n");
+                builder.append("retract($retrigger);\n");
+                builder.append("end\n");
+            }
+        }
 
         return builder.toString();
     }
