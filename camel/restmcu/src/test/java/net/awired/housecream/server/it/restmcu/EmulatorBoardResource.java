@@ -1,6 +1,5 @@
 package net.awired.housecream.server.it.restmcu;
 
-import net.awired.housecream.camel.restmcu.LatchBoardResource;
 
 public class EmulatorBoardResource extends LatchBoardResource {
 

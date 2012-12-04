@@ -1,4 +1,4 @@
-package net.awired.housecream.camel.restmcu;
+package net.awired.housecream.server.it.restmcu;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -62,10 +62,6 @@ public class LatchBoardResource implements RestMcuBoardResource {
 
     @Override
     public void resetBoard() {
-    }
-
-    @Override
-    public void init() {
     }
 
     @Override

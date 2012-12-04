@@ -1,6 +1,8 @@
 package net.awired.housecream.camel.restmcu;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -11,15 +13,19 @@ import org.apache.camel.impl.DefaultEndpoint;
  */
 public class RestMcuEndpoint extends DefaultEndpoint {
 
-    public RestMcuEndpoint() {
-    }
+    private static String HTTP_PREFIX = "http://";
+
+    private URL notifyUrl;
+    private int lineNumber;
 
     public RestMcuEndpoint(String uri, RestMcuComponent component) {
         super(uri, component);
-    }
-
-    public RestMcuEndpoint(String endpointUri) {
-        super(endpointUri);
+        String path = getEndpointConfiguration().getURI().getPath();
+        try {
+            lineNumber = Integer.parseInt(path.substring(1)); // skip / from path
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid line number : " + path, e);
+        }
     }
 
     @Override
@@ -37,13 +43,29 @@ public class RestMcuEndpoint extends DefaultEndpoint {
         return true;
     }
 
-    public String getRestMcuUrl() {
+    public String getRestmcuUrl() {
         URI uri = getEndpointConfiguration().getURI();
-        String url = "http://" + uri.getHost();
+        String url = HTTP_PREFIX + uri.getHost();
         if (uri.getPort() != -1) {
             url += ":" + uri.getPort();
         }
         return url;
+    }
+
+    public URL getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        try {
+            if (notifyUrl.startsWith(HTTP_PREFIX)) {
+                this.notifyUrl = new URL(notifyUrl);
+            } else {
+                this.notifyUrl = new URL(HTTP_PREFIX + notifyUrl);
+            }
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid notifyUrl", e);
+        }
     }
 
 }

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.awired.ajsl.web.rest.RestContext;
-import net.awired.housecream.camel.restmcu.LatchLineResource.LineInfo;
 import net.awired.housecream.server.it.restmcu.EmulatorBoardResource;
 import net.awired.housecream.server.it.restmcu.EmulatorLineResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource.LineInfo;
 import net.awired.restmcu.api.domain.line.RestMcuLine;
 import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
@@ -20,11 +20,11 @@ import org.apache.cxf.transport.http_jetty.JettyHTTPDestination;
 import org.apache.cxf.transport.http_jetty.JettyHTTPServerEngine;
 import org.apache.cxf.transport.http_jetty.ServerEngine;
 
-public class RestMcuSample {
+public class RestmcuSample {
 
     private Server server;
 
-    public RestMcuSample() {
+    public RestmcuSample() {
         EmulatorBoardResource board = new EmulatorBoardResource("127.0.0.1", 8976);
         board.board.setDescription("description of the board");
         board.board.setHardware("RestMcu");
@@ -70,9 +70,9 @@ public class RestMcuSample {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        RestMcuSample restMcuSample = new RestMcuSample();
+        RestmcuSample restmcuSample = new RestmcuSample();
 
-        Destination dest = restMcuSample.server.getDestination();
+        Destination dest = restmcuSample.server.getDestination();
 
         JettyHTTPDestination jettyDestination = JettyHTTPDestination.class.cast(dest);
         ServerEngine engine = jettyDestination.getEngine();

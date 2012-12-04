@@ -51,7 +51,11 @@ public class OutPointService implements OutPointResource {
     @Override
     public OutPoint getOutPoint(long outPointId) throws NotFoundException {
         OutPoint find = pointDao.find(outPointId);
-        find.setValue(engine.getPointState(outPointId));
+        try {
+            find.setValue(engine.getPointState(outPointId));
+        } catch (NotFoundException e) {
+            // no current value for point
+        }
         return find;
     }
 

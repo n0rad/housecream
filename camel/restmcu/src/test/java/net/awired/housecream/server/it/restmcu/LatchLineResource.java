@@ -1,4 +1,4 @@
-package net.awired.housecream.camel.restmcu;
+package net.awired.housecream.server.it.restmcu;
 
 import java.util.Date;
 import java.util.HashMap;

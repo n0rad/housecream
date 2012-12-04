@@ -40,7 +40,11 @@ public class InPointService implements InPointResource {
     @Override
     public InPoint getInPoint(long inPointId) throws NotFoundException {
         InPoint point = pointDao.find(inPointId);
-        point.setValue(engine.getPointState(inPointId));
+        try {
+            point.setValue(engine.getPointState(inPointId));
+        } catch (NotFoundException e) {
+            // no current value for point
+        }
         return point;
     }
 

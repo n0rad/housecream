@@ -1,6 +1,8 @@
 package net.awired.housecream.camel.restmcu;
 
 import net.awired.ajsl.test.RestServerRule;
+import net.awired.housecream.server.it.restmcu.LatchBoardResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;

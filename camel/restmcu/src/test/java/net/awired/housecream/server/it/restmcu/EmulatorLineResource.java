@@ -2,7 +2,6 @@ package net.awired.housecream.server.it.restmcu;
 
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.core.lang.exception.UpdateException;
-import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
 

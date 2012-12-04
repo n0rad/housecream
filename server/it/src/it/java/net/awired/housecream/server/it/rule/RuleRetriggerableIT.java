@@ -5,8 +5,6 @@ import static org.fest.assertions.Assertions.assertThat;
 import java.util.Date;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.camel.restmcu.LatchBoardResource;
-import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
@@ -21,6 +19,8 @@ import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
+import net.awired.housecream.server.it.restmcu.LatchBoardResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import org.junit.Rule;
@@ -87,6 +87,7 @@ public class RuleRetriggerableIT {
 
         Pair<Float, Date> awaitLineValueAndDate = lineResource.awaitLineValueAndDate(3);
         assertThat(awaitLineValueAndDate.left).isEqualTo(0);
-        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(7000).isLessThan(7400);
+        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(10000)
+                .isLessThan(10500);
     }
 }

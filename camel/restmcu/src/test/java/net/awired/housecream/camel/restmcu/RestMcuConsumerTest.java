@@ -2,6 +2,8 @@ package net.awired.housecream.camel.restmcu;
 
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import net.awired.ajsl.test.RestServerRule;
+import net.awired.housecream.server.it.restmcu.LatchBoardResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;

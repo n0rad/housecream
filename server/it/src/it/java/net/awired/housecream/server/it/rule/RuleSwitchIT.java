@@ -2,8 +2,6 @@ package net.awired.housecream.server.it.rule;
 
 import static org.fest.assertions.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.camel.restmcu.LatchBoardResource;
-import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
@@ -17,6 +15,8 @@ import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
+import net.awired.housecream.server.it.restmcu.LatchBoardResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition;

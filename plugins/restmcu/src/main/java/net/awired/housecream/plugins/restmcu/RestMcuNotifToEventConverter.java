@@ -8,6 +8,7 @@ import net.awired.housecream.server.engine.InPointDaoInterface;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import org.apache.camel.Converter;
 import org.apache.camel.Exchange;
+import com.google.common.base.Preconditions;
 
 @Converter
 public class RestMcuNotifToEventConverter {
@@ -17,7 +18,20 @@ public class RestMcuNotifToEventConverter {
 
     @Converter
     public Event toEvent(RestMcuLineNotification notif, Exchange exchange) {
-        String url = "restmcu://" + notif.getSource() + "/" + notif.getId();
+        Preconditions.checkNotNull(notif, "Notification cannot be null");
+        Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
+        String[] split = notif.getSource().split(":");
+        if (split.length != 2) {
+            throw new IllegalStateException("Received notification with invalid source : " + notif.getSource());
+        }
+
+        String url = "restmcu://";
+        if (split[1].equals("80")) {
+            url += split[0];
+        } else {
+            url += notif.getSource();
+        }
+        url += "/" + notif.getId();
 
         try {
             Event event = new Event();
@@ -26,7 +40,7 @@ public class RestMcuNotifToEventConverter {
             event.setValue(notif.getValue());
             return event;
         } catch (NotFoundException e) {
-            throw new RuntimeException("Not found", e);
+            throw new RuntimeException("Inpoint not found" + url, e);
         }
 
     }

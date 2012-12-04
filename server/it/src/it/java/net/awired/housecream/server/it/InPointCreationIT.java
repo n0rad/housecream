@@ -2,14 +2,13 @@ package net.awired.housecream.server.it;
 
 import static org.fest.assertions.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.camel.restmcu.LatchBoardResource;
-import net.awired.housecream.camel.restmcu.LatchLineResource;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
-import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
+import net.awired.housecream.server.it.restmcu.LatchBoardResource;
+import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +27,7 @@ public class InPointCreationIT {
         restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/pin/3").build();
+                .url("restmcu://127.0.0.1:5879/3").build();
 
         hcs.inPointResource().createInPoint(inPoint);
 
@@ -42,7 +41,7 @@ public class InPointCreationIT {
         restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/pin/3").build();
+                .url("restmcu://127.0.0.1:5879/3").build();
         Long pointId = hcs.inPointResource().createInPoint(inPoint);
 
         Float pointValue = hcs.inPointResource().getPointValue(pointId);
