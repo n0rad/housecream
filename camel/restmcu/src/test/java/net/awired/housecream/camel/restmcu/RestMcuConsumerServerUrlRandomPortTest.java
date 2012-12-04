@@ -5,41 +5,30 @@ import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.restmcu.api.domain.line.RestMcuLine;
 import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
-import org.apache.camel.EndpointInject;
-import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.fest.assertions.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class RestMcuProducerTest extends CamelTestSupport {
-
-    @EndpointInject(uri = "mock:result")
-    protected MockEndpoint result;
+public class RestMcuConsumerServerUrlRandomPortTest extends CamelTestSupport {
 
     @Rule
     public RestServerRule boardRule = new RestServerRule("http://0.0.0.0:5879", new LatchLineResource() {
         {
             LineInfo lineInfo = new LineInfo();
-            lineInfo.value = 43f;
+            lineInfo.value = 42f;
             lineInfo.description = new RestMcuLine();
-            lineInfo.description.setDirection(RestMcuLineDirection.OUTPUT);
-            lines.put(3, lineInfo);
+            lineInfo.description.setDirection(RestMcuLineDirection.INPUT);
+            lines.put(2, lineInfo);
         }
     }, new LatchBoardResource());
 
     @Test
-    public void should_send_new_line_value() throws Exception {
-        result.expectedMinimumMessageCount(1);
-        ProducerTemplate template = context.createProducerTemplate();
-        template.sendBody("direct:start", 42f);
-
-        LatchLineResource resource = boardRule.getResource(LatchLineResource.class);
-
-        Assertions.assertThat(resource.awaitLineValue(3)).isEqualTo(42);
-        assertMockEndpointsSatisfied();
+    public void should_use_notify_url_put_in_parameter() throws Exception {
+        String notifyUrl = boardRule.getResource(LatchBoardResource.class).awaitUpdateSettings().getNotifyUrl();
+        Assertions.assertThat(notifyUrl).startsWith("http://127.0.1.2:");
+        Assertions.assertThat(notifyUrl.endsWith(":0")).isFalse();
     }
 
     @Override
@@ -47,7 +36,7 @@ public class RestMcuProducerTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() {
-                from("direct:start").to("restmcu://localhost:5879/3").to("mock:result");
+                from("restmcu://localhost:5879/2?notifyUrl=127.0.1.2:0").to("mock:result");
             }
         };
     }

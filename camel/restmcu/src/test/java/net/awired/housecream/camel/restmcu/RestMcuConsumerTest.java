@@ -4,6 +4,10 @@ import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.it.restmcu.LatchBoardResource;
 import net.awired.housecream.server.it.restmcu.LatchLineResource;
+import net.awired.restmcu.api.domain.board.RestMcuBoardNotification;
+import net.awired.restmcu.api.domain.board.RestMcuBoardNotificationType;
+import net.awired.restmcu.api.domain.line.RestMcuLine;
+import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
@@ -22,9 +26,11 @@ public class RestMcuConsumerTest extends CamelTestSupport {
     @Rule
     public RestServerRule boardRule = new RestServerRule("http://0.0.0.0:5879", new LatchLineResource() {
         {
-            LineInfo value = new LineInfo();
-            value.value = 42f;
-            lines.put(2, value);
+            LineInfo lineInfo = new LineInfo();
+            lineInfo.value = 42f;
+            lineInfo.description = new RestMcuLine();
+            lineInfo.description.setDirection(RestMcuLineDirection.INPUT);
+            lines.put(2, lineInfo);
         }
     }, new LatchBoardResource());
 
@@ -38,6 +44,20 @@ public class RestMcuConsumerTest extends CamelTestSupport {
                 .buildNotifyProxyFromNotifyUrl();
 
         notifyResource.lineNotification(notif);
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void should_receive_board_notification() throws Exception {
+        result.expectedMinimumMessageCount(1);
+        RestMcuBoardNotification notif = new RestMcuBoardNotification(RestMcuBoardNotificationType.BOOT);
+        result.expectedBodiesReceived(notif);
+
+        RestMcuNotifyResource notifyResource = boardRule.getResource(LatchBoardResource.class)
+                .buildNotifyProxyFromNotifyUrl();
+
+        notifyResource.boardNotification(notif);
 
         assertMockEndpointsSatisfied();
     }

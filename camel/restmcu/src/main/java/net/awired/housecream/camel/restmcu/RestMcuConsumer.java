@@ -4,9 +4,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import net.awired.ajsl.core.io.NetworkUtils;
-import net.awired.ajsl.web.rest.RestContext;
+import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.restmcu.api.domain.board.RestMcuBoardSettings;
+import net.awired.restmcu.api.domain.line.RestMcuLine;
+import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.api.resource.client.RestMcuBoardResource;
+import net.awired.restmcu.api.resource.client.RestMcuLineResource;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultConsumer;
 import org.apache.cxf.endpoint.Server;
@@ -17,14 +20,18 @@ import org.slf4j.LoggerFactory;
 
 public class RestMcuConsumer extends DefaultConsumer {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final transient Logger LOG = LoggerFactory.getLogger(RestMcuConsumer.class);
 
     private Server server;
+    private String boardUrl;
+    private int lineId;
 
     public RestMcuConsumer(RestMcuEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
         URL listeningUrl = findListeningUrl();
-        server = new RestContext().prepareServer(listeningUrl.toString(),
+        boardUrl = endpoint.findBoardUrl();
+        lineId = endpoint.findLineId();
+        server = endpoint.getRestContext().prepareServer(listeningUrl.toString(),
                 Arrays.asList(new RestMcuCamelNotifyResource(endpoint, this)));
         String notifyUrl = findNotifyUrl(listeningUrl);
         log.debug("Started restmcu notify server {}:{}", listeningUrl.getHost(), findListeningPort());
@@ -62,23 +69,33 @@ public class RestMcuConsumer extends DefaultConsumer {
     }
 
     private void updateNotificationUrl(RestMcuEndpoint endpoint, String notifyUrl) {
-        log.debug("Calling board : {} to update notifyUrl with : {}", endpoint.getRestmcuUrl(), notifyUrl);
-        RestContext restContext = new RestContext();
-        RestMcuBoardResource client = restContext.prepareClient(RestMcuBoardResource.class, endpoint.getRestmcuUrl(),
-                null, true);
+        log.debug("Calling board : {} to update notifyUrl with : {}", endpoint.findBoardUrl(), notifyUrl);
+        RestMcuBoardResource client = endpoint.getRestContext().prepareClient(RestMcuBoardResource.class,
+                endpoint.findBoardUrl(), null, true);
         RestMcuBoardSettings boardSettings = new RestMcuBoardSettings();
         boardSettings.setNotifyUrl(notifyUrl);
         try {
             client.setBoardSettings(boardSettings);
         } catch (Exception e) {
-            log.warn("Cannot set notifyUrl for board : " + endpoint.getRestmcuUrl(), e);
+            log.warn("Cannot set notifyUrl for board : " + endpoint.findBoardUrl(), e);
         }
     }
 
     @Override
     protected void doStart() throws Exception {
         super.doStart();
+        checkLineIsInput();
         server.start();
+    }
+
+    private void checkLineIsInput() throws NotFoundException {
+        LOG.debug("Get line description from board to check consumer direction : {}", boardUrl);
+        RestMcuLineResource restMcuClient = ((RestMcuEndpoint) getEndpoint()).getRestContext().prepareClient(
+                RestMcuLineResource.class, boardUrl, null, true);
+        RestMcuLine line = restMcuClient.getLine(lineId);
+        if (line.getDirection() != RestMcuLineDirection.INPUT) {
+            throw new IllegalStateException("Cannot start a restmcu producer for a non INPUT line : " + line);
+        }
     }
 
     @Override
