@@ -35,3 +35,60 @@ snmp // notif
 DB // notif
 ssh ? 
 file ?
+
+
+
+
+
+
+rule "my first rule"
+    when
+Event(pointId == 368, value == 1.0)
+not ConsequenceAction(outPointId == (long)365)
+not ConsequenceAction(outPointId == (long)365)
+    then
+insert(new ConsequenceAction((long)365,(float)1.0, 0, null));
+insert(new ConsequenceAction((long)365,(float)0.0, 5000, TriggerType.NON_RETRIGGER));
+end
+
+
+
+
+
+
+
+
+rule "my first rule"
+    when
+Event(pointId == 369, value == 1.0)
+not ConsequenceAction(outPointId == (long)366)
+not ConsequenceAction(outPointId == (long)366)
+    then
+insert(new ConsequenceAction((long)366,(float)1.0, 0, null));
+insert(new ConsequenceAction((long)366,(float)0.0, 5000, TriggerType.RETRIGGER));
+end
+
+rule "my first rule-RETRIGGER369"
+salience 10
+    when
+Event(pointId == 369, value == 1.0)
+$retrigger:Action(outPointId == (long)366)
+    then
+retract($retrigger);
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

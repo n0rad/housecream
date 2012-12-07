@@ -55,9 +55,15 @@ public class RuleBuilder {
         appendCondition(rule, builder);
 
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("not ConsequenceAction(outPointId == (long)");
-            builder.append(consequence.getOutPointId());
-            builder.append(")\n");
+            if (consequence.getTriggerType() == TriggerType.NON_RETRIGGER) {
+                builder.append("not Action(outPointId == (long)");
+                builder.append(consequence.getOutPointId());
+                builder.append(")\n");
+            } else {
+                builder.append("not ConsequenceAction(outPointId == (long)");
+                builder.append(consequence.getOutPointId());
+                builder.append(")\n");
+            }
         }
 
         builder.append("    then\n");

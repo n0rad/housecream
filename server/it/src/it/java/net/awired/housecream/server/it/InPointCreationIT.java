@@ -23,7 +23,7 @@ public class InPointCreationIT {
             new LatchLineResource());
 
     @Test
-    public void should_update_notify_url_when_create_point() throws Exception {
+    public void should_update_notify_url_when_creating_inpoint() throws Exception {
         restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
