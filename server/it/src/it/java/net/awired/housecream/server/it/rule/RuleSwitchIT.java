@@ -1,5 +1,7 @@
 package net.awired.housecream.server.it.rule;
 
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static org.fest.assertions.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
@@ -34,8 +36,9 @@ public class RuleSwitchIT {
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
-        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
-        restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
+        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().direction(INPUT).value(1).build());
+        restmcu.getResource(LatchLineResource.class)
+                .line(3, new LineInfoBuilder().direction(OUTPUT).value(1).build());
 
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
 

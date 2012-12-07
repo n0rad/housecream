@@ -1,5 +1,7 @@
 package net.awired.housecream.server.it.rule;
 
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static org.fest.assertions.Assertions.assertThat;
 import java.util.Date;
@@ -38,8 +40,8 @@ public class RuleDelayerIT {
         LatchLineResource lineResource = restmcu.getResource(LatchLineResource.class);
         LatchBoardResource boardResource = restmcu.getResource(LatchBoardResource.class);
 
-        lineResource.line(2, new LineInfoBuilder().value(1).build());
-        lineResource.line(3, new LineInfoBuilder().value(1).build());
+        lineResource.line(2, new LineInfoBuilder().direction(INPUT).value(1).build());
+        lineResource.line(3, new LineInfoBuilder().direction(OUTPUT).value(1).build());
 
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
 
