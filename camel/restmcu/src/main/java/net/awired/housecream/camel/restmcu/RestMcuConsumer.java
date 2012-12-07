@@ -28,14 +28,8 @@ public class RestMcuConsumer extends DefaultConsumer {
 
     public RestMcuConsumer(RestMcuEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
-        URL listeningUrl = findListeningUrl();
         boardUrl = endpoint.findBoardUrl();
         lineId = endpoint.findLineId();
-        server = endpoint.getRestContext().prepareServer(listeningUrl.toString(),
-                Arrays.asList(new RestMcuCamelNotifyResource(endpoint, this)));
-        String notifyUrl = findNotifyUrl(listeningUrl);
-        log.debug("Started restmcu notify server {}:{}", listeningUrl.getHost(), findListeningPort());
-        updateNotificationUrl(endpoint, notifyUrl);
     }
 
     private URL findListeningUrl() {
@@ -84,7 +78,15 @@ public class RestMcuConsumer extends DefaultConsumer {
     @Override
     protected void doStart() throws Exception {
         super.doStart();
-        checkLineIsInput();
+        RestMcuEndpoint endpoint = (RestMcuEndpoint) getEndpoint();
+        URL listeningUrl = findListeningUrl();
+        server = endpoint.getRestContext().prepareServer(listeningUrl.toString(),
+                Arrays.asList(new RestMcuCamelNotifyResource(endpoint, this)));
+        log.debug("Started restmcu notify server {}:{}", listeningUrl.getHost(), findListeningPort());
+        //        checkLineIsInput(); // TODO if board is not available at server start this fail and block the server 
+        String notifyUrl = findNotifyUrl(listeningUrl);
+        updateNotificationUrl(endpoint, notifyUrl);
+
         server.start();
     }
 

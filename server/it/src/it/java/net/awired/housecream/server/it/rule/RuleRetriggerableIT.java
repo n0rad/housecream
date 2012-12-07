@@ -1,5 +1,7 @@
 package net.awired.housecream.server.it.rule;
 
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static org.fest.assertions.Assertions.assertThat;
 import java.util.Date;
@@ -39,8 +41,8 @@ public class RuleRetriggerableIT {
         LatchLineResource lineResource = restmcu.getResource(LatchLineResource.class);
         LatchBoardResource boardResource = restmcu.getResource(LatchBoardResource.class);
 
-        lineResource.line(2, new LineInfoBuilder().value(1).build());
-        lineResource.line(3, new LineInfoBuilder().value(1).build());
+        lineResource.line(2, new LineInfoBuilder().direction(INPUT).value(1).build());
+        lineResource.line(3, new LineInfoBuilder().direction(OUTPUT).value(1).build());
 
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
 
@@ -58,9 +60,9 @@ public class RuleRetriggerableIT {
         EventRule rule = new EventRule();
         rule.setName("my first rule");
         rule.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
-        rule.getConditions().add(new Condition(outPointId, 0, ConditionType.state));
+        //        rule.getConditions().add(new Condition(outPointId, 0, ConditionType.state));
         rule.getConsequences().add(new Consequence(outPointId, 1));
-        rule.getConsequences().add(new Consequence(outPointId, 0, 7000, TriggerType.RETRIGGER));
+        rule.getConsequences().add(new Consequence(outPointId, 0, 5000, TriggerType.RETRIGGER));
         hcs.ruleResource().createRule(rule);
 
         RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)
@@ -87,7 +89,6 @@ public class RuleRetriggerableIT {
 
         Pair<Float, Date> awaitLineValueAndDate = lineResource.awaitLineValueAndDate(3);
         assertThat(awaitLineValueAndDate.left).isEqualTo(0);
-        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(10000)
-                .isLessThan(10500);
+        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(8000).isLessThan(9000);
     }
 }

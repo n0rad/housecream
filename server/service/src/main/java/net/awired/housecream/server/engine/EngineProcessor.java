@@ -73,7 +73,20 @@ public class EngineProcessor implements Processor {
                     ksession.getFactHandles(new ClassObjectFilter(ConsequenceAction.class)), FactHandle.class);
             Actions actions = new Actions();
             for (FactHandle consequenceHandler : consequenceHandlers) {
-                Action action = new Action((ConsequenceAction) ksession.getObject(consequenceHandler));
+                ConsequenceAction consequence = (ConsequenceAction) ksession.getObject(consequenceHandler);
+                if (consequence.getDelayMili() == 0) {
+                    try {
+                        float currentState = getPointState(consequence.getOutPointId());
+                        if (currentState == consequence.getValue()) {
+                            log.debug("Skip direct action {} as the point already have this state", consequence);
+                            ksession.retract(consequenceHandler);
+                            continue;
+                        }
+                    } catch (NotFoundException e) {
+                        // nothing to do if there is no point state
+                    }
+                }
+                Action action = new Action(consequence);
                 actions.add(action);
                 ksession.insert(action);
                 ksession.retract(consequenceHandler);

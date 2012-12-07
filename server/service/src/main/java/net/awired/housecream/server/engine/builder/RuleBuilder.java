@@ -52,23 +52,7 @@ public class RuleBuilder {
             builder.append("salience " + rule.getSalience() + '\n');
         }
         builder.append("    when\n");
-        for (Condition condition : rule.getConditions()) {
-            if (condition.getType() == ConditionType.event) {
-                builder.append("Event");
-            } else if (condition.getType() == ConditionType.state) {
-                builder.append("not PointState(pointId == ");
-                builder.append(condition.getPointId());
-                builder.append(") || PointState");
-            } else {
-                throw new RuntimeException("unknown condition type " + condition.getType());
-            }
-            builder.append("(pointId == ");
-            builder.append(condition.getPointId());
-            builder.append(", value == ");
-            builder.append(condition.getValue());
-            builder.append(")");
-            builder.append('\n');
-        }
+        appendCondition(rule, builder);
 
         for (Consequence consequence : rule.getConsequences()) {
             builder.append("not ConsequenceAction(outPointId == (long)");
@@ -89,6 +73,9 @@ public class RuleBuilder {
                 builder.append("\nrule \"" + rule.getName() + "-RETRIGGER" + consequence.getId() + "\"\n");
                 builder.append("salience 10\n");
                 builder.append("    when\n");
+
+                appendCondition(rule, builder);
+
                 builder.append("$retrigger:");
                 builder.append("Action(outPointId == (long)" + consequence.getOutPointId() + ")\n");
                 builder.append("    then\n");
@@ -98,6 +85,26 @@ public class RuleBuilder {
         }
 
         return builder.toString();
+    }
+
+    private void appendCondition(EventRule rule, StringBuilder builder) {
+        for (Condition condition : rule.getConditions()) {
+            if (condition.getType() == ConditionType.event) {
+                builder.append("Event");
+            } else if (condition.getType() == ConditionType.state) {
+                builder.append("not PointState(pointId == ");
+                builder.append(condition.getPointId());
+                builder.append(") || PointState");
+            } else {
+                throw new RuntimeException("unknown condition type " + condition.getType());
+            }
+            builder.append("(pointId == ");
+            builder.append(condition.getPointId());
+            builder.append(", value == ");
+            builder.append(condition.getValue());
+            builder.append(")");
+            builder.append('\n');
+        }
     }
 
     private String buildTriggerJavaType(TriggerType triggerType) {

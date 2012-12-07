@@ -71,4 +71,10 @@ public class RestMcuConsumerTest extends CamelTestSupport {
             }
         };
     }
+
+    @Test
+    public void findListeningPort()
+     throws Exception {
+    
+    }
 }

@@ -18,8 +18,8 @@ public class CommandProcessor implements Processor {
         PrintStream ps = new PrintStream(baos);
         argumentManager.setOutputStream(ps);
         argumentManager.setErrorStream(ps);
-        if (argumentManager.parse(exchange.getIn().getBody(String.class).split(" "))) {
-
+        if (argumentManager.parseWithSuccess(exchange.getIn().getBody(String.class).split(" "))) {
+            //TODO
         }
 
         exchange.getIn().setBody(baos.toString(Charsets.UTF_8.displayName()));

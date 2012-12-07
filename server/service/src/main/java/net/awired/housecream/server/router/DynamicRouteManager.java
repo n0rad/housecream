@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
+import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.service.PluginService;
 import org.apache.camel.builder.RouteBuilder;
@@ -35,7 +36,9 @@ public class DynamicRouteManager extends RouteBuilder {
             if (plugin.isCommand()) {
                 routeDefinition = from(point.getUrl()).to("direct:command");
             } else {
-                routeDefinition = from(point.getUrl()).to(StaticRouteManager.EVENT_HOLDER_QUEUE);
+                routeDefinition = from(point.getUrl()) //
+                        .transform(body(Event.class)) //
+                        .to(StaticRouteManager.EVENT_HOLDER_QUEUE);
             }
 
             camelContext.addRouteDefinition(routeDefinition);

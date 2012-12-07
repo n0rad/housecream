@@ -52,7 +52,8 @@ public class OutDynamicRouter {
         properties.put(ROUTED_FLAG, invoked);
 
         if (invoked == 1) {
-            return url.toString();
+            log.debug("routing body {} to component url {}", body, url);
+            return url;
         }
         return null;
     }

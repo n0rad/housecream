@@ -21,7 +21,7 @@ public class Main {
 
     public void run(String[] args) {
         AnsiConsole.systemInstall();
-        if (!argManager.parse(args)) {
+        if (!argManager.parseWithSuccess(args)) {
             return;
         }
 

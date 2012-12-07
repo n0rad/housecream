@@ -1,7 +1,6 @@
 package net.awired.housecream.server.router;
 
 import javax.inject.Inject;
-import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.command.CommandProcessor;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.service.event.EventService;
@@ -11,7 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class StaticRouteManager extends RouteBuilder {
 
-    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder";
+    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
+    public static final String OUT_HOLDER_QUEUE = "seda:outHolder?concurrentConsumers=50";
 
     @Inject
     private EngineProcessor engine;
@@ -41,14 +41,13 @@ public class StaticRouteManager extends RouteBuilder {
     public void configure() throws Exception {
 
         from(EVENT_HOLDER_QUEUE) //
-                .transform(body(Event.class)) //
                 .bean(eventService, "saveEventAsync") //
                 .process(engine) //
                 .split().method(splitter, "split").parallelProcessing() //
-                .delay().method(delayer, "calculateDelay") //
-                .to("direct:output");
+                .delay().method(delayer, "calculateDelay").asyncDelayed() //
+                .to(OUT_HOLDER_QUEUE);
 
-        from("direct:output") //
+        from(OUT_HOLDER_QUEUE) //
                 .process(consequenceProcessor) //
                 .dynamicRouter().method(dynamicRouter, "route") //
                 .process(endProcessor);
