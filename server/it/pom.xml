@@ -83,9 +83,10 @@
 			<scope>test</scope>
 		</dependency>
         <dependency>
-            <groupId>net.awired.housecream.camel</groupId>
-            <artifactId>housecream-camel-restmcu</artifactId>
-            <type>test-jar</type>
+            <groupId>net.awired.restmcu</groupId>
+            <artifactId>restmcu-it</artifactId>
+            <version>${restmcu.version}</version>
+            <scope>test</scope>
         </dependency>
 
 		<dependency>

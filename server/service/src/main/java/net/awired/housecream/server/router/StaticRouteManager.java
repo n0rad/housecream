@@ -54,10 +54,9 @@ public class StaticRouteManager extends RouteBuilder {
 
         from("direct:command").process(commandProcessor);
 
-        //        
-        //        from(
-        //                "axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
-        //                .process(commandProcessor)
-        //                .to("axmpp://talk.google.com:5222/alemaire@norad.fr?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
+        from(
+                "axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
+                .process(commandProcessor)
+                .to("axmpp://talk.google.com:5222/alemaire@norad.fr?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
     }
 }

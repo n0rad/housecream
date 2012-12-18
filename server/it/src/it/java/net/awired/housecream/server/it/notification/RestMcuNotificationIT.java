@@ -5,11 +5,11 @@ import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
-import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
-import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
+import net.awired.restmcu.it.builder.LineInfoBuilder;
+import net.awired.restmcu.it.resource.LatchBoardResource;
+import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Rule;
 import org.junit.Test;
 

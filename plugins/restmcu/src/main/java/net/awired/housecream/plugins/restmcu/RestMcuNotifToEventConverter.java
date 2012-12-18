@@ -8,10 +8,14 @@ import net.awired.housecream.server.engine.InPointDaoInterface;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import org.apache.camel.Converter;
 import org.apache.camel.Exchange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.google.common.base.Preconditions;
 
 @Converter
 public class RestMcuNotifToEventConverter {
+
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Inject
     private InPointDaoInterface inPointDao;
@@ -26,11 +30,11 @@ public class RestMcuNotifToEventConverter {
         }
 
         String url = "restmcu://";
-        if (split[1].equals("80")) {
-            url += split[0];
-        } else {
-            url += notif.getSource();
-        }
+        //        if (split[1].equals("80")) {
+        //            url += split[0];
+        //        } else {
+        url += notif.getSource();
+        //        }
         url += "/" + notif.getId();
 
         try {
@@ -40,8 +44,9 @@ public class RestMcuNotifToEventConverter {
             event.setValue(notif.getValue());
             return event;
         } catch (NotFoundException e) {
-            throw new RuntimeException("Inpoint not found" + url, e);
+            log.warn("No point found to process notification : " + notif);
+            exchange.setProperty(Exchange.ROUTE_STOP, Boolean.TRUE);
         }
-
+        return null;
     }
 }

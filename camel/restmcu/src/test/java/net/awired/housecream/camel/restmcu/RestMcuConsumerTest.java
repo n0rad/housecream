@@ -2,8 +2,6 @@ package net.awired.housecream.camel.restmcu;
 
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.restmcu.api.domain.board.RestMcuBoardNotification;
 import net.awired.restmcu.api.domain.board.RestMcuBoardNotificationType;
 import net.awired.restmcu.api.domain.line.RestMcuLine;
@@ -11,6 +9,8 @@ import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
 import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
+import net.awired.restmcu.it.resource.LatchBoardResource;
+import net.awired.restmcu.it.resource.LatchLineResource;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;

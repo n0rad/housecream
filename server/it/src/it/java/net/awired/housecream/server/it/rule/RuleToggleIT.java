@@ -15,13 +15,13 @@ import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.it.HcsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
-import net.awired.housecream.server.it.builder.LineInfoBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
-import net.awired.housecream.server.it.restmcu.LatchBoardResource;
-import net.awired.housecream.server.it.restmcu.LatchLineResource;
 import net.awired.housecream.server.it.restmcu.NotifBuilder;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
+import net.awired.restmcu.it.builder.LineInfoBuilder;
+import net.awired.restmcu.it.resource.LatchBoardResource;
+import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Rule;
 import org.junit.Test;
 

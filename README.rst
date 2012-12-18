@@ -24,7 +24,7 @@ out
 ===
 restmcu // event
 mail // notif
-sip // notif
+sip // notif 
 sms // notif
 xmpp // notif
 x10 // event
