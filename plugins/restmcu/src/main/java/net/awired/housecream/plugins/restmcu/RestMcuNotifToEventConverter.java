@@ -1,5 +1,7 @@
 package net.awired.housecream.plugins.restmcu;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Event;
@@ -25,27 +27,24 @@ public class RestMcuNotifToEventConverter {
         Preconditions.checkNotNull(notif, "Notification cannot be null");
         Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
         String[] split = notif.getSource().split(":");
-        if (split.length != 2) {
-            throw new IllegalStateException("Received notification with invalid source : " + notif.getSource());
-        }
-
-        String url = "restmcu://";
-        //        if (split[1].equals("80")) {
-        //            url += split[0];
-        //        } else {
-        url += notif.getSource();
-        //        }
-        url += "/" + notif.getId();
+        Preconditions.checkState(split.length == 2, "Source is not valid");
 
         try {
+            String hostPort = notif.getSource();
+            if (Integer.parseInt(split[1]) == RestMcuHousecreamPlugin.DEFAULT_COMPONENT_PORT) {
+                hostPort = split[0];
+            }
+            InPoint findFromUrl = inPointDao.findFromUriStart(new URI("restmcu://" + hostPort + "/" + notif.getId()));
+
             Event event = new Event();
-            InPoint findFromUrl = inPointDao.findFromUrl(url);
             event.setPointId(findFromUrl.getId());
             event.setValue(notif.getValue());
             return event;
         } catch (NotFoundException e) {
             log.warn("No point found to process notification : " + notif);
             exchange.setProperty(Exchange.ROUTE_STOP, Boolean.TRUE);
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Invalid information from notification : " + notif, e);
         }
         return null;
     }

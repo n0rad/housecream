@@ -14,7 +14,7 @@ import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 public interface OutPointResource extends PointResource {
 
     @PUT
-    long createOutPoint(@Valid OutPoint outPoint);
+    OutPoint createOutPoint(@Valid OutPoint outPoint) throws PluginNotFoundException;
 
     @GET
     @Path("{id}")

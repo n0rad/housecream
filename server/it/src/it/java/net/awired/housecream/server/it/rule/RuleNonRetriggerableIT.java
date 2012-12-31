@@ -48,21 +48,21 @@ public class RuleNonRetriggerableIT {
 
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/2").build();
-        Long inPointId = hcs.inPointResource().createInPoint(inPoint);
+                .uri("restmcu://127.0.0.1:5879/2").build();
+        inPoint = hcs.inPointResource().createInPoint(inPoint);
 
         // outpoint
         OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/3").build();
-        Long outPointId = hcs.outPointResource().createOutPoint(outPoint);
+                .uri("restmcu://127.0.0.1:5879/3").build();
+        outPoint = hcs.outPointResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
         rule.setName("my first rule");
-        rule.getConditions().add(new Condition(inPointId, 1, ConditionType.event));
+        rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         //        rule.getConditions().add(new Condition(outPointId, 0, ConditionType.state));
-        rule.getConsequences().add(new Consequence(outPointId, 1));
-        rule.getConsequences().add(new Consequence(outPointId, 0, 5000, TriggerType.NON_RETRIGGER));
+        rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
+        rule.getConsequences().add(new Consequence(outPoint.getId(), 0, 5000, TriggerType.NON_RETRIGGER));
         hcs.ruleResource().createRule(rule);
 
         RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)

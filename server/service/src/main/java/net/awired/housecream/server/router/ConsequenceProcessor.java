@@ -46,7 +46,7 @@ public class ConsequenceProcessor implements Processor {
         }
 
         OutPoint outpoint = outputDao.find(action.getOutPointId());
-        HousecreamPlugin plugin = pluginService.getPluginFromPrefix(outpoint.extractUrlPrefix());
+        HousecreamPlugin plugin = pluginService.getPluginFromScheme(outpoint.getUri().getScheme());
         Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, outpoint);
         Message outMessage = outRouter.buildMessage(bodyAndHeaders, outpoint, action);
 

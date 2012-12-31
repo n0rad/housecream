@@ -27,7 +27,7 @@ public class InPointCreationIT {
         restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/3").build();
+                .uri("restmcu://127.0.0.1:5879/3").build();
 
         hcs.inPointResource().createInPoint(inPoint);
 
@@ -41,10 +41,10 @@ public class InPointCreationIT {
         restmcu.getResource(LatchLineResource.class).line(3, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/3").build();
-        Long pointId = hcs.inPointResource().createInPoint(inPoint);
+                .uri("restmcu://127.0.0.1:5879/3").build();
+        inPoint = hcs.inPointResource().createInPoint(inPoint);
 
-        Float pointValue = hcs.inPointResource().getPointValue(pointId);
+        Float pointValue = hcs.inPointResource().getPointValue(inPoint.getId());
 
         assertThat(pointValue).isEqualTo(1f);
     }

@@ -1,5 +1,6 @@
 package net.awired.housecream.server.router;
 
+import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,23 +27,23 @@ public class DynamicRouteManager extends RouteBuilder {
     @Inject
     private PluginService pluginService;
 
-    private Map<String, RouteDefinition> pointRoutes = Collections
-            .synchronizedMap(new HashMap<String, RouteDefinition>());
+    private Map<URI, RouteDefinition> pointRoutes = Collections.synchronizedMap(new HashMap<URI, RouteDefinition>());
 
     public void registerInRoute(InPoint point) {
         try {
-            HousecreamPlugin plugin = pluginService.getPluginFromPrefix(point.extractUrlPrefix());
+            URI uri = point.getUri();
+            HousecreamPlugin plugin = pluginService.getPluginFromScheme(uri.getScheme());
             RouteDefinition routeDefinition;
             if (plugin.isCommand()) {
-                routeDefinition = from(point.getUrl()).to("direct:command");
+                routeDefinition = from(point.getUri().toString()).to("direct:command");
             } else {
-                routeDefinition = from(point.getUrl()) //
+                routeDefinition = from(point.getUri().toString()) //
                         .transform(body(Event.class)) //
                         .to(StaticRouteManager.EVENT_HOLDER_QUEUE);
             }
 
             camelContext.addRouteDefinition(routeDefinition);
-            pointRoutes.put(point.getUrl(), routeDefinition);
+            pointRoutes.put(uri, routeDefinition);
         } catch (Exception e) {
             throw new IllegalStateException("Cannot register route for point : " + point, e);
         }
@@ -52,7 +53,7 @@ public class DynamicRouteManager extends RouteBuilder {
     }
 
     public void removeInRoute(InPoint point) {
-        RouteDefinition routeDefinition = pointRoutes.get(point.getUrl());
+        RouteDefinition routeDefinition = pointRoutes.get(point.getUri());
         if (routeDefinition == null) {
             log.warn("trying to remove the route of a point that is not registered" + point);
             return;

@@ -1,11 +1,13 @@
 package net.awired.housecream.server.service;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 import javax.annotation.PostConstruct;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
+import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,15 +40,21 @@ public class PluginService {
         return result;
     }
 
-    public HousecreamPlugin getPluginFromPrefix(String prefix) {
+    public URI validateAndNormalizeURI(URI uri) throws PluginNotFoundException {
+        Preconditions.checkNotNull(uri, "uri cannot be null");
+        HousecreamPlugin pluginFromScheme = getPluginFromScheme(uri.getScheme());
+        return pluginFromScheme.validateAndNormalizeUri(uri);
+    }
+
+    public HousecreamPlugin getPluginFromScheme(String prefix) throws PluginNotFoundException {
         Preconditions.checkNotNull(prefix, "prefix cannot be null");
         Iterator<HousecreamPlugin> pluginIt = pluginLoader.iterator();
         while (pluginIt.hasNext()) {
             HousecreamPlugin plugin = pluginIt.next();
-            if (prefix.equals(plugin.prefix())) {
+            if (prefix.equals(plugin.scheme())) {
                 return plugin;
             }
         }
-        throw new IllegalStateException("Cannot found plugin for prefix : " + prefix);
+        throw new PluginNotFoundException("Cannot found plugin for prefix : " + prefix);
     }
 }

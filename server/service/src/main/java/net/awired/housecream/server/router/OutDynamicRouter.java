@@ -1,5 +1,6 @@
 package net.awired.housecream.server.router;
 
+import java.net.URI;
 import java.util.Map;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
@@ -29,13 +30,13 @@ public class OutDynamicRouter {
         message.setHeaders(bodyAndHeaders.right);
         message.setBody(bodyAndHeaders.left);
         message.setHeader(OutEndProcessor.CONSEQUENCE_HEADER, action);
-        message.setHeader(OutDynamicRouter.OUT_URL, outpoint.getUrl());
+        message.setHeader(OutDynamicRouter.OUT_URL, outpoint.getUri());
         return message;
 
     }
 
     public Object route(Exchange exchange, @Body Object body, @Properties Map<String, Object> properties,
-            @Header(OUT_URL) String url) {
+            @Header(OUT_URL) URI url) {
         exchange.setPattern(ExchangePattern.InOut);
         //        Object url = properties.get(OUT_URL);
         if (url == null) {

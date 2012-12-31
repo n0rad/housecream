@@ -18,7 +18,7 @@ public interface InPointResource extends PointResource {
     public ClientValidatorInfo getInPointValidator();
 
     @PUT
-    long createInPoint(@Valid InPoint inPoint);
+    InPoint createInPoint(@Valid InPoint inPoint) throws PluginNotFoundException;
 
     @GET
     @Path("{id}")

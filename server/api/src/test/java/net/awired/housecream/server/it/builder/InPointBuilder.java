@@ -1,5 +1,7 @@
 package net.awired.housecream.server.it.builder;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 
@@ -8,7 +10,7 @@ public class InPointBuilder {
     private Long id;
     private String name;
     private InPointType type;
-    private String url;
+    private URI uri;
     private Long zoneId;
 
     public InPoint build() {
@@ -16,7 +18,7 @@ public class InPointBuilder {
         inPoint.setId(id);
         inPoint.setName(name);
         inPoint.setType(type);
-        inPoint.setUrl(url);
+        inPoint.setUri(uri);
         if (zoneId != null) {
             inPoint.setZoneId(zoneId);
         }
@@ -43,8 +45,17 @@ public class InPointBuilder {
         return this;
     }
 
-    public InPointBuilder url(String url) {
-        this.url = url;
+    public InPointBuilder uri(String stringUri) {
+        try {
+            this.uri = new URI(stringUri);
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException(e);
+        }
+        return this;
+    }
+
+    public InPointBuilder uri(URI uri) {
+        this.uri = uri;
         return this;
     }
 }

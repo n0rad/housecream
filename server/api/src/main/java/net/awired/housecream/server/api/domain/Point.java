@@ -1,5 +1,7 @@
 package net.awired.housecream.server.api.domain;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -32,7 +34,7 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     @NotNull
     @Column(unique = true)
-    private String url;
+    private String uri;
 
     @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     @ForeignId(daoName = "zoneDao")
@@ -44,17 +46,6 @@ public abstract class Point extends IdEntityImpl<Long> {
     //    private Device device;
 
     ////////////////////////
-
-    public String extractUrlPrefix() {
-        if (url == null) {
-            return null;
-        }
-        int indexOf = url.indexOf(':');
-        if (indexOf == -1) {
-            return null;
-        }
-        return url.substring(0, indexOf);
-    }
 
     @Override
     @XmlElement
@@ -77,12 +68,20 @@ public abstract class Point extends IdEntityImpl<Long> {
         return name;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUri(URI uri) {
+        if (uri == null) {
+            this.uri = null;
+        } else {
+            this.uri = uri.toString();
+        }
     }
 
-    public String getUrl() {
-        return url;
+    public URI getUri() {
+        try {
+            return new URI(uri);
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Cannot rebuild uri", e);
+        }
     }
 
     public long getZoneId() {

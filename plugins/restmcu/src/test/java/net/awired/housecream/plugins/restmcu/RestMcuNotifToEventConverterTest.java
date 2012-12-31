@@ -4,6 +4,7 @@ import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.INF_
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import java.net.URI;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.engine.InPointDaoInterface;
@@ -32,7 +33,7 @@ public class RestMcuNotifToEventConverterTest {
         inpoint.setId(45L);
         RestMcuLineNotification notif = new RestMcuLineNotification(43, 0f, 1f, "192.168.42.42:80",
                 new RestMcuLineNotify(INF_OR_EQUAL, 1));
-        when(inPointDao.findFromUrl("restmcu://192.168.42.42/43")).thenReturn(inpoint);
+        when(inPointDao.findFromUriStart(new URI("restmcu://192.168.42.42/43"))).thenReturn(inpoint);
 
         Event event = restMcuNotifToEventConverter.toEvent(notif, exchange);
 

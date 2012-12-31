@@ -1,5 +1,6 @@
 package net.awired.housecream.server.storage.dao;
 
+import java.net.URI;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
@@ -16,9 +17,9 @@ public class InPointDao extends GenericDaoImpl<InPoint, Long> implements InPoint
     }
 
     @Override
-    public InPoint findFromUrl(String url) throws NotFoundException {
-        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_URL, InPoint.class);
-        query.setParameter(InPoint.QUERY_PARAM_URL, url);
+    public InPoint findFromUriStart(URI uri) throws NotFoundException {
+        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_URI, InPoint.class);
+        query.setParameter(InPoint.QUERY_PARAM_START_URI, uri + "%");
         return findSingleResult(query);
     }
 

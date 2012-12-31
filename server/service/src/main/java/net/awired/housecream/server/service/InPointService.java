@@ -6,6 +6,7 @@ import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
+import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
@@ -30,11 +31,15 @@ public class InPointService implements InPointResource {
     @Inject
     private ValidationService validationService;
 
+    @Inject
+    private PluginService pluginService;
+
     @Override
-    public long createInPoint(InPoint inPoint) {
+    public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
+        pluginService.validateAndNormalizeURI(inPoint.getUri());
         pointDao.save(inPoint);
         routeManager.registerInRoute(inPoint);
-        return inPoint.getId();
+        return inPoint;
     }
 
     @Override

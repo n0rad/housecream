@@ -1,18 +1,23 @@
 package net.awired.housecream.plugins.restmcu;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
+import javax.validation.ValidationException;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
+import com.google.common.base.Preconditions;
 
 public class RestMcuHousecreamPlugin implements HousecreamPlugin {
 
-    private static final String PREFIX = "restmcu";
+    private static final String SCHEME = "restmcu";
+    public static final int DEFAULT_COMPONENT_PORT = 80;
 
     @Override
-    public String prefix() {
-        return PREFIX;
+    public String scheme() {
+        return SCHEME;
     }
 
     //    @Override
@@ -74,4 +79,22 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     public boolean isCommand() {
         return false;
     }
+
+    @Override
+    public URI validateAndNormalizeUri(URI uri) throws ValidationException {
+        Preconditions.checkNotNull(uri, "Uri cannot be null");
+        Preconditions.checkState(SCHEME.equals(uri.getScheme()), "Invalid schema for uri : " + uri);
+
+        int port = uri.getPort();
+        if (port == DEFAULT_COMPONENT_PORT) {
+            port = -1;
+        }
+        try {
+            return new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), port, uri.getPath(), uri.getQuery(),
+                    uri.getFragment());
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("cannot rebuild URI after removing the default port : " + uri, e);
+        }
+    }
+
 }

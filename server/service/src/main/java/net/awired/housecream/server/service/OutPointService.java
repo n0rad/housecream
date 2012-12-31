@@ -7,8 +7,8 @@ import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
+import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.router.StaticRouteManager;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,19 +23,19 @@ public class OutPointService implements OutPointResource {
     private OutPointDao pointDao;
 
     @Inject
-    private StaticRouteManager routeManager;
-
-    @Inject
     private EngineProcessor engine;
 
     @Inject
     private ValidationService validationService;
 
+    @Inject
+    private PluginService pluginService;
+
     @Override
-    public long createOutPoint(OutPoint outPoint) {
+    public OutPoint createOutPoint(OutPoint outPoint) throws PluginNotFoundException {
+        pluginService.validateAndNormalizeURI(outPoint.getUri());
         pointDao.save(outPoint);
-        //        routeManager.registerPointRoute(outPoint);
-        return outPoint.getId();
+        return outPoint;
     }
 
     @Override
@@ -63,7 +63,6 @@ public class OutPointService implements OutPointResource {
     public void deleteOutPoint(long outPointId) {
         try {
             OutPoint point = pointDao.find(outPointId);
-            //            routeManager.removePointRoute(point);
             pointDao.delete(point.getId());
         } catch (NotFoundException e) {
             // nothing to do if trying to remove a point that is already not there
@@ -73,6 +72,5 @@ public class OutPointService implements OutPointResource {
     @Override
     public void setValue(long outPointId, Float value) {
         // TODO Auto-generated method stub
-
     }
 }

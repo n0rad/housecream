@@ -31,8 +31,8 @@ public class WebSocketIT {
         restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/2").build();
-        long inpointId = hcs.inPointResource().createInPoint(inPoint);
+                .uri("restmcu://127.0.0.1:5879/2").build();
+        inPoint = hcs.inPointResource().createInPoint(inPoint);
         HcwWebSocket webSocketConnection = hcs.webSocketConnection();
         RestMcuLineNotification notif = new RestMcuLineNotification(2, 0f, 1f, "127.0.0.1:5879",
                 new RestMcuLineNotify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1f));
@@ -42,7 +42,7 @@ public class WebSocketIT {
         List<Event> events = webSocketConnection.awaitEvents();
 
         assertEquals(1, events.size());
-        assertEquals(inpointId, events.get(0).getPointId());
+        assertEquals(inPoint.getId(), (Long) events.get(0).getPointId());
         assertEquals(1f, events.get(0).getValue(), 0f);
     }
 }

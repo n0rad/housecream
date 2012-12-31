@@ -2,6 +2,7 @@ package net.awired.housecream.server.it.server.it.floor;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import java.net.URI;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Point;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
@@ -24,16 +25,16 @@ public class InPointIT {
     @Test
     @Ignore
     public void should_create_point() throws Exception {
+
         InPoint point = new InPoint();
         point.setName("my point name");
-        point.setUrl("genre style ouda");
+        point.setUri(new URI("genre style ouda")); //TODO use builder
 
-        Long inPointId = hcs.inPointResource().createInPoint(point);
-        point.setId(inPointId);
+        point = hcs.inPointResource().createInPoint(point);
 
-        assertNotNull(inPointId);
+        assertNotNull(point);
 
-        Point getPoint = hcs.inPointResource().getInPoint(inPointId);
+        Point getPoint = hcs.inPointResource().getInPoint(point.getId());
 
         assertTrue(EqualsBuilder.reflectionEquals(point, getPoint));
     }

@@ -28,7 +28,7 @@ public class NotifyUrlIT {
 
         long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
-                .url("restmcu://127.0.0.1:5879/2").build();
+                .uri("restmcu://127.0.0.1:5879/2").build();
         hcs.inPointResource().createInPoint(inPoint);
 
         RestMcuBoardSettings settings = restmcu.getResource(LatchBoardResource.class).awaitUpdateSettings();
