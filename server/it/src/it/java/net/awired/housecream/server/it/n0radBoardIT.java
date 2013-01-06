@@ -11,9 +11,11 @@ import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
+@Ignore
 public class n0radBoardIT {
 
     @Rule
