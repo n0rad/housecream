@@ -43,7 +43,11 @@ public class PluginService {
     public URI validateAndNormalizeURI(URI uri) throws PluginNotFoundException {
         Preconditions.checkNotNull(uri, "uri cannot be null");
         HousecreamPlugin pluginFromScheme = getPluginFromScheme(uri.getScheme());
-        return pluginFromScheme.validateAndNormalizeUri(uri);
+        URI normalizedUri = pluginFromScheme.validateAndNormalizeUri(uri);
+        if (normalizedUri == null) {
+            return uri;
+        }
+        return normalizedUri;
     }
 
     public HousecreamPlugin getPluginFromScheme(String prefix) throws PluginNotFoundException {

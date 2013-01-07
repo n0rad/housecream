@@ -43,16 +43,10 @@ public class RuleBuilder {
 
     private String generateDrl(EventRule rule) {
         StringBuilder builder = new StringBuilder(300);
-        builder.append("package " + RULE_PACKAGE + ";\n\n");
-        for (String importClass : IMPORTS) {
-            builder.append("import " + importClass + ";\n");
-        }
-        builder.append("\nrule \"" + rule.getName() + "\"\n");
-        if (rule.getSalience() != null) {
-            builder.append("salience " + rule.getSalience() + '\n');
-        }
+        appendHeader(builder, rule);
+
         builder.append("    when\n");
-        appendCondition(rule, builder);
+        appendCondition(builder, rule);
 
         for (Consequence consequence : rule.getConsequences()) {
             if (consequence.getTriggerType() == TriggerType.NON_RETRIGGER) {
@@ -80,7 +74,7 @@ public class RuleBuilder {
                 builder.append("salience 10\n");
                 builder.append("    when\n");
 
-                appendCondition(rule, builder);
+                appendCondition(builder, rule);
 
                 builder.append("$retrigger:");
                 builder.append("Action(outPointId == (long)" + consequence.getOutPointId() + ")\n");
@@ -93,7 +87,18 @@ public class RuleBuilder {
         return builder.toString();
     }
 
-    private void appendCondition(EventRule rule, StringBuilder builder) {
+    private void appendHeader(StringBuilder builder, EventRule rule) {
+        builder.append("package " + RULE_PACKAGE + ";\n\n");
+        for (String importClass : IMPORTS) {
+            builder.append("import " + importClass + ";\n");
+        }
+        builder.append("\nrule \"" + rule.getName() + "\"\n");
+        if (rule.getSalience() != null) {
+            builder.append("salience " + rule.getSalience() + '\n');
+        }
+    }
+
+    private void appendCondition(StringBuilder builder, EventRule rule) {
         for (Condition condition : rule.getConditions()) {
             if (condition.getType() == ConditionType.event) {
                 builder.append("Event");
@@ -118,5 +123,31 @@ public class RuleBuilder {
             return "null";
         }
         return "TriggerType." + triggerType;
+    }
+
+    public Collection<KnowledgePackage> getOutEventRule() {
+        final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+
+        StringBuilder builder = new StringBuilder(300);
+        EventRule eventRule = new EventRule();
+        eventRule.setName("outEvent");
+        eventRule.setSalience(1);
+        appendHeader(builder, eventRule);
+
+        builder.append("    when\n");
+        builder.append("$outEvent : OutEvent()");
+        builder.append("    then\n");
+        builder.append("insert(new ConsequenceAction((long)$outEvent.getOutPointId(), (float)$outEvent.getValue(), 0, null));");
+        builder.append("end\n");
+        String generateDrl = builder.toString();
+
+        log.debug("building rule\n" + generateDrl);
+        kbuilder.add(ResourceFactory.newByteArrayResource(generateDrl.getBytes()), ResourceType.DRL);
+        if (kbuilder.hasErrors()) {
+            String error = "Unable to compile rule : " + kbuilder.getErrors().toString() + " for rule " + generateDrl;
+            kbuilder.undo();
+            throw new RuntimeException(error);
+        }
+        return kbuilder.getKnowledgePackages();
     }
 }

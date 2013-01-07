@@ -7,23 +7,20 @@ import net.awired.restmcu.api.resource.server.RestMcuNotifyResource;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultConsumer;
 
 @Path("/")
 public class RestMcuCamelNotifyResource implements RestMcuNotifyResource {
 
-    private DefaultConsumer consumer;
-    private RestMcuEndpoint endpoint;
+    private RestMcuConsumer consumer;
 
-    public RestMcuCamelNotifyResource(RestMcuEndpoint endpoint, RestMcuConsumer consumer) {
-        this.endpoint = endpoint;
+    public RestMcuCamelNotifyResource(RestMcuConsumer consumer) {
         this.consumer = consumer;
     }
 
     @Override
     public void lineNotification(RestMcuLineNotification pinNotification) {
         //TODO check remote address to be sure it match the source
-        Exchange camelExchange = endpoint.createExchange(ExchangePattern.InOnly);
+        Exchange camelExchange = consumer.getEndpoint().createExchange(ExchangePattern.InOnly);
         Message in = camelExchange.getIn();
         in.setBody(pinNotification);
         try {
@@ -36,7 +33,7 @@ public class RestMcuCamelNotifyResource implements RestMcuNotifyResource {
     @Override
     public void boardNotification(RestMcuBoardNotification boardNotification) {
         //TODO check remote address to be sure it match the source
-        Exchange camelExchange = endpoint.createExchange(ExchangePattern.InOnly);
+        Exchange camelExchange = consumer.getEndpoint().createExchange(ExchangePattern.InOnly);
         Message in = camelExchange.getIn();
         in.setBody(boardNotification);
         try {

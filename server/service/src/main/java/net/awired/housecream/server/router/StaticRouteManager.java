@@ -1,7 +1,7 @@
 package net.awired.housecream.server.router;
 
 import javax.inject.Inject;
-import net.awired.housecream.server.command.CommandProcessor;
+import net.awired.housecream.server.command.CliProcessor;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.builder.RouteBuilder;
@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class StaticRouteManager extends RouteBuilder {
 
+    private static final String DIRECT_ENGINE = "direct:engine";
     public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
-    public static final String OUT_HOLDER_QUEUE = "seda:outHolder?concurrentConsumers=50";
+    public static final String OUT_HOLDER_QUEUE = "direct:outHolder";
 
     @Inject
     private EngineProcessor engine;
@@ -20,7 +21,7 @@ public class StaticRouteManager extends RouteBuilder {
     private EngineResultSplitter splitter;
 
     @Inject
-    private CommandProcessor commandProcessor;
+    private CliProcessor cliProcessor;
 
     @Inject
     private ConsequenceDelayer delayer;
@@ -42,6 +43,9 @@ public class StaticRouteManager extends RouteBuilder {
 
         from(EVENT_HOLDER_QUEUE) //
                 .bean(eventService, "saveEventAsync") //
+                .to(DIRECT_ENGINE);
+
+        from(DIRECT_ENGINE) //
                 .process(engine) //
                 .split().method(splitter, "split").parallelProcessing() //
                 .delay().method(delayer, "calculateDelay").asyncDelayed() //
@@ -52,11 +56,13 @@ public class StaticRouteManager extends RouteBuilder {
                 .dynamicRouter().method(dynamicRouter, "route") //
                 .process(endProcessor);
 
-        from("direct:command").process(commandProcessor);
+        from("direct:command").process(cliProcessor);
+
+        from("hcweb:genre").to(DIRECT_ENGINE);
 
         from(
                 "axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
-                .process(commandProcessor)
+                .process(cliProcessor)
                 .to("axmpp://talk.google.com:5222/alemaire@norad.fr?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
     }
 }

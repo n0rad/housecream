@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Charsets;
 
 @Component
-public class CommandProcessor implements Processor {
+public class CliProcessor implements Processor {
 
     private CommandArgumentManager argumentManager = new CommandArgumentManager();
 

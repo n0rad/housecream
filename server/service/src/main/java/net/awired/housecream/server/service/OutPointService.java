@@ -8,7 +8,9 @@ import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
+import net.awired.housecream.server.command.CommandService;
 import net.awired.housecream.server.engine.EngineProcessor;
+import net.awired.housecream.server.engine.OutEvent;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,9 @@ public class OutPointService implements OutPointResource {
 
     @Inject
     private PluginService pluginService;
+
+    @Inject
+    private CommandService commandService;
 
     @Override
     public OutPoint createOutPoint(OutPoint outPoint) throws PluginNotFoundException {
@@ -71,6 +76,7 @@ public class OutPointService implements OutPointResource {
 
     @Override
     public void setValue(long outPointId, Float value) {
-        // TODO Auto-generated method stub
+        Object processOutEvent = commandService.processOutEvent(new OutEvent(outPointId, value));
+        System.out.println(processOutEvent);
     }
 }

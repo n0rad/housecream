@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RuleBuilderTest {
@@ -38,11 +39,12 @@ public class RuleBuilderTest {
     private RuleBuilder ruleBuilder = new RuleBuilder();
 
     @InjectMocks
-    private EngineProcessor engine = new EngineProcessor();
+    private EngineProcessor engine;
 
     @Before
     public void before() throws Exception {
         engine = new EngineProcessor();
+        ReflectionTestUtils.setField(engine, "ruleBuilder", ruleBuilder);
         Method m = engine.getClass().getDeclaredMethod("postConstruct", (Class<?>[]) null);
         m.setAccessible(true);
         m.invoke(engine, null);

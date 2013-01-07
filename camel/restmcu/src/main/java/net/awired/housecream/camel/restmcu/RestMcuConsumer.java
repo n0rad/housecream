@@ -81,7 +81,7 @@ public class RestMcuConsumer extends DefaultConsumer {
         RestMcuEndpoint endpoint = (RestMcuEndpoint) getEndpoint();
         URL listeningUrl = findListeningUrl();
         server = endpoint.getRestContext().prepareServer(listeningUrl.toString(),
-                Arrays.asList(new RestMcuCamelNotifyResource(endpoint, this)));
+                Arrays.asList(new RestMcuCamelNotifyResource(this)));
         log.debug("Started restmcu notify server {}:{}", listeningUrl.getHost(), findListeningPort());
         //        checkLineIsInput(); // TODO if board is not available at server start this fail and block the server 
         String notifyUrl = findNotifyUrl(listeningUrl);

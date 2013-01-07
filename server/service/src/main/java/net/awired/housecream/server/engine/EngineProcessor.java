@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.PointState;
+import net.awired.housecream.server.engine.builder.RuleBuilder;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.drools.KnowledgeBase;
@@ -38,6 +40,9 @@ public class EngineProcessor implements Processor {
     private final StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
     private KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "hcs.droolsLogs");
 
+    @Inject
+    private RuleBuilder ruleBuilder;
+
     public EngineProcessor() {
         //        System.setProperty("drools.assertBehaviour", "identity");
         //        drools.consequenceExceptionHandler = <qualified class name>
@@ -47,6 +52,7 @@ public class EngineProcessor implements Processor {
     protected void postConstruct() {
         ksession.addEventListener(new DebugAgendaEventListener());
         ksession.addEventListener(new DebugWorkingMemoryEventListener());
+        registerPackages(ruleBuilder.getOutEventRule());
     }
 
     @PreDestroy
@@ -62,7 +68,7 @@ public class EngineProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Event event = exchange.getIn().getBody(Event.class);
+        Object event = exchange.getIn().getBody(Object.class);
         log.debug("Asking to processing event : {}", event);
         logCurrentFacts("before fire rules");
         log.debug("Start processing event : {}", event);
@@ -95,7 +101,10 @@ public class EngineProcessor implements Processor {
             logCurrentFacts("after fired rules");
         } finally {
             ksession.retract(eventFact);
-            setPointState(event.getPointId(), event.getValue());
+            // TODO sux
+            if (event instanceof Event) {
+                setPointState(((Event) event).getPointId(), ((Event) event).getValue());
+            }
         }
     }
 
