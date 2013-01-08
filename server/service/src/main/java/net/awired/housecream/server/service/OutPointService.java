@@ -75,8 +75,7 @@ public class OutPointService implements OutPointResource {
     }
 
     @Override
-    public void setValue(long outPointId, Float value) {
-        Object processOutEvent = commandService.processOutEvent(new OutEvent(outPointId, value));
-        System.out.println(processOutEvent);
+    public void setValue(long outPointId, Float value) throws Exception {
+        commandService.processOutEvent(new OutEvent(outPointId, value));
     }
 }

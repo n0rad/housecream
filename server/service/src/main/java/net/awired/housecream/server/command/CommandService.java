@@ -11,15 +11,17 @@ public class CommandService {
 
     private HcWebConsumer consumer;
 
-    public Object processOutEvent(OutEvent event) {
+    public void processOutEvent(OutEvent event) throws Exception {
         Exchange exchange = consumer.getEndpoint().createExchange(ExchangePattern.InOut);
         try {
             exchange.getIn().setBody(event);
             consumer.getProcessor().process(exchange);
-            return exchange.getOut().getBody();
+            //TODO            return exchange.getOut().getBody();
         } catch (Exception e) {
             exchange.setException(e);
-            throw new RuntimeException(e);
+        }
+        if (exchange.getException() != null) {
+            throw exchange.getException();
         }
     }
 

@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -36,7 +35,7 @@ public abstract class Point extends IdEntityImpl<Long> {
     @Column(unique = true)
     private String uri;
 
-    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
+    //TODO    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     @ForeignId(daoName = "zoneDao")
     private long zoneId;
 

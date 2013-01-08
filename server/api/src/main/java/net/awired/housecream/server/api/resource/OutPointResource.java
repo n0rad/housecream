@@ -26,7 +26,7 @@ public interface OutPointResource extends PointResource {
 
     @PUT
     @Path("{id}/value")
-    void setValue(@PathParam("id") long outPointId, Float value);
+    void setValue(@PathParam("id") long outPointId, Float value) throws Exception;
 
     @GET
     @Path("/validator")
