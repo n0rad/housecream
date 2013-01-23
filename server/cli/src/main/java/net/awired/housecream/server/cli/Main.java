@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.ProtectionDomain;
 import net.awired.ajsl.core.io.FileUtils;
-import net.awired.housecream.server.core.application.common.ApplicationHelper;
+import net.awired.housecream.server.core.application.Housecream;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
@@ -13,7 +13,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.fusesource.jansi.AnsiConsole;
 
 public class Main {
-    private final ArgumentManager argManager = new ArgumentManager(this);
+    private final ArgumentManager argManager = new ArgumentManager();
 
     public static void main(String[] args) {
         new Main().run(args);
@@ -25,14 +25,7 @@ public class Main {
             return;
         }
 
-        System.setProperty(ApplicationHelper.HOME_KEY, ApplicationHelper.findHomeDir());
-        System.setProperty(ApplicationHelper.LOG_HOUSECREAM_AWIRED, argManager.logLevel.getParamOneValue().toString());
-        System.setProperty(ApplicationHelper.LOG_HOUSECREAM_ROOT, argManager.logLevel.getParamOneValue().toString());
-        if (argManager.logRootLevel.isSet()) {
-            System.setProperty(ApplicationHelper.LOG_HOUSECREAM_ROOT, argManager.logRootLevel.getParamOneValue()
-                    .toString());
-        }
-        ApplicationHelper.changeLogLvl();
+        Housecream hc = Housecream.INSTANCE;
 
         if (argManager.displayFile.isSet()) {
             argManager.displayFile.getParamOneValue().display();
@@ -40,33 +33,24 @@ public class Main {
         }
 
         if (argManager.info.isSet()) {
-            printInfo();
+            hc.printInfo();
             System.exit(0);
         }
 
         if (argManager.clearDb.isSet()) {
-            cleanDB();
+            cleanDb();
             System.exit(0);
         }
 
         runServer();
     }
 
-    public void cleanDB() {
-        String home = ApplicationHelper.findHomeDir();
+    public void cleanDb() {
         try {
-            System.out.println("clearing database in home folder : " + home);
-            FileUtils.deleteRecursively(new File(home + "/db"));
+            System.out.println("clearing database in home folder : " + Housecream.INSTANCE.getHome());
+            FileUtils.deleteRecursively(new File(Housecream.INSTANCE.getHome(), "db"));
         } catch (IOException e) {
         }
-        System.exit(0);
-    }
-
-    public void printInfo() {
-        ApplicationHelper.getVersion(null);
-        System.out.println("Housecream version : " + ApplicationHelper.getVersion());
-        System.out.println("Housecream home : " + ApplicationHelper.findHomeDir());
-        // TODO list plugin founds
     }
 
     public void runServer() {

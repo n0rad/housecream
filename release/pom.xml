@@ -6,6 +6,7 @@
 	<packaging>war</packaging>
 
 	<name>Housecream Release</name>
+    <url>http://housecream.org</url>
 
     <parent>
         <groupId>net.awired.housecream</groupId>
@@ -60,7 +61,7 @@
 						<manifestEntries>
 							<Bootstrap-MainClass>net.awired.housecream.server.cli.Main</Bootstrap-MainClass>
 							<Bootstrap-Classpath>META-INF/lib</Bootstrap-Classpath>
-							<HouseCreamVersion>${project.version}</HouseCreamVersion>
+							<HousecreamVersion>${project.version}</HousecreamVersion>
 						</manifestEntries>
 					</archive>
 					<webResources>

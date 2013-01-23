@@ -19,7 +19,7 @@
 			<artifactId>housecream-server-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -51,7 +51,6 @@
 			<groupId>net.awired.aclm</groupId>
 			<artifactId>aclm</artifactId>
 			<version>${aclm.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -80,6 +79,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
+							<excludeArtifactIds>junit,mockito-all,fest-*,hamcrest-core</excludeArtifactIds>
 							<excludeScope>provided</excludeScope>
 							<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
 						</configuration>

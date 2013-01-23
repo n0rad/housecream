@@ -8,8 +8,9 @@
 	<name>Housecream</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<url>http://housecream.awired.net</url>
-	<description>The concrete domotic project</description>
+	<url>http://housecream.org</url>
+	<description>Housecream is an advanced home automation server aiming
+to give you unlimited control over your house</description>
 
 	<parent>
 		<groupId>net.awired.parent.parent-java</groupId>
@@ -26,15 +27,15 @@
 	</licenses>
 
 	<modules>
-        <module>camel/restmcu</module>
-        <module>camel/axmpp</module>
+		<module>camel/restmcu</module>
+		<module>camel/axmpp</module>
 
-        <module>plugins/api</module>
-        <module>plugins/restmcu</module>
-        <module>plugins/mail</module>
-        <module>plugins/xmpp</module>
+		<module>plugins/api</module>
+		<module>plugins/restmcu</module>
+		<module>plugins/mail</module>
+		<module>plugins/xmpp</module>
 
-        <module>server</module>
+		<module>server</module>
 		<module>web</module>
 		<module>release</module>
 	</modules>
@@ -58,7 +59,7 @@
 		<jackson.version>2.0.5</jackson.version>
 
 		<guava.version>13.0</guava.version>
-		<logback.version>0.9.26</logback.version>
+		<logback.version>1.0.7</logback.version>
 
 		<!-- TEST -->
 		<festassert.version>1.4</festassert.version>
@@ -75,12 +76,12 @@
 				<artifactId>housecream-server-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-            <dependency>
-                <groupId>net.awired.housecream.server</groupId>
-                <artifactId>housecream-server-api</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-            </dependency>
+			<dependency>
+				<groupId>net.awired.housecream.server</groupId>
+				<artifactId>housecream-server-api</artifactId>
+				<version>${project.version}</version>
+				<type>test-jar</type>
+			</dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
 				<artifactId>housecream-server-core</artifactId>
@@ -119,42 +120,42 @@
 				<type>war</type>
 			</dependency>
 
-            <!-- CAMEL -->
-            <dependency>
-                <groupId>net.awired.housecream.camel</groupId>
-                <artifactId>housecream-camel-restmcu</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.awired.housecream.camel</groupId>
-                <artifactId>housecream-camel-restmcu</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-            </dependency>
+			<!-- CAMEL -->
+			<dependency>
+				<groupId>net.awired.housecream.camel</groupId>
+				<artifactId>housecream-camel-restmcu</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.camel</groupId>
+				<artifactId>housecream-camel-restmcu</artifactId>
+				<version>${project.version}</version>
+				<type>test-jar</type>
+			</dependency>
 
-            <!-- PLUGINS -->
-            <dependency>
-                <groupId>net.awired.housecream.plugins</groupId>
-                <artifactId>housecream-plugins-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.awired.housecream.plugins</groupId>
-                <artifactId>housecream-plugins-restmcu</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.awired.housecream.plugins</groupId>
-                <artifactId>housecream-plugins-mail</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.awired.housecream.plugins</groupId>
-                <artifactId>housecream-plugins-xmpp</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            
-            
+			<!-- PLUGINS -->
+			<dependency>
+				<groupId>net.awired.housecream.plugins</groupId>
+				<artifactId>housecream-plugins-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.plugins</groupId>
+				<artifactId>housecream-plugins-restmcu</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.plugins</groupId>
+				<artifactId>housecream-plugins-mail</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.awired.housecream.plugins</groupId>
+				<artifactId>housecream-plugins-xmpp</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -163,13 +164,13 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.easytesting</groupId>
 			<artifactId>fest-assert</artifactId>
 			<version>${festassert.version}</version>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
