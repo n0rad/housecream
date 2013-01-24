@@ -3,17 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.awired.housecream.server</groupId>
+	<groupId>net.awired.housecream.server</groupId>
 	<artifactId>housecream-server-rest</artifactId>
 	<name>Housecream Server - Rest</name>
 	<packaging>war</packaging>
 
-    <parent>
-        <groupId>net.awired.housecream</groupId>
-        <artifactId>housecream</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../</relativePath>
-    </parent>
+	<parent>
+		<groupId>net.awired.housecream</groupId>
+		<artifactId>housecream</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../</relativePath>
+	</parent>
 
 	<dependencies>
 		<dependency>
@@ -80,6 +80,24 @@
 									<version>${bootstrap.version}</version>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>net.awired.housecream.server</groupId>
+									<artifactId>housecream-server-cli</artifactId>
+									<version>${project.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF/lib</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
