@@ -52,6 +52,11 @@
 			<artifactId>aclm</artifactId>
 			<version>${aclm.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.6</version>
+        </dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -79,7 +84,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<excludeArtifactIds>junit,mockito-all,fest-*,hamcrest-core</excludeArtifactIds>
+							<excludeArtifactIds>junit,mockito-all,fest-assert,fest-util,hamcrest-core</excludeArtifactIds>
 							<excludeScope>provided</excludeScope>
 							<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
 						</configuration>

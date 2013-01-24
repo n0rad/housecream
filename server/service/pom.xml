@@ -14,6 +14,10 @@
 	</parent>
 
 	<dependencies>
+        <dependency>
+            <groupId>net.awired.housecream.server</groupId>
+            <artifactId>housecream-server-cli</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-storage</artifactId>

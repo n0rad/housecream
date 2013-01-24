@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.ProtectionDomain;
-import net.awired.ajsl.core.io.FileUtils;
 import net.awired.housecream.server.core.application.Housecream;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
@@ -48,8 +47,22 @@ public class Main {
     public void cleanDb() {
         try {
             System.out.println("clearing database in home folder : " + Housecream.INSTANCE.getHome());
-            FileUtils.deleteRecursively(new File(Housecream.INSTANCE.getHome(), "db"));
+            deleteRecursively(new File(Housecream.INSTANCE.getHome(), "db"));
         } catch (IOException e) {
+        }
+    }
+
+    public void deleteRecursively(File directory) throws IOException {
+        // Symbolic links will have different canonical and absolute paths
+        if (!directory.getCanonicalPath().equals(directory.getAbsolutePath())) {
+            return;
+        }
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new IOException("Error listing files for " + directory);
+        }
+        for (File file : files) {
+            deleteRecursively(file);
         }
     }
 
