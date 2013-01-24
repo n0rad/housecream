@@ -3,23 +3,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.awired.housecream.server</groupId>
+	<groupId>net.awired.housecream.server</groupId>
 	<artifactId>housecream-server-cli</artifactId>
 	<name>Housecream Server - Cli</name>
 
-    <parent>
-        <groupId>net.awired.housecream</groupId>
-        <artifactId>housecream</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../</relativePath>
-    </parent>
+	<parent>
+		<groupId>net.awired.housecream</groupId>
+		<artifactId>housecream</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../</relativePath>
+	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.awired.ajsl</groupId>
 			<artifactId>ajsl-log</artifactId>
 			<version>${ajsl.version}</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -32,11 +31,6 @@
 			<artifactId>jetty-webapp</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.eclipse.jetty</groupId> -->
-		<!-- <artifactId>jetty-jsp</artifactId> -->
-		<!-- <version>${jetty.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jsp-2.1-glassfish</artifactId>
@@ -86,25 +80,8 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<excludeArtifactIds>junit,mockito-all,fest-assert,fest-util,hamcrest-core</excludeArtifactIds>
-							<excludeScope>provided</excludeScope>
+							<includeScope>compile</includeScope>
 							<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>net.awired.ajsl</groupId>
-									<artifactId>ajsl-log</artifactId>
-									<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
-								</artifactItem>
-							</artifactItems>
 						</configuration>
 					</execution>
 				</executions>
