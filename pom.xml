@@ -37,7 +37,6 @@ to give you unlimited control over your house</description>
 
         <module>server/api</module>
         <module>server/storage</module>
-        <module>server/service</module>
         <module>server/cli</module>
         <module>server/rest</module>
         <module>server/it</module>
@@ -93,11 +92,6 @@ to give you unlimited control over your house</description>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
 				<artifactId>housecream-server-storage</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>housecream-server-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
