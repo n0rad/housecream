@@ -35,7 +35,13 @@ to give you unlimited control over your house</description>
 		<module>plugins/mail</module>
 		<module>plugins/xmpp</module>
 
-		<module>server</module>
+        <module>server/api</module>
+        <module>server/storage</module>
+        <module>server/service</module>
+        <module>server/cli</module>
+        <module>server/rest</module>
+        <module>server/it</module>
+
 		<module>web</module>
 		<module>release</module>
 	</modules>
@@ -44,6 +50,7 @@ to give you unlimited control over your house</description>
 		<sonar.jacoco.itReportPath>${jacoco.file.path}</sonar.jacoco.itReportPath>
 		<cargo.jvm.args>-XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError
 			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
+        <jacoco.file.path>/tmp/jacoco-hc.data</jacoco.file.path>
 
 		<bootstrap.version>1.0</bootstrap.version>
 		<ajsl.version>0.5-SNAPSHOT</ajsl.version>
