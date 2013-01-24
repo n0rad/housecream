@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="30 seconds">
     <conversionRule conversionWord="colorlevel"
-        converterClass="net.awired.aclm.log.ColorLevelCompositeConverter" />
+        converterClass="net.awired.ajsl.log.ColorLevelCompositeConverter" />
 
     <appender name="FILE"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -19,14 +19,14 @@
         <encoder>
             <pattern><![CDATA[%d{HH:mm:ss.SSS} [%-10.10thread] %colorlevel(%-5level) %-45.45(%41C{41}:%L) - %msg%n %magenta(%ex{full})]]></pattern>
         </encoder>
-        <filter class="net.awired.housecream.server.core.application.log.OutFilter" />
+        <filter class="net.awired.ajsl.log.OutFilter" />
     </appender>
     <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.err</target>
         <encoder>
             <pattern><![CDATA[%boldWhite(%d{HH:mm:ss.SSS} [%-10.10thread]) %colorlevel(%-5level) %boldWhite(%-45.45(%41C{41}:%L)) - %colorlevel(%msg)%n %magenta(%ex{full})]]></pattern>
         </encoder>
-        <filter class="net.awired.housecream.server.core.application.log.ErrFilter" />
+        <filter class="net.awired.ajsl.log.ErrFilter" />
     </appender>
 
     <logger name="net.awired" level="INFO" />
