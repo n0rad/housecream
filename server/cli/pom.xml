@@ -15,11 +15,12 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-core</artifactId>
+			<groupId>net.awired.ajsl</groupId>
+			<artifactId>ajsl-log</artifactId>
+			<version>${ajsl.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -52,11 +53,11 @@
 			<artifactId>aclm</artifactId>
 			<version>${aclm.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.fusesource.jansi</groupId>
-            <artifactId>jansi</artifactId>
-            <version>1.6</version>
-        </dependency>
+		<dependency>
+			<groupId>org.fusesource.jansi</groupId>
+			<artifactId>jansi</artifactId>
+			<version>1.6</version>
+		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -98,8 +99,8 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>net.awired.housecream.server</groupId>
-									<artifactId>housecream-server-core</artifactId>
+									<groupId>net.awired.ajsl</groupId>
+									<artifactId>ajsl-log</artifactId>
 									<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
 								</artifactItem>
 							</artifactItems>

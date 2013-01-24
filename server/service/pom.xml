@@ -23,8 +23,9 @@
 			<artifactId>housecream-server-storage</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-core</artifactId>
+			<groupId>net.awired.ajsl</groupId>
+			<artifactId>ajsl-log</artifactId>
+			<version>${ajsl.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.housecream.plugins</groupId>

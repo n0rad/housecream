@@ -85,11 +85,6 @@ to give you unlimited control over your house</description>
 			</dependency>
 			<dependency>
 				<groupId>net.awired.housecream.server</groupId>
-				<artifactId>housecream-server-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
 				<artifactId>housecream-server-storage</artifactId>
 				<version>${project.version}</version>
 			</dependency>
