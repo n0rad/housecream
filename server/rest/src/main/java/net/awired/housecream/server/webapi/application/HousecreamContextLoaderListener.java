@@ -5,6 +5,7 @@ import java.util.logging.Handler;
 import java.util.logging.LogManager;
 import javax.servlet.ServletContextEvent;
 import net.awired.housecream.server.core.application.Housecream;
+import net.awired.housecream.server.core.application.common.HousecreamHome;
 import org.fusesource.jansi.AnsiConsole;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.web.context.ContextLoaderListener;
@@ -32,6 +33,7 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
         SLF4JBridgeHandler.install();
 
         Housecream hc = Housecream.INSTANCE;
+        HousecreamHome hcHome = HousecreamHome.INSTANCE;
 
         InputStream manifest = event.getServletContext().getResourceAsStream("META-INF/MANIFEST.MF");
         try {

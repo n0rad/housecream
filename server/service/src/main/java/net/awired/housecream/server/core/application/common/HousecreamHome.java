@@ -5,15 +5,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import net.awired.ajsl.core.io.FileUtils;
+import net.awired.housecream.server.core.application.Housecream;
+import net.awired.housecream.server.core.application.SingleInstanceFileLocker;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 public enum HousecreamHome implements Closeable {
-
     INSTANCE;
 
+    private static final String LOCKER_FILE_NAME = "lock";
+
     private HousecreamHome() {
-        // shutdown hook
+        File home = Housecream.INSTANCE.getHome();
+        File lockFile = new File(home, LOCKER_FILE_NAME);
+        SingleInstanceFileLocker lock = new SingleInstanceFileLocker(lockFile);
+        if (lock.isAppActive()) {
+            throw new IllegalStateException("Housecream Home folder : " + home + " is locked");
+        }
     }
 
     public void updateDbVersion(String home, String currentVersion) {
