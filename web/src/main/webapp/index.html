@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Housecream</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Le styles -->
+<link href="${contextPath}/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+</style>
+<link href="${contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
+
+<style type="text/css">
+@media ( min-width : 320px) {
+    .nav-collapse .dropdown-menu {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 5px 5px 5px 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+    .nav-collapse .dropdown-menu a.btn {
+        color: #fff;
+    }
+    .nav-collapse .dropdown-menu a.btn:hover {
+        background-color: #49AFCD;
+        background-position: 0 -32px;
+        color: #FFFFFF;
+    }
+    .nav-collapse .dropdown-menu a:hover {
+        color: #4572a7;
+        background: transparent;
+    }
+}
+
+@media ( min-width : 767px) {
+    .nav-collapse .dropdown-menu {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 5px 5px 5px 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+</style>
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<link rel="shortcut icon" href="favicon.ico">
+
+<script type="text/javascript" src="${contextPath}/ajsl-utils.js"></script>
+<script type="text/javascript" src="${contextPath}/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="${contextPath}/jquery.dataSelector.js"></script>
+<script type="text/javascript" src="${contextPath}/jquery.bootstrap.select.js"></script>
+<script type="text/javascript" src="${contextPath}/bootstrap-modal.js"></script>
+<script type="text/javascript" src="${contextPath}/js/bootstrap.js"></script>
+<script type="text/javascript" src="${contextPath}/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="${contextPath}/jquery.noty.js"></script>
+<script type="text/javascript" src="${contextPath}/jquery.noty.layout.js"></script>
+<script type="text/javascript" src="${contextPath}/jquery.noty.theme.js"></script>
+
+<!-- script type="text/javascript" src="${contextPath}/history.js"></script -->
+
+<!-- script type="text/javascript" src="${contextPath}/history.adapter.jquery.js"></script> -->
+<script type="text/javascript" src="${contextPath}/form2js.js"></script>
+
+<script type="text/javascript">
+    curl = {
+        baseUrl : '${contextPath}'
+    };
+</script>
+<script type="text/javascript" src="${contextPath}/curl.js"></script>
+<script type="text/javascript">
+    var require = curl;
+    require([ 'bootstrap' ], function(main) {
+        main.start({context : '${contextPath}', root :'${fullWebPath}'});
+    });  
+</script>
+
+</head>
+<body>
+    <div class="navbar navbar-fixed-top" id="topNav" style="display:none">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span>
+                </a> <a class="brand" href="${fullWebPath}">Housecream</a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="active"><a class="pushState" href="${contextPath}/">Home</a></li>
+                        <li><a class="pushState" href="${contextPath}/admin">Admin</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="container" class="row-fluid"></div>
+        <footer>
+            <p>
+                <strong>© <a href="http://housecream.awired.net">Housecream</a></strong>
+            </p>
+        </footer>
+    </div>
+
+</body>
+</html>

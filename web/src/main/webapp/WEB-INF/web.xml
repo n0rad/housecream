@@ -10,9 +10,28 @@
 	<servlet>
 		<servlet-name>ToIndex</servlet-name>
 		<servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
+        <init-param>
+            <param-name>indexMapping</param-name>
+            <param-value>/index.html</param-value>
+        </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ToIndex</servlet-name>
 		<url-pattern>/notFoundResource</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>indexServlet</servlet-name>
+		<servlet-class>net.awired.ajsl.web.IndexTemplateServlet</servlet-class>
+		<init-param>
+			<param-name>tplPath</param-name>
+			<param-value>/index.html</param-value>
+		</init-param>
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>indexServlet</servlet-name>
+        <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

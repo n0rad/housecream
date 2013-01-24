@@ -51,11 +51,6 @@
 		<mime-type>text/plain</mime-type>
 	</mime-mapping>
 
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>server.html</welcome-file>
-	</welcome-file-list>
-
 	<error-page>
 		<error-code>404</error-code>
 		<location>/notFoundResource</location>
@@ -63,10 +58,31 @@
 	<servlet>
 		<servlet-name>ToIndex</servlet-name>
 		<servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
+		<init-param>
+			<param-name>indexMapping</param-name>
+			<param-value>/index.html</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ToIndex</servlet-name>
 		<url-pattern>/notFoundResource</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>indexServlet</servlet-name>
+		<servlet-class>net.awired.ajsl.web.IndexTemplateServlet</servlet-class>
+		<init-param>
+			<param-name>tplPath</param-name>
+			<param-value>/index.html</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>indexServlet</servlet-name>
+		<url-pattern>/index.html</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>server.html</welcome-file>
+	</welcome-file-list>
 </web-app>

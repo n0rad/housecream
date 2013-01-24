@@ -80,10 +80,6 @@ public class Main {
         context.setServer(server);
         context.setContextPath(argManager.contextPath.getParamOneValue());
 
-        //        context.addServlet(DefaultServlet.class, "/");
-        //        final ServletHolder jsp = context.addServlet(JspServlet.class, "*.jsp");
-        //        jsp.setInitParameter("classpath", context.getClassPath());
-
         ProtectionDomain protectionDomain = Main.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
         context.setDescriptor(location.toExternalForm() + "/WEB-INF/web.xml");
