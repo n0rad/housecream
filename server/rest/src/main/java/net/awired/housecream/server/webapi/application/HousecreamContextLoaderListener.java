@@ -32,6 +32,8 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
         }
         SLF4JBridgeHandler.install();
 
+        //
+
         Housecream hc = Housecream.INSTANCE;
         HousecreamHome hcHome = HousecreamHome.INSTANCE;
 
@@ -44,6 +46,8 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
             } catch (Exception e) {
             }
         }
+
+        hcHome.updateDbVersion();
 
         System.out.println("######################################");
         System.out.println("version : " + hc.getVersion());

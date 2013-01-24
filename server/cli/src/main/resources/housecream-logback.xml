@@ -17,14 +17,14 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder>
-            <pattern><![CDATA[%d{HH:mm:ss.SSS} [%-10.10thread] %colorlevel(%-5level) %-45.45(%41C{41}:%L) - %msg%n %magenta(%ex{full})]]></pattern>
+            <pattern><![CDATA[%blue(%d{HH:mm:ss.SSS}) [%-10.10thread] %colorlevel(%-5level) %-45.45(%41C{41}:%L) - %msg%n]]></pattern>
         </encoder>
         <filter class="net.awired.ajsl.log.OutFilter" />
     </appender>
     <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.err</target>
         <encoder>
-            <pattern><![CDATA[%boldWhite(%d{HH:mm:ss.SSS} [%-10.10thread]) %colorlevel(%-5level) %boldWhite(%-45.45(%41C{41}:%L)) - %colorlevel(%msg)%n %magenta(%ex{full})]]></pattern>
+            <pattern><![CDATA[%boldBlue(%d{HH:mm:ss.SSS}) %boldWhite([%-10.10thread]) %colorlevel(%-5level) %boldWhite(%-45.45(%41C{41}:%L)) - %colorlevel(%msg%n)]]></pattern>
         </encoder>
         <filter class="net.awired.ajsl.log.ErrFilter" />
     </appender>
@@ -39,4 +39,3 @@
     </root>
 
 </configuration>
-

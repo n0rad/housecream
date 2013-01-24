@@ -66,7 +66,7 @@ class ArgumentManager extends CliArgumentManager {
             @Override
             public File parse(String param) throws CliArgumentParseException {
                 File res = super.parse(param);
-                System.setProperty(Housecream.HOME_KEY, param);
+                System.setProperty(Housecream.HOUSECREAM_HOME_KEY, param);
                 return res;
             }
         });

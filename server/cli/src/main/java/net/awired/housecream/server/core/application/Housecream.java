@@ -15,14 +15,14 @@ import javax.naming.NamingException;
 public enum Housecream {
     INSTANCE;
 
-    public static final String HOUSECREAM_NAME = "Housecream";
-    public static final String HOME_KEY = "HOUSECREAM_HOME";
+    private static final String HOUSECREAM_NAME = "Housecream";
+    public static final String HOUSECREAM_HOME_KEY = "HOUSECREAM_HOME";
 
     private static final String LOG_CONF_FILE_PATH_KEY = "logback.configurationFile";
     private static final String LOG_CONF_FILE_NAME = "logback.xml";
 
     private static final String VERSION_MANIFEST_KEY = "HousecreamVersion";
-    private static final String VERSION_UNKNOWN = "Unknow Version";
+    public static final String VERSION_UNKNOWN = "Unknow Version";
 
     private File home;
     private String version;
@@ -31,7 +31,7 @@ public enum Housecream {
         home = findHomeDir();
         version = findVersion(null);
 
-        System.setProperty(HOME_KEY, home.getAbsolutePath());
+        System.setProperty(HOUSECREAM_HOME_KEY, home.getAbsolutePath());
         if (!home.exists()) {
             home.mkdirs();
         }
@@ -72,25 +72,25 @@ public enum Housecream {
         try {
             InitialContext iniCtxt = new InitialContext();
             Context env = (Context) iniCtxt.lookup("java:comp/env");
-            String value = (String) env.lookup(HOME_KEY);
+            String value = (String) env.lookup(HOUSECREAM_HOME_KEY);
             if (value != null && value.trim().length() > 0) {
                 return new File(value.trim());
             }
 
-            value = (String) iniCtxt.lookup(HOME_KEY);
+            value = (String) iniCtxt.lookup(HOUSECREAM_HOME_KEY);
             if (value != null && value.trim().length() > 0) {
                 return new File(value.trim());
             }
         } catch (NamingException e) {
         }
 
-        String sysProp = System.getProperty(HOME_KEY);
+        String sysProp = System.getProperty(HOUSECREAM_HOME_KEY);
         if (sysProp != null) {
             return new File(sysProp.trim());
         }
 
         try {
-            String env = System.getenv(HOME_KEY);
+            String env = System.getenv(HOUSECREAM_HOME_KEY);
             if (env != null) {
                 return new File(env.trim());
             }
