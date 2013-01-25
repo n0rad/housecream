@@ -1,41 +1,50 @@
 <configuration scan="true" scanPeriod="30 seconds">
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
     <conversionRule conversionWord="colorlevel"
         converterClass="net.awired.ajsl.log.ColorLevelCompositeConverter" />
+    <conversionRule conversionWord="bold"
+        converterClass="net.awired.ajsl.log.BoldCompositeConverter" />
 
-    <appender name="FILE"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${HOUSECREAM_HOME}/logs/housecream.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern><![CDATA[${HOUSECREAM_HOME}/logs/housecream.%d{yyyy-MM-dd}.log]]></fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-                <pattern><![CDATA[%d{HH:mm:ss.SSS} [%-10.10thread] %-5level %-45.45(%41C{41}:%L) - %msg%n]]></pattern>
-        </encoder>
-    </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.out</target>
-        <encoder>
-            <pattern><![CDATA[%blue(%d{HH:mm:ss.SSS}) [%-10.10thread] %colorlevel(%-5level) %-45.45(%41C{41}:%L) - %msg%n]]></pattern>
-        </encoder>
-        <filter class="net.awired.ajsl.log.OutFilter" />
-    </appender>
-    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.err</target>
-        <encoder>
-            <pattern><![CDATA[%boldBlue(%d{HH:mm:ss.SSS}) %boldWhite([%-10.10thread]) %colorlevel(%-5level) %boldWhite(%-45.45(%41C{41}:%L)) - %colorlevel(%msg%n)]]></pattern>
-        </encoder>
-        <filter class="net.awired.ajsl.log.ErrFilter" />
-    </appender>
 
-    <logger name="net.awired" level="INFO" />
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${HOUSECREAM_HOME}/logs/housecream.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern><![CDATA[${HOUSECREAM_HOME}/logs/housecream.%d{yyyy-MM-dd}.log]]></fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern><![CDATA[%d{HH:mm:ss.SSS} [%-10.10thread] %-5level %-45.45(%41C{41}:%L) - %msg%n]]></pattern>
+		</encoder>
+	</appender>
 
-    <root>
-        <level value="INFO" />
-        <appender-ref ref="FILE" />
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="STDERR" />
-    </root>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.out</target>
+		<withJansi>true</withJansi>
+		<encoder>
+			<pattern><![CDATA[%blue(%d{HH:mm:ss.SSS}) [%-10.10thread] %colorlevel(%-5level) %-45.45(%41C{41}:%L) - %msg%n]]></pattern>
+		</encoder>
+		<filter class="net.awired.ajsl.log.OutFilter" />
+	</appender>
+	<appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.err</target>
+		<withJansi>true</withJansi>
+		<encoder>
+			<pattern><![CDATA[%boldBlue(%d{HH:mm:ss.SSS}) %bold([%-10.10thread]) %colorlevel(%-5level) %bold(%-45.45(%41C{41}:%L)) - %colorlevel(%msg) %n]]></pattern>
+		</encoder>
+		<filter class="net.awired.ajsl.log.ErrFilter" />
+	</appender>
+
+	<logger name="net.awired" level="INFO" />
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="STDERR" />
+	</root>
 
 </configuration>

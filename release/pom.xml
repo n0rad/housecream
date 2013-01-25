@@ -16,7 +16,7 @@
     </parent>
 
 	<properties>
-		<hcs.url>hcs/</hcs.url>
+		<hcs.url>ws/</hcs.url>
 	</properties>
 
 	<dependencies>
