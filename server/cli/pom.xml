@@ -16,12 +16,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-log</artifactId>
-			<version>${ajsl.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>${jetty.version}</version>
@@ -31,12 +25,12 @@
 			<artifactId>jetty-webapp</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>net.awired.aclm</groupId>
 			<artifactId>aclm</artifactId>
 			<version>${aclm.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.fusesource.jansi</groupId>
 			<artifactId>jansi</artifactId>
@@ -48,9 +42,9 @@
 			<version>${logback.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>net.awired.ajsl</groupId>
+			<artifactId>ajsl-log</artifactId>
+			<version>${ajsl.version}</version>
 		</dependency>
 
 	</dependencies>

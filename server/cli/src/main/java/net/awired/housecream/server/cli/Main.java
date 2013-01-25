@@ -9,7 +9,6 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.fusesource.jansi.AnsiConsole;
 
 public class Main {
     private final ArgumentManager argManager = new ArgumentManager();
@@ -19,7 +18,6 @@ public class Main {
     }
 
     public void run(String[] args) {
-        AnsiConsole.systemInstall();
         if (!argManager.parseWithSuccess(args)) {
             return;
         }
