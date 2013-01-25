@@ -19,6 +19,24 @@ public enum HousecreamHome {
     private static final String LOCKER_FILE_NAME = "lock";
 
     private HousecreamHome() {
+        lockHomeDirectory();
+        updateDbVersion();
+    }
+
+    public void init() {
+        logHousecreamInfo();
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+
+    private void logHousecreamInfo() {
+        log.info("######################################");
+        log.info("## version : " + Housecream.INSTANCE.getVersion());
+        log.info("## home : " + Housecream.INSTANCE.getHome());
+        log.info("######################################");
+    }
+
+    private void lockHomeDirectory() {
         File home = Housecream.INSTANCE.getHome();
         File lockFile = new File(home, LOCKER_FILE_NAME);
         SingleInstanceFileLocker lock = new SingleInstanceFileLocker(lockFile);
@@ -27,7 +45,7 @@ public enum HousecreamHome {
         }
     }
 
-    public void updateDbVersion() {
+    private void updateDbVersion() {
         Housecream hc = Housecream.INSTANCE;
         File versionFile = new File(hc.getHome() + "/version");
         if (Housecream.VERSION_UNKNOWN.equals(hc.getVersion())) {
@@ -52,4 +70,5 @@ public enum HousecreamHome {
         }
 
     }
+
 }

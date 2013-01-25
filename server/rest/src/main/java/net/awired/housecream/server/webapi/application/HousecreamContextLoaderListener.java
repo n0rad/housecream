@@ -10,12 +10,9 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        Housecream hc = Housecream.INSTANCE;
-        HousecreamHome hcHome = HousecreamHome.INSTANCE;
-
         InputStream manifest = event.getServletContext().getResourceAsStream("META-INF/MANIFEST.MF");
         try {
-            hc.updateVersion(manifest);
+            Housecream.INSTANCE.updateVersion(manifest);
         } finally {
             try {
                 manifest.close();
@@ -23,14 +20,8 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
             }
         }
 
-        hcHome.updateDbVersion();
-
-        System.out.println("######################################");
-        System.out.println("version : " + hc.getVersion());
-        System.out.println("home : " + hc.getHome());
-        System.out.println("######################################");
+        HousecreamHome.INSTANCE.init();
 
         super.contextInitialized(event);
     }
-
 }
