@@ -1,4 +1,4 @@
-package net.awired.housecream.server.core.application;
+package net.awired.housecream.server;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -131,7 +131,7 @@ public enum Housecream {
     }
 
     private String findVersion(InputStream manifestIn) {
-        // runnnable war
+        // runnable war
         try {
             Enumeration<URL> manifests = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
             while (manifests.hasMoreElements()) {

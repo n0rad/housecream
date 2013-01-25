@@ -9,8 +9,8 @@ import net.awired.aclm.param.CliParamEnum;
 import net.awired.aclm.param.CliParamFile;
 import net.awired.aclm.param.CliParamInt;
 import net.awired.aclm.param.CliParamString;
-import net.awired.housecream.server.core.application.Housecream;
-import net.awired.housecream.server.core.application.enumeration.FileInfoEnum;
+import net.awired.housecream.server.FileInfoEnum;
+import net.awired.housecream.server.Housecream;
 
 class ArgumentManager extends CliArgumentManager {
 

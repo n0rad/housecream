@@ -1,4 +1,4 @@
-package net.awired.housecream.server.core.application.enumeration;
+package net.awired.housecream.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;

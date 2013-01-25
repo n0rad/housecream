@@ -1,4 +1,4 @@
-package net.awired.housecream.server.core.application;
+package net.awired.housecream.server;
 
 import java.io.File;
 import java.io.RandomAccessFile;

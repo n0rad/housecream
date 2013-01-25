@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.ProtectionDomain;
-import net.awired.housecream.server.core.application.Housecream;
+import net.awired.housecream.server.Housecream;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;

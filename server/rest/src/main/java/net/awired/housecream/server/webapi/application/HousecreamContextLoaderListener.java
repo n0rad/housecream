@@ -2,7 +2,7 @@ package net.awired.housecream.server.webapi.application;
 
 import java.io.InputStream;
 import javax.servlet.ServletContextEvent;
-import net.awired.housecream.server.core.application.Housecream;
+import net.awired.housecream.server.Housecream;
 import net.awired.housecream.server.core.application.common.HousecreamHome;
 import org.springframework.web.context.ContextLoaderListener;
 
