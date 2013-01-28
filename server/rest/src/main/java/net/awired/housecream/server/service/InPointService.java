@@ -36,7 +36,7 @@ public class InPointService implements InPointResource {
 
     @Override
     public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
-        pluginService.validateAndNormalizeURI(inPoint.getUri());
+        inPoint.setUri(pluginService.validateAndNormalizeURI(inPoint.getUri()));
         pointDao.save(inPoint);
         routeManager.registerInRoute(inPoint);
         return inPoint;

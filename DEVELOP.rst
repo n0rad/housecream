@@ -9,7 +9,7 @@ todo in jetty :
 - SSL
 - GZip
 
-in 
+in
 ==
 restmcu // event
 timer // event

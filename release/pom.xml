@@ -35,7 +35,6 @@
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-cli</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.bootstrap</groupId>

@@ -35,7 +35,7 @@ public class DynamicRouteManager extends RouteBuilder {
             HousecreamPlugin plugin = pluginService.getPluginFromScheme(uri.getScheme());
             RouteDefinition routeDefinition;
             if (plugin.isCommand()) {
-                routeDefinition = from(point.getUri().toString()).to("direct:command");
+                routeDefinition = from(point.getUri().toString()).to(StaticRouteManager.DIRECT_COMMAND);
             } else {
                 routeDefinition = from(point.getUri().toString()) //
                         .transform(body(Event.class)) //

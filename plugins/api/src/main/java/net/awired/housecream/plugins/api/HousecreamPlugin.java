@@ -20,7 +20,7 @@ public interface HousecreamPlugin {
     boolean isCommand();
 
     /**
-     * @return null if valid.
+     * @return can return null if valid.
      */
     URI validateAndNormalizeUri(URI pointUri) throws ValidationException;
 

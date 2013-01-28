@@ -12,7 +12,7 @@ public class XmppHousecreamPlugin implements HousecreamPlugin {
 
     @Override
     public String scheme() {
-        return "xmpp";
+        return "axmpp";
     }
 
     @Override

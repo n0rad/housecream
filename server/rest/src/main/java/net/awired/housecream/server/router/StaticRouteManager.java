@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StaticRouteManager extends RouteBuilder {
 
+    public static final String DIRECT_COMMAND = "direct:command";
     private static final String DIRECT_ENGINE = "direct:engine";
     public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
     public static final String OUT_HOLDER_QUEUE = "direct:outHolder";
@@ -40,7 +41,6 @@ public class StaticRouteManager extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-
         from(EVENT_HOLDER_QUEUE) //
                 .bean(eventService, "saveEventAsync") //
                 .to(DIRECT_ENGINE);
@@ -56,13 +56,13 @@ public class StaticRouteManager extends RouteBuilder {
                 .dynamicRouter().method(dynamicRouter, "route") //
                 .process(endProcessor);
 
-        from("direct:command").process(cliProcessor);
+        from(DIRECT_COMMAND).process(cliProcessor);
 
         from("hcweb:genre").to(DIRECT_ENGINE);
 
-        from(
-                "axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
-                .process(cliProcessor)
-                .to("axmpp://talk.google.com:5222/alemaire@norad.fr?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
+        //        from(
+        //                "axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
+        //                .process(cliProcessor)
+        //                .to("axmpp://talk.google.com:5222/alemaire@norad.fr?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP");
     }
 }

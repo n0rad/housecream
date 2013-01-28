@@ -11,11 +11,9 @@ import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
-@Ignore
 public class n0radBoardIT {
 
     @Rule
@@ -79,9 +77,22 @@ public class n0radBoardIT {
         rule2.getConditions().add(new Condition(inPoint.getId(), 0, ConditionType.event));
         rule2.getConsequences().add(new Consequence(outPoint.getId(), 0));
         hcs.ruleResource().createRule(rule2);
-
     }
 
+    @Test
+    public void should_handle_xmpp() throws Exception {
+        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+
+        // inpoint
+        InPoint inPoint = new InPointBuilder()
+                .type(InPointType.PIR)
+                .name("light switch button")
+                .zoneId(landId)
+                .uri("axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
+                .build();
+        inPoint = hcs.inPointResource().createInPoint(inPoint);
+
+    }
 }
 
 /*
