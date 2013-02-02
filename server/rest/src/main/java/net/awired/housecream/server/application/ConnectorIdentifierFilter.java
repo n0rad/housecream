@@ -1,4 +1,4 @@
-package net.awired.housecream.server;
+package net.awired.housecream.server.application;
 
 import java.io.IOException;
 import javax.inject.Inject;

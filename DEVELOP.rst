@@ -5,6 +5,13 @@ http://www.slideshare.net/ge0ffrey/20110329-london-drools
 land > building > floor > room > area
 land > area
 
+
+sun position : 
+- Timeleft before event
+- degree
+- 
+
+
 todo in jetty :
 - SSL
 - GZip

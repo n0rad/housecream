@@ -1,6 +1,6 @@
 package net.awired.housecream.server.component;
 
-import net.awired.housecream.server.ApplicationContextProvider;
+import net.awired.housecream.server.application.ApplicationContextProvider;
 import net.awired.housecream.server.command.CommandService;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Processor;

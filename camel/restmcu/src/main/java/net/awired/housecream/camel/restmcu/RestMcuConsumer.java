@@ -104,6 +104,7 @@ public class RestMcuConsumer extends DefaultConsumer {
     protected void doStop() throws Exception {
         server.stop();
         server.destroy();
+        server = null;
         super.doStop();
     }
 

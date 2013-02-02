@@ -1,4 +1,4 @@
-package net.awired.housecream.server;
+package net.awired.housecream.server.application;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

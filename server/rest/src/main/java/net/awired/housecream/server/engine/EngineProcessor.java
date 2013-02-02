@@ -1,9 +1,6 @@
 package net.awired.housecream.server.engine;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -33,12 +30,12 @@ public class EngineProcessor implements Processor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private Map<Long, Pair<PointState, FactHandle>> states = Collections
-            .synchronizedMap(new HashMap<Long, Pair<PointState, FactHandle>>());
-
     private KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
     private final StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
     private KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "hcs.droolsLogs");
+
+    @Inject
+    private StateService stateService;
 
     @Inject
     private RuleBuilder ruleBuilder;
@@ -117,8 +114,8 @@ public class EngineProcessor implements Processor {
         PointState state = new PointState(pointId, currentValue);
         //TODO may be a problem as we insert before remove
         FactHandle factHandler = ksession.insert(state);
-        Pair<PointState, FactHandle> previous = states.put(state.getPointId(), new Pair<PointState, FactHandle>(
-                state, factHandler));
+
+        Pair<PointState, FactHandle> previous = stateService.updateAndGetPrevious(state, factHandler);
         if (previous != null) {
             ksession.retract(previous.right);
         }
@@ -126,7 +123,7 @@ public class EngineProcessor implements Processor {
     }
 
     public float getPointState(long pointId) throws NotFoundException {
-        Pair<PointState, FactHandle> pair = states.get(pointId);
+        Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair == null) {
             throw new NotFoundException("Point state not found for pointId : " + pointId);
         }
@@ -135,11 +132,11 @@ public class EngineProcessor implements Processor {
 
     public void removePointState(long pointId) {
         log.debug("Removing point state for id : {}" + pointId);
-        Pair<PointState, FactHandle> pair = states.get(pointId);
+        Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair != null) {
             ksession.retract(pair.right);
         }
-        states.remove(pointId);
+        stateService.remove(pointId);
         logCurrentFacts("after removing point state");
     }
 
@@ -154,16 +151,16 @@ public class EngineProcessor implements Processor {
     }
 
     private void logCurrentFacts(String info) {
-        if (!log.isDebugEnabled()) {
-            return;
-        }
-        log.debug("FACTS: " + info);
-        for (long key : states.keySet()) {
-            log.debug("Point state : " + states.get(key).left);
-        }
-        Collection<Object> objects = ksession.getObjects();
-        for (Object object : objects) {
-            log.debug("Fact : " + object);
-        }
+        //        if (!log.isDebugEnabled()) {
+        //            return;
+        //        }
+        //        log.debug("FACTS: " + info);
+        //        for (long key : states.keySet()) {
+        //            log.debug("Point state : " + states.get(key).left);
+        //        }
+        //        Collection<Object> objects = ksession.getObjects();
+        //        for (Object object : objects) {
+        //            log.debug("Fact : " + object);
+        //        }
     }
 }

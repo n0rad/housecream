@@ -28,6 +28,7 @@ to give you unlimited control over your house</description>
 
 	<modules>
 		<module>camel/restmcu</module>
+		<module>camel/sunrise</module>
 		<module>camel/axmpp</module>
 
 		<module>plugins/api</module>
