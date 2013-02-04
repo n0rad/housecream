@@ -16,9 +16,8 @@
 		</param-value>
 	</context-param>
 
-	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
-		<listener-class>net.awired.housecream.server.webapi.application.HousecreamContextLoaderListener</listener-class>
+		<listener-class>net.awired.housecream.server.application.HousecreamContextLoaderListener</listener-class>
 	</listener>
 
 	<filter>
