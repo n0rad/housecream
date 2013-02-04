@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it.zone;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import javax.validation.ValidationException;
 import net.awired.housecream.server.api.domain.zone.Zones;
 import net.awired.housecream.server.it.HcsItServer;

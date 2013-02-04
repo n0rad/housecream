@@ -7,7 +7,7 @@ import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.fest.assertions.Assertions;
+import org.fest.assertions.api.Assertions;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;

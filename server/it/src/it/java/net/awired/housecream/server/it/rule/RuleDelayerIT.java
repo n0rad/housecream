@@ -3,7 +3,7 @@ package net.awired.housecream.server.it.rule;
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import java.util.Date;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;

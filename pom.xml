@@ -28,7 +28,7 @@ to give you unlimited control over your house</description>
 
 	<modules>
 		<module>camel/restmcu</module>
-		<module>camel/sunrise</module>
+		<module>camel/solar</module>
 		<module>camel/axmpp</module>
 
 		<module>plugins/api</module>
@@ -69,7 +69,7 @@ to give you unlimited control over your house</description>
 		<logback.version>1.0.9</logback.version>
 
 		<!-- TEST -->
-		<festassert.version>1.4</festassert.version>
+		<festassert.version>2.0M8</festassert.version>
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
 		<jacoco.version>0.5.5.201112152213</jacoco.version>
@@ -160,7 +160,7 @@ to give you unlimited control over your house</description>
 		</dependency>
 		<dependency>
 			<groupId>org.easytesting</groupId>
-			<artifactId>fest-assert</artifactId>
+			<artifactId>fest-assert-core</artifactId>
 			<version>${festassert.version}</version>
 			<scope>test</scope>
 		</dependency>

@@ -1,7 +1,7 @@
 package net.awired.housecream.server.it.outevent;
 
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;

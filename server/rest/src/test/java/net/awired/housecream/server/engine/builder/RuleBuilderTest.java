@@ -1,10 +1,12 @@
 package net.awired.housecream.server.engine.builder;
 
+import static net.awired.ajsl.core.lang.Caster.cast;
 import static net.awired.housecream.server.api.domain.rule.TriggerType.NON_RETRIGGER;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
+import net.awired.ajsl.core.lang.Caster;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
@@ -129,7 +131,8 @@ public class RuleBuilderTest {
         engine.process(exchange);
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(2);
 
-        assertThat(exchange.getIn().getBody(Actions.class).getActions()).containsOnly(delayed0, direct1);
+        assertThat(cast(exchange.getIn().getBody(Actions.class).getActions(), Consequence.class)).containsOnly(
+                delayed0, direct1);
 
         engine.setPointState(43, 1f);
 
@@ -155,15 +158,14 @@ public class RuleBuilderTest {
         engine.process(exchange);
         List<Action> actions = exchange.getIn().getBody(Actions.class).getActions();
         assertThat(actions).hasSize(2);
-        assertThat(actions).contains(delayed0, direct1);
+        assertThat(Caster.cast(actions, Consequence.class)).contains(delayed0, direct1);
         Action currentDelayAction = actions.get(actions.indexOf(delayed0));
-
         engine.setPointState(43, 1f);
 
         exchange = buildExchange(1f);
         engine.process(exchange);
         assertThat(actions).hasSize(2);
-        assertThat(actions).contains(delayed0, direct1);
+        assertThat(cast(actions, Consequence.class)).contains(delayed0, direct1);
         assertThat(engine.findAndRemoveActionFromFacts(currentDelayAction)).isFalse();
     }
 

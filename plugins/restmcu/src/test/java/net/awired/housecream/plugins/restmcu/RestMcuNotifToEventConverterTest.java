@@ -1,7 +1,7 @@
 package net.awired.housecream.plugins.restmcu;
 
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.INF_OR_EQUAL;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.net.URI;

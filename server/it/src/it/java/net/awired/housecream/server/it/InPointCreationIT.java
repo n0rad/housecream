@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
