@@ -16,6 +16,7 @@ import net.awired.housecream.server.api.domain.rule.TriggerType;
 import net.awired.housecream.server.engine.Action;
 import net.awired.housecream.server.engine.Actions;
 import net.awired.housecream.server.engine.EngineProcessor;
+import net.awired.housecream.server.engine.StateService;
 import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
@@ -37,6 +38,9 @@ public class RuleBuilderTest {
     @Mock
     private EventService eventService;
 
+    @Mock
+    private StateService stateService;
+
     @InjectMocks
     private RuleBuilder ruleBuilder = new RuleBuilder();
 
@@ -47,6 +51,7 @@ public class RuleBuilderTest {
     public void before() throws Exception {
         engine = new EngineProcessor();
         ReflectionTestUtils.setField(engine, "ruleBuilder", ruleBuilder);
+        ReflectionTestUtils.setField(engine, "stateService", stateService);
         Method m = engine.getClass().getDeclaredMethod("postConstruct", (Class<?>[]) null);
         m.setAccessible(true);
         m.invoke(engine, null);

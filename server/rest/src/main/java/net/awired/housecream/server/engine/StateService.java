@@ -9,7 +9,7 @@ import org.drools.runtime.rule.FactHandle;
 import org.springframework.stereotype.Service;
 
 @Service
-class StateService {
+public class StateService {
 
     private Map<Long, Pair<PointState, FactHandle>> states = Collections
             .synchronizedMap(new HashMap<Long, Pair<PointState, FactHandle>>());
