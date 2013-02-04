@@ -8,11 +8,11 @@ import org.apache.camel.ExchangePattern;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
 
-public final class SolarConsumerRunner implements Runnable, Trigger {
+public class SolarConsumerRunner implements Runnable, Trigger {
 
     private final SolarConsumer consumer;
     private final SolarEndpoint endpoint;
-    private final SolarAdvancedCalculator calculator;
+    private SolarAdvancedCalculator calculator;
 
     private SolarState nextEvent;
 
@@ -25,14 +25,12 @@ public final class SolarConsumerRunner implements Runnable, Trigger {
 
     @Override
     public void run() {
-        Exchange camelExchange = consumer.getEndpoint().createExchange(ExchangePattern.InOnly);
+        Exchange camelExchange = endpoint.createExchange(ExchangePattern.InOnly);
         camelExchange.getIn().setBody(nextEvent);
         try {
             consumer.getProcessor().process(camelExchange);
         } catch (Exception exception) {
             camelExchange.setException(exception);
-        } finally {
-            nextEvent = null;
         }
     }
 
@@ -40,9 +38,12 @@ public final class SolarConsumerRunner implements Runnable, Trigger {
     public Date nextExecutionTime(TriggerContext triggerContext) {
         if (triggerContext.lastActualExecutionTime() == null) {
             nextEvent = calculator.findCurrentState();
-            return new Date();
+        } else if (nextEvent != null && nextEvent.getEvent() != null) {
+            nextEvent = new SolarState(nextEvent.getLatitude(), nextEvent.getLongitude(), nextEvent.getDate()
+                    .plusMinutes(1), nextEvent.getPhase());
+        } else {
+            nextEvent = calculator.findNextEvent();
         }
-        nextEvent = calculator.findNextEvent();
         return nextEvent.getDate().toDate();
     }
 }

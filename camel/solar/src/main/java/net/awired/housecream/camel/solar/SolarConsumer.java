@@ -9,7 +9,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 public class SolarConsumer extends DefaultConsumer {
 
     private static TaskScheduler scheduler = new ConcurrentTaskScheduler();
-    private ScheduledFuture<?> schedule;
+    private ScheduledFuture<SolarConsumerRunner> schedule;
 
     public SolarConsumer(SolarEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
@@ -29,6 +29,10 @@ public class SolarConsumer extends DefaultConsumer {
             schedule = null;
         }
         super.doStop();
+    }
+
+    public ScheduledFuture<SolarConsumerRunner> getSchedule() {
+        return schedule;
     }
 
 }
