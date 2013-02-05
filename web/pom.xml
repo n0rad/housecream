@@ -14,11 +14,10 @@
 
 	<properties>
 		<sonar.language>js</sonar.language>
-		<hcs.url>/hcs/</hcs.url>
+		<hcWsUrl>/housecream-ws</hcWsUrl>
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>net.awired.ajsl</groupId>
 			<artifactId>ajsl-web</artifactId>
@@ -31,44 +30,43 @@
 			<version>${ajsl.version}</version>
 			<type>war</type>
 		</dependency>
-		<dependency>
-			<groupId>net.awired.js</groupId>
-			<artifactId>bootstrap</artifactId>
-			<version>2.0.4</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.js</groupId>
-			<artifactId>jquery</artifactId>
-			<version>1.7.2</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.js</groupId>
-			<artifactId>underscore</artifactId>
-			<version>1.1.6</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.js</groupId>
-			<artifactId>curl</artifactId>
-			<version>0.6.3-SNAPSHOT</version>
-			<type>war</type>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.awired.js</groupId> -->
+<!-- 			<artifactId>bootstrap</artifactId> -->
+<!-- 			<version>2.0.4</version> -->
+<!-- 			<type>war</type> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.awired.js</groupId> -->
+<!-- 			<artifactId>jquery</artifactId> -->
+<!-- 			<version>1.7.2</version> -->
+<!-- 			<type>war</type> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.awired.js</groupId> -->
+<!-- 			<artifactId>underscore</artifactId> -->
+<!-- 			<version>1.1.6</version> -->
+<!-- 			<type>war</type> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.awired.js</groupId> -->
+<!-- 			<artifactId>curl</artifactId> -->
+<!-- 			<version>0.6.3-SNAPSHOT</version> -->
+<!-- 			<type>war</type> -->
+<!-- 		</dependency> -->
 
-		<!-- Test -->
-		<dependency>
-			<groupId>net.awired.js</groupId>
-			<artifactId>jasmine</artifactId>
-			<version>1.1.0</version>
-			<type>war</type>
-			<scope>test</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.awired.js</groupId> -->
+<!-- 			<artifactId>jasmine</artifactId> -->
+<!-- 			<version>1.1.0</version> -->
+<!-- 			<type>war</type> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
 
 	<build>
-		<finalName>hcw</finalName>
+		<finalName>housecream-web</finalName>
 		<sourceDirectory>src/main/webapp</sourceDirectory>
 		<testSourceDirectory>src/test/webapp</testSourceDirectory>
 

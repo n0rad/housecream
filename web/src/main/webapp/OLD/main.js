@@ -1,9 +1,8 @@
-define(['require', //	
+define(['require', 'hcsRootUrl', //	
         'js!Underscore.js!order', //
 //        'js!jquery-1.7.2.js!order', //
         'js!jquery.toObject.js!order', //
         'js!jquery.history.js!order', //
-        'js!/hcs/ws/resources/Validator.js'
         
 //        'css!jquery/jquery.marquee.min.css',
 //        'css!jquery/jquery.selectBox.css',
@@ -19,7 +18,7 @@ define(['require', //
 //        'js!jquery/jquery.selectbox-0.6.1.js!order',
 //        'js!jquery/jquery.history.js!order',
 //        'js!jquery/jquery.history.extended.js!order'
-        ], function(require) {
+        ], function(require, hcsRootUrl) {
 
 	define('jquery', [], function() {
 		var jquery = $;
@@ -37,15 +36,14 @@ define(['require', //
 //		return window.console;
 		var empty = function() {};
 		return {log : empty, info : empty, error : empty, warn : empty, debug : empty};
-	});	
-	
-	define('hcsUrl', function() {
-		return "hcs/ws/";
 	});
 	
-	define('Validator', function() {
-		return Validator;
+	require('js!' + hcsRootUrl + 'resources/Validator.js', function() {
+		define('Validator', function() {
+			return Validator;
+		});		
 	});
+	
 	
 	return {
 		start : function(data) {

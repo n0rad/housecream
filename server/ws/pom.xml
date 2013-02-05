@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.awired.housecream.server</groupId>
-	<artifactId>housecream-server-rest</artifactId>
-	<name>Housecream Server - Rest</name>
+	<artifactId>housecream-server-ws</artifactId>
+	<name>Housecream Server - WS</name>
 	<packaging>war</packaging>
 
 	<parent>
@@ -16,7 +16,6 @@
 	</parent>
 
 	<dependencies>
-
         <dependency>
             <groupId>net.awired.housecream.server</groupId>
             <artifactId>housecream-server-cli</artifactId>
@@ -286,7 +285,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>hcs</finalName>
+		<finalName>housecream-ws</finalName>
 
 		<plugins>
 			<plugin>

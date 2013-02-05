@@ -16,13 +16,13 @@
     </parent>
 
 	<properties>
-		<hcs.url>ws/</hcs.url>
+		<hcWsUrl>ws</hcWsUrl>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-rest</artifactId>
+			<artifactId>housecream-server-ws</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
@@ -141,7 +141,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>net.awired.housecream.server</groupId>
-					<artifactId>housecream-server-rest</artifactId>
+					<artifactId>housecream-server-ws</artifactId>
 				</dependency>
 			</dependencies>
 		</profile>

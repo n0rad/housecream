@@ -73,7 +73,7 @@
 
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
-			<artifactId>housecream-server-rest</artifactId>
+			<artifactId>housecream-server-ws</artifactId>
 			<type>war</type>
 			<scope>provided</scope>
 		</dependency>
