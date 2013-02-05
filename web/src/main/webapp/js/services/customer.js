@@ -1,6 +1,6 @@
 'use strict';
 
-foodMeApp.factory('customer', function($rootScope, localStorage) {
+housecream.factory('customer', function($rootScope, localStorage) {
 
   var LOCAL_STORAGE_ID = 'fmCustomer',
       customerString = localStorage[LOCAL_STORAGE_ID];

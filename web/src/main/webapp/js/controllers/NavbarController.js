@@ -1,9 +1,9 @@
 'use strict';
 
-foodMeApp.controller('NavbarController', function NavbarController($scope, $location) {
+housecream.controller('NavbarController', function NavbarController($scope, $location, $window) {
 
   $scope.routeIs = function(routeName) {
-    return $location.path() === routeName;
+    return $location.path() === $window.contextPath + routeName;
   };
 
 });

@@ -10,7 +10,7 @@ public class HcsItContext {
     private static final String HCS_PORT_DEFAULT = "8080";
     private static final String HCS_PORT_PROPERTY_NAME = "hcs.port";
 
-    private static final String HCS_PATH_DEFAULT = "/hcs/ws";
+    private static final String HCS_PATH_DEFAULT = "/housecream/ws";
     private static final String HCS_PATH_PROPERTY_NAME = "hcs.path";
 
     private static String hcsHost;

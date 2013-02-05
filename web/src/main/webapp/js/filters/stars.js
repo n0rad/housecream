@@ -1,6 +1,6 @@
 'use strict';
 
-foodMeApp.filter('stars', function() {
+housecream.filter('stars', function() {
   var STARS = {
     1: '\u2605',
     2: '\u2605\u2605',

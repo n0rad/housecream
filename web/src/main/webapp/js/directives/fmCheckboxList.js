@@ -1,6 +1,6 @@
 'use strict';
 
-foodMeApp.directive('fmCheckboxList', function() {
+housecream.directive('fmCheckboxList', function() {
   return {
     require: 'ngModel',
     link: function(scope, elm, attr, ngModel) {

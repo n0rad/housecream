@@ -1,3 +1,3 @@
 'use strict';
 
-foodMeApp.value('alert', window.alert);
+housecream.value('alert', window.alert);

@@ -1,2 +1,2 @@
-window.hcWsUrl = '${hcWsUrl}';
-window.hcVersion = '${project.version}';
+var hcWsUrl = '${hcWsUrl}';
+var hcVersion = '${project.version}';

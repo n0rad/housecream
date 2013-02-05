@@ -1,6 +1,6 @@
 'use strict';
 
-foodMeApp.controller('RestaurantsController',
+housecream.controller('RestaurantsController',
     function RestaurantsController($scope, customer, $location, Restaurant) {
 
   if (!customer.address) {

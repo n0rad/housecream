@@ -2,11 +2,8 @@
 </div>
 
 <form class="form-inline">
-
 	<div class="btn-toolbar">
-
 		<a class="pushState btn btn-primary" href="<%= rootUrl %>/admin/inpoint/new">New</a>
-
 		<div class="btn-group">
 			<a class="btn dropdown-toggle btn-success" data-toggle="dropdown" href="#"> Action <span class="caret"></span>
 			</a>
@@ -43,20 +40,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<% _.each(inPoints, function(point) { %>
-			<tr>
-				<td class="selector"><input type="checkbox" name="id" value="<%= point.id %>" /></td>
-				<td class="name"><%= point.name %></td>
-				<td><%= point.type %></td>
-				<td><%= point.url %></td>
+			<tr ng-repeat="point in inPoints.inPoints">
+				<td class="selector"><input type="checkbox" name="id" ng-model="point.id" /></td>
+				<td class="name">{{point.name}}</td>
+				<td>{{point.type}}</td>
+				<td>{{point.url}}</td>
 				<td class="actions">
 				    <a class="btn btn-success btn-mini" href="#"> <i class="icon-zoom-in icon-white"></i></a>
-				    <a class="pushState btn btn-info btn-mini" href="<%= rootUrl %>/admin/inpoint/<%= point.id %>"> <i
+				    <a class="pushState btn btn-info btn-mini" ng-href="admin/inpoint/{{point.id}}"> <i
 						class="icon-edit icon-white"></i></a>
 					<button class="delete btn btn-danger btn-mini"><i class="icon-trash icon-white"></i></button>
 				</td>
 			</tr>
-			<% }); %>
 		</tbody>
 		<tfoot>
 		</tfoot>
