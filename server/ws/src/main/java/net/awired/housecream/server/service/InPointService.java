@@ -37,9 +37,21 @@ public class InPointService implements InPointResource {
     @Override
     public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
         inPoint.setUri(pluginService.validateAndNormalizeURI(inPoint.getUri()));
+        removePreviousRoute(inPoint);
         pointDao.save(inPoint);
         routeManager.registerInRoute(inPoint);
         return inPoint;
+    }
+
+    private void removePreviousRoute(InPoint inPoint) {
+        if (inPoint.getId() != null) {
+            try {
+                InPoint previous = pointDao.find(inPoint.getId());
+                routeManager.removeInRoute(previous);
+            } catch (NotFoundException e) {
+                routeManager.removeInRoute(inPoint);
+            }
+        }
     }
 
     @Override
@@ -72,6 +84,11 @@ public class InPointService implements InPointResource {
     @Override
     public ClientValidatorInfo getInPointValidator() {
         return validationService.getValidatorInfo(InPoint.class);
+    }
+
+    @Override
+    public InPoint updateInPoint(InPoint inPoint) throws PluginNotFoundException {
+        return createInPoint(inPoint);
     }
 
 }

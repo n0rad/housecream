@@ -1,7 +1,7 @@
 'use strict';
 
 housecream.controller('InpointTableController',
-    function InpointTableController($scope, InPoints, $location) {
+    function InpointTableController($scope, InPoints) {
 	
 	$scope.inPoints = InPoints.get();
 	

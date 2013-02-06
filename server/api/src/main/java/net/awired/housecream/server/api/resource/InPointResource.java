@@ -3,6 +3,7 @@ package net.awired.housecream.server.api.resource;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,8 +18,12 @@ public interface InPointResource extends PointResource {
     @Path("/validator")
     public ClientValidatorInfo getInPointValidator();
 
-    @PUT
+    @POST
     InPoint createInPoint(@Valid InPoint inPoint) throws PluginNotFoundException;
+
+    @PUT
+    @Path("{id}")
+    InPoint updateInPoint(@Valid InPoint inPoint) throws PluginNotFoundException;
 
     @GET
     @Path("{id}")

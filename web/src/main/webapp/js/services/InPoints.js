@@ -2,6 +2,10 @@
 
 housecream.factory('InPoints', function($resource, hcWsUrl) {
 	var InPoints = $resource(hcWsUrl + '/inpoints');
+	var types = $resource(hcWsUrl + '/inpoints/types');
+
+	InPoints.getTypes = types.query.bind(types);
+	
 	return InPoints;
 });
 

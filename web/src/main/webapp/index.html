@@ -23,7 +23,7 @@
 <![endif]-->
 </head>
 <body>
-	<div class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
+	<header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
 		<div class="navbar-inner">
 			<a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
 			<ul class="nav">
@@ -35,25 +35,28 @@
 			<!-- 					<li ng-class="{active: routeIs('/help')}"><a href="${contextPath}/help">Help</a></li> -->
 			<!-- 				</ul> -->
 		</div>
-	</div>
-	<ng-view></ng-view>
+	</header>
+	
+	<ng-view>loading..........</ng-view>
 
-	<div class="container-fluid">
+	<footer class="container-fluid">
 		<div id="container" class="row-fluid"></div>
-		<footer>
+		<div>
 			<p>
 				<strong>© <a href="http://housecream.awired.net">Housecream</a></strong>
 			</p>
-		</footer>
-	</div>
+		</div>
+	</footer>
 
+    <script src="lib/ajsl/utils.js"></script>
 	<script src="lib/angular/angular.js"></script>
 	<script src="lib/angular/angular-resource.js"></script>
 	<script src="js/housecream.js"></script>
 
-	<script src="js/view/admin/inpoint/InpointTableController.js"></script>
+    <script src="js/controllers/admin/inpoint/InpointTableController.js"></script>
+    <script src="js/controllers/admin/inpoint/InpointFormController.js"></script>
 
-	<script src="js/view/index/ZoneController.js"></script>
+	<script src="js/controllers/index/ZoneController.js"></script>
 
 
 	<script src="js/controllers/CheckoutController.js"></script>
@@ -66,6 +69,7 @@
 	<script src="js/directives/fmCheckboxList.js"></script>
 	<script src="js/directives/fmRating.js"></script>
 
+    <script src="js/services/InPoint.js"></script>
 	<script src="js/services/InPoints.js"></script>
 	<script src="js/services/alert.js"></script>
 	<script src="js/services/customer.js"></script>

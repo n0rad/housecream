@@ -6,7 +6,6 @@ import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import net.awired.client.bean.validation.js.constraint.EnumNotEmpty;
 import net.awired.housecream.server.api.domain.Point;
 
 @XmlRootElement
@@ -27,7 +26,7 @@ public class InPoint extends Point {
 
     private static final long serialVersionUID = 1L;
 
-    @EnumNotEmpty
+    //    @EnumNotEmpty
     private InPointType type;
 
     ////////////////////////////////////

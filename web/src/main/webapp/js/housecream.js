@@ -14,10 +14,13 @@ housecream.config(function($routeProvider, $locationProvider) {
 		templateUrl : 'views/restaurants.html'
 	}).when('/admin/inpoint', {
 		controller : 'InpointTableController',
-		templateUrl : 'js/view/admin/inpoint/InpointTable.html'
+		templateUrl : 'views/admin/inpoint/InpointTable.html'
+	}).when('/admin/inpoint/:inPointId', {
+		controller : 'InpointFormController',
+		templateUrl : 'views/admin/inpoint/InpointForm.html'
 	}).when('/zone/:zoneId', {
 		controller : 'ZoneController',
-		templateUrl : 'js/view/index/Zone.html'
+		templateUrl : 'views/index/Zone.html'
 	}).when('/menu/:restaurantId', {
 		controller : 'MenuController',
 		templateUrl : 'views/menu.html'
