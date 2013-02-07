@@ -114,7 +114,7 @@ public enum Housecream {
             }
         } catch (Throwable _) {
         }
-        return ApplicationHomeFactory.getApplicationHome().getFolder(HOUSECREAM_NAME.toLowerCase());
+        return ApplicationHomeFactory.getApplicationHome().getFolder(HOUSECREAM_NAME);
     }
 
     private void copyLogbackFile() {
