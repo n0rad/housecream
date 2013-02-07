@@ -68,7 +68,7 @@
 							<directory>src/main</directory>
 							<filtering>true</filtering>
 							<includes>
-								<include>bootstrap.js</include>
+								<include>constant.js</include>
 							</includes>
 						</resource>
 						<resource>

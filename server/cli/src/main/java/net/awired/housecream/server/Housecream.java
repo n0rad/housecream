@@ -11,11 +11,13 @@ import java.util.jar.Manifest;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import net.awired.ajsl.os.ApplicationHomeFactory;
 
 public enum Housecream {
     INSTANCE;
 
     private static final String HOUSECREAM_NAME = "Housecream";
+    private static final String HOUSECREAM_CONF = "housecream.conf";
     public static final String HOUSECREAM_HOME_KEY = "HOUSECREAM_HOME";
 
     private static final String LOG_CONF_FILE_PATH_KEY = "logback.configurationFile";
@@ -26,24 +28,37 @@ public enum Housecream {
 
     private File home;
     private String version;
+    private File logbackConf;
+    private File housecreamConf;
+    private File pluginDirectory;
+    private boolean inited = false;
 
     private Housecream() {
         home = findHomeDir();
         version = findVersion(null);
+        logbackConf = new File(home, LOG_CONF_FILE_NAME);
+        housecreamConf = new File(home, HOUSECREAM_CONF);
+        pluginDirectory = new File(home, "plugins");
+    }
 
+    public synchronized void init() {
+        if (inited) {
+            return;
+        }
         System.setProperty(HOUSECREAM_HOME_KEY, home.getAbsolutePath());
-        if (!home.exists()) {
-            home.mkdirs();
-        }
-
-        File logbackConf = new File(home, LOG_CONF_FILE_NAME);
-        if (!logbackConf.exists()) {
-            copyLogbackFile();
-        }
         if (System.getProperty(LOG_CONF_FILE_PATH_KEY) == null) {
             System.setProperty(LOG_CONF_FILE_PATH_KEY, logbackConf.getAbsolutePath());
         }
 
+        if (!home.exists()) {
+            home.mkdirs();
+            pluginDirectory.mkdirs();
+        }
+
+        if (!logbackConf.exists()) {
+            copyLogbackFile();
+        }
+        inited = true;
     }
 
     public void updateVersion(InputStream manifest) {
@@ -54,8 +69,11 @@ public enum Housecream {
     }
 
     public void printInfo() {
-        System.out.println("Housecream version : " + version);
-        System.out.println("Housecream home : " + home);
+        System.out.println("Housecream Version          : " + version);
+        System.out.println("Housecream Home             : " + home);
+        System.out.println("Housecream Conf             : " + housecreamConf);
+        System.out.println("Housecream Log conf         : " + logbackConf);
+        System.out.println("Housecream Plugin directory : " + pluginDirectory);
     }
 
     public File getHome() {
@@ -96,7 +114,7 @@ public enum Housecream {
             }
         } catch (Throwable _) {
         }
-        return new File(System.getProperty("user.home") + "/." + HOUSECREAM_NAME.toLowerCase());
+        return ApplicationHomeFactory.getApplicationHome().getFolder(HOUSECREAM_NAME.toLowerCase());
     }
 
     private void copyLogbackFile() {
@@ -157,6 +175,18 @@ public enum Housecream {
             }
         }
         return VERSION_UNKNOWN;
+    }
+
+    public File getHousecreamConf() {
+        return housecreamConf;
+    }
+
+    public File getPluginDirectory() {
+        return pluginDirectory;
+    }
+
+    public File getLogbackConf() {
+        return logbackConf;
     }
 
 }

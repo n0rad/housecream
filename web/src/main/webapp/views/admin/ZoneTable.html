@@ -1,0 +1,73 @@
+<div class="modal hide fade" style="height: @modalHeight; top: 50%; margin-top: -1 * (@modalHieght / 2);" id="myModal">
+</div>
+
+<form class="form-inline">
+
+    <div class="btn-toolbar">
+
+        <a class="pushState btn btn-primary" href="admin/zone/new">New</a>
+
+        <div class="btn-group">
+            <a class="btn dropdown-toggle btn-success" data-toggle="dropdown" href="#"> Action <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+<!--                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li> -->
+                <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+<!--                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li> -->
+<!--                <li class="divider"></li> -->
+<!--                <li><a href="#"><i class="i"></i> Make admin</a></li> -->
+            </ul>
+        </div>
+
+        <div class="input-prepend input-append">
+            <span class="add-on"><i class="icon-search"></i></span><input class="span8" id="appendedPrependedInput" type="text"><button class="btn" type="button">Search</button>
+        </div>
+
+        <select class="btn">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </div>
+
+    <table class="zoneTable table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th width="30px"></th>
+                <th>Name</th>
+                <th>img</th>
+                <th width="100px">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% _.each(zones, function(zone) { %>
+            <tr>
+                <td class="selector"><input type="checkbox" name="id" value="<%= zone.id %>" /></td>
+                <td class="name">{{zone.name}}</td>
+                <td><img height="20px" src=""></td>
+                <td class="actions">
+                    <a class="btn btn-success btn-mini" href="#"> <i class="icon-zoom-in icon-white"></i></a>
+                    <a class="pushState btn btn-info btn-mini" href="admin/zone/<%= zone.id %>"> <i
+                        class="icon-edit icon-white"></i></a>
+                    <button class="delete btn btn-danger btn-mini"><i class="icon-trash icon-white"></i></button>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+
+    <span>Page 1 of 6</span>
+    <div class="pagination">
+        <ul>
+            <li><a href="#">«</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">»</a></li>
+        </ul>
+    </div>
+</form>
+
+

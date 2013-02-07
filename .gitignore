@@ -8,5 +8,7 @@ target/
 .project
 .classpath
 .settings
+*.iml
 .pmd
 .checkstyle
+.idea

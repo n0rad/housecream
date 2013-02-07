@@ -1,47 +1,63 @@
 package net.awired.housecream.server.application;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import net.awired.ajsl.core.io.FileLocker;
 import net.awired.ajsl.core.io.FileUtils;
 import net.awired.housecream.server.Housecream;
-import net.awired.housecream.server.SingleInstanceFileLocker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-public enum HousecreamHome {
+public enum HousecreamHome implements Closeable {
     INSTANCE;
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String LOCKER_FILE_NAME = "lock";
 
+    private FileLocker lock;
+    private boolean inited;
+
     private HousecreamHome() {
-        lockHomeDirectory();
-        updateDbVersion();
     }
 
     public void init() {
+        if (inited) {
+            return;
+        }
+        lockHomeDirectory();
+        updateDbVersion();
         logHousecreamInfo();
+        inited = true;
+    }
+
+    @Override
+    public void close() {
+        lock.close();
+        inited = false;
     }
 
     ///////////////////////////////////////////////////////////////////////
 
     private void logHousecreamInfo() {
-        log.info("######################################");
-        log.info("## version : " + Housecream.INSTANCE.getVersion());
-        log.info("## home : " + Housecream.INSTANCE.getHome());
+        log.info("############# Housecream #############");
+        log.info("## Version          : " + Housecream.INSTANCE.getVersion());
+        log.info("## Home             : " + Housecream.INSTANCE.getHome());
+        log.info("## Log conf         : " + Housecream.INSTANCE.getLogbackConf());
+        log.info("## Housecream conf  : " + Housecream.INSTANCE.getHousecreamConf());
+        log.info("## Plugin directory : " + Housecream.INSTANCE.getPluginDirectory());
         log.info("######################################");
     }
 
     private void lockHomeDirectory() {
         File home = Housecream.INSTANCE.getHome();
-        File lockFile = new File(home, LOCKER_FILE_NAME);
-        SingleInstanceFileLocker lock = new SingleInstanceFileLocker(lockFile);
-        if (lock.isAppActive()) {
-            throw new IllegalStateException("Housecream Home folder : " + home + " is locked");
+        lock = new FileLocker(new File(home, LOCKER_FILE_NAME));
+        if (lock.isLocked()) {
+            throw new SecurityException("Housecream Home folder : " + home + " is locked");
         }
     }
 

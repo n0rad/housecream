@@ -24,12 +24,12 @@
 			<version>0.5-SNAPSHOT</version>
 		</dependency>
 
-		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-js</artifactId>
-			<version>${ajsl.version}</version>
-			<type>war</type>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>net.awired.ajsl</groupId> -->
+<!-- 			<artifactId>ajsl-js</artifactId> -->
+<!-- 			<version>${ajsl.version}</version> -->
+<!-- 			<type>war</type> -->
+<!-- 		</dependency> -->
 <!-- 		<dependency> -->
 <!-- 			<groupId>net.awired.js</groupId> -->
 <!-- 			<artifactId>bootstrap</artifactId> -->
@@ -81,7 +81,7 @@
 							<directory>src/main</directory>
 							<filtering>true</filtering>
 							<includes>
-								<include>bootstrap.js</include>
+								<include>constant.js</include>
 							</includes>
 						</resource>
 					</webResources>

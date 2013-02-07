@@ -1,0 +1,49 @@
+<form class="form-horizontal" ng-controller="InpointFormController">
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="name">Point name</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" ng-model="inPoint.name" name="name"> <span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="url">Uri</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" ng-model="inPoint.uri" name="uri">
+				<p class="help-block">Camel uri to access the point</p>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Point type</label>
+			<div class="controls">
+				<select name="type" ng-model="color" ng-options="c.name for c in inPointTypes"></select>
+				<span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Zone</label>
+			<div class="zoneId controls">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle btn-success input-xlarge" data-toggle="dropdown" href="#"> Zone <span
+						class="caret" style="float: right;"></span>
+					</a> <select class="hide" name="zoneId"><option value=""></option></select>
+					<ul class="dropdown-menu">
+						<li><a href="" data-id=""><strong>Zone</strong></a></li>
+					</ul>
+					<span class="help-inline"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="{{actionLabel}}" ng-click="save()"
+				ng-disabled="isClean() || myForm.$invalid" /> <a class="pushState btn" href="admin/inpoint">Cancel</a>
+            <button ng-click="destroy()" ng-show="inPoint.id" class="btn btn-danger">Delete</button>
+          
+			<div class="control-group error">
+				<span class="help-inline"></span>
+			</div>
+
+		</div>
+	</fieldset>
+</form>

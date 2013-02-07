@@ -1,6 +1,6 @@
 'use strict';
 
-var housecream = angular.module('housecream', [ 'ngResource' ]);
+var housecream = angular.module('housecream', [ 'ngResource', 'ui' ]);
 
 housecream.constant('hcWsUrl', hcWsUrl);
 housecream.constant('hcVersion', hcVersion);
@@ -10,34 +10,19 @@ housecream.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 
 	$routeProvider.when('/', {
-		controller : 'RestaurantsController',
-		templateUrl : 'views/restaurants.html'
-	}).when('/admin/inpoint', {
-		controller : 'InpointTableController',
-		templateUrl : 'views/admin/inpoint/InpointTable.html'
-	}).when('/admin/inpoint/:inPointId', {
-		controller : 'InpointFormController',
-		templateUrl : 'views/admin/inpoint/InpointForm.html'
+		controller : 'IndexController',
+		templateUrl : 'views/index/Index.html'
+	}).when('/admin', {
+		controller : 'AdminController',
+		templateUrl : 'views/admin/Admin.html'
+	}).when('/admin/:type', {
+		controller : 'AdminController',
+		templateUrl : 'views/admin/Admin.html'
+	}).when('/admin/:type/:id', {
+		controller : 'AdminController',
+		templateUrl : 'views/admin/Admin.html'
 	}).when('/zone/:zoneId', {
 		controller : 'ZoneController',
 		templateUrl : 'views/index/Zone.html'
-	}).when('/menu/:restaurantId', {
-		controller : 'MenuController',
-		templateUrl : 'views/menu.html'
-	}).when('/checkout', {
-		controller : 'CheckoutController',
-		templateUrl : 'views/checkout.html'
-	}).when('/thank-you', {
-		controller : 'ThankYouController',
-		templateUrl : 'views/thank-you.html'
-	}).when('/customer', {
-		controller : 'CustomerController',
-		templateUrl : 'views/customer.html'
-	}).when('/who-we-are', {
-		templateUrl : 'views/who-we-are.html'
-	}).when('/how-it-works', {
-		templateUrl : 'views/how-it-works.html'
-	}).when('/help', {
-		templateUrl : 'views/help.html'
 	});
 });
