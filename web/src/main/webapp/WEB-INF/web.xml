@@ -10,10 +10,10 @@
 	<servlet>
 		<servlet-name>ToIndex</servlet-name>
 		<servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
-        <init-param>
-            <param-name>indexMapping</param-name>
-            <param-value>/index.html</param-value>
-        </init-param>
+		<init-param>
+			<param-name>indexMapping</param-name>
+			<param-value>/index.html</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ToIndex</servlet-name>
@@ -27,11 +27,23 @@
 			<param-name>tplPath</param-name>
 			<param-value>/index.html</param-value>
 		</init-param>
+		<init-param>
+			<param-name>versioningParamName</param-name>
+			<param-value>version.property</param-value>
+		</init-param>
+		<init-param>
+			<param-name>version.property</param-name>
+			<param-value>HousecreamVersion</param-value>
+		</init-param>
+		<init-param>
+			<param-name>hcWsUrl.property</param-name>
+			<param-value>HousecreamWebServiceUrl</param-value>
+		</init-param>
 	</servlet>
-    <servlet-mapping>
-        <servlet-name>indexServlet</servlet-name>
-        <url-pattern>/index.html</url-pattern>
-    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>indexServlet</servlet-name>
+		<url-pattern>/index.html</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

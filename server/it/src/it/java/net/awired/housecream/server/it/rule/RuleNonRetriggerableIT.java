@@ -5,7 +5,6 @@ import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static org.fest.assertions.api.Assertions.assertThat;
 import java.util.Date;
-import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
@@ -25,6 +24,7 @@ import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.it.builder.LineInfoBuilder;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -88,7 +88,8 @@ public class RuleNonRetriggerableIT {
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif0);
 
         Pair<Float, Date> awaitLineValueAndDate = lineResource.awaitLineValueAndDate(3);
-        assertThat(awaitLineValueAndDate.left).isEqualTo(0);
-        assertThat(awaitLineValueAndDate.right.getTime() - startPush.getTime()).isGreaterThan(5000).isLessThan(6000);
+        assertThat(awaitLineValueAndDate.getLeft()).isEqualTo(0);
+        assertThat(awaitLineValueAndDate.getRight().getTime() - startPush.getTime()).isGreaterThan(5000).isLessThan(
+                6000);
     }
 }

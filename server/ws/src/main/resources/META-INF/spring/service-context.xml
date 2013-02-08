@@ -54,13 +54,13 @@
 		</jaxrs:providers>
 	</jaxrs:server>
 
-	<bean id="ajslExceptionMapper" class="net.awired.ajsl.web.resource.mapper.AjslExceptionMapper" />
+	<bean id="ajslExceptionMapper" class="net.awired.ajsl.ws.resource.mapper.AjslExceptionMapper" />
 	<bean id="ajslRuntimeExceptionMapper"
-		class="net.awired.ajsl.web.resource.mapper.AjslRuntimeExceptionMapper" />
+		class="net.awired.ajsl.ws.resource.mapper.AjslRuntimeExceptionMapper" />
 	<bean id="ajslValidationExceptionMapper"
-		class="net.awired.ajsl.web.resource.mapper.AjslValidationExceptionMapper" />
+		class="net.awired.ajsl.ws.resource.mapper.AjslValidationExceptionMapper" />
 	<bean id="ajslResponseExceptionMapper"
-		class="net.awired.ajsl.web.resource.mapper.AjslResponseExceptionMapper">
+		class="net.awired.ajsl.ws.resource.mapper.AjslResponseExceptionMapper">
 		<constructor-arg>
 			<ref bean="jsonProvider" />
 		</constructor-arg>

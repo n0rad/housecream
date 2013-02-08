@@ -5,12 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.jar.Manifest;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import net.awired.ajsl.core.io.JarManifestUtils;
 import net.awired.ajsl.os.ApplicationHomeFactory;
 
 public enum Housecream {
@@ -23,7 +21,7 @@ public enum Housecream {
     private static final String LOG_CONF_FILE_PATH_KEY = "logback.configurationFile";
     private static final String LOG_CONF_FILE_NAME = "logback.xml";
 
-    private static final String VERSION_MANIFEST_KEY = "HousecreamVersion";
+    public static final String VERSION_MANIFEST_KEY = "HousecreamVersion";
     public static final String VERSION_UNKNOWN = "Unknow Version";
 
     private File home;
@@ -35,7 +33,10 @@ public enum Housecream {
 
     private Housecream() {
         home = findHomeDir();
-        version = findVersion(null);
+        version = JarManifestUtils.getManifestAttribute(VERSION_MANIFEST_KEY);
+        if (version == null) {
+            version = VERSION_UNKNOWN;
+        }
         logbackConf = new File(home, LOG_CONF_FILE_NAME);
         housecreamConf = new File(home, HOUSECREAM_CONF);
         pluginDirectory = new File(home, "plugins");
@@ -61,11 +62,10 @@ public enum Housecream {
         inited = true;
     }
 
-    public void updateVersion(InputStream manifest) {
-        if (manifest == null) {
-            return;
+    public void updateVersion(String versionFromWar) {
+        if (versionFromWar != null && (version == null || VERSION_UNKNOWN.equals(version))) {
+            version = versionFromWar;
         }
-        version = findVersion(manifest);
     }
 
     public void printInfo() {
@@ -146,35 +146,6 @@ public enum Housecream {
                 }
             }
         }
-    }
-
-    private String findVersion(InputStream manifestIn) {
-        // runnable war
-        try {
-            Enumeration<URL> manifests = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
-            while (manifests.hasMoreElements()) {
-                URL res = manifests.nextElement();
-                Manifest manifest = new Manifest(res.openStream());
-                String versionManifest = manifest.getMainAttributes().getValue(VERSION_MANIFEST_KEY);
-                if (versionManifest != null) {
-                    return versionManifest;
-                }
-            }
-        } catch (IOException e) {
-        }
-
-        if (manifestIn != null) {
-            // tomcat like
-            try {
-                Manifest manifest = new Manifest(manifestIn);
-                String versionManifest = manifest.getMainAttributes().getValue(VERSION_MANIFEST_KEY);
-                if (versionManifest != null) {
-                    return versionManifest;
-                }
-            } catch (IOException e) {
-            }
-        }
-        return VERSION_UNKNOWN;
     }
 
     public File getHousecreamConf() {

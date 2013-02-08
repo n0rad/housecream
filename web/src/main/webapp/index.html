@@ -11,13 +11,12 @@
 <meta name="owner" content="Awired.net" />
 
 <base href="${contextPath}/" />
-<script type="text/javascript" src="constant.js"></script>
 
 <link href="favicon.ico" rel="shortcut icon" />
-<link href="lib/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
-<link href="lib/bootstrap/css/bootstrap-responsive.css" type="text/css" rel="stylesheet" />
-<link href="lib/angular-ui/angular-ui.css" type="text/css" rel="stylesheet" />
-<link href="css/housecream.css" type="text/css" rel="stylesheet" />
+<link href="lib/bootstrap/css/bootstrap.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<link href="lib/bootstrap/css/bootstrap-responsive.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<link href="lib/angular-ui/angular-ui.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<link href="css/housecream.css${versioningQuery}" type="text/css" rel="stylesheet" />
 
 
 <!--[if lt IE 9]>
@@ -29,35 +28,38 @@
     <script src="build/angular-ui-ieshiv.js"></script>
 <![endif]-->
 
-<script src="lib/ajsl/utils.js"></script>
-<!-- <script src="lib/jquery/jquery-1.9.1.js"></script> -->
-<!-- <script src="lib/bootstrap/js/bootstrap.js"></script> -->
+<script type="text/javascript">
+	var hcVersioning = '${versioning}', hcVersion = '${version}', hcWsUrl = '${hcWsUrl}';
+</script>
+<script src="lib/ajsl/utils.js${versioningQuery}"></script>
+<!-- <script src="lib/jquery/jquery-1.9.1.js${versioningQuery}"></script> -->
+<!-- <script src="lib/bootstrap/js/bootstrap.js${versioningQuery}"></script> -->
 
-<script src="lib/angular/angular.js"></script>
-<script src="lib/angular/angular-resource.js"></script>
-<script src="lib/angular-ui/angular-ui.js"></script>
-<script src="lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
+<script src="lib/angular/angular.js${versioningQuery}"></script>
+<script src="lib/angular/angular-resource.js${versioningQuery}"></script>
+<script src="lib/angular-ui/angular-ui.js${versioningQuery}"></script>
+<script src="lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.1.0.js${versioningQuery}"></script>
 
 
-<script src="js/housecream.js"></script>
-<script src="js/controllers/NavbarController.js"></script>
+<script src="js/housecream.js${versioningQuery}"></script>
+<script src="js/controllers/NavbarController.js${versioningQuery}"></script>
 
-<script src="js/controllers/admin/AdminController.js"></script>
-<script src="js/controllers/admin/InpointTableController.js"></script>
-<script src="js/controllers/admin/InpointFormController.js"></script>
-<script src="js/controllers/admin/OutpointTableController.js"></script>
-<script src="js/controllers/admin/OutpointFormController.js"></script>
-<script src="js/controllers/admin/ZoneTableController.js"></script>
-<script src="js/controllers/admin/ZoneFormController.js"></script>
-<script src="js/controllers/admin/RuleTableController.js"></script>
-<script src="js/controllers/admin/RuleFormController.js"></script>
+<script src="js/controllers/admin/AdminController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/InpointTableController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/InpointFormController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/OutpointTableController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/OutpointFormController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/ZoneTableController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/ZoneFormController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/RuleTableController.js${versioningQuery}"></script>
+<script src="js/controllers/admin/RuleFormController.js${versioningQuery}"></script>
 
-<script src="js/controllers/index/IndexController.js"></script>
-<script src="js/controllers/index/ZoneController.js"></script>
+<script src="js/controllers/index/IndexController.js${versioningQuery}"></script>
+<script src="js/controllers/index/ZoneController.js${versioningQuery}"></script>
 
-<script src="js/services/InPoint.js"></script>
-<script src="js/services/InPoints.js"></script>
-<script src="js/services/Zone.js"></script>
+<script src="js/services/InPoint.js${versioningQuery}"></script>
+<script src="js/services/InPoints.js${versioningQuery}"></script>
+<script src="js/services/Zone.js${versioningQuery}"></script>
 
 </head>
 <body>

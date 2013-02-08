@@ -16,7 +16,7 @@
     </parent>
 
 	<properties>
-		<hcWsUrl>ws</hcWsUrl>
+		<housecream.webservice.url>ws</housecream.webservice.url>
 	</properties>
 
 	<dependencies>
@@ -61,16 +61,10 @@
 							<Bootstrap-MainClass>net.awired.housecream.server.cli.Main</Bootstrap-MainClass>
 							<Bootstrap-Classpath>META-INF/lib</Bootstrap-Classpath>
 							<HousecreamVersion>${project.version}</HousecreamVersion>
+							<HousecreamWebServiceUrl>${housecream.webservice.url}</HousecreamWebServiceUrl>
 						</manifestEntries>
 					</archive>
 					<webResources>
-						<resource>
-							<directory>src/main</directory>
-							<filtering>true</filtering>
-							<includes>
-								<include>constant.js</include>
-							</includes>
-						</resource>
 						<resource>
 							<directory>../</directory>
 							<includes>

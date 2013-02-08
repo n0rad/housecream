@@ -74,6 +74,18 @@
 			<param-name>tplPath</param-name>
 			<param-value>/index.html</param-value>
 		</init-param>
+        <init-param>
+            <param-name>versioningParamName</param-name>
+            <param-value>version.property</param-value>
+        </init-param>
+        <init-param>
+            <param-name>version.property</param-name>
+            <param-value>HousecreamVersion</param-value>
+        </init-param>
+        <init-param>
+            <param-name>hcWsUrl.property</param-name>
+            <param-value>HousecreamWebServiceUrl</param-value>
+        </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>indexServlet</servlet-name>
@@ -84,4 +96,5 @@
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>server.html</welcome-file>
 	</welcome-file-list>
+
 </web-app>
