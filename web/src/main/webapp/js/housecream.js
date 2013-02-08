@@ -1,6 +1,6 @@
 'use strict';
 
-var housecream = angular.module('housecream', [ 'ngResource', 'ui' ]);
+var housecream = angular.module('housecream', [ 'ngResource', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.tabs' ]);
 
 housecream.constant('hcWsUrl', hcWsUrl);
 housecream.constant('hcVersion', hcVersion);
@@ -24,5 +24,5 @@ housecream.config(function($routeProvider, $locationProvider) {
 	}).when('/zone/:zoneId', {
 		controller : 'ZoneController',
 		templateUrl : 'views/index/Zone.html'
-	});
+	}).otherwise({redirectTo:'/'});
 });

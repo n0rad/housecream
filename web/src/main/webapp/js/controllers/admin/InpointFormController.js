@@ -1,6 +1,11 @@
 'use strict';
-housecream.controller('InpointFormController', function InpointFormController($scope, $location, $routeParams, InPoint, InPoints) {
+housecream.controller('InpointFormController', function InpointFormController($scope, $location, $routeParams, InPoint, InPoints, Zones) {
 	var self = this;
+	
+	Zones.query(function(data) {
+		$scope.zones = data.zones;
+		$scope.total = data.total;
+	});
 	
 //	InPoints.getTypes(function(types) {
 //		$scope.inPointTypes = types;
@@ -24,7 +29,7 @@ housecream.controller('InpointFormController', function InpointFormController($s
 		InPoint.save($scope.inPoint, function(inPoint) {
 		      $location.path('admin/inpoint');
 		    }, function(error) {
-		    	var toto = "dfdf"
+		    	var toto = "dfdf";
 		    });
 //		
 //	    $scope.inPoint.update(function() {
