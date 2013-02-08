@@ -11,7 +11,7 @@ import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class HcwWebSocket implements WebSocket.OnTextMessage {
+public class HcWebWebSocket implements WebSocket.OnTextMessage {
 
     private Connection connection;
     private List<Event> events = Collections.synchronizedList(new ArrayList<Event>());
@@ -19,7 +19,7 @@ public class HcwWebSocket implements WebSocket.OnTextMessage {
     private CountDownLatch eventsLatchCount = new CountDownLatch(1);
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public HcwWebSocket(WebSocketClient client) {
+    public HcWebWebSocket(WebSocketClient client) {
         this.client = client;
     }
 

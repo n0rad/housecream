@@ -20,7 +20,7 @@ import org.junit.Test;
 public class WebSocketIT {
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hc = new HcWsItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchLineResource(),
@@ -29,11 +29,11 @@ public class WebSocketIT {
     @Test
     public void should_notify_client_on_event_received() throws Exception {
         restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
                 .uri("restmcu://127.0.0.1:5879/2").build();
-        inPoint = hcs.inPointResource().createInPoint(inPoint);
-        HcwWebSocket webSocketConnection = hcs.webSocketConnection();
+        inPoint = hc.inPointResource().createInPoint(inPoint);
+        HcWebWebSocket webSocketConnection = hc.webSocketConnection();
         RestMcuLineNotification notif = new RestMcuLineNotification(2, 0f, 1f, "127.0.0.1:5879",
                 new RestMcuLineNotify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1f));
 

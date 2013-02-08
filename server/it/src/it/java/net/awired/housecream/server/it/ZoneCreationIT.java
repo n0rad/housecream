@@ -6,7 +6,7 @@ import java.util.List;
 import javax.mail.internet.InternetHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 import net.awired.housecream.server.api.resource.ZoneResource;
-import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.HcWsItServer;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
@@ -17,11 +17,11 @@ import org.junit.Test;
 
 public class ZoneCreationIT {
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hc = new HcWsItServer();
 
     @Test
     public void should_create_zone() throws Exception {
-        ZoneResource zoneResource = hcs.zoneResource();
+        ZoneResource zoneResource = hc.zoneResource();
 
         //        Land land = new Land();
         //        land.setName("landName");
@@ -64,7 +64,7 @@ public class ZoneCreationIT {
     @Test
     @Ignore("need the upload part of form first")
     public void should_create_zone2() throws Exception {
-        ZoneResource zoneResource = hcs.zoneResource();
+        ZoneResource zoneResource = hc.zoneResource();
         // TODO Auto-generated method stub
         InputStream resourceAsStream = getClass().getResourceAsStream("test.txt");
         ContentDisposition cd = new ContentDisposition("attachment;filename=java.jpg");

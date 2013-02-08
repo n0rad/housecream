@@ -14,7 +14,7 @@ import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
-import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
@@ -29,7 +29,7 @@ import org.junit.Test;
 public class RuleDelayerIT {
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hc = new HcWsItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchBoardResource(),
@@ -43,24 +43,24 @@ public class RuleDelayerIT {
         lineResource.line(2, new LineInfoBuilder().direction(INPUT).value(1).build());
         lineResource.line(3, new LineInfoBuilder().direction(OUTPUT).value(1).build());
 
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
                 .uri("restmcu://127.0.0.1:5879/2").build();
-        inPoint = hcs.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointResource().createInPoint(inPoint);
 
         // outpoint
         OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(landId)
                 .uri("restmcu://127.0.0.1:5879/3").build();
-        outPoint = hcs.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
         rule.setName("my first rule");
         rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 1, 5000));
-        hcs.ruleResource().createRule(rule);
+        hc.ruleResource().createRule(rule);
 
         RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)
                 .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();

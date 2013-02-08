@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it;
 
-public class HcsItSession {
+public class HcWsItSession {
 
     private String sessionId;
     private boolean json = true;

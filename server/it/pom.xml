@@ -124,8 +124,8 @@
 				<configuration>
 					<systemProperties>
 						<property>
-							<name>hcs.port</name>
-							<value>${hcs.port}</value>
+							<name>hcws.port</name>
+							<value>${hcws.port}</value>
 						</property>
 					</systemProperties>
 				</configuration>
@@ -164,7 +164,7 @@
 					</container>
 					<configuration>
 						<properties>
-							<cargo.servlet.port>${hcs.port}</cargo.servlet.port>
+							<cargo.servlet.port>${hcws.port}</cargo.servlet.port>
 							<cargo.tomcat.ajp.port>${ajp.port}</cargo.tomcat.ajp.port>
 							<cargo.logging>low</cargo.logging>
 							<cargo.jvmargs>${cargo.jvm.args} -DHOUSECREAM_HOME=${project.build.directory}/housecream-home</cargo.jvmargs>
@@ -175,7 +175,7 @@
 								<artifactId>housecream-server-ws</artifactId>
 								<type>war</type>
 								<properties>
-									<context>hcs</context>
+									<context>housecream-ws</context>
 								</properties>
 							</deployable>
 						</deployables>
@@ -209,7 +209,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<hcs.port>8080</hcs.port>
+				<hcws.port>8080</hcws.port>
 				<ajp.port>8009</ajp.port>
 			</properties>
 		</profile>
@@ -231,7 +231,7 @@
 								</goals>
 								<configuration>
 									<portNames>
-										<portName>hcs.port</portName>
+										<portName>hcws.port</portName>
 										<portName>ajp.port</portName>
 									</portNames>
 								</configuration>

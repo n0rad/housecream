@@ -3,7 +3,7 @@ package net.awired.housecream.server.it.zone;
 import static org.fest.assertions.api.Assertions.assertThat;
 import javax.validation.ValidationException;
 import net.awired.housecream.server.api.domain.zone.Zones;
-import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.builder.zone.AreaBuilder;
 import net.awired.housecream.server.it.builder.zone.BuildingBuilder;
 import net.awired.housecream.server.it.builder.zone.FloorBuilder;
@@ -19,32 +19,32 @@ public class ZoneCreationIT {
     public ExpectedException exception = ExpectedException.none();
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hc = new HcWsItServer();
 
     @Test
     public void should_not_create_zone_without_name() {
         exception.expect(ValidationException.class);
         exception.expectMessage(".name");
 
-        hcs.zoneResource().createZone(new LandBuilder().build());
+        hc.zoneResource().createZone(new LandBuilder().build());
     }
 
     @Test
     public void should_create_land_without_parent() {
-        long createZone = hcs.zoneResource().createZone(new LandBuilder().name("mylandname").build());
+        long createZone = hc.zoneResource().createZone(new LandBuilder().name("mylandname").build());
 
         assertThat(createZone).isNotEqualTo(0);
     }
 
     @Test
     public void should_not_create_land_with_parent() {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("mylandname").build());
-        long buildId = hcs.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("mylandname").build());
+        long buildId = hc.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
 
         exception.expect(ValidationException.class);
         exception.expectMessage("javax.validation.constraints.Null.message");
 
-        hcs.zoneResource().createZone(new LandBuilder().name("mylandname").parentId(buildId).build());
+        hc.zoneResource().createZone(new LandBuilder().name("mylandname").parentId(buildId).build());
     }
 
     @Test
@@ -52,36 +52,36 @@ public class ZoneCreationIT {
         exception.expect(ValidationException.class);
         exception.expectMessage(".parentId");
 
-        hcs.zoneResource().createZone(new BuildingBuilder().name("myBuilding").build());
+        hc.zoneResource().createZone(new BuildingBuilder().name("myBuilding").build());
     }
 
     @Test
     public void should_create_building_with_land_as_parent() {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("myland").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("myland").build());
 
-        long buildId = hcs.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
+        long buildId = hc.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
 
         assertThat(buildId).isNotEqualTo(0);
     }
 
     @Test
     public void should_not_create_building_without_building_as_parent() {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("myland").build());
-        long buildId = hcs.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("myland").build());
+        long buildId = hc.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
         exception.expect(ValidationException.class);
         exception.expectMessage(".parentId");
-        hcs.zoneResource().createZone(new BuildingBuilder().name("B").parentId(buildId).build());
+        hc.zoneResource().createZone(new BuildingBuilder().name("B").parentId(buildId).build());
     }
 
     @Test
     public void should_create_hierachical_zone() {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("myland").build());
-        long buildId = hcs.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
-        long floorId = hcs.zoneResource().createZone(new FloorBuilder().name("B").parentId(buildId).build());
-        long roomId = hcs.zoneResource().createZone(new RoomBuilder().name("C").parentId(floorId).build());
-        hcs.zoneResource().createZone(new AreaBuilder().name("D").parentId(roomId).build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("myland").build());
+        long buildId = hc.zoneResource().createZone(new BuildingBuilder().name("A").parentId(landId).build());
+        long floorId = hc.zoneResource().createZone(new FloorBuilder().name("B").parentId(buildId).build());
+        long roomId = hc.zoneResource().createZone(new RoomBuilder().name("C").parentId(floorId).build());
+        hc.zoneResource().createZone(new AreaBuilder().name("D").parentId(roomId).build());
 
-        Zones zones = hcs.zonesResource().getZones(42, null, null, null, null);
+        Zones zones = hc.zonesResource().getZones(42, null, null, null, null);
 
         assertThat(zones.getZones().size()).isEqualTo(5);
     }

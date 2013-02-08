@@ -15,65 +15,65 @@ import net.awired.housecream.server.api.resource.ZonesResource;
 import org.eclipse.jetty.websocket.WebSocketClient;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
-public class HcsItServer extends LoggingRule {
+public class HcWsItServer extends LoggingRule {
 
     RestContext context = new RestContext();
 
     private WebSocketClientFactory factory;
 
     public InPointResource inPointResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(InPointResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(InPointResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public InPointsResource inPointsResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(InPointsResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(InPointsResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public OutPointsResource outPointsResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(OutPointsResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(OutPointsResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public OutPointResource outPointResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(OutPointResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(OutPointResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public RulesResource rulesResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(RulesResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(RulesResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public RuleResource ruleResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        hcsItSession.setJson(true);
-        return context.prepareClient(RuleResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        hcWsItSession.setJson(true);
+        return context.prepareClient(RuleResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public ZoneResource zoneResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(ZoneResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(ZoneResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
     public ZonesResource zonesResource() {
-        HcsItSession hcsItSession = new HcsItSession();
-        return context.prepareClient(ZonesResource.class, HcsItContext.getUrl(), hcsItSession.getSessionId(),
-                hcsItSession.isJson());
+        HcWsItSession hcWsItSession = new HcWsItSession();
+        return context.prepareClient(ZonesResource.class, HcWsItContext.getUrl(), hcWsItSession.getSessionId(),
+                hcWsItSession.isJson());
     }
 
-    public HcwWebSocket webSocketConnection() {
+    public HcWebWebSocket webSocketConnection() {
         WebSocketClient client = factory.newWebSocketClient();
 
-        HcwWebSocket socket = new HcwWebSocket(client);
+        HcWebWebSocket socket = new HcWebWebSocket(client);
         try {
             client.open(new URI("ws://localhost:8888"), socket, 10, TimeUnit.SECONDS);
             return socket;

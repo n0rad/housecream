@@ -16,7 +16,7 @@ import org.junit.Test;
 public class NotifyUrlIT {
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hc = new HcWsItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchLineResource(),
@@ -26,10 +26,10 @@ public class NotifyUrlIT {
     public void should_update_notify_url_on_creation() throws Exception {
         restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
 
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
         InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
                 .uri("restmcu://127.0.0.1:5879/2").build();
-        hcs.inPointResource().createInPoint(inPoint);
+        hc.inPointResource().createInPoint(inPoint);
 
         RestMcuBoardSettings settings = restmcu.getResource(LatchBoardResource.class).awaitUpdateSettings();
 

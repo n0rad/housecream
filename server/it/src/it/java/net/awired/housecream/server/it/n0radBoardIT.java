@@ -17,21 +17,21 @@ import org.junit.Test;
 public class n0radBoardIT {
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hc = new HcWsItServer();
 
     @Test
     public void should_() throws Exception {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("light toggle button").zoneId(landId)
                 .uri("restmcu://10.1.50.120:80/24").build();
-        inPoint = hcs.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointResource().createInPoint(inPoint);
 
         // outpoint
         OutPoint outPoint = new OutPointBuilder().name("light").type(OutPointType.LIGHT).zoneId(landId)
                 .uri("restmcu://10.1.50.120:80/44").build();
-        outPoint = hcs.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
@@ -39,7 +39,7 @@ public class n0radBoardIT {
         rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule.getConditions().add(new Condition(outPoint.getId(), 0, ConditionType.state));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
-        hcs.ruleResource().createRule(rule);
+        hc.ruleResource().createRule(rule);
 
         // rule 2
         EventRule rule2 = new EventRule();
@@ -47,41 +47,41 @@ public class n0radBoardIT {
         rule2.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule2.getConditions().add(new Condition(outPoint.getId(), 1, ConditionType.state));
         rule2.getConsequences().add(new Consequence(outPoint.getId(), 0));
-        hcs.ruleResource().createRule(rule2);
+        hc.ruleResource().createRule(rule2);
     }
 
     @Test
     public void should_testname() throws Exception {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("light switch button").zoneId(landId)
                 .uri("restmcu://10.1.50.120:80/24").build();
-        inPoint = hcs.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointResource().createInPoint(inPoint);
 
         // outpoint
         OutPoint outPoint = new OutPointBuilder().name("light").type(OutPointType.LIGHT).zoneId(landId)
                 .uri("restmcu://10.1.50.120:80/44").build();
-        outPoint = hcs.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
         rule.setName("my first rule");
         rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
-        hcs.ruleResource().createRule(rule);
+        hc.ruleResource().createRule(rule);
 
         // rule
         EventRule rule2 = new EventRule();
         rule2.setName("my first rule2");
         rule2.getConditions().add(new Condition(inPoint.getId(), 0, ConditionType.event));
         rule2.getConsequences().add(new Consequence(outPoint.getId(), 0));
-        hcs.ruleResource().createRule(rule2);
+        hc.ruleResource().createRule(rule2);
     }
 
     @Test
     public void should_handle_xmpp() throws Exception {
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
+        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder()
@@ -90,7 +90,7 @@ public class n0radBoardIT {
                 .zoneId(landId)
                 .uri("axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
                 .build();
-        inPoint = hcs.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointResource().createInPoint(inPoint);
 
     }
 }
