@@ -8,12 +8,15 @@ import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
+@Ignore
 public class n0radBoardIT {
 
     @Rule
@@ -21,17 +24,17 @@ public class n0radBoardIT {
 
     @Test
     public void should_() throws Exception {
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
-        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("light toggle button").zoneId(landId)
+        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("light toggle button").zoneId(land.getId())
                 .uri("restmcu://10.1.50.120:80/24").build();
-        inPoint = hc.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointsResource().createInPoint(inPoint);
 
         // outpoint
-        OutPoint outPoint = new OutPointBuilder().name("light").type(OutPointType.LIGHT).zoneId(landId)
+        OutPoint outPoint = new OutPointBuilder().name("light").type(OutPointType.LIGHT).zoneId(land.getId())
                 .uri("restmcu://10.1.50.120:80/44").build();
-        outPoint = hc.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointsResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
@@ -39,7 +42,7 @@ public class n0radBoardIT {
         rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule.getConditions().add(new Condition(outPoint.getId(), 0, ConditionType.state));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
-        hc.ruleResource().createRule(rule);
+        hc.rulesResource().createRule(rule);
 
         // rule 2
         EventRule rule2 = new EventRule();
@@ -47,50 +50,50 @@ public class n0radBoardIT {
         rule2.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule2.getConditions().add(new Condition(outPoint.getId(), 1, ConditionType.state));
         rule2.getConsequences().add(new Consequence(outPoint.getId(), 0));
-        hc.ruleResource().createRule(rule2);
+        hc.rulesResource().createRule(rule2);
     }
 
     @Test
     public void should_testname() throws Exception {
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
-        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("light switch button").zoneId(landId)
+        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("light switch button").zoneId(land.getId())
                 .uri("restmcu://10.1.50.120:80/24").build();
-        inPoint = hc.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointsResource().createInPoint(inPoint);
 
         // outpoint
-        OutPoint outPoint = new OutPointBuilder().name("light").type(OutPointType.LIGHT).zoneId(landId)
+        OutPoint outPoint = new OutPointBuilder().name("light").type(OutPointType.LIGHT).zoneId(land.getId())
                 .uri("restmcu://10.1.50.120:80/44").build();
-        outPoint = hc.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointsResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
         rule.setName("my first rule");
         rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
-        hc.ruleResource().createRule(rule);
+        hc.rulesResource().createRule(rule);
 
         // rule
         EventRule rule2 = new EventRule();
         rule2.setName("my first rule2");
         rule2.getConditions().add(new Condition(inPoint.getId(), 0, ConditionType.event));
         rule2.getConsequences().add(new Consequence(outPoint.getId(), 0));
-        hc.ruleResource().createRule(rule2);
+        hc.rulesResource().createRule(rule2);
     }
 
     @Test
     public void should_handle_xmpp() throws Exception {
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
         InPoint inPoint = new InPointBuilder()
                 .type(InPointType.PIR)
                 .name("light switch button")
-                .zoneId(landId)
+                .zoneId(land.getId())
                 .uri("axmpp://talk.google.com:5222/*?serviceName=gmail.com&user=housecream.test@gmail.com&password=AZERTYUIOP")
                 .build();
-        inPoint = hc.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointsResource().createInPoint(inPoint);
 
     }
 }

@@ -30,7 +30,7 @@ public class InPointIT {
         point.setName("my point name");
         point.setUri(new URI("genre style ouda")); //TODO use builder
 
-        point = hc.inPointResource().createInPoint(point);
+        point = hc.inPointsResource().createInPoint(point);
 
         assertNotNull(point);
 

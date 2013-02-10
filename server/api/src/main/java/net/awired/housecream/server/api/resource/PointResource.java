@@ -8,7 +8,7 @@ import net.awired.ajsl.core.lang.exception.NotFoundException;
 public interface PointResource {
 
     @GET
-    @Path("{id}/value")
+    @Path("/value")
     Float getPointValue(@PathParam("id") long pointId) throws NotFoundException;
 
 }

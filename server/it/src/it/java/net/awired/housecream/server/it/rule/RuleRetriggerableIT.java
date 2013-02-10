@@ -15,6 +15,7 @@ import net.awired.housecream.server.api.domain.rule.ConditionType;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
@@ -44,17 +45,17 @@ public class RuleRetriggerableIT {
         lineResource.line(2, new LineInfoBuilder().direction(INPUT).value(1).build());
         lineResource.line(3, new LineInfoBuilder().direction(OUTPUT).value(1).build());
 
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
 
         // inpoint
-        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(landId)
+        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(land.getId())
                 .uri("restmcu://127.0.0.1:5879/2").build();
-        inPoint = hc.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointsResource().createInPoint(inPoint);
 
         // outpoint
-        OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(landId)
+        OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(land.getId())
                 .uri("restmcu://127.0.0.1:5879/3").build();
-        outPoint = hc.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointsResource().createOutPoint(outPoint);
 
         // rule
         EventRule rule = new EventRule();
@@ -63,7 +64,7 @@ public class RuleRetriggerableIT {
         //        rule.getConditions().add(new Condition(outPointId, 0, ConditionType.state));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
         rule.getConsequences().add(new Consequence(outPoint.getId(), 0, 5000, TriggerType.RETRIGGER));
-        hc.ruleResource().createRule(rule);
+        hc.rulesResource().createRule(rule);
 
         RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldValue(0).value(1)
                 .source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build();

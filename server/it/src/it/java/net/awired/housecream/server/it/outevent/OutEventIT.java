@@ -5,6 +5,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
@@ -28,11 +29,11 @@ public class OutEventIT {
         LatchLineResource lineResource = restmcu.getResource(LatchLineResource.class);
         lineResource.line(3, new LineInfoBuilder().direction(OUTPUT).value(0).build());
         // land
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
         // outpoint
-        OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(landId)
+        OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(land.getId())
                 .uri("restmcu://127.0.0.1:5879/3").build();
-        outPoint = hc.outPointResource().createOutPoint(outPoint);
+        outPoint = hc.outPointsResource().createOutPoint(outPoint);
 
         hc.outPointResource().setValue(outPoint.getId(), 45f);
 

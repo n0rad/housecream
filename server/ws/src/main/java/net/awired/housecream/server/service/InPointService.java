@@ -2,8 +2,6 @@ package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
-import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
@@ -29,30 +27,7 @@ public class InPointService implements InPointResource {
     private EngineProcessor engine;
 
     @Inject
-    private ValidationService validationService;
-
-    @Inject
-    private PluginService pluginService;
-
-    @Override
-    public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
-        inPoint.setUri(pluginService.validateAndNormalizeURI(inPoint.getUri()));
-        removePreviousRoute(inPoint);
-        pointDao.save(inPoint);
-        routeManager.registerInRoute(inPoint);
-        return inPoint;
-    }
-
-    private void removePreviousRoute(InPoint inPoint) {
-        if (inPoint.getId() != null) {
-            try {
-                InPoint previous = pointDao.find(inPoint.getId());
-                routeManager.removeInRoute(previous);
-            } catch (NotFoundException e) {
-                routeManager.removeInRoute(inPoint);
-            }
-        }
-    }
+    private InPointsService inPointsService;
 
     @Override
     public InPoint getInPoint(long inPointId) throws NotFoundException {
@@ -82,13 +57,8 @@ public class InPointService implements InPointResource {
     }
 
     @Override
-    public ClientValidatorInfo getInPointValidator() {
-        return validationService.getValidatorInfo(InPoint.class);
-    }
-
-    @Override
-    public InPoint updateInPoint(InPoint inPoint) throws PluginNotFoundException {
-        return createInPoint(inPoint);
+    public InPoint updateInPoint(long pointId, InPoint inPoint) throws PluginNotFoundException {
+        return inPointsService.createInPoint(inPoint);
     }
 
 }

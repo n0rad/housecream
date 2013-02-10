@@ -2,12 +2,8 @@ package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
-import net.awired.client.bean.validation.js.service.ValidationService;
-import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
-import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.command.CommandService;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.OutEvent;
@@ -28,29 +24,11 @@ public class OutPointService implements OutPointResource {
     private EngineProcessor engine;
 
     @Inject
-    private ValidationService validationService;
-
-    @Inject
-    private PluginService pluginService;
-
-    @Inject
     private CommandService commandService;
-
-    @Override
-    public OutPoint createOutPoint(OutPoint outPoint) throws PluginNotFoundException {
-        pluginService.validateAndNormalizeURI(outPoint.getUri());
-        pointDao.save(outPoint);
-        return outPoint;
-    }
 
     @Override
     public Float getPointValue(long pointId) throws NotFoundException {
         return engine.getPointState(pointId);
-    }
-
-    @Override
-    public ClientValidatorInfo getOutPointValidator() {
-        return validationService.getValidatorInfo(InPoint.class);
     }
 
     @Override

@@ -4,6 +4,7 @@ import static net.awired.housecream.server.api.domain.inpoint.InPointType.PIR;
 import static org.fest.assertions.api.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
 import net.awired.restmcu.api.domain.board.RestMcuBoardSettings;
@@ -26,10 +27,10 @@ public class NotifyUrlIT {
     public void should_update_notify_url_on_creation() throws Exception {
         restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
 
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
-        InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
+        InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(land.getId())
                 .uri("restmcu://127.0.0.1:5879/2").build();
-        hc.inPointResource().createInPoint(inPoint);
+        hc.inPointsResource().createInPoint(inPoint);
 
         RestMcuBoardSettings settings = restmcu.getResource(LatchBoardResource.class).awaitUpdateSettings();
 

@@ -6,6 +6,7 @@ import java.util.List;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
@@ -29,10 +30,10 @@ public class WebSocketIT {
     @Test
     public void should_notify_client_on_event_received() throws Exception {
         restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
-        long landId = hc.zoneResource().createZone(new LandBuilder().name("land").build());
-        InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
+        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
+        InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(land.getId())
                 .uri("restmcu://127.0.0.1:5879/2").build();
-        inPoint = hc.inPointResource().createInPoint(inPoint);
+        inPoint = hc.inPointsResource().createInPoint(inPoint);
         HcWebWebSocket webSocketConnection = hc.webSocketConnection();
         RestMcuLineNotification notif = new RestMcuLineNotification(2, 0f, 1f, "127.0.0.1:5879",
                 new RestMcuLineNotify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1f));

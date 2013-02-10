@@ -6,6 +6,6 @@ housecream.factory('Zone', function($resource, hcWsUrl) {
 });
 
 housecream.factory('Zones', function($resource, hcWsUrl) {
-	var Zone = $resource(hcWsUrl + '/zones');
-	return Zone;
+	var Zones = $resource(hcWsUrl + '/zones');
+	return Zones;
 });

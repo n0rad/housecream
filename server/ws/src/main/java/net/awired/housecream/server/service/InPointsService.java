@@ -6,10 +6,13 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.persistence.entity.Order;
+import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.resource.InPointsResource;
+import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
@@ -31,12 +34,43 @@ public class InPointsService implements InPointsResource {
     @Inject
     private DynamicRouteManager routeManager;
 
+    @Inject
+    private ValidationService validationService;
+
+    @Inject
+    private PluginService pluginService;
+
     @PostConstruct
     public void postConstruct() {
         List<InPoint> findAll = inPointDao.findAll();
         for (InPoint inPoint : findAll) {
             routeManager.registerInRoute(inPoint);
         }
+    }
+
+    @Override
+    public ClientValidatorInfo getInPointValidator() {
+        return validationService.getValidatorInfo(InPoint.class);
+    }
+
+    private void removePreviousRoute(InPoint inPoint) {
+        if (inPoint.getId() != null) {
+            try {
+                InPoint previous = inPointDao.find(inPoint.getId());
+                routeManager.removeInRoute(previous);
+            } catch (NotFoundException e) {
+                routeManager.removeInRoute(inPoint);
+            }
+        }
+    }
+
+    @Override
+    public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
+        inPoint.setUri(pluginService.validateAndNormalizeURI(inPoint.getUri()));
+        removePreviousRoute(inPoint);
+        inPointDao.save(inPoint);
+        routeManager.registerInRoute(inPoint);
+        return inPoint;
     }
 
     @Override

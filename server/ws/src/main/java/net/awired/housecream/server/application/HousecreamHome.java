@@ -45,11 +45,11 @@ public enum HousecreamHome implements Closeable {
 
     private void logHousecreamInfo() {
         log.info("############# Housecream #############");
-        log.info("## Version          : " + Housecream.INSTANCE.getVersion());
-        log.info("## Home             : " + Housecream.INSTANCE.getHome());
-        log.info("## Log conf         : " + Housecream.INSTANCE.getLogbackConf());
-        log.info("## Housecream conf  : " + Housecream.INSTANCE.getHousecreamConf());
-        log.info("## Plugin directory : " + Housecream.INSTANCE.getPluginDirectory());
+        log.info("## Version           : " + Housecream.INSTANCE.getVersion());
+        log.info("## Home              : " + Housecream.INSTANCE.getHome());
+        log.info("## Log conf          : " + Housecream.INSTANCE.getLogbackConf());
+        log.info("## Housecream conf   : " + Housecream.INSTANCE.getHousecreamConf());
+        log.info("## Plugins directory : " + Housecream.INSTANCE.getPluginDirectory());
         log.info("######################################");
     }
 

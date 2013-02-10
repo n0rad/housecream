@@ -1,5 +1,8 @@
 'use strict';
-housecream.controller('ZoneController', function ZoneController($scope, $location) {
+housecream.controller('ZoneController', function ZoneController($scope) {
+	
+
+
 	
 //	  if (!customer.address) {
 //		    $location.url('/customer');

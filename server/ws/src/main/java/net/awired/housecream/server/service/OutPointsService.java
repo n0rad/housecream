@@ -6,12 +6,15 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.persistence.entity.Order;
+import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.client.bean.validation.js.service.ValidationService;
+import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 import net.awired.housecream.server.api.domain.outPoint.OutPoints;
 import net.awired.housecream.server.api.resource.OutPointsResource;
+import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.router.StaticRouteManager;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +32,10 @@ public class OutPointsService implements OutPointsResource {
     private EngineProcessor engine;
 
     @Inject
-    private StaticRouteManager routeManager;
+    private ValidationService validationService;
+
+    @Inject
+    private PluginService pluginService;
 
     @PostConstruct
     public void postConstruct() {
@@ -62,6 +68,18 @@ public class OutPointsService implements OutPointsResource {
         }
         Long count = outPointDao.findFilteredCount(search, searchProperties);
         return new OutPoints(outPointsFiltered, count);
+    }
+
+    @Override
+    public OutPoint createOutPoint(OutPoint outPoint) throws PluginNotFoundException {
+        pluginService.validateAndNormalizeURI(outPoint.getUri());
+        outPointDao.save(outPoint);
+        return outPoint;
+    }
+
+    @Override
+    public ClientValidatorInfo getOutPointValidator() {
+        return validationService.getValidatorInfo(InPoint.class);
     }
 
     @Override

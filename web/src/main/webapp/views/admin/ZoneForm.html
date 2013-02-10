@@ -1,24 +1,25 @@
-<form class="form-horizontal">
+<form class="form-horizontal" ng-controller="ZoneFormController" ng-submit="save()">
 	<div class="row">
 		<div class="span6">
-			<input type="hidden" name="id">
 			<fieldset>
 				<div class="control-group">
 					<label class="control-label" for="name">Name</label>
 					<div class="controls">
-						<input type="text" class="input-large" id="name" name="name"> <span class="help-inline"></span>
+						<input type="text" class="input-large" id="name" name="name" ng-model="zone.name"> <span class="help-inline"></span>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="type">Parent zone</label>
 					<div class="parentId controls">
 						<div class="btn-group">
-							<a class="btn dropdown-toggle btn-success input-large" data-toggle="dropdown" href="#"> Zone <span
-								class="caret" style="float: right;"></span>
-							</a> <select class="hide" name="parentId"><option value=""></option></select>
-							<ul class="dropdown-menu">
-								<li><a href="" data-id=""><i class="icon-pencil"></i> <strong>Land</strong></a></li>
-							</ul>
+		                    <select name="type" ng-model="zone.parentId" ng-options="z.name for z in zones"></select>
+						  
+<!-- 							<a class="btn dropdown-toggle btn-success input-large" data-toggle="dropdown" href="#"> Zone <span -->
+<!-- 								class="caret" style="float: right;"></span> -->
+<!-- 							</a> <select class="hide" name="parentId"><option value=""></option></select> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="" data-id=""><i class="icon-pencil"></i> <strong>Land</strong></a></li> -->
+<!-- 							</ul> -->
 						</div>
 					</div>
 				</div>
@@ -42,10 +43,6 @@
 
 		<div class="control-group error">
 			<span class="help-inline"></span>
-		</div>
-
-		<div class="progress progress-striped active">
-			<div class="bar" style="width: 0%"></div>
 		</div>
 	</div>
 </form>

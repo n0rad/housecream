@@ -1,3 +1,18 @@
+'use strict';
+housecream.controller('ZoneFormController', function ZoneFormController($scope, $location, Zone, Zones) {
+
+	Zones.query(function(data) {
+		$scope.zones = data.zones;
+	});
+	
+	$scope.save = function() {
+		Zone.save($scope.zone, function(zone) {
+		      $location.path('admin/zone');
+		});
+	};
+
+});
+
 //define(['jquery', 'restFormHandler', 'ajsl/view', 'ajsl/event', 'hcw/service/ZoneService', 'text!./ZoneForm.html', 
 //        '../imagemap/ImageMap'],
 //function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {

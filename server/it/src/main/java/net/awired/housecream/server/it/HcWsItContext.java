@@ -10,7 +10,7 @@ public class HcWsItContext {
     private static final String HCWS_PORT_DEFAULT = "8080";
     private static final String HCWS_PORT_PROPERTY_NAME = "hcws.port";
 
-    private static final String HCWS_PATH_DEFAULT = "/housecream-ws/ws";
+    private static final String HCWS_PATH_DEFAULT = "/housecream/ws";
     private static final String HCWS_PATH_PROPERTY_NAME = "hcws.path";
 
     private static String hcwsHost;
