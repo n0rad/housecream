@@ -127,6 +127,10 @@
 							<name>hcws.port</name>
 							<value>${hcws.port}</value>
 						</property>
+						<property>
+                            <name>hcws.path</name>
+                            <value>/housecream-ws/ws</value>
+						</property>
 					</systemProperties>
 				</configuration>
 				<executions>
