@@ -1,10 +1,9 @@
 'use strict';
-housecream.controller('InpointFormController', function InpointFormController($scope, $location, $routeParams, InPoint, InPoints, Zones) {
+housecream.controller('InpointFormController', function InpointFormController($scope, $location, $routeParams, InPoints, Zones) {
 	var self = this;
 	
-	Zones.query(function(data) {
+	Zones.get(function(data) {
 		$scope.zones = data.zones;
-		$scope.total = data.total;
 	});
 	
 //	InPoints.getTypes(function(types) {
@@ -12,9 +11,9 @@ housecream.controller('InpointFormController', function InpointFormController($s
 //	});
 
 	if ($routeParams.id != 'new') {
-		InPoint.get({id: $routeParams.id}, function(inPoint) {
+		InPoints.get({id: $routeParams.id}, function(inPoint) {
 		    self.original = inPoint;
-		    $scope.inPoint = new InPoint(self.original);
+		    $scope.inPoint = new InPoints(self.original);
 		});
 		$scope.actionLabel = 'update';
 	} else {
@@ -25,11 +24,9 @@ housecream.controller('InpointFormController', function InpointFormController($s
 		return angular.equals(self.original, $scope.inPoint);
 	};
 	
-	$scope.save = function() {
-		InPoint.save($scope.inPoint, function(inPoint) {
+	$scope.create = function() {
+		InPoints.save($scope.inPoint, function(inPoint) {
 		      $location.path('admin/inpoint');
-		    }, function(error) {
-		    	var toto = "dfdf";
 		    });
 //		
 //	    $scope.inPoint.update(function() {
@@ -38,7 +35,7 @@ housecream.controller('InpointFormController', function InpointFormController($s
 	};
 	
 	$scope.destroy = function() {
-	    self.original.destroy(function() {
+	    self.original.$delete(function() {
 	      $location.path('admin/inpoint');
 	    });
 	};

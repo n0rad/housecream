@@ -1,13 +1,17 @@
 'use strict';
 
 housecream.factory('InPoints', function($resource, hcWsUrl) {
-	var InPoints = $resource(hcWsUrl + '/inpoints');
-	var types = $resource(hcWsUrl + '/inpoints/types');
-
-	InPoints.getTypes = types.query.bind(types);
-	
-	return InPoints;
+	return $resource(hcWsUrl + '/inpoints/:id', {id: '@id'}, {
+		list: {method: 'GET', isArray: true},
+		get: {method: 'GET', params: {}},
+		save: {method: 'POST', params: {}},
+		update: {method: 'PUT', params: {}},
+		'delete': {method: 'DELETE', params: {}}
+	});	
+//	var types = $resource(hcWsUrl + '/inpoints/types');
+//	InPoints.getTypes = types.query.bind(types);
 });
+
 
 
 

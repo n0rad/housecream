@@ -37,7 +37,7 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     //TODO    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     @ForeignId(daoName = "zoneDao")
-    private long zoneId;
+    private Long zoneId;
 
     @Transient
     private Float value;
@@ -83,11 +83,11 @@ public abstract class Point extends IdEntityImpl<Long> {
         }
     }
 
-    public long getZoneId() {
+    public Long getZoneId() {
         return zoneId;
     }
 
-    public void setZoneId(long zoneId) {
+    public void setZoneId(Long zoneId) {
         this.zoneId = zoneId;
     }
 

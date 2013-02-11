@@ -39,6 +39,9 @@ public class ZoneService implements ZoneResource {
     @Inject
     private EngineProcessor engine;
 
+    @Inject
+    private ZonesService zonesService;
+
     @Override
     public Zone getZone(long zoneId) throws NotFoundException {
         return zoneDao.find(zoneId);
@@ -71,7 +74,7 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
-    public List<InPoint> inPoints(long zoneId) {
+    public List<InPoint> getInPoints(long zoneId) {
         List<InPoint> findByZone = inPointDao.findByZone(zoneId);
         for (InPoint inPoint : findByZone) {
             try {
@@ -85,7 +88,7 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
-    public List<OutPoint> outPoints(long zoneId) {
+    public List<OutPoint> getOutPoints(long zoneId) {
         List<OutPoint> findByZone = outPointDao.findByZone(zoneId);
         for (OutPoint outPoint : findByZone) {
             try {
@@ -96,6 +99,14 @@ public class ZoneService implements ZoneResource {
         }
 
         return findByZone;
+    }
+
+    @Override
+    public Zone updateZone(long zoneId, Zone zone) throws NotFoundException {
+        if (zoneId != zone.getId()) {
+            throw new IllegalStateException("zoneId do not match payload sent");
+        }
+        return zonesService.createZone(zone);
     }
 
 }

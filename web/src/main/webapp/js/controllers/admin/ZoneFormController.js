@@ -1,12 +1,36 @@
 'use strict';
-housecream.controller('ZoneFormController', function ZoneFormController($scope, $location, Zone, Zones) {
 
-	Zones.query(function(data) {
+housecream.controller('ZoneFormController', function ZoneFormController($scope, $location, $routeParams, Zones) {
+	var self = this;
+	
+	
+	Zones.get(function(data) {
 		$scope.zones = data.zones;
 	});
 	
-	$scope.save = function() {
-		Zone.save($scope.zone, function(zone) {
+	if ($routeParams.id != 'new') {
+		Zones.get({id: $routeParams.id}, function(zone) {
+		    self.original = zone;
+		    $scope.zone = new Zones(self.original);
+		});
+		$scope.actionLabel = 'update';
+	} else {
+		$scope.actionLabel = 'create';
+	}
+	
+	$scope.isClean = function() {
+		return angular.equals(self.original, $scope.zone);
+	};
+	
+	$scope.create = function() {
+		$scope.zone.type = "land"; //TODO remove when handling zones hierarchy
+		Zones.save($scope.zone, function(zone) {
+		      $location.path('admin/zone');
+		});
+	};
+	$scope.update = function() {
+		$scope.zone.type = "land"; //TODO remove when handling zones hierarchy
+		Zones.update($scope.zone, function(zone) {
 		      $location.path('admin/zone');
 		});
 	};

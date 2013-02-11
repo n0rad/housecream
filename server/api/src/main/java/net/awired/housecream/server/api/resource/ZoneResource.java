@@ -1,10 +1,12 @@
 package net.awired.housecream.server.api.resource;
 
 import java.util.List;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
@@ -16,6 +18,9 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 @Path("/zones/{id}")
 public interface ZoneResource {
+
+    @PUT
+    Zone updateZone(@PathParam("id") long zoneId, @Valid Zone zone) throws NotFoundException;
 
     @GET
     Zone getZone(@PathParam("id") long zoneId) throws NotFoundException;
@@ -34,10 +39,10 @@ public interface ZoneResource {
 
     @GET
     @Path("/inpoints")
-    List<InPoint> inPoints(@PathParam("id") long zoneId);
+    List<InPoint> getInPoints(@PathParam("id") long zoneId);
 
     @GET
     @Path("/outpoints")
-    List<OutPoint> outPoints(@PathParam("id") long zoneId);
+    List<OutPoint> getOutPoints(@PathParam("id") long zoneId);
 
 }

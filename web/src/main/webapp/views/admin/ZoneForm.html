@@ -1,4 +1,4 @@
-<form class="form-horizontal" ng-controller="ZoneFormController" ng-submit="save()">
+<form class="form-horizontal" ng-controller="ZoneFormController" ng-submit="{{actionLabel}}()">
 	<div class="row">
 		<div class="span6">
 			<fieldset>
@@ -12,8 +12,9 @@
 					<label class="control-label" for="type">Parent zone</label>
 					<div class="parentId controls">
 						<div class="btn-group">
-		                    <select name="type" ng-model="zone.parentId" ng-options="z.name for z in zones"></select>
-						  
+		                    <select name="type" ng-model="zone.parentId" ng-options="z.id as z.name for z in zones">
+    		                    <option value=""></option>
+		                    </select>
 <!-- 							<a class="btn dropdown-toggle btn-success input-large" data-toggle="dropdown" href="#"> Zone <span -->
 <!-- 								class="caret" style="float: right;"></span> -->
 <!-- 							</a> <select class="hide" name="parentId"><option value=""></option></select> -->
@@ -38,8 +39,8 @@
     <div class="imageMap hide"></div>
 
 	<div class="form-actions">
-		<input type="submit" class="btn btn-primary" value="Save changes" /> <a class="pushState btn"
-			href="admin/zone">Cancel</a>
+		<input type="submit" class="btn btn-primary" value="{{actionLabel}}" ng-disabled="isClean() || myForm.$invalid"  />
+		<a class="pushState btn" href="admin/zone">Cancel</a>
 
 		<div class="control-group error">
 			<span class="help-inline"></span>
