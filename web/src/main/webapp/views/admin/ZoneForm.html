@@ -1,4 +1,4 @@
-<form class="form-horizontal" ng-controller="ZoneFormController" ng-submit="{{actionLabel}}()">
+<form class="form-horizontal" ng-controller="ZoneFormController">
 	<div class="row">
 		<div class="span6">
 			<fieldset>
@@ -39,8 +39,9 @@
     <div class="imageMap hide"></div>
 
 	<div class="form-actions">
-		<input type="submit" class="btn btn-primary" value="{{actionLabel}}" ng-disabled="isClean() || myForm.$invalid"  />
+		<input type="submit" class="btn btn-primary" value="{{actionLabel}}" ng-disabled="isClean() || myForm.$invalid" ng-click="{{actionLabel}}()" />
 		<a class="pushState btn" href="admin/zone">Cancel</a>
+        <button ng-click="destroy()" ng-show="zone.id" class="btn btn-danger">Delete</button>
 
 		<div class="control-group error">
 			<span class="help-inline"></span>

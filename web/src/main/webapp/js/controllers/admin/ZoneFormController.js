@@ -34,6 +34,11 @@ housecream.controller('ZoneFormController', function ZoneFormController($scope, 
 		      $location.path('admin/zone');
 		});
 	};
+	$scope.destroy = function() {
+	    self.original.$delete(function() {
+	      $location.path('admin/zone');
+	    });
+	};
 
 });
 

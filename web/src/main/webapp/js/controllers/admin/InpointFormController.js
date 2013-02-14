@@ -28,10 +28,12 @@ housecream.controller('InpointFormController', function InpointFormController($s
 		InPoints.save($scope.inPoint, function(inPoint) {
 		      $location.path('admin/inpoint');
 		    });
-//		
-//	    $scope.inPoint.update(function() {
-//	      $location.path('admin/inpoint');
-//	    });
+	};
+
+	$scope.update = function() {
+		InPoints.update($scope.inPoint, function(inPoint) {
+		      $location.path('admin/inpoint');
+		    });
 	};
 	
 	$scope.destroy = function() {
