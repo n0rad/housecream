@@ -3,7 +3,7 @@ package net.awired.housecream.camel.restmcu;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import net.awired.ajsl.web.rest.RestContext;
+import net.awired.ajsl.ws.rest.RestContext;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;

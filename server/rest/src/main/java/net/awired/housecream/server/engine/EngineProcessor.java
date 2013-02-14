@@ -4,13 +4,13 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
-import net.awired.ajsl.core.lang.Pair;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.PointState;
 import net.awired.housecream.server.engine.builder.RuleBuilder;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.definition.KnowledgePackage;
@@ -117,7 +117,7 @@ public class EngineProcessor implements Processor {
 
         Pair<PointState, FactHandle> previous = stateService.updateAndGetPrevious(state, factHandler);
         if (previous != null) {
-            ksession.retract(previous.right);
+            ksession.retract(previous.getRight());
         }
         logCurrentFacts("after add point state");
     }
@@ -127,14 +127,14 @@ public class EngineProcessor implements Processor {
         if (pair == null) {
             throw new NotFoundException("Point state not found for pointId : " + pointId);
         }
-        return pair.left.getValue();
+        return pair.getLeft().getValue();
     }
 
     public void removePointState(long pointId) {
         log.debug("Removing point state for id : {}" + pointId);
         Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair != null) {
-            ksession.retract(pair.right);
+            ksession.retract(pair.getRight());
         }
         stateService.remove(pointId);
         logCurrentFacts("after removing point state");

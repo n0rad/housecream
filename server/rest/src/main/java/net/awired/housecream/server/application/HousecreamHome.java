@@ -3,9 +3,9 @@ package net.awired.housecream.server.application;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import net.awired.ajsl.core.io.FileUtils;
 import net.awired.housecream.server.Housecream;
 import net.awired.housecream.server.SingleInstanceFileLocker;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.common.base.Charsets;
@@ -57,7 +57,7 @@ public enum HousecreamHome {
             if (lines.size() > 0 && !lines.get(0).equals(hc.getVersion())) {
                 log.warn("Version of DB is " + lines.get(0) + " but currently running " + hc.getVersion()
                         + ". DB will be dropped");
-                FileUtils.deleteRecursively(new File(hc.getHome() + "/db"));
+                FileUtils.deleteDirectory(new File(hc.getHome() + "/db"));
             }
         } catch (IOException e) {
             // no file found will not do anything

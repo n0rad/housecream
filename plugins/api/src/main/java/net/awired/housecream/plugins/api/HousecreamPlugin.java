@@ -3,9 +3,9 @@ package net.awired.housecream.plugins.api;
 import java.net.URI;
 import java.util.Map;
 import javax.validation.ValidationException;
-import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
+import org.apache.commons.lang3.tuple.Pair;
 
 public interface HousecreamPlugin {
 

@@ -4,10 +4,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 import javax.validation.ValidationException;
-import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.base.Preconditions;
 
 public class RestMcuHousecreamPlugin implements HousecreamPlugin {
@@ -72,7 +73,7 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     //
     @Override
     public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, OutPoint outpoint) {
-        return new Pair<Object, Map<String, Object>>(action.getValue(), null);
+        return new ImmutablePair<Object, Map<String, Object>>(action.getValue(), null);
     }
 
     @Override

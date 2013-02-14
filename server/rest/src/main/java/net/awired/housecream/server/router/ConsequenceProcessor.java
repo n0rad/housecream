@@ -2,7 +2,6 @@ package net.awired.housecream.server.router;
 
 import java.util.Map;
 import javax.inject.Inject;
-import net.awired.ajsl.core.lang.Pair;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
@@ -13,6 +12,7 @@ import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
