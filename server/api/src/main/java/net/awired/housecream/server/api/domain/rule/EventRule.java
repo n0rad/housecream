@@ -20,6 +20,7 @@ import net.awired.ajsl.persistence.entity.IdEntityImpl;
 public class EventRule extends IdEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
+    public static final String QUERY_ALL = "QUERY_ALL";
 
     @NotNull
     @Column(unique = true)

@@ -1,0 +1,57 @@
+<form class="form-horizontal">
+    <input type="hidden" name="id">
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="name">Rule name</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" id="name" name="name"> <span class="help-inline"></span>
+            </div>
+        </div>
+        <div>
+            <label>When</label>
+            <ul>
+                <li>
+                    <select name="conditions[0].pointId" class="input-medium">
+                        <% _.each(inpoints, function(inpoint) { %>
+                        <option value="<%= inpoint.id %>"><%= inpoint.name %></option>
+                        <% }); %>
+                        <% _.each(outpoints, function(outpoint) { %>
+                        <option value="<%= outpoint.id %>"><%= outpoint.name %></option>
+                        <% }); %>
+                    </select>
+                    <input name="conditions[0].value" placeholder="value" class="input-mini" type="text"/>
+                    <select name="conditions[0].type" class="input-small">
+                        <option value="state">State</option>
+                        <option value="event">Event</option>
+                    </select>
+               </li>
+            </ul>
+            <label>Then</label>
+            <ul>
+                <li>
+                    <select name="consequences[0].outPointId" class="input-medium">
+                        <% _.each(outpoints, function(outpoint) { %>
+                        <option value="<%= outpoint.id %>"><%= outpoint.name %></option>
+                        <% }); %>
+                    </select>
+                    <input name="consequences[0].value" placeholder="value" class="input-mini" type="text"/>
+                    <input name="consequences[0].delayMili" placeholder="delay" class="input-mini" type="text"/>
+                    <select name="consequences[0].triggerType" class="input-medium" disabled="disabled">
+                        <option></option>
+                        <option value="RETRIGGER">Retrigger</option>
+                        <option value="NON_RETRIGGER">Non retrigger</option>
+                    </select>                    
+                </li>
+            </ul>
+        </div>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Save changes" /> <a class="pushState btn"
+                href="<%= rootUrl %>/admin/rule">Cancel</a>
+                
+            <div class="control-group error">
+                <span class="help-inline"></span>
+            </div>
+                
+        </div>
+    </fieldset>
+</form>
