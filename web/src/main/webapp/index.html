@@ -57,20 +57,34 @@
 <script src="js/controllers/index/IndexController.js${versioningQuery}"></script>
 <script src="js/controllers/index/ZoneController.js${versioningQuery}"></script>
 
-<script src="js/services/InPoints.js${versioningQuery}"></script>
-<script src="js/services/OutPoints.js${versioningQuery}"></script>
-<script src="js/services/Zones.js${versioningQuery}"></script>
-<script src="js/services/Rules.js${versioningQuery}"></script>
+<!-- Javascript needed for map & canvas manipulation -->
+<script src="js/utils/leaflet-tools.js${versioningQuery}"></script>
+<script src="js/utils/openlayers-tools.js${versioningQuery}"></script>
+<script src="lib/leaflet/leaflet-src.js${versioningQuery}"></script>
+<script src="lib/openlayer/openlayers.js${versioningQuery}"></script>
+<script src="js/controllers/index/LeafletController.js${versioningQuery}"></script>
+<script src="js/controllers/index/OpenLayersController.js${versioningQuery}"></script>
+<link href="css/leaflet.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<link href="css/housecream-map.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<!--[if IE]>
+    <link href="css/leaflet.ie.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<![endif]-->
 
-</head>
-<body>
-	<header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
-		<div class="navbar-inner">
-			<a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
-			<ul class="nav">
-				<li ng-class="{active: routeIs('/')}"><a href="">Home</a></li>
-				<li ng-class="{active: routeIs('/admin')}"><a href="admin">Admin</a></li>
-				<!-- 					<li ng-class="{active: routeIs('/who-we-are')}"><a href="${contextPath}/who-we-are">Who we are</a></li> -->
+
+    <script src="js/services/InPoints.js${versioningQuery}"></script>
+    <script src="js/services/OutPoints.js${versioningQuery}"></script>
+    <script src="js/services/Zones.js${versioningQuery}"></script>
+    <script src="js/services/Rules.js${versioningQuery}"></script>
+
+    </head>
+    <body>
+        <header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
+            <div class="navbar-inner">
+                <a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
+                <ul class="nav">
+                    <li ng-class="{active: routeIs('/')}"><a href="">Home</a></li>
+                    <li ng-class="{active: routeIs('/admin')}"><a href="admin">Admin</a></li>
+                    <!-- 					<li ng-class="{active: routeIs('/who-we-are')}"><a href="${contextPath}/who-we-are">Who we are</a></li> -->
 			</ul>
 			<!-- 				<ul class="nav pull-right"> -->
 			<!-- 					<li ng-class="{active: routeIs('/help')}"><a href="${contextPath}/help">Help</a></li> -->

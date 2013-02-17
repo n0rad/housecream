@@ -2,6 +2,9 @@
 
 housecream.controller('IndexController', function IndexController($scope, $location, $routeParams) {
 //    $location.url('/zone/');
+    $scope.panes = [
+        {title:'LeafletMap', templateUrl: 'views/index/Leaflet.html', content: 'End', active: true},
+        {title: 'OpenLayersMap', templateUrl: 'views/index/OpenLayers.html'}];
 });
 
 
