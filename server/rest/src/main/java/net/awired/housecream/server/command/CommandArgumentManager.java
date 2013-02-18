@@ -1,8 +1,10 @@
 package net.awired.housecream.server.command;
 
 import net.awired.aclm.argument.CliArgumentManager;
+import net.awired.aclm.argument.CliArgumentParseException;
 import net.awired.aclm.argument.args.CliNoParamArgument;
 import net.awired.aclm.argument.args.CliOneParamArgument;
+import net.awired.aclm.param.CliParamFloat;
 import net.awired.aclm.param.CliParamLong;
 
 public class CommandArgumentManager extends CliArgumentManager {
@@ -11,6 +13,7 @@ public class CommandArgumentManager extends CliArgumentManager {
     private final CliNoParamArgument outpoint;
     private final CliNoParamArgument rule;
     private final CliNoParamArgument zone;
+    private final CliOneParamArgument<Float> value;
     private final CliOneParamArgument<Long> id;
 
     protected CommandArgumentManager() {
@@ -36,6 +39,10 @@ public class CommandArgumentManager extends CliArgumentManager {
         zone.setDescription("Display zone informations");
         addArg(zone);
 
+        value = new CliOneParamArgument<Float>('v', new CliParamFloat("value"));
+        value.setDescription("Set value of an outpoint");
+        addArg(value);
+
         id = new CliOneParamArgument<Long>('0', new CliParamLong("Id"));
         id.setDescription("Display informations about a specific element");
         setDefaultArgument(id);
@@ -43,18 +50,29 @@ public class CommandArgumentManager extends CliArgumentManager {
         zone.addForbiddenArgument(rule);
         zone.addForbiddenArgument(inpoint);
         zone.addForbiddenArgument(outpoint);
+        zone.addForbiddenArgument(value);
 
         rule.addForbiddenArgument(zone);
         rule.addForbiddenArgument(inpoint);
         rule.addForbiddenArgument(outpoint);
+        rule.addForbiddenArgument(value);
 
         inpoint.addForbiddenArgument(zone);
         inpoint.addForbiddenArgument(rule);
         inpoint.addForbiddenArgument(outpoint);
+        inpoint.addForbiddenArgument(value);
 
         outpoint.addForbiddenArgument(zone);
         outpoint.addForbiddenArgument(rule);
         outpoint.addForbiddenArgument(inpoint);
+    }
+
+    @Override
+    protected void checkParse() throws CliArgumentParseException {
+        super.checkParse();
+        if (outpoint.isSet() && value.isSet() && !getDefaultArgument().isSet()) {
+            throw new CliArgumentParseException("Setting a value require a selected outpoint", value);
+        }
     }
 
     public CliNoParamArgument getInpoint() {
@@ -75,6 +93,10 @@ public class CommandArgumentManager extends CliArgumentManager {
 
     public CliOneParamArgument<Long> getId() {
         return id;
+    }
+
+    public CliOneParamArgument<Float> getValue() {
+        return value;
     }
 
 }
