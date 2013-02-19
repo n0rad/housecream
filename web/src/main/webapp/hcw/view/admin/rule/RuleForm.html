@@ -8,8 +8,8 @@
             </div>
         </div>
         <div>
-            <label>When</label>
-            <ul>
+            <label>When <button class="btn btn-mini btn-success" type="button"><i class="icon-plus icon-white"></i></button></label>
+            <ul class="when">
                 <li>
                     <select name="conditions[0].pointId" class="input-medium">
                         <% _.each(inpoints, function(inpoint) { %>
@@ -24,10 +24,11 @@
                         <option value="state">State</option>
                         <option value="event">Event</option>
                     </select>
+                    <button class="btn btn-mini btn-danger" type="button"><i class="icon-minus icon-white"></i></button>
                </li>
             </ul>
-            <label>Then</label>
-            <ul>
+            <label>Then <button class="btn btn-mini btn-success" type="button"><i class="icon-plus icon-white"></i></button></label>
+            <ul class="then">
                 <li>
                     <select name="consequences[0].outPointId" class="input-medium">
                         <% _.each(outpoints, function(outpoint) { %>
@@ -40,7 +41,8 @@
                         <option></option>
                         <option value="RETRIGGER">Retrigger</option>
                         <option value="NON_RETRIGGER">Non retrigger</option>
-                    </select>                    
+                    </select>
+                    <button class="btn btn-mini btn-danger" type="button"><i class="icon-minus icon-white"></i></button>
                 </li>
             </ul>
         </div>

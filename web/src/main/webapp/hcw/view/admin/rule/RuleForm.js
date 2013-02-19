@@ -29,6 +29,16 @@ function($, restFormHandler, view, event, RuleTemplate, RuleService) {
 	}
 
 	Rule.prototype = {
+			
+		addFormConditions : function(i) {
+			var ul = $('.when', this.context);
+			var li = ul.find("li")[0];
+			var newLi = $.clone(li);
+			ul.append(newLi);
+		},
+		addFormConsequences : function(i) {
+			
+		},
 		displayForm : function(data) {
 			var self = this;
 			$.getJSON('/hcs/ws/inpoints/.json', {}, function(inpoints) { //TODO use when.js
@@ -38,7 +48,7 @@ function($, restFormHandler, view, event, RuleTemplate, RuleService) {
 						       outpoints : outpoints.outPoints};
 				self.context.html(_.template(RuleTemplate, tplData));
 				
-				view.rebuildFormRec(self.context, data);
+				view.rebuildFormRec(self.context, data, self);
 				event.register(self.events, self.context);
 //				self.ruleService.getRules(function(rules) {
 //					$('.ruleId', self.context).bootstrapSelect(rules.rules);

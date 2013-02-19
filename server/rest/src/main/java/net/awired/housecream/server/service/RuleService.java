@@ -2,6 +2,7 @@ package net.awired.housecream.server.service;
 
 import java.util.Collection;
 import javax.inject.Inject;
+import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.rule.EventRule;
@@ -47,6 +48,11 @@ public class RuleService implements RuleResource {
     @Override
     public void deleteRule(long ruleId) {
         ruleDao.delete(ruleId);
+    }
+
+    @Override
+    public EventRule getRule(long ruleId) throws NotFoundException {
+        return ruleDao.find(ruleId);
     }
 
 }
