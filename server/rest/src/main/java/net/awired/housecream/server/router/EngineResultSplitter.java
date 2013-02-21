@@ -17,5 +17,4 @@ public class EngineResultSplitter {
         log.debug("splitting actions {}", actions);
         return actions.getActions();
     }
-
 }
