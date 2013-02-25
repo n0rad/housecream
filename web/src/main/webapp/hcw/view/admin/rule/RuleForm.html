@@ -8,7 +8,7 @@
             </div>
         </div>
         <div>
-            <label>When <button class="btn btn-mini btn-success" type="button"><i class="icon-plus icon-white"></i></button></label>
+            <label>When <button class="btn btn-mini btn-success when-add" type="button"><i class="icon-plus icon-white"></i></button></label>
             <ul class="when">
                 <li>
                     <select name="conditions[0].pointId" class="input-medium">
@@ -24,10 +24,10 @@
                         <option value="state">State</option>
                         <option value="event">Event</option>
                     </select>
-                    <button class="btn btn-mini btn-danger" type="button"><i class="icon-minus icon-white"></i></button>
+                    <button class="btn btn-mini btn-danger delete" type="button"><i class="icon-minus icon-white"></i></button>
                </li>
             </ul>
-            <label>Then <button class="btn btn-mini btn-success" type="button"><i class="icon-plus icon-white"></i></button></label>
+            <label>Then <button class="btn btn-mini btn-success then-add" type="button"><i class="icon-plus icon-white"></i></button></label>
             <ul class="then">
                 <li>
                     <select name="consequences[0].outPointId" class="input-medium">
@@ -42,7 +42,7 @@
                         <option value="RETRIGGER">Retrigger</option>
                         <option value="NON_RETRIGGER">Non retrigger</option>
                     </select>
-                    <button class="btn btn-mini btn-danger" type="button"><i class="icon-minus icon-white"></i></button>
+                    <button class="btn btn-mini btn-danger delete" type="button"><i class="icon-minus icon-white"></i></button>
                 </li>
             </ul>
         </div>

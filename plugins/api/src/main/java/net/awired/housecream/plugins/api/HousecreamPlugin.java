@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.validation.ValidationException;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
+import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
 
 public interface HousecreamPlugin {
@@ -23,5 +24,7 @@ public interface HousecreamPlugin {
      * @return can return null if valid.
      */
     URI validateAndNormalizeUri(URI pointUri) throws ValidationException;
+
+    Float readInValue(Message in) throws Exception;
 
 }

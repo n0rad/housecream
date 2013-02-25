@@ -7,13 +7,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import net.awired.housecream.server.api.domain.Event;
+import net.awired.housecream.server.api.domain.PointState;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -50,8 +51,9 @@ public class EventWebSocketService {
         }
     }
 
-    public void sendEvent(Event event) {
-        handler.sendMessage(event);
+    @Async
+    public void notifyStateUpdate(PointState state) {
+        handler.sendMessage(state);
     }
 
     public class HcwWebSocketHandler extends WebSocketHandler {
@@ -68,12 +70,12 @@ public class EventWebSocketService {
             return new HcwWebSocket(this);
         }
 
-        public void sendMessage(Event event) {
+        public void sendMessage(PointState state) {
             String eventAsJson;
             try {
-                eventAsJson = objectMapper.writeValueAsString(event);
+                eventAsJson = objectMapper.writeValueAsString(state);
             } catch (Exception e) {
-                throw new RuntimeException("Cannot construct json version of event : " + event, e);
+                throw new RuntimeException("Cannot construct json version of state : " + state, e);
             }
             for (HcwWebSocket webSocket : webSockets) {
                 try {

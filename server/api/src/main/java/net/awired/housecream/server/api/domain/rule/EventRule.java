@@ -29,12 +29,12 @@ public class EventRule extends IdEntityImpl<Long> {
     private Integer salience;
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RULE_ID", nullable = false)
     private List<Condition> conditions = new ArrayList<Condition>();
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RULE_ID", nullable = false)
     private List<Consequence> consequences = new ArrayList<Consequence>();
 

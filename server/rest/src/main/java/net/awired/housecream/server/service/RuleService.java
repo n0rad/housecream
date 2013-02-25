@@ -37,7 +37,7 @@ public class RuleService implements RuleResource {
         ruleDao.save(rule);
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
         engine.registerPackages(build);
-        return rule; //TODO return id
+        return rule;
     }
 
     @Override

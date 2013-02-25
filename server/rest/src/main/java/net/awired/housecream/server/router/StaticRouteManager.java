@@ -5,7 +5,6 @@ import static net.awired.housecream.server.router.ActionAggregationStrategy.AGGR
 import javax.inject.Inject;
 import net.awired.housecream.server.command.CliProcessor;
 import net.awired.housecream.server.engine.EngineProcessor;
-import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -19,8 +18,8 @@ public class StaticRouteManager extends RouteBuilder {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     public static final String DIRECT_COMMAND = "direct:command";
-    private static final String DIRECT_ENGINE = "direct:engine";
-    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
+    public static final String DIRECT_ENGINE = "direct:engine";
+    //    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
 
     @Inject
     private EngineProcessor engine;
@@ -38,9 +37,6 @@ public class StaticRouteManager extends RouteBuilder {
     private ConsequenceProcessor consequenceProcessor;
 
     @Inject
-    private EventService eventService;
-
-    @Inject
     private OutDynamicRouter dynamicRouter;
 
     @Inject
@@ -51,9 +47,9 @@ public class StaticRouteManager extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from(EVENT_HOLDER_QUEUE) //
-                .bean(eventService, "saveEventAsync") //
-                .to(DIRECT_ENGINE);
+        //        from(EVENT_HOLDER_QUEUE) //
+        //                .bean(eventService, "saveEventAsync") //
+        //                .to(DIRECT_ENGINE);
 
         from(DIRECT_ENGINE) //
                 .bean(aggregationStrategy, "fillCorrelationId") //

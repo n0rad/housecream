@@ -3,18 +3,37 @@ package net.awired.housecream.plugins.restmcu;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
+import javax.inject.Inject;
 import javax.validation.ValidationException;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
+import net.awired.housecream.server.engine.InPointDaoInterface;
+import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
+import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.google.common.base.Preconditions;
 
 public class RestMcuHousecreamPlugin implements HousecreamPlugin {
 
     private static final String SCHEME = "restmcu";
     public static final int DEFAULT_COMPONENT_PORT = 80;
+
+    private Logger log = LoggerFactory.getLogger(getClass());
+
+    @Inject
+    private InPointDaoInterface inPointDao;
+
+    @Override
+    public Float readInValue(Message in) throws Exception {
+        RestMcuLineNotification notif = in.getBody(RestMcuLineNotification.class);
+        Preconditions.checkNotNull(notif, "Notification cannot be null");
+        Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
+        return notif.getValue();
+    }
 
     @Override
     public String scheme() {
