@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Map;
 import javax.validation.ValidationException;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
-import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import org.apache.camel.Message;
@@ -35,7 +34,7 @@ public class MailHousecreamPlugin implements HousecreamPlugin {
     }
 
     @Override
-    public Event toEvent(Message in) throws Exception {
+    public Float readInValue(Message in) throws Exception {
         // TODO Auto-generated method stub
         return null;
     }
