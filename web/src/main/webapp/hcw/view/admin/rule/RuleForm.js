@@ -15,7 +15,7 @@ function($, restFormHandler, view, event, RuleTemplate, RuleService) {
 		this.events = {
 			'|submit' : function(e) {
 				e.preventDefault();
-				var formData = $(this).toObject({skipEmpty : false});
+				var formData = $(this).toObject({skipEmpty : true});
 				restFormHandler.handleSubmit(this, rootUrl, "/hcs/ws/rule", validatorInfo, formData, function() {
 					  var url = self.rootUrl + '/admin/rule';
 					  History.pushState(null, url, url);

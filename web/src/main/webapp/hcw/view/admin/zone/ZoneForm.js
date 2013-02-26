@@ -58,7 +58,6 @@ function($, restFormHandler, view, event, ZoneService, ZoneTemplate, ImageMap) {
 						    data.append('file-'+i, file);
 						});
 						
-						var self = this; 
 						
 						progressHandlerFunction = function(e) {
 							var loaded = Math.round((e.loaded / e.total) * 100); // on calcul le pourcentage de progression
