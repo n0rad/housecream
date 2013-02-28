@@ -2,7 +2,7 @@ package net.awired.housecream.server.router;
 
 import java.util.Map;
 import javax.inject.Inject;
-import net.awired.housecream.plugins.api.HousecreamPlugin;
+import net.awired.housecream.plugins.api.OutHousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
 import net.awired.housecream.server.engine.Action;
@@ -10,7 +10,6 @@ import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.service.PluginService;
 import net.awired.housecream.server.storage.dao.OutPointDao;
 import org.apache.camel.Exchange;
-import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -46,10 +45,16 @@ public class ConsequenceProcessor implements Processor {
         }
 
         OutPoint outpoint = outputDao.find(action.getOutPointId());
-        HousecreamPlugin plugin = pluginService.getPluginFromScheme(outpoint.getUri().getScheme());
+        OutHousecreamPlugin plugin = (OutHousecreamPlugin) pluginService.getPluginFromScheme(outpoint.getUri()
+                .getScheme()); //TODO cast should not be necessary
         Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, outpoint);
-        Message outMessage = outRouter.buildMessage(bodyAndHeaders, outpoint, action);
 
-        exchange.setIn(outMessage);
+        if (bodyAndHeaders.getRight() != null) {
+            for (String key : bodyAndHeaders.getRight().keySet()) {
+                exchange.getIn().setHeader(key, bodyAndHeaders.getRight().get(key));
+            }
+        }
+        exchange.getIn().setBody(bodyAndHeaders.getLeft());
+        outRouter.fillRoutingHeaders(exchange.getIn(), outpoint, action);
     }
 }

@@ -1,5 +1,5 @@
-define([ 'jquery', 'hcw/view/admin/AdminLayout', 'hcw/controller/AdminInPointController', 'hcw/controller/AdminOutPointController', 'hcw/controller/AdminZoneController' ],
-function($, AdminLayout, InPointController, OutPointController, ZoneController) {
+define([ 'jquery', 'hcw/view/admin/AdminLayout', 'hcw/controller/AdminInPointController', 'hcw/controller/AdminOutPointController', 'hcw/controller/AdminZoneController', 'hcw/controller/AdminRuleController' ],
+function($, AdminLayout, InPointController, OutPointController, ZoneController, RuleController) {
 	"use strict";
 	
 
@@ -39,6 +39,17 @@ function($, AdminLayout, InPointController, OutPointController, ZoneController) 
 				new ZoneController(self.rootUrl, $('#current')).displayForm(zoneId);
 			} else {
 				new ZoneController(self.rootUrl, $('#current')).displayTable();				
+			}
+		};
+		
+		this.rule = function(params, ruleId) {
+			self.adminLayout.displayAdmin();
+			if (ruleId == 'new') {
+				new RuleController(self.rootUrl, $('#current')).displayNewForm();
+			} else if (ruleId) {
+				new RuleController(self.rootUrl, $('#current')).displayForm(ruleId);
+			} else {
+				new RuleController(self.rootUrl, $('#current')).displayTable();				
 			}
 		};
 		

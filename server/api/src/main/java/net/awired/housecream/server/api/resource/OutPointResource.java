@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
+import net.awired.housecream.server.api.resource.generic.PointResource;
 
 @Path("/outpoints/{id}")
 public interface OutPointResource extends PointResource {

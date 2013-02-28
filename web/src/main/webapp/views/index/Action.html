@@ -7,20 +7,20 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="inPoints">
             <% _.each(inPoints, function(point) { %>
-	            <button class="btn btn-inverse btn-toolbar btn-large">
-	               <%= point.id %>
-                   <%= point.type %>
-                   <%= point.value %>
+	            <button class="btn btn-inverse btn-toolbar btn-large disabled" data-id="<%= point.id %>" data-val="<%= point.value %>" style="position: relative; padding-right: 18px">
+                    <img src="<%= rootUrl %>/img/green-button.png" class="green" style="position: absolute; right: 5px; bottom: 5px; display: none">
+                    <img src="<%= rootUrl %>/img/grey-button.png" class="grey" style="position: absolute; right: 5px; bottom: 5px; display: none">
+	               <%= point.name %>
 <!-- 	                <img src="<%= rootUrl %>/img/icon/iconset-promo.png" alt=""> -->
 	            </button>
             <% }); %>
 		</div>
 		<div class="tab-pane" id="outPoints">
             <% _.each(outPoints, function(point) { %>
-                <button class="btn btn-inverse btn-toolbar btn-large">
-                   <%= point.id %>
-                   <%= point.type %>
-                   <%= point.value %>
+                <button class="btn btn-inverse btn-toolbar btn-large" data-id="<%= point.id %>" data-val="<%= point.value %>" style="position: relative; padding-right: 18px">
+                    <img src="<%= rootUrl %>/img/green-button.png" class="green" style="position: absolute; right: 5px; bottom: 5px; display: none">
+                    <img src="<%= rootUrl %>/img/grey-button.png" class="grey" style="position: absolute; right: 5px; bottom: 5px; display: none">
+                   <%= point.name %>
 <!--                    <img src="<%= rootUrl %>/img/icon/iconset-promo.png" alt=""> -->
                 </button>
             <% }); %>

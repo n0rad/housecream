@@ -1,4 +1,4 @@
-package net.awired.housecream.server.api.resource;
+package net.awired.housecream.server.api.resource.generic;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

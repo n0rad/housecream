@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.resource.generic.PointResource;
 
 @Path("/inpoints/{id}")
 public interface InPointResource extends PointResource {
@@ -22,7 +23,7 @@ public interface InPointResource extends PointResource {
     void deleteInPoint(@PathParam("id") long inPointId);
 
     //    @GET
-    //    @Path("{id}/value")
+    //    @Path("/value")
     //    Float getInPointValue(@PathParam("id") long inPointId);
 
 }

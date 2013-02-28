@@ -10,8 +10,6 @@ import org.apache.camel.ExchangePattern;
 import org.apache.camel.Header;
 import org.apache.camel.Message;
 import org.apache.camel.Properties;
-import org.apache.camel.impl.DefaultMessage;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,15 +22,9 @@ public class OutDynamicRouter {
     private static final String ROUTED_FLAG = "invoked";
     private static final String OUT_URL = "outUrl";
 
-    public Message buildMessage(Pair<Object, Map<String, Object>> bodyAndHeaders, OutPoint outpoint,
-            Consequence action) {
-        DefaultMessage message = new DefaultMessage();
-        message.setHeaders(bodyAndHeaders.getRight());
-        message.setBody(bodyAndHeaders.getLeft());
+    public void fillRoutingHeaders(Message message, OutPoint outpoint, Consequence action) {
         message.setHeader(OutEndProcessor.CONSEQUENCE_HEADER, action);
         message.setHeader(OutDynamicRouter.OUT_URL, outpoint.getUri());
-        return message;
-
     }
 
     public Object route(Exchange exchange, @Body Object body, @Properties Map<String, Object> properties,

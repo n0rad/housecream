@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
 import net.awired.ajsl.persistence.validator.ForeignId;
+import com.google.common.base.Objects;
 
 @MappedSuperclass
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -41,6 +42,17 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     @Transient
     private Float value;
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this) //
+                .add("id", id) //
+                .add("description", description) //
+                .add("uri", uri) //
+                .add("zoneId", zoneId) //
+                .add("value", value) //
+                .toString();
+    }
 
     //    private Device device;
 

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
-import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.service.PluginService;
 import org.apache.camel.builder.RouteBuilder;
@@ -25,6 +24,9 @@ public class DynamicRouteManager extends RouteBuilder {
     private ModelCamelContext camelContext;
 
     @Inject
+    private InEventConverter eventConverter;
+
+    @Inject
     private PluginService pluginService;
 
     private Map<URI, RouteDefinition> pointRoutes = Collections.synchronizedMap(new HashMap<URI, RouteDefinition>());
@@ -38,8 +40,11 @@ public class DynamicRouteManager extends RouteBuilder {
                 routeDefinition = from(point.getUri().toString()).to(StaticRouteManager.DIRECT_COMMAND);
             } else {
                 routeDefinition = from(point.getUri().toString()) //
-                        .transform(body(Event.class)) //
-                        .to(StaticRouteManager.EVENT_HOLDER_QUEUE);
+                        .setHeader(InEventConverter.PLUGIN_HEADER_NAME, constant(plugin)) //
+                        .setHeader(InEventConverter.INPOINT_HEADER_NAME, constant(point)) //
+                        .process(eventConverter) //
+                        //                        .transform(body(Event.class)) //
+                        .to("seda:" + point.getId()).to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 blocking queue per inpoint
             }
 
             camelContext.addRouteDefinition(routeDefinition);

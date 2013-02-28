@@ -17,7 +17,6 @@ import net.awired.housecream.server.engine.Action;
 import net.awired.housecream.server.engine.Actions;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.StateService;
-import net.awired.housecream.server.service.event.EventService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -34,9 +33,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RuleBuilderTest {
-
-    @Mock
-    private EventService eventService;
 
     @Mock
     private StateService stateService;

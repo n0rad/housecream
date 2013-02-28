@@ -51,6 +51,11 @@
         </dependency>
         <dependency>
             <groupId>net.awired.ajsl</groupId>
+            <artifactId>ajsl-ws</artifactId>
+            <version>${ajsl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.awired.ajsl</groupId>
             <artifactId>ajsl-web</artifactId>
             <version>${ajsl.version}</version>
         </dependency>
