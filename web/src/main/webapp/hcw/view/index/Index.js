@@ -6,6 +6,15 @@ function($, _, IndexTemplate, EventService) {
 	
 	eventService.registerEventHandler(function(event) {
 		noty({layout: 'bottomRight', text: "pointId: " + event.pointId + ", value: " + event.value, timeout: 10000});
+		var button = $('BUTTON[data-id=' + event.pointId + ']');
+		$(button).data('val', event.value);
+		if (event.value == 0) {
+			$('IMG.grey', button).show();
+			$('IMG.green', button).hide();
+		} else {
+			$('IMG.grey', button).hide();
+			$('IMG.green', button).show();
+		} 
 	});
 //		noty({layout: 'bottomRight', text: error_note, type: 'error'});
 //		noty({layout: 'bottomRight', text: success_note, type: 'success'});

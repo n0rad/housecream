@@ -3,13 +3,14 @@ package net.awired.housecream.plugins.xmpp;
 import java.net.URI;
 import java.util.Map;
 import javax.validation.ValidationException;
-import net.awired.housecream.plugins.api.HousecreamPlugin;
+import net.awired.housecream.plugins.api.InHousecreamPlugin;
+import net.awired.housecream.plugins.api.OutHousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class XmppHousecreamPlugin implements HousecreamPlugin {
+public class XmppHousecreamPlugin implements InHousecreamPlugin, OutHousecreamPlugin {
 
     @Override
     public String scheme() {

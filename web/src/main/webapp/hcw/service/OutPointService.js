@@ -29,6 +29,22 @@ function($) {
 				$.getJSON(this.rootUrl + '/ws/outpoints', {}, function(data) {
 					callback(data);
 				});				
+			},
+			
+			setValue : function(id, value, callback) {
+				$.ajax({
+					url : this.rootUrl + '/ws/outpoint/' + id + '/value',
+					type : 'PUT',
+					data : value,
+					processData: false,
+					dataType : 'application/json',
+					error : function(jqXHR, textStatus, errorThrown) {
+						//TODO
+					},
+					success : function(data, textStatus, jqXHR) {
+						callback();
+					}
+				});				
 			}
 						
 	};

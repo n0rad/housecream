@@ -2,7 +2,7 @@ package net.awired.housecream.server.router;
 
 import java.util.Map;
 import javax.inject.Inject;
-import net.awired.housecream.plugins.api.HousecreamPlugin;
+import net.awired.housecream.plugins.api.OutHousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
 import net.awired.housecream.server.engine.Action;
@@ -45,7 +45,8 @@ public class ConsequenceProcessor implements Processor {
         }
 
         OutPoint outpoint = outputDao.find(action.getOutPointId());
-        HousecreamPlugin plugin = pluginService.getPluginFromScheme(outpoint.getUri().getScheme());
+        OutHousecreamPlugin plugin = (OutHousecreamPlugin) pluginService.getPluginFromScheme(outpoint.getUri()
+                .getScheme()); //TODO cast should not be necessary
         Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, outpoint);
 
         if (bodyAndHeaders.getRight() != null) {
