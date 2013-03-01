@@ -75,7 +75,9 @@ public class RuleRetriggerableIT {
 
         //notif button pushed
         boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif1);
+        System.out.println("threre");
         assertThat(lineResource.awaitLineValue(3)).isEqualTo(1);
+        System.out.println("threre2");
         lineResource.resetValueLatch(3);
 
         //notif button released

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InEventConverter implements Processor {
+public class InEventTransformer implements Processor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     public static final String PLUGIN_HEADER_NAME = "hc-plugin";
