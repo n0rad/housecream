@@ -1,12 +1,8 @@
 package net.awired.housecream.server.router;
 
-import static net.awired.housecream.server.router.ActionAggregationStrategy.AGGREGATION_ID_HEADER;
-import static net.awired.housecream.server.router.ActionAggregationStrategy.AGGREGATION_SIZE_HEADER;
 import javax.inject.Inject;
 import net.awired.housecream.server.command.CliProcessor;
 import net.awired.housecream.server.engine.EngineProcessor;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +41,9 @@ public class StaticRouteManager extends RouteBuilder {
     @Inject
     private ActionAggregationStrategy aggregationStrategy;
 
+    public static final String DIRECT_OUT_PROCESS = "direct:out";
+    public static final String SEDA_DELAY = "seda:delay";
+
     @Override
     public void configure() throws Exception {
         //        from(EVENT_HOLDER_QUEUE) //
@@ -57,20 +56,25 @@ public class StaticRouteManager extends RouteBuilder {
                 .bean(aggregationStrategy, "fillAggregationSize") //
                 .split().method(splitter, "split").parallelProcessing() //
                 .bean(aggregationStrategy, "removeCorrelationIdOnAsync") //
-                .delay().method(delayer, "calculateDelay").asyncDelayed() //
-                .process(consequenceProcessor) //
+                .choice() //
+                .when(header(aggregationStrategy.AGGREGATION_ID_HEADER).isNotNull()).to(DIRECT_OUT_PROCESS) //
+                .otherwise().inOnly(SEDA_DELAY);
+
+        from(SEDA_DELAY).delay().method(delayer, "calculateDelay").asyncDelayed().to(DIRECT_OUT_PROCESS); //
+
+        from(DIRECT_OUT_PROCESS).process(consequenceProcessor) //
                 .dynamicRouter().method(dynamicRouter, "route") //
-                .process(endProcessor) //
-                .aggregate(header(AGGREGATION_ID_HEADER), aggregationStrategy) //
-                .completionTimeout(3000).completionSize(header(AGGREGATION_SIZE_HEADER)) //
-                .ignoreInvalidCorrelationKeys().closeCorrelationKeyOnCompletion(10) //
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        log.debug("Receive aggregation result {}", exchange);
-                        System.out.println("GENRESTYLEOUDA");
-                    }
-                });
+                .process(endProcessor); //
+        //                .aggregate(header(AGGREGATION_ID_HEADER), aggregationStrategy) //
+        //                .completionTimeout(3000).completionSize(header(AGGREGATION_SIZE_HEADER)) //
+        //                .ignoreInvalidCorrelationKeys().closeCorrelationKeyOnCompletion(10) //
+        //                .process(new Processor() {
+        //                    @Override
+        //                    public void process(Exchange exchange) throws Exception {
+        //                        log.debug("Receive aggregation result {}", exchange);
+        //                        System.out.println("GENRESTYLEOUDA");
+        //                    }
+        //                });
 
         from(DIRECT_COMMAND).process(cliProcessor);
 

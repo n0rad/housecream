@@ -44,7 +44,8 @@ public class DynamicRouteManager extends RouteBuilder {
                         .setHeader(InEventConverter.INPOINT_HEADER_NAME, constant(point)) //
                         .process(eventConverter) //
                         //                        .transform(body(Event.class)) //
-                        .to("seda:" + point.getId()).to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 blocking queue per inpoint
+                        .to("seda:" + point.getId()) //
+                        .to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 blocking queue per inpoint
             }
 
             camelContext.addRouteDefinition(routeDefinition);
