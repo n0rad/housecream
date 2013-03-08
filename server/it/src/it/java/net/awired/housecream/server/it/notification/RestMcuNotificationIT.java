@@ -1,13 +1,13 @@
 package net.awired.housecream.server.it.notification;
 
 import static net.awired.housecream.server.api.domain.inpoint.InPointType.PIR;
+import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
+import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.builder.InPointBuilder;
-import net.awired.housecream.server.it.builder.zone.LandBuilder;
+import net.awired.housecream.server.it.HcsItSession;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
-import net.awired.restmcu.it.builder.LineInfoBuilder;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Rule;
@@ -18,23 +18,23 @@ public class RestMcuNotificationIT {
     @Rule
     public HcsItServer hcs = new HcsItServer();
 
+    private LatchBoardResource board = new LatchBoardResource();
+    private LatchLineResource line = new LatchLineResource() //
+            .addLine(line(2).direction(INPUT).build());
+
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchLineResource(),
-            new LatchBoardResource());
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_not_return_error_on_unknown_event_received() throws Exception {
-        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().value(1).build());
-        long landId = hcs.zoneResource().createZone(new LandBuilder().name("land").build());
-
-        InPoint inPoint = new InPointBuilder().type(PIR).name("my pir1").zoneId(landId)
-                .uri("restmcu://127.0.0.1:5879/2").build();
-        hcs.inPointResource().createInPoint(inPoint);
+        HcsItSession session = hcs.session();
+        Land land = session.zone().createLand("landName");
+        session.inpoint().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
 
         RestMcuLineNotification lineNotif = new RestMcuLineNotification();
         lineNotif.setSource("unknown source");
 
-        restmcu.getResource(LatchBoardResource.class).buildNotifyProxyFromNotifyUrl().lineNotification(lineNotif);
+        board.sendNotif(lineNotif);
     }
 
 }

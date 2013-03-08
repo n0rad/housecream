@@ -1,6 +1,7 @@
 package net.awired.housecream.server.it;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,15 @@ public class HcwWebSocket implements WebSocket.OnTextMessage {
 
     public HcwWebSocket(WebSocketClient client) {
         this.client = client;
+    }
+
+    public HcwWebSocket open() {
+        try {
+            client.open(new URI("ws://localhost:8888"), this, 10, TimeUnit.SECONDS);
+            return this;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void resetLatchEventsCounter(int size) {

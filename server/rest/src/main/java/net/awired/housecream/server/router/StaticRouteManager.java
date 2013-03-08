@@ -15,6 +15,8 @@ public class StaticRouteManager extends RouteBuilder {
 
     public static final String DIRECT_COMMAND = "direct:command";
     public static final String DIRECT_ENGINE = "direct:engine";
+    public static final String DIRECT_OUT_PROCESS = "direct:out";
+    public static final String SEDA_DELAY = "seda:delay";
     //    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
 
     @Inject
@@ -40,9 +42,6 @@ public class StaticRouteManager extends RouteBuilder {
 
     @Inject
     private ActionAggregationStrategy aggregationStrategy;
-
-    public static final String DIRECT_OUT_PROCESS = "direct:out";
-    public static final String SEDA_DELAY = "seda:delay";
 
     @Override
     public void configure() throws Exception {

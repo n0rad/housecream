@@ -12,6 +12,10 @@ public class OutPointBuilder {
     private String name;
     private long zoneId;
 
+    public static OutPointBuilder out() {
+        return new OutPointBuilder();
+    }
+
     public OutPoint build() {
         OutPoint outPoint = new OutPoint();
         outPoint.setName(name);

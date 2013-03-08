@@ -43,9 +43,8 @@ public class DynamicRouteManager extends RouteBuilder {
                         .setHeader(InEventConverter.PLUGIN_HEADER_NAME, constant(plugin)) //
                         .setHeader(InEventConverter.INPOINT_HEADER_NAME, constant(point)) //
                         .process(eventConverter) //
-                        //                        .transform(body(Event.class)) //
                         .to("seda:" + point.getId()) //
-                        .to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 blocking queue per inpoint
+                        .to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 BlockingQueue per inpoint
             }
 
             camelContext.addRouteDefinition(routeDefinition);
@@ -54,6 +53,7 @@ public class DynamicRouteManager extends RouteBuilder {
             throw new IllegalStateException("Cannot register route for point : " + point, e);
         }
 
+        // TODO
         //        Float currentValue = plugin.getCurrentValue(point, camelContext);
         //        stateHolder.setState(point.getId(), currentValue);
     }
