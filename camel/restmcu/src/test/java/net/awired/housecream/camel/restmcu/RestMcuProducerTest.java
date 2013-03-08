@@ -1,7 +1,7 @@
 package net.awired.housecream.camel.restmcu;
 
+import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import net.awired.ajsl.test.RestServerRule;
-import net.awired.restmcu.api.domain.line.RestMcuLine;
 import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
@@ -19,16 +19,12 @@ public class RestMcuProducerTest extends CamelTestSupport {
     @EndpointInject(uri = "mock:result")
     protected MockEndpoint result;
 
+    private LatchLineResource line = new LatchLineResource() //
+            .addLine(line(3).value(43f).direction(RestMcuLineDirection.OUTPUT).build());
+    private LatchBoardResource board = new LatchBoardResource();
+
     @Rule
-    public RestServerRule boardRule = new RestServerRule("http://0.0.0.0:5879", new LatchLineResource() {
-        {
-            LineInfo lineInfo = new LineInfo();
-            lineInfo.value = 43f;
-            lineInfo.description = new RestMcuLine();
-            lineInfo.description.setDirection(RestMcuLineDirection.OUTPUT);
-            lines.put(3, lineInfo);
-        }
-    }, new LatchBoardResource());
+    public RestServerRule boardRule = new RestServerRule("http://0.0.0.0:5879", line, board);
 
     @Test
     public void should_send_new_line_value() throws Exception {
@@ -36,9 +32,7 @@ public class RestMcuProducerTest extends CamelTestSupport {
         ProducerTemplate template = context.createProducerTemplate();
         template.sendBody("direct:start", 42f);
 
-        LatchLineResource resource = boardRule.getResource(LatchLineResource.class);
-
-        Assertions.assertThat(resource.awaitLineValue(3)).isEqualTo(42);
+        Assertions.assertThat(line.awaitLineValue(3)).isEqualTo(42);
         assertMockEndpointsSatisfied();
     }
 

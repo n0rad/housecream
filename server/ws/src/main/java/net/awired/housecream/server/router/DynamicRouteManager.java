@@ -38,22 +38,22 @@ public class DynamicRouteManager extends RouteBuilder {
             RouteDefinition routeDefinition;
             if (plugin.isCommand()) {
                 routeDefinition = from(point.getUri().toString()).to(StaticRouteManager.DIRECT_COMMAND);
-                camelContext.addRouteDefinition(routeDefinition);
             } else {
                 routeDefinition = from(point.getUri().toString()) //
-                        .setHeader(InEventTransformer.PLUGIN_HEADER_NAME, constant(plugin)) //
-                        .setHeader(InEventTransformer.INPOINT_HEADER_NAME, constant(point)) //
-                        .process(eventTransformer) //
-                        .to("seda:" + point.getId()); //
-
-                camelContext.addRouteDefinition(routeDefinition);
-                camelContext.addRouteDefinition(from("seda:" + point.getId()).to(StaticRouteManager.DIRECT_ENGINE)); // TODO code smell, creating 1 blocking queue per inpoint
+                        .setHeader(InEventConverter.PLUGIN_HEADER_NAME, constant(plugin)) //
+                        .setHeader(InEventConverter.INPOINT_HEADER_NAME, constant(point)) //
+                        .process(eventConverter) //
+                        .to("seda:" + point.getId()) //
+                        .to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 BlockingQueue per inpoint
             }
+
+            camelContext.addRouteDefinition(routeDefinition);
             pointRoutes.put(uri, routeDefinition);
         } catch (Exception e) {
             throw new IllegalStateException("Cannot register route for point : " + point, e);
         }
 
+        // TODO
         //        Float currentValue = plugin.getCurrentValue(point, camelContext);
         //        stateHolder.setState(point.getId(), currentValue);
     }

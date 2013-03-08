@@ -1,26 +1,22 @@
 package net.awired.housecream.server.it.rule;
 
+import static net.awired.housecream.server.api.domain.inpoint.InPointType.PIR;
+import static net.awired.housecream.server.api.domain.outPoint.OutPointType.LIGHT;
+import static net.awired.housecream.server.api.domain.rule.ConditionType.event;
+import static net.awired.housecream.server.it.builder.ConditionBuilder.condition;
+import static net.awired.housecream.server.it.builder.ConsequenceBuilder.consequence;
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
+import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
+import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
+import static net.awired.restmcu.it.builder.NotifBuilder.notif;
 import static org.fest.assertions.api.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
-import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
-import net.awired.housecream.server.api.domain.outPoint.OutPointType;
-import net.awired.housecream.server.api.domain.rule.Condition;
-import net.awired.housecream.server.api.domain.rule.ConditionType;
-import net.awired.housecream.server.api.domain.rule.Consequence;
-import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.domain.zone.Land;
-import net.awired.housecream.server.it.HcWsItServer;
-import net.awired.housecream.server.it.builder.InPointBuilder;
-import net.awired.housecream.server.it.builder.OutPointBuilder;
-import net.awired.housecream.server.it.builder.zone.LandBuilder;
-import net.awired.housecream.server.it.restmcu.NotifBuilder;
-import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
-import net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition;
-import net.awired.restmcu.it.builder.LineInfoBuilder;
+import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.HcsItSession;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Rule;
@@ -28,45 +24,27 @@ import org.junit.Test;
 
 public class RuleSwitchIT {
 
-    @Rule
-    public HcWsItServer hc = new HcWsItServer();
+    private LatchBoardResource board = new LatchBoardResource();
+    private LatchLineResource line = new LatchLineResource() //
+            .addLine(line(2).direction(INPUT).build()) //
+            .addLine(line(3).direction(OUTPUT).build());
 
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchBoardResource(),
-            new LatchLineResource());
+    public HcsItServer hcs = new HcsItServer();
+
+    @Rule
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
-        restmcu.getResource(LatchLineResource.class).line(2, new LineInfoBuilder().direction(INPUT).value(1).build());
-        restmcu.getResource(LatchLineResource.class)
-                .line(3, new LineInfoBuilder().direction(OUTPUT).value(1).build());
+        HcsItSession session = hcs.session();
+        Land land = session.zone().createLand("landName");
+        InPoint pir = session.inpoint().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
+        OutPoint light = session.outpoint().create("my light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
+        session.rule().create("my first rule", condition(pir, 1, event), consequence(light, 1));
 
-        Land land = (Land) hc.zonesResource().createZone(new LandBuilder().name("land").build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(1).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1).build());
 
-        // inpoint
-        InPoint inPoint = new InPointBuilder().type(InPointType.PIR).name("my pir1").zoneId(land.getId())
-                .uri("restmcu://127.0.0.1:5879/2").build();
-        inPoint = hc.inPointsResource().createInPoint(inPoint);
-
-        // outpoint
-        OutPoint outPoint = new OutPointBuilder().name("my light1").type(OutPointType.LIGHT).zoneId(land.getId())
-                .uri("restmcu://127.0.0.1:5879/3").build();
-        outPoint = hc.outPointsResource().createOutPoint(outPoint);
-
-        // rule
-        EventRule rule = new EventRule();
-        rule.setName("my first rule");
-        rule.getConditions().add(new Condition(inPoint.getId(), 1, ConditionType.event));
-        rule.getConsequences().add(new Consequence(outPoint.getId(), 1));
-        hc.rulesResource().createRule(rule);
-
-        RestMcuLineNotification pinNotif = new NotifBuilder().lineId(2).oldValue(0).value(1).source("127.0.0.1:5879")
-                .notify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1).build();
-        LatchBoardResource boardResource = restmcu.getResource(LatchBoardResource.class);
-        boardResource.buildNotifyProxyFromNotifyUrl().lineNotification(pinNotif);
-
-        assertThat(boardResource.awaitUpdateSettings().getNotifyUrl()).isNotNull();
-        assertThat(restmcu.getResource(LatchLineResource.class).awaitLineValue(3)).isEqualTo(1);
+        assertThat(line.awaitLineValue(3)).isEqualTo(1);
     }
-
 }

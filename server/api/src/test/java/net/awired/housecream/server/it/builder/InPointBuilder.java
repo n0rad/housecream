@@ -13,6 +13,10 @@ public class InPointBuilder {
     private URI uri;
     private Long zoneId;
 
+    public static InPointBuilder in() {
+        return new InPointBuilder();
+    }
+
     public InPoint build() {
         InPoint inPoint = new InPoint();
         inPoint.setId(id);

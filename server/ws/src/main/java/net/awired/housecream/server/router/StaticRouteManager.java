@@ -15,6 +15,8 @@ public class StaticRouteManager extends RouteBuilder {
 
     public static final String DIRECT_COMMAND = "direct:command";
     public static final String DIRECT_ENGINE = "direct:engine";
+    public static final String DIRECT_OUT_PROCESS = "direct:out";
+    public static final String SEDA_DELAY = "seda:delay";
     //    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
 
     @Inject
@@ -53,8 +55,13 @@ public class StaticRouteManager extends RouteBuilder {
                 .bean(aggregationStrategy, "fillAggregationSize") //
                 .split().method(splitter, "split").parallelProcessing() //
                 .bean(aggregationStrategy, "removeCorrelationIdOnAsync") //
-                .delay().method(delayer, "calculateDelay").asyncDelayed() //
-                .process(consequenceProcessor) //
+                .choice() //
+                .when(header(aggregationStrategy.AGGREGATION_ID_HEADER).isNotNull()).to(DIRECT_OUT_PROCESS) //
+                .otherwise().inOnly(SEDA_DELAY);
+
+        from(SEDA_DELAY).delay().method(delayer, "calculateDelay").asyncDelayed().to(DIRECT_OUT_PROCESS); //
+
+        from(DIRECT_OUT_PROCESS).process(consequenceProcessor) //
                 .dynamicRouter().method(dynamicRouter, "route") //
                 .process(endProcessor); //
         //                .aggregate(header(AGGREGATION_ID_HEADER), aggregationStrategy) //
