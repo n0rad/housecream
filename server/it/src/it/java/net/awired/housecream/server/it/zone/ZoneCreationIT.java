@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it.zone;
 
-import net.awired.housecream.server.it.HcsItServer;
+import net.awired.housecream.server.it.HcWsItServer;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -10,7 +10,7 @@ public class ZoneCreationIT {
     public ExpectedException exception = ExpectedException.none();
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hcs = new HcWsItServer();
 
     //    @Test
     //    public void should_not_create_zone_without_name() {

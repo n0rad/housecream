@@ -9,8 +9,8 @@ import net.awired.ajsl.core.lang.exception.UpdateException;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.zone.Land;
-import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.HcsItSession;
+import net.awired.housecream.server.it.HcWsItServer;
+import net.awired.housecream.server.it.HcWsItSession;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Assert;
@@ -34,14 +34,14 @@ public class OutEventFailureIT {
     private FailSetLatchLineResource line = new FailSetLatchLineResource();
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hcs = new HcWsItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchBoardResource(), line);
 
     @Test
     public void should_send_failure_if_cannot_set_output() throws Exception {
-        HcsItSession session = hcs.session();
+        HcWsItSession session = hcs.session();
         Land land = session.zone().createLand("landName");
         OutPoint light = session.outpoint().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
 

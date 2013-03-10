@@ -1,24 +1,21 @@
 package net.awired.housecream.server.it.api;
 
 import net.awired.housecream.server.api.domain.zone.Land;
-import net.awired.housecream.server.api.resource.ZoneResource;
 import net.awired.housecream.server.api.resource.ZonesResource;
-import net.awired.housecream.server.it.HcsItSession;
+import net.awired.housecream.server.it.HcWsItSession;
 import net.awired.housecream.server.it.builder.zone.LandBuilder;
 
 public class ZoneApi {
 
-    private final HcsItSession session;
+    private final HcWsItSession session;
 
-    public ZoneApi(HcsItSession session) {
+    public ZoneApi(HcWsItSession session) {
         this.session = session;
     }
 
     public Land createLand(String name) {
-        Land land = new LandBuilder().name(name).build();
-        long createZone = session.getServer().getResource(ZoneResource.class, session).createZone(land);
-        long zoneId = createZone;
-        land.setId(zoneId);
+        Land land = (Land) session.getServer().getResource(ZonesResource.class, session)
+                .createZone(new LandBuilder().name(name).build());
         return land;
     }
 

@@ -4,29 +4,29 @@ import net.awired.ajsl.test.LoggingRule;
 import net.awired.ajsl.ws.rest.RestContext;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
-public class HcsItServer extends LoggingRule {
+public class HcWsItServer extends LoggingRule {
 
     private RestContext context = new RestContext();
 
     private WebSocketClientFactory factory;
 
-    public HcsItSession session() {
-        return new HcsItSession(this);
+    public HcWsItSession session() {
+        return new HcWsItSession(this);
     }
 
-    public <T> T getResource(Class<T> clazz, HcsItSession session) {
-        T client = context.prepareClient(clazz, HcsItContext.getUrl(), session.getSessionId(), session.isUseJson());
+    public <T> T getResource(Class<T> clazz, HcWsItSession session) {
+        T client = context.prepareClient(clazz, HcWsItContext.getUrl(), session.getSessionId(), session.isUseJson());
         return client;
     }
 
-    public HcwWebSocket newWebSocket() {
-        HcwWebSocket socket = new HcwWebSocket(factory.newWebSocketClient());
+    public HcWebWebSocket newWebSocket() {
+        HcWebWebSocket socket = new HcWebWebSocket(factory.newWebSocketClient());
         return socket;
     }
 
     @Override
     public void before() throws Throwable {
-        HcsItSession session = session();
+        HcWsItSession session = session();
         session.inpoint().deleteAll();
         session.outpoint().deleteAll();
         session.rule().deleteAll();

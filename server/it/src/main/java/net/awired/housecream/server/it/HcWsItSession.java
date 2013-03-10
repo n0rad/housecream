@@ -5,18 +5,18 @@ import net.awired.housecream.server.it.api.OutpointApi;
 import net.awired.housecream.server.it.api.RuleApi;
 import net.awired.housecream.server.it.api.ZoneApi;
 
-public class HcsItSession {
+public class HcWsItSession {
 
-    private final HcsItServer server;
+    private final HcWsItServer server;
 
     private String sessionId;
     private boolean useJson = true;
 
-    public HcsItSession(HcsItServer server) {
+    public HcWsItSession(HcWsItServer server) {
         this.server = server;
     }
 
-    public HcwWebSocket webSocket() {
+    public HcWebWebSocket webSocket() {
         return server.newWebSocket().open();
     }
 
@@ -50,7 +50,7 @@ public class HcsItSession {
         this.useJson = useJson;
     }
 
-    public HcsItServer getServer() {
+    public HcWsItServer getServer() {
         return server;
     }
 

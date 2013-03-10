@@ -40,9 +40,9 @@ public class DynamicRouteManager extends RouteBuilder {
                 routeDefinition = from(point.getUri().toString()).to(StaticRouteManager.DIRECT_COMMAND);
             } else {
                 routeDefinition = from(point.getUri().toString()) //
-                        .setHeader(InEventConverter.PLUGIN_HEADER_NAME, constant(plugin)) //
-                        .setHeader(InEventConverter.INPOINT_HEADER_NAME, constant(point)) //
-                        .process(eventConverter) //
+                        .setHeader(InEventTransformer.PLUGIN_HEADER_NAME, constant(plugin)) //
+                        .setHeader(InEventTransformer.INPOINT_HEADER_NAME, constant(point)) //
+                        .process(eventTransformer) //
                         .to("seda:" + point.getId()) //
                         .to(StaticRouteManager.DIRECT_ENGINE); // TODO code smell, creating 1 BlockingQueue per inpoint
             }

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class ZoneCreationIT {
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hcs = new HcWsItServer();
 
     @Test
     public void should_create_zone() throws Exception {

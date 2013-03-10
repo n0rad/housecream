@@ -8,18 +8,18 @@ import net.awired.housecream.server.api.domain.zone.Zone;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
-import net.awired.housecream.server.it.HcsItSession;
+import net.awired.housecream.server.it.HcWsItSession;
 
 public class InpointApi {
 
-    private final HcsItSession session;
+    private final HcWsItSession session;
 
-    public InpointApi(HcsItSession session) {
+    public InpointApi(HcWsItSession session) {
         this.session = session;
     }
 
     public InPoint create(String name, Zone zone, InPointType type, String uri) throws PluginNotFoundException {
-        InPoint inpoint = session.getServer().getResource(InPointResource.class, session)
+        InPoint inpoint = session.getServer().getResource(InPointsResource.class, session)
                 .createInPoint(in().name(name).uri(uri).type(type).zoneId(zone.getId()).build());
         return inpoint;
     }

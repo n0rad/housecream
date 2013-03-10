@@ -6,8 +6,8 @@ import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import static org.fest.assertions.api.Assertions.assertThat;
 import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.zone.Land;
-import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.HcsItSession;
+import net.awired.housecream.server.it.HcWsItServer;
+import net.awired.housecream.server.it.HcWsItSession;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Ignore;
@@ -22,14 +22,14 @@ public class RestMcuIT {
             .addLine(line(2).direction(OUTPUT).value(1).build());
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hcs = new HcWsItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_update_notify_url_on_creation() throws Exception {
-        HcsItSession session = hcs.session();
+        HcWsItSession session = hcs.session();
         Land land = session.zone().createLand("land");
         session.inpoint().create("my pir", land, PIR, "restmcu://127.0.0.1:5879/2");
 

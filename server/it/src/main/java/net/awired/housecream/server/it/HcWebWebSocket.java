@@ -24,7 +24,7 @@ public class HcWebWebSocket implements WebSocket.OnTextMessage {
         this.client = client;
     }
 
-    public HcwWebSocket open() {
+    public HcWebWebSocket open() {
         try {
             client.open(new URI("ws://localhost:8888"), this, 10, TimeUnit.SECONDS);
             return this;

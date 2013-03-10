@@ -17,8 +17,8 @@ import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.zone.Land;
-import net.awired.housecream.server.it.HcsItServer;
-import net.awired.housecream.server.it.HcsItSession;
+import net.awired.housecream.server.it.HcWsItServer;
+import net.awired.housecream.server.it.HcWsItSession;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.it.builder.NotifBuilder;
 import net.awired.restmcu.it.resource.LatchBoardResource;
@@ -34,14 +34,14 @@ public class RuleRetriggerableIT {
             .addLine(line(3).direction(OUTPUT).value(1).build());
 
     @Rule
-    public HcsItServer hcs = new HcsItServer();
+    public HcWsItServer hcs = new HcWsItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_retrigger_in_time() throws Exception {
-        HcsItSession session = hcs.session();
+        HcWsItSession session = hcs.session();
         Land land = session.zone().createLand("land");
         InPoint pir = session.inpoint().create("my pir", land, PIR, "restmcu://127.0.0.1:5879/2");
         OutPoint light = session.outpoint().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
