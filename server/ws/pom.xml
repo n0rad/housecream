@@ -32,6 +32,10 @@
 
         <!-- plugins -->
         <dependency>
+            <groupId>net.awired.housecream.server</groupId>
+            <artifactId>housecream-server-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.awired.housecream.plugins</groupId>
             <artifactId>housecream-plugins-restmcu</artifactId>
         </dependency>
@@ -110,20 +114,6 @@
                     <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-
-
-
-
-
-        <dependency>
-            <groupId>net.awired.housecream.server</groupId>
-            <artifactId>housecream-server-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.awired.housecream.plugins</groupId>
-            <artifactId>housecream-plugins-mail</artifactId>
         </dependency>
 
         <dependency>
@@ -277,9 +267,6 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
-
-
-
 
 		<dependency>
 			<groupId>net.awired.bootstrap</groupId>

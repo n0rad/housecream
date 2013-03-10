@@ -81,7 +81,6 @@
 			<groupId>net.awired.housecream.server</groupId>
 			<artifactId>housecream-server-api</artifactId>
 			<type>test-jar</type>
-			<scope>test</scope>
 		</dependency>
         <dependency>
             <groupId>net.awired.restmcu</groupId>
