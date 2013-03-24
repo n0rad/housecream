@@ -36,8 +36,8 @@
 
 
     <!-- Just for testing... -->
-    <sec:http pattern="/oauth/cache_approvals" security="none"/>
-    <sec:http pattern="/oauth/uncache_approvals" security="none"/>
+    <sec:http pattern="/ws2/oauth/cache_approvals" security="none"/>
+    <sec:http pattern="/ws2/oauth/uncache_approvals" security="none"/>
 
     <sec:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
         <sec:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />

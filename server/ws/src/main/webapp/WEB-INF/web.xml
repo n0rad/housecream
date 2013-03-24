@@ -77,7 +77,7 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>indexServlet</servlet-name>
+		<servlet-name>indexServlet</servlet-name> 
 		<servlet-class>net.awired.ajsl.web.IndexTemplateServlet</servlet-class>
 		<init-param>
 			<param-name>tplPath</param-name>
