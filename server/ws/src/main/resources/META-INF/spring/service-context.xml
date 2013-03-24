@@ -14,7 +14,7 @@
 	<task:executor id="executor" pool-size="7" />
 	<task:scheduler id="scheduler" pool-size="10" />
 
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+<!-- 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" /> -->
 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
 	<bean class="net.awired.client.bean.validation.js.service.ValidationService" />
 

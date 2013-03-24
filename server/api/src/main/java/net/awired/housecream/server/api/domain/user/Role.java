@@ -13,17 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @XmlRootElement
-public class Role extends IdEntityImpl<Long> implements GrantedAuthority {
-
-    @Column(unique = true)
-    private String name;
-
-    @Override
-    public String getAuthority() {
-        return name;
-    }
-
-    ///////////////////////////////////////////:
+public class Role extends IdEntityImpl<String> implements GrantedAuthority {
 
     @XmlTransient
     @ManyToMany(mappedBy = "roles")
@@ -31,23 +21,30 @@ public class Role extends IdEntityImpl<Long> implements GrantedAuthority {
 
     ////////////////////////////////////
 
+    public Role() {
+    }
+
+    public Role(String name) {
+        this.id = name;
+    }
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + id;
+    }
+
+    ////////////////////////////////////
+
     @Override
     @XmlElement
-    public Long getId() {
+    @Column(unique = true)
+    public String getId() {
         return super.getId();
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(String id) {
         super.setId(id);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<User> getUsers() {

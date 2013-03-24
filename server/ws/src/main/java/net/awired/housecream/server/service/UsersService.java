@@ -1,6 +1,7 @@
 package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
+import net.awired.housecream.server.api.domain.user.Role;
 import net.awired.housecream.server.api.domain.user.User;
 import net.awired.housecream.server.api.resource.UsersResource;
 import net.awired.housecream.server.storage.dao.UserDao;
@@ -24,6 +25,7 @@ public class UsersService implements UsersResource {
 
     @Override
     public User createUser(User user) {
+        user.getRoles().add(new Role("user"));
         userDao.persist(user); //to have an ID
         user.setHashedPassword(encoder.encodePassword(user.getClearPassword(), saltSource.getSalt(user)));
         user.setClearPassword(null);
