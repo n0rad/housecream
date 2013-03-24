@@ -19,7 +19,7 @@ public class OutEventIT {
     @Rule
     public HcWsItServer hcs = new HcWsItServer();
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(3).direction(OUTPUT).build());
 

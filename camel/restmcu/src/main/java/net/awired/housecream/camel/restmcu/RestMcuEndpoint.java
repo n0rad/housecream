@@ -3,7 +3,7 @@ package net.awired.housecream.camel.restmcu;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import net.awired.ajsl.ws.rest.RestContext;
+import net.awired.ajsl.ws.rest.RestBuilder;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -16,7 +16,7 @@ public class RestMcuEndpoint extends DefaultEndpoint {
 
     private static String HTTP_PREFIX = "http://";
 
-    private RestContext restContext = new RestContext();
+    private RestBuilder restContext = new RestBuilder();
 
     private URL notifyUrl;
     private int lineNumber;
@@ -75,11 +75,11 @@ public class RestMcuEndpoint extends DefaultEndpoint {
         }
     }
 
-    public RestContext getRestContext() {
+    public RestBuilder getRestContext() {
         return restContext;
     }
 
-    public void setRestContext(RestContext restContext) {
+    public void setRestContext(RestBuilder restContext) {
         this.restContext = restContext;
     }
 

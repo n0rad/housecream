@@ -16,7 +16,7 @@ import org.junit.Test;
 
 public class RestMcuIT {
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
 
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).direction(OUTPUT).value(1).build());

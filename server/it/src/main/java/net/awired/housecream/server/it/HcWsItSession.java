@@ -1,16 +1,14 @@
 package net.awired.housecream.server.it;
 
+import net.awired.ajsl.ws.rest.RestSession;
 import net.awired.housecream.server.it.api.InpointApi;
 import net.awired.housecream.server.it.api.OutpointApi;
 import net.awired.housecream.server.it.api.RuleApi;
 import net.awired.housecream.server.it.api.ZoneApi;
 
-public class HcWsItSession {
+public class HcWsItSession extends RestSession {
 
     private final HcWsItServer server;
-
-    private String sessionId;
-    private boolean useJson = true;
 
     public HcWsItSession(HcWsItServer server) {
         this.server = server;
@@ -37,18 +35,6 @@ public class HcWsItSession {
     }
 
     ///////////////////////////////////////////
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public boolean isUseJson() {
-        return useJson;
-    }
-
-    public void setUseJson(boolean useJson) {
-        this.useJson = useJson;
-    }
 
     public HcWsItServer getServer() {
         return server;

@@ -11,6 +11,7 @@ import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
+import static net.awired.restmcu.it.builder.NotifBuilder.notif;
 import static org.fest.assertions.api.Assertions.assertThat;
 import java.util.Date;
 import net.awired.ajsl.test.RestServerRule;
@@ -20,7 +21,6 @@ import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.HcWsItSession;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
-import net.awired.restmcu.it.builder.NotifBuilder;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.apache.commons.lang3.tuple.Pair;
@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class RuleNonRetriggerableIT {
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).direction(INPUT).value(1).build()) //
             .addLine(line(3).direction(OUTPUT).value(1).build());
@@ -49,10 +49,8 @@ public class RuleNonRetriggerableIT {
         session.rule().create("firstrule", condition(pir, 1, event), //
                 asList(consequence(light, 1), consequence(light, 0, 5000, NON_RETRIGGER)));
 
-        RestMcuLineNotification pinNotif1 = new NotifBuilder().lineId(2).oldVal(0).val(1).source("127.0.0.1:5879")
-                .notify(SUP_OR_EQUAL, 1).build();
-        RestMcuLineNotification pinNotif0 = new NotifBuilder().lineId(2).oldVal(1).val(0).source("127.0.0.1:5879")
-                .notify(SUP_OR_EQUAL, 1).build();
+        RestMcuLineNotification pinNotif1 = notif().lineId(2).oldVal(0).val(1).notify(SUP_OR_EQUAL, 1).build();
+        RestMcuLineNotification pinNotif0 = notif().lineId(2).oldVal(1).val(0).notify(SUP_OR_EQUAL, 1).build();
 
         Date startPush = new Date();
 

@@ -17,7 +17,7 @@ public class RestMcuConsumerServerUrlTest extends CamelTestSupport {
 
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).value(42f).direction(RestMcuLineDirection.INPUT).build());
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
 
     @Rule
     public RestServerRule boardRule = new RestServerRule("http://0.0.0.0:5879", line, board);

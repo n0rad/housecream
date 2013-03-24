@@ -24,7 +24,7 @@ import org.junit.Test;
 
 public class RuleSwitchIT {
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).direction(INPUT).build()) //
             .addLine(line(3).direction(OUTPUT).build());
@@ -43,8 +43,7 @@ public class RuleSwitchIT {
         OutPoint light = session.outpoint().create("my light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
         session.rule().create("my first rule", condition(pir, 1, event), consequence(light, 1));
 
-        board.sendNotif(notif().line(line.lineInfo(2)).val(1).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(1).notify(SUP_OR_EQUAL, 1).build());
 
         assertThat(line.awaitLineValue(3)).isEqualTo(1);
     }

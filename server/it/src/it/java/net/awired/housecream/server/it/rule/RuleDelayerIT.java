@@ -25,7 +25,7 @@ import org.junit.Test;
 
 public class RuleDelayerIT {
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).direction(INPUT).value(1).build()) //
             .addLine(line(3).direction(OUTPUT).value(1).build());
@@ -44,8 +44,7 @@ public class RuleDelayerIT {
         OutPoint light = session.outpoint().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
         session.rule().create("rule", condition(pir, 1, event), consequence(light, 1, 5000));
 
-        board.sendNotif(notif().line(line.lineInfo(2)).val(1).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(1).notify(SUP_OR_EQUAL, 1).build());
 
         Date start = new Date();
         assertThat(line.awaitLineValue(3)).isEqualTo(1);

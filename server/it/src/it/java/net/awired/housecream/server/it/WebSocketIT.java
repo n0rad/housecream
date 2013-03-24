@@ -2,6 +2,7 @@ package net.awired.housecream.server.it;
 
 import static net.awired.housecream.server.api.domain.inpoint.InPointType.PIR;
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
+import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import static org.junit.Assert.assertEquals;
 import java.util.List;
@@ -11,7 +12,6 @@ import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
-import net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Rule;
@@ -22,7 +22,7 @@ public class WebSocketIT {
     @Rule
     public HcWsItServer hcs = new HcWsItServer();
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).direction(INPUT).build());
 
@@ -35,8 +35,8 @@ public class WebSocketIT {
         Land land = session.zone().createLand("landName");
         InPoint pir = session.inpoint().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
         HcWebWebSocket webSocket = session.webSocket();
-        RestMcuLineNotification notif = new RestMcuLineNotification(2, 0f, 1f, "127.0.0.1:5879",
-                new RestMcuLineNotify(RestMcuLineNotifyCondition.SUP_OR_EQUAL, 1f));
+        RestMcuLineNotification notif = new RestMcuLineNotification(2, 0f, 1f,
+                new RestMcuLineNotify(SUP_OR_EQUAL, 1f));
         board.sendNotif(notif);
 
         List<Event> events = webSocket.awaitEvents();

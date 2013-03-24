@@ -1,51 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
-    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:task="http://www.springframework.org/schema/task"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                         http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
                         http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                         http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
                         http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
                         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd"
-    default-autowire="byName">
+	default-autowire="byName">
 
-    <context:component-scan base-package="net.awired.housecream" />
-    <context:component-scan base-package="net.awired.ajsl" />
+	<context:component-scan base-package="net.awired.housecream" />
+	<context:component-scan base-package="net.awired.ajsl" />
 
-    <bean
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-<!--        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> -->
-<!--        <property name="searchContextAttributes" value="true" /> -->
-<!--        <property name="contextOverride" value="true" /> -->
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-        <property name="location">
-            <value>${HOUSECREAM_HOME}/config.properties</value>
-        </property>
-    </bean>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> -->
+		<!-- <property name="searchContextAttributes" value="true" /> -->
+		<!-- <property name="contextOverride" value="true" /> -->
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location">
+			<value>${HOUSECREAM_HOME}/config.properties</value>
+		</property>
+	</bean>
 
-    <bean
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath*:META-INF/spring/*.properties</value>
-            </list>
-        </property>
-        <property name="propertiesArray">
-            <list>
-                <!-- <bean factory-bean="housecreamApplication" factory-method="housecreamProperties" 
-                    /> -->
-            </list>
-        </property>
-        <property name="ignoreUnresolvablePlaceholders" value="false" />
-    </bean>
-
-
-
-
-
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:META-INF/spring/*.properties</value>
+			</list>
+		</property>
+		<property name="propertiesArray">
+			<list>
+				<!-- <bean factory-bean="housecreamApplication" factory-method="housecreamProperties" /> -->
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="false" />
+	</bean>
 
 </beans>

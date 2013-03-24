@@ -12,6 +12,7 @@ import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
+import org.springframework.security.access.annotation.Secured;
 
 @Path("/inpoints")
 public interface InPointsResource {
@@ -24,6 +25,7 @@ public interface InPointsResource {
     InPoint createInPoint(@Valid InPoint inPoint) throws PluginNotFoundException;
 
     @GET
+    @Secured("ROLE_ADMIN")
     InPoints getInPoints(@QueryParam("length") Integer length, //
             @QueryParam("start") Integer start, //
             @QueryParam("search") String search, //
@@ -36,4 +38,5 @@ public interface InPointsResource {
     @GET
     @Path("/types")
     List<InPointType> getInPointTypes();
+
 }

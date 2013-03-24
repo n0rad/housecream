@@ -22,7 +22,7 @@ public class RestMcuProducer extends DefaultProducer {
         super(endpoint);
         boardUrl = endpoint.findBoardUrl();
         lineId = endpoint.findLineId();
-        restMcuClient = endpoint.getRestContext().prepareClient(RestMcuLineResource.class, boardUrl, null, true);
+        restMcuClient = endpoint.getRestContext().buildClient(RestMcuLineResource.class, boardUrl);
 
     }
 

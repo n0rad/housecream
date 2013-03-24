@@ -64,8 +64,8 @@ public class RestMcuConsumer extends DefaultConsumer {
 
     private void updateNotificationUrl(RestMcuEndpoint endpoint, String notifyUrl) {
         log.debug("Calling board : {} to update notifyUrl with : {}", endpoint.findBoardUrl(), notifyUrl);
-        RestMcuBoardResource client = endpoint.getRestContext().prepareClient(RestMcuBoardResource.class,
-                endpoint.findBoardUrl(), null, true);
+        RestMcuBoardResource client = endpoint.getRestContext().buildClient(RestMcuBoardResource.class,
+                endpoint.findBoardUrl());
         RestMcuBoardSettings boardSettings = new RestMcuBoardSettings();
         boardSettings.setNotifyUrl(notifyUrl);
         try {
@@ -80,7 +80,7 @@ public class RestMcuConsumer extends DefaultConsumer {
         super.doStart();
         RestMcuEndpoint endpoint = (RestMcuEndpoint) getEndpoint();
         URL listeningUrl = findListeningUrl();
-        server = endpoint.getRestContext().prepareServer(listeningUrl.toString(),
+        server = endpoint.getRestContext().buildServer(listeningUrl.toString(),
                 Arrays.asList(new RestMcuCamelNotifyResource(this)));
         log.debug("Started restmcu notify server {}:{}", listeningUrl.getHost(), findListeningPort());
         //        checkLineIsInput(); // TODO if board is not available at server start this fail and block the server 
@@ -92,8 +92,8 @@ public class RestMcuConsumer extends DefaultConsumer {
 
     private void checkLineIsInput() throws NotFoundException {
         LOG.debug("Get line description from board to check consumer direction : {}", boardUrl);
-        RestMcuLineResource restMcuClient = ((RestMcuEndpoint) getEndpoint()).getRestContext().prepareClient(
-                RestMcuLineResource.class, boardUrl, null, true);
+        RestMcuLineResource restMcuClient = ((RestMcuEndpoint) getEndpoint()).getRestContext().buildClient(
+                RestMcuLineResource.class, boardUrl);
         RestMcuLine line = restMcuClient.getLine(lineId);
         if (line.getDirection() != RestMcuLineDirection.INPUT) {
             throw new IllegalStateException("Cannot start a restmcu producer for a non INPUT line : " + line);

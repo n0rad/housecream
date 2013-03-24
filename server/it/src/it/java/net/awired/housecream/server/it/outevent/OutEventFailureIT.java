@@ -32,12 +32,13 @@ public class OutEventFailureIT {
     }
 
     private FailSetLatchLineResource line = new FailSetLatchLineResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
 
     @Rule
     public HcWsItServer hcs = new HcWsItServer();
 
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", new LatchBoardResource(), line);
+    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_send_failure_if_cannot_set_output() throws Exception {

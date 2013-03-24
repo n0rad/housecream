@@ -1,12 +1,13 @@
 package net.awired.housecream.server.it;
 
 import net.awired.ajsl.test.LoggingRule;
-import net.awired.ajsl.ws.rest.RestContext;
+import net.awired.ajsl.ws.rest.RestBuilder;
+import net.awired.housecream.server.it.api.UserApi;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
 public class HcWsItServer extends LoggingRule {
 
-    private RestContext context = new RestContext();
+    private RestBuilder context = new RestBuilder();
 
     private WebSocketClientFactory factory;
 
@@ -15,8 +16,12 @@ public class HcWsItServer extends LoggingRule {
     }
 
     public <T> T getResource(Class<T> clazz, HcWsItSession session) {
-        T client = context.prepareClient(clazz, HcWsItContext.getUrl(), session.getSessionId(), session.isUseJson());
+        T client = context.buildClient(clazz, HcWsItContext.getUrl(), session);
         return client;
+    }
+
+    public UserApi user() {
+        return new UserApi(this);
     }
 
     public HcWebWebSocket newWebSocket() {

@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class RuleToggleIT {
 
-    private LatchBoardResource board = new LatchBoardResource();
+    private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
 
     private LatchLineResource line = new LatchLineResource() //
             .addLine(line(2).direction(INPUT).build()) //
@@ -50,26 +50,21 @@ public class RuleToggleIT {
                 consequence(light, 0));
 
         //push
-        board.sendNotif(notif().line(line.lineInfo(2)).val(1).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(1).notify(SUP_OR_EQUAL, 1).build());
         assertThat(line.awaitLineValue(3)).isEqualTo(0);
 
         // release
-        board.sendNotif(notif().line(line.lineInfo(2)).val(0).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(0).notify(SUP_OR_EQUAL, 1).build());
 
         //push
-        board.sendNotif(notif().line(line.lineInfo(2)).val(1).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(1).notify(SUP_OR_EQUAL, 1).build());
         assertThat(line.awaitLineValue(3)).isEqualTo(1);
 
         // release
-        board.sendNotif(notif().line(line.lineInfo(2)).val(0).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(0).notify(SUP_OR_EQUAL, 1).build());
 
         //push
-        board.sendNotif(notif().line(line.lineInfo(2)).val(1).source("127.0.0.1:5879").notify(SUP_OR_EQUAL, 1)
-                .build());
+        board.sendNotif(notif().line(line.lineInfo(2)).val(1).notify(SUP_OR_EQUAL, 1).build());
         assertThat(line.awaitLineValue(3)).isEqualTo(0);
     }
 
