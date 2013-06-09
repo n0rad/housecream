@@ -19,6 +19,15 @@
 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
 	<bean class="net.awired.client.bean.validation.js.service.ValidationService" />
 
+
+	<bean id="swaggerResourceJSON" class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />
+	<bean id="swaggerResourceXML" class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceXML" />
+
+	<bean id="basicApplication" class="com.wordnik.swagger.sample.util.BasicApplication">
+		<property name="resourcePackage" value="net.awired" />
+	</bean>
+
+
 	<jaxrs:server id="restRouter" address="/" staticSubresourceResolution="true">
 		<jaxrs:inInterceptors>
 			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
@@ -38,29 +47,77 @@
 			<ref bean="zonesService" />
 			<ref bean="userService" />
 			<ref bean="usersService" />
+
+			<ref bean="swaggerResourceJSON" />
+			<ref bean="swaggerResourceXML" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json" />
 			<entry key="xml" value="application/xml" />
 		</jaxrs:extensionMappings>
 		<jaxrs:providers>
+			<bean class="net.awired.ajsl.security.SecurityFilter">
+				<property name="dataProvider" ref="oauthProvider" />
+			</bean>
 			<ref bean="jaxbProvider" />
 			<ref bean="jsonProvider" />
-			<bean class="net.awired.ajsl.ws.resource.mapper.GenericExceptionMapper" />
-			<bean class="net.awired.ajsl.ws.resource.mapper.RuntimeExceptionMapper" />
+			<bean class="net.awired.ajsl.ws.resource.mapper.generic.GenericExceptionMapper" />
+            <bean class="net.awired.ajsl.ws.resource.mapper.generic.RuntimeExceptionMapper" />
+            <bean class="net.awired.ajsl.ws.resource.mapper.generic.WebApplicationExceptionMapper" />
+<!--            <bean class="net.awired.ajsl.ws.resource.mapper.GenericResponseExceptionMapper"> -->
+<!--                <constructor-arg> -->
+<!--                    <ref bean="jsonProvider" /> -->
+<!--                </constructor-arg> -->
+<!--            </bean> -->
+
 			<bean class="net.awired.ajsl.ws.resource.mapper.ValidationExceptionMapper" />
 			<bean class="net.awired.ajsl.ws.resource.mapper.NotFoundExceptionMapper" />
-			<bean class="net.awired.ajsl.ws.resource.mapper.RuntimeNotFoundExceptionMapper" />
 			<bean class="net.awired.ajsl.ws.resource.mapper.UpdateExceptionMapper" />
-			<bean class="net.awired.ajsl.ws.resource.mapper.AccessDeniedExceptionMapper" />
-			<bean class="net.awired.ajsl.ws.resource.mapper.AuthenticationExceptionMapper" />
-			<bean class="net.awired.ajsl.ws.resource.mapper.GenericResponseExceptionMapper">
-				<constructor-arg>
-					<ref bean="jsonProvider" />
-				</constructor-arg>
-			</bean>
 		</jaxrs:providers>
 	</jaxrs:server>
+
+	<!-- <bean -->
+	<!-- class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> -->
+	<!-- <property name="targetObject" ref="restRouter" /> -->
+	<!-- <property name="targetMethod" value="setApplication" /> -->
+	<!-- <property name="arguments"> -->
+	<!-- <list> -->
+	<!-- <ref bean="basicApplication"/> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
+
+	<!-- <bean class="org.apache.cxf.jaxrs.JAXRSServerFactoryBean" init-method="create"> -->
+	<!-- <property name="address" value="/" /> -->
+	<!-- <property name="serviceBeans"> -->
+	<!-- <list> -->
+
+	<!-- <ref bean="resourceService" /> -->
+	<!-- <ref bean="inPointService" /> -->
+	<!-- <ref bean="inPointsService" /> -->
+	<!-- <ref bean="outPointService" /> -->
+	<!-- <ref bean="outPointsService" /> -->
+	<!-- <ref bean="ruleService" /> -->
+	<!-- <ref bean="rulesService" /> -->
+	<!-- <ref bean="zoneService" /> -->
+	<!-- <ref bean="zonesService" /> -->
+	<!-- <ref bean="userService" /> -->
+	<!-- <ref bean="usersService" /> -->
+
+
+	<!-- <ref bean="swaggerResourceJSON" /> -->
+	<!-- <ref bean="swaggerResourceXML" /> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- <property name="providers"> -->
+	<!-- <list> -->
+	<!-- <ref bean="jsonProvider" /> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- <property name="application" ref="basicApplication" /> -->
+	<!-- </bean> -->
+
 
 
 
@@ -68,16 +125,16 @@
 
 	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
 		<property name="serializationInclusion" value="NON_NULL" />
-        <property name="annotationIntrospector">
-            <bean class="com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair">
-                <constructor-arg index="0">
-                    <bean class="com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector" />
-                </constructor-arg>
-                <constructor-arg index="1">
-                    <bean class="com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" />
-                </constructor-arg>
-            </bean>
-        </property>
+		<property name="annotationIntrospector">
+			<bean class="com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair">
+				<constructor-arg index="0">
+					<bean class="com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector" />
+				</constructor-arg>
+				<constructor-arg index="1">
+					<bean class="com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" />
+				</constructor-arg>
+			</bean>
+		</property>
 	</bean>
 
 	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />

@@ -28,7 +28,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-
 		<!-- PLUGINS -->
 		<dependency>
 			<groupId>net.awired.housecream.plugins</groupId>
@@ -197,6 +196,11 @@
 			<artifactId>swagger-jaxrs_2.9.1</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.8</version>
+		</dependency>
 
 		<!-- Logger -->
 		<dependency>
@@ -305,6 +309,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 
 	<build>
 		<finalName>housecream-ws</finalName>

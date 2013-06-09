@@ -5,4 +5,6 @@ import javax.ws.rs.Path;
 @Path("/users/{id:\\d+}")
 public interface UserResource {
 
+    //    User updateUser(long userId, User user);
+
 }

@@ -1,7 +1,6 @@
 package net.awired.housecream.server.api.domain.user;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -18,15 +17,13 @@ import javax.xml.bind.annotation.XmlTransient;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 //@NamedQueries({ //
 //@NamedQuery(name = QUERY_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = :" + QUERY_PARAM_USERNAME) })
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class User extends IdEntityImpl<String> implements UserDetails {
+public class User extends IdEntityImpl<String> /* implements UserDetails */{
 
     public static final String QUERY_PARAM_USERNAME = "QUERY_PARAM_USERNAME";
     public static final String QUERY_BY_USERNAME = "QUERY_BY_USERNAME";
@@ -62,13 +59,11 @@ public class User extends IdEntityImpl<String> implements UserDetails {
         this.clearPassword = password;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-        //        return groups;
-    }
+    //    public Collection<? extends GrantedAuthority> getAuthorities() {
+    //        return null;
+    //        //        return groups;
+    //    }
 
-    @Override
     @XmlTransient
     public boolean isAccountNonExpired() {
         if (passwordExpiration == null) {
@@ -77,13 +72,11 @@ public class User extends IdEntityImpl<String> implements UserDetails {
         return new Date().getTime() - passwordExpiration.getTime() > 0;
     }
 
-    @Override
     @XmlTransient
     public boolean isAccountNonLocked() {
         return !locked;
     }
 
-    @Override
     @XmlTransient
     public boolean isCredentialsNonExpired() {
         if (passwordExpiration == null) {
@@ -92,12 +85,10 @@ public class User extends IdEntityImpl<String> implements UserDetails {
         return new Date().getTime() - passwordExpiration.getTime() > 0;
     }
 
-    @Override
     public String getPassword() {
         return hashedPassword;
     }
 
-    @Override
     public String getUsername() {
         return id;
     }
@@ -125,7 +116,6 @@ public class User extends IdEntityImpl<String> implements UserDetails {
         this.email = email;
     }
 
-    @Override
     public boolean isEnabled() {
         return enabled;
     }

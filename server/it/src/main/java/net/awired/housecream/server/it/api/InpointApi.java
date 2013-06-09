@@ -4,6 +4,7 @@ import static net.awired.housecream.server.it.builder.InPointBuilder.in;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
+import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.InPointsResource;
@@ -22,6 +23,11 @@ public class InpointApi {
         InPoint inpoint = session.getServer().getResource(InPointsResource.class, session)
                 .createInPoint(in().name(name).uri(uri).type(type).zoneId(zone.getId()).build());
         return inpoint;
+    }
+
+    public InPoints list() {
+        return session.getServer().getResource(InPointsResource.class, session)
+                .getInPoints(null, null, null, null, null);
     }
 
     public void deleteAll() {

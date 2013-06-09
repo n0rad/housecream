@@ -2,7 +2,6 @@ package net.awired.housecream.server.it;
 
 import net.awired.ajsl.test.LoggingRule;
 import net.awired.ajsl.ws.rest.RestBuilder;
-import net.awired.housecream.server.it.api.UserApi;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
 public class HcWsItServer extends LoggingRule {
@@ -11,17 +10,13 @@ public class HcWsItServer extends LoggingRule {
 
     private WebSocketClientFactory factory;
 
-    public HcWsItSession session() {
-        return new HcWsItSession(this);
+    public HcWsItSession session(String username, String password) {
+        return new HcWsItSession(this, username, password);
     }
 
     public <T> T getResource(Class<T> clazz, HcWsItSession session) {
         T client = context.buildClient(clazz, HcWsItContext.getUrl(), session);
         return client;
-    }
-
-    public UserApi user() {
-        return new UserApi(this);
     }
 
     public HcWebWebSocket newWebSocket() {
@@ -31,11 +26,11 @@ public class HcWsItServer extends LoggingRule {
 
     @Override
     public void before() throws Throwable {
-        HcWsItSession session = session();
-        session.inpoint().deleteAll();
-        session.outpoint().deleteAll();
-        session.rule().deleteAll();
-        session.zone().deleteAll();
+        //        HcWsItSession session = session();
+        //        session.inpoint().deleteAll();
+        //        session.outpoint().deleteAll();
+        //        session.rule().deleteAll();
+        //        session.zone().deleteAll();
 
         factory = new WebSocketClientFactory();
         factory.setBufferSize(4096);

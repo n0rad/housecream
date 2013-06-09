@@ -10,7 +10,7 @@ public class UserApi {
     private HcWsItSession session;
 
     public UserApi(HcWsItServer server) {
-        this.session = new HcWsItSession(server);
+        //        this.session = new HcWsItSession(server);
     }
 
     public UserApi(HcWsItSession session) {

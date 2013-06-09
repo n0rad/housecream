@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import net.awired.ajsl.core.lang.exception.NotFoundException;
 import net.awired.ajsl.persistence.entity.Order;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
@@ -19,10 +21,15 @@ import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiError;
+import com.wordnik.swagger.annotations.ApiErrors;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 @Service
 @Validated
 @Transactional
+@Api(value = "/inpoints", description = "Operations about inpoints")
 public class InPointsService implements InPointsResource {
 
     @Inject
@@ -64,6 +71,10 @@ public class InPointsService implements InPointsResource {
         }
     }
 
+    @POST
+    @Path("")
+    @ApiOperation(value = "create a input point", responseClass = "net.awired.housecream.server.api.domain.inpoint.InPoint")
+    @ApiErrors({ @ApiError(code = 500, reason = "plugin not found") })
     @Override
     public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
         inPoint.setUri(pluginService.validateAndNormalizeURI(inPoint.getUri()));

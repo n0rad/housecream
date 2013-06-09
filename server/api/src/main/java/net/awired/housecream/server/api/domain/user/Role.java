@@ -9,11 +9,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import net.awired.ajsl.persistence.entity.IdEntityImpl;
-import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @XmlRootElement
-public class Role extends IdEntityImpl<String> implements GrantedAuthority {
+public class Role extends IdEntityImpl<String> /* implements GrantedAuthority */{
 
     @XmlTransient
     @ManyToMany(mappedBy = "roles")
@@ -28,7 +27,6 @@ public class Role extends IdEntityImpl<String> implements GrantedAuthority {
         this.id = name;
     }
 
-    @Override
     public String getAuthority() {
         return "ROLE_" + id;
     }
