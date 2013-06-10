@@ -30,12 +30,15 @@ public class Main {
         }
 
         if (argManager.info.isSet()) {
-            hc.printInfo();
+            System.out.println("Housecream version          : " + hc.getVersion());
+            System.out.println("Housecream home             : " + hc.getHome());
+            System.out.println("Housecream log conf         : " + hc.getLogbackConf());
+            System.out.println("Housecream plugin directory : " + hc.getPluginDirectory());
             System.exit(0);
         }
 
         if (argManager.clearDb.isSet()) {
-            cleanDb();
+            clearDb();
             System.exit(0);
         }
 
@@ -43,9 +46,9 @@ public class Main {
         runServer();
     }
 
-    public void cleanDb() {
+    public void clearDb() {
         try {
-            System.out.println("clearing database in home folder : " + Housecream.INSTANCE.getHome());
+            System.out.println("Clearing database in home folder : " + Housecream.INSTANCE.getHome());
             deleteRecursively(new File(Housecream.INSTANCE.getHome(), "db"));
         } catch (IOException e) {
         }

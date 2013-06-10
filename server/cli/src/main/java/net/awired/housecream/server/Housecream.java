@@ -15,7 +15,7 @@ public enum Housecream {
     INSTANCE;
 
     private static final String HOUSECREAM_NAME = "Housecream";
-    private static final String HOUSECREAM_CONF = "housecream.conf";
+    //    private static final String HOUSECREAM_CONF = "housecream.conf";
     public static final String HOUSECREAM_HOME_KEY = "HOUSECREAM_HOME";
 
     private static final String LOG_CONF_FILE_PATH_KEY = "logback.configurationFile";
@@ -27,7 +27,7 @@ public enum Housecream {
     private File home;
     private String version;
     private File logbackConf;
-    private File housecreamConf;
+    //    private File housecreamConf;
     private File pluginDirectory;
     private boolean inited = false;
 
@@ -38,7 +38,7 @@ public enum Housecream {
             version = VERSION_UNKNOWN;
         }
         logbackConf = new File(home, LOG_CONF_FILE_NAME);
-        housecreamConf = new File(home, HOUSECREAM_CONF);
+        //        housecreamConf = new File(home, HOUSECREAM_CONF);
         pluginDirectory = new File(home, "plugins");
     }
 
@@ -69,11 +69,6 @@ public enum Housecream {
     }
 
     public void printInfo() {
-        System.out.println("Housecream Version          : " + version);
-        System.out.println("Housecream Home             : " + home);
-        System.out.println("Housecream Conf             : " + housecreamConf);
-        System.out.println("Housecream Log conf         : " + logbackConf);
-        System.out.println("Housecream Plugin directory : " + pluginDirectory);
     }
 
     public File getHome() {
@@ -85,6 +80,10 @@ public enum Housecream {
     }
 
     //////////////////////////////////
+
+    public File findDefaultOsHomeDirectory() {
+        return ApplicationHomeFactory.getApplicationHome().getFolder(HOUSECREAM_NAME);
+    }
 
     private File findHomeDir() {
         try {
@@ -114,7 +113,7 @@ public enum Housecream {
             }
         } catch (Throwable _) {
         }
-        return ApplicationHomeFactory.getApplicationHome().getFolder(HOUSECREAM_NAME);
+        return findDefaultOsHomeDirectory();
     }
 
     private void copyLogbackFile() {
@@ -148,9 +147,9 @@ public enum Housecream {
         }
     }
 
-    public File getHousecreamConf() {
-        return housecreamConf;
-    }
+    //    public File getHousecreamConf() {
+    //        return housecreamConf;
+    //    }
 
     public File getPluginDirectory() {
         return pluginDirectory;

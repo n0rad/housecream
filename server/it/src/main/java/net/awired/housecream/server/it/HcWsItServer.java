@@ -10,6 +10,10 @@ public class HcWsItServer extends LoggingRule {
 
     private WebSocketClientFactory factory;
 
+    public HcWsItSession session() {
+        return new HcWsItSession(this);
+    }
+
     public HcWsItSession session(String username, String password) {
         return new HcWsItSession(this, username, password);
     }

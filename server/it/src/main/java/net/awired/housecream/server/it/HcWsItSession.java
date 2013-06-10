@@ -11,8 +11,12 @@ import net.awired.housecream.server.it.api.ZoneApi;
 public class HcWsItSession extends RestSession<HcWsItSession, HcWsItClient> {
 
     private final HcWsItServer server;
-    private final String username;
-    private final String password;
+    private String username;
+    private String password;
+
+    public HcWsItSession(HcWsItServer server) {
+        this.server = server;
+    }
 
     public HcWsItSession(HcWsItServer server, String username, String password) {
         this.server = server;

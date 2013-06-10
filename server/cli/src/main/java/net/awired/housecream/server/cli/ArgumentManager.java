@@ -70,9 +70,10 @@ class ArgumentManager extends CliArgumentManager {
                 return res;
             }
         });
-        rootFolder.setParamOneDefValue(new File("~/.housecream"));
+        rootFolder.setParamOneDefValue(Housecream.INSTANCE.findDefaultOsHomeDirectory());
         rootFolder.setName("home");
-        rootFolder.setDescription("Housecream root folder");
+        rootFolder.setDescription("Housecream root folder (override system property : "
+                + Housecream.HOUSECREAM_HOME_KEY + ")");
         addArg(rootFolder);
     }
 }
