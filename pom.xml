@@ -9,14 +9,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://housecream.org</url>
-	<description>Housecream is an advanced home automation server aiming
-to give you unlimited control over your house</description>
-
+	<description><![CDATA[Housecream is an advanced home automation server aiming to give you unlimited control over your house]]></description>
 
 	<parent>
 		<groupId>net.awired.parent</groupId>
 		<artifactId>parent-java</artifactId>
-		<version>1.15-SNAPSHOT</version>
+		<version>1.16</version>
 	</parent>
 
 	<licenses>
