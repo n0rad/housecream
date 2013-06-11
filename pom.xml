@@ -12,10 +12,11 @@
 	<description>Housecream is an advanced home automation server aiming
 to give you unlimited control over your house</description>
 
+
 	<parent>
-		<groupId>net.awired.parent.parent-java</groupId>
+		<groupId>net.awired.parent</groupId>
 		<artifactId>parent-java</artifactId>
-		<version>1.13</version>
+		<version>1.15-SNAPSHOT</version>
 	</parent>
 
 	<licenses>
