@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.service.PluginService;
+import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.ModelCamelContext;
 import org.apache.camel.model.RouteDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class DynamicRouteManager extends RouteBuilder {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Inject
-    private ModelCamelContext camelContext;
+    private CamelContext camelContext;
 
     @Inject
     private InEventTransformer eventTransformer;

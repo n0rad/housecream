@@ -15,8 +15,14 @@
 		</param-value>
 	</context-param>
 
+	<init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>net.awired.housecream.server.application.context.**</param-value>
+	</init-param>
+
 	<listener>
 		<listener-class>net.awired.housecream.server.application.HousecreamContextLoaderListener</listener-class>
+
 	</listener>
 
 	<servlet>
@@ -24,43 +30,11 @@
 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<!-- <async-supported>true</async-supported> -->
-		
-		    <!-- set the base path for the swagger application -->
-<!--     <init-param> -->
-<!--       <param-name>swagger.api.basepath</param-name> -->
-<!--       <param-value>http://localhost:8080/housecream/ws</param-value> -->
-<!--     </init-param> -->
-
-    <!-- configure a security filter -->
-<!--     <init-param> -->
-<!--       <param-name>swagger.security.filter</param-name> -->
-<!--       <param-value>com.wordnik.swagger.sample.util.ApiAuthorizationFilterImpl</param-value> -->
-<!--     </init-param> -->
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CXFServlet</servlet-name>
 		<url-pattern>/ws/*</url-pattern>
 	</servlet-mapping>
-
-<!-- 	<filter> -->
-<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
-<!-- 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
-<!-- 		<url-pattern>/ws/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
-
-
-<!--     <servlet> -->
-<!--         <servlet-name>spring</servlet-name> -->
-<!--         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
-<!--         <load-on-startup>1</load-on-startup> -->
-<!--     </servlet> -->
-<!--     <servlet-mapping> -->
-<!--         <servlet-name>spring</servlet-name> -->
-<!--         <url-pattern>/*</url-pattern> -->
-<!--     </servlet-mapping> -->
 
 	<mime-mapping>
 		<extension>ico</extension>
@@ -89,7 +63,7 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>indexServlet</servlet-name> 
+		<servlet-name>indexServlet</servlet-name>
 		<servlet-class>net.awired.ajsl.web.IndexTemplateServlet</servlet-class>
 		<init-param>
 			<param-name>tplPath</param-name>
@@ -117,16 +91,5 @@
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>server.html</welcome-file>
 	</welcome-file-list>
-	
-	
-	  <!-- add the origin filter for JQuery CORS support -->
-<!-- 	<filter> -->
-<!-- 		<filter-name>ApiOriginFilter</filter-name> -->
-<!-- 		<filter-class>com.wordnik.swagger.sample.util.ApiOriginFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>ApiOriginFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
 
 </web-app>

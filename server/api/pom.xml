@@ -15,12 +15,10 @@
 	</parent>
 
 	<dependencies>
-
-		<!-- Annotation APIs -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
-			<artifactId>jsr311-api</artifactId>
-			<version>1.1.1</version>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0-m10</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -42,11 +40,17 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.wordnik</groupId>
-			<artifactId>swagger-annotations_2.9.1</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.wordnik</groupId> -->
+<!-- 			<artifactId>swagger-annotations_2.9.1</artifactId> -->
+<!-- 			<version>${swagger.version}</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>jsr311-api</artifactId> -->
+<!-- 					<groupId>javax.ws.rs</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>net.awired.ajsl</groupId>
 			<artifactId>ajsl-persistence</artifactId>

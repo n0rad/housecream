@@ -30,11 +30,11 @@ public class HcWsItServer extends LoggingRule {
 
     @Override
     public void before() throws Throwable {
-        //        HcWsItSession session = session();
-        //        session.inpoint().deleteAll();
-        //        session.outpoint().deleteAll();
-        //        session.rule().deleteAll();
-        //        session.zone().deleteAll();
+        HcWsItSession session = session();
+        session.inpoint().deleteAll();
+        session.outpoint().deleteAll();
+        session.rule().deleteAll();
+        session.zone().deleteAll();
 
         factory = new WebSocketClientFactory();
         factory.setBufferSize(4096);

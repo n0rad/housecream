@@ -36,6 +36,12 @@
 		<dependency>
 			<groupId>net.awired.housecream.plugins</groupId>
 			<artifactId>housecream-plugins-restmcu</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jsr311-api</artifactId>
+					<groupId>javax.ws.rs</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.housecream.plugins</groupId>
@@ -75,43 +81,10 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.2.7-b41</version>
 		</dependency>
-
-		<!-- SECURITY -->
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-rs-security-oauth2</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security</groupId> -->
-		<!-- <artifactId>spring-security-core</artifactId> -->
-		<!-- <version>${spring.security.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security</groupId> -->
-		<!-- <artifactId>spring-security-config</artifactId> -->
-		<!-- <version>${spring.security.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security.oauth</groupId> -->
-		<!-- <artifactId>spring-security-oauth2</artifactId> -->
-		<!-- <version>${spring.security.oauth.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security</groupId> -->
-		<!-- <artifactId>spring-security-web</artifactId> -->
-		<!-- <version>${spring.version}</version> -->
-		<!-- </dependency> -->
-
 
 		<!-- WEB -->
 		<dependency>
@@ -184,22 +157,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- SWAGGER -->
 		<dependency>
-			<groupId>com.wordnik</groupId>
-			<artifactId>swagger-core_2.9.1</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.wordnik</groupId>
-			<artifactId>swagger-jaxrs_2.9.1</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.reflections</groupId>
-			<artifactId>reflections</artifactId>
-			<version>0.9.8</version>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring-javaconfig</artifactId>
+			<version>${camel.version}</version>
 		</dependency>
 
 		<!-- Logger -->

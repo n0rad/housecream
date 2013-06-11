@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import net.awired.housecream.server.api.domain.Point;
-import com.wordnik.swagger.annotations.ApiProperty;
 
 @XmlRootElement(name = "InPoint")
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -25,7 +24,7 @@ public class InPoint extends Point {
     private static final long serialVersionUID = 1L;
 
     //    @EnumNotEmpty
-    @ApiProperty(value = "type of point", allowableValues = "any")
+    //    @ApiProperty(value = "type of point", allowableValues = "any")
     private InPointType type;
 
     ////////////////////////////////////
@@ -34,7 +33,7 @@ public class InPoint extends Point {
         this.type = type;
     }
 
-    @ApiProperty(value = "type of point", allowableValues = "any")
+    //    @ApiProperty(value = "type of point", allowableValues = "any")
     @XmlElement
     public InPointType getType() {
         return type;
