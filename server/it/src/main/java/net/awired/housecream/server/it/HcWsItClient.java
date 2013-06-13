@@ -17,7 +17,7 @@
  */
 package net.awired.housecream.server.it;
 
-import net.awired.ajsl.ws.rest.RestClient;
+import net.awired.jaxrs.client.server.rest.RestClient;
 
 public class HcWsItClient extends RestClient {
 }

@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-    <groupId>net.awired.housecream.server</groupId>
+
+	<groupId>net.awired.housecream.server</groupId>
 	<artifactId>housecream-server-it</artifactId>
 	<name>Housecream Server - IT</name>
 
-    <parent>
-        <groupId>net.awired.housecream</groupId>
-        <artifactId>housecream</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../</relativePath>
-    </parent>
+	<parent>
+		<groupId>net.awired.housecream</groupId>
+		<artifactId>housecream</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../</relativePath>
+	</parent>
 
 	<dependencies>
 		<dependency>
@@ -20,14 +20,14 @@
 			<artifactId>housecream-server-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-ws</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.jaxrs.client.server</groupId>
+			<artifactId>jaxrs-client-server</artifactId>
+			<version>${jaxrs-client-server.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-test</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.jaxrs.junit</groupId>
+			<artifactId>jaxrs-junit</artifactId>
+			<version>${jaxrs-junit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.restmcu</groupId>
@@ -82,12 +82,12 @@
 			<artifactId>housecream-server-api</artifactId>
 			<type>test-jar</type>
 		</dependency>
-        <dependency>
-            <groupId>net.awired.restmcu</groupId>
-            <artifactId>restmcu-it</artifactId>
-            <version>${restmcu.version}</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>net.awired.restmcu</groupId>
+			<artifactId>restmcu-it</artifactId>
+			<version>${restmcu.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -127,8 +127,8 @@
 							<value>${hcws.port}</value>
 						</property>
 						<property>
-                            <name>hcws.path</name>
-                            <value>/housecream-ws/ws</value>
+							<name>hcws.path</name>
+							<value>/housecream-ws/ws</value>
 						</property>
 					</systemProperties>
 				</configuration>

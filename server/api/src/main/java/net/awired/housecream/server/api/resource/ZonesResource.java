@@ -25,8 +25,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-import net.awired.ajsl.persistence.entity.Order;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.generic.jpa.entity.Order;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import net.awired.housecream.server.api.domain.zone.Zones;
 

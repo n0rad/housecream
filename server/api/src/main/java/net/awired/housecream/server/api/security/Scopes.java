@@ -17,7 +17,7 @@
  */
 package net.awired.housecream.server.api.security;
 
-import net.awired.ajsl.security.Scope;
+import net.awired.jaxrs.oauth2.Scope;
 
 public enum Scopes {
     INSTANCE;

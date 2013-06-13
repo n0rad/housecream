@@ -17,12 +17,12 @@
  */
 package net.awired.housecream.server.command;
 
-import net.awired.aclm.argument.CliArgumentManager;
-import net.awired.aclm.argument.CliArgumentParseException;
-import net.awired.aclm.argument.args.CliNoParamArgument;
-import net.awired.aclm.argument.args.CliOneParamArgument;
-import net.awired.aclm.param.CliParamFloat;
-import net.awired.aclm.param.CliParamLong;
+import net.awired.typed.command.line.parser.argument.CliArgumentManager;
+import net.awired.typed.command.line.parser.argument.CliArgumentParseException;
+import net.awired.typed.command.line.parser.argument.args.CliNoParamArgument;
+import net.awired.typed.command.line.parser.argument.args.CliOneParamArgument;
+import net.awired.typed.command.line.parser.param.CliParamFloat;
+import net.awired.typed.command.line.parser.param.CliParamLong;
 
 public class CommandArgumentManager extends CliArgumentManager {
 

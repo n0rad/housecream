@@ -1,79 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.awired.housecream.server</groupId>
-    <artifactId>housecream-server-cli</artifactId>
-    <name>Housecream Server - Cli</name>
+	<groupId>net.awired.housecream.server</groupId>
+	<artifactId>housecream-server-cli</artifactId>
+	<name>Housecream Server - Cli</name>
 
-    <parent>
-        <groupId>net.awired.housecream</groupId>
-        <artifactId>housecream</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../</relativePath>
-    </parent>
+	<parent>
+		<groupId>net.awired.housecream</groupId>
+		<artifactId>housecream</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../</relativePath>
+	</parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.awired.aclm</groupId>
-            <artifactId>aclm</artifactId>
-            <version>${aclm.version}</version>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>net.awired.typed.command.line.parser</groupId>
+			<artifactId>typed-command-line-parser</artifactId>
+			<version>${typed-command-line-parser.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.logback.prettier</groupId>
+			<artifactId>logback-prettier</artifactId>
+			<version>${logback-prettier.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.operating.system.specific</groupId>
+			<artifactId>operating-system-specific</artifactId>
+			<version>${operating-system-specific.version}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.fusesource.jansi</groupId>
-            <artifactId>jansi</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.awired.ajsl</groupId>
-            <artifactId>ajsl-log</artifactId>
-            <version>${ajsl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.awired.ajsl</groupId>
-            <artifactId>ajsl-os</artifactId>
-            <version>${ajsl.version}</version>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <includeScope>compile</includeScope>
-                            <outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeScope>compile</includeScope>
+							<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
 

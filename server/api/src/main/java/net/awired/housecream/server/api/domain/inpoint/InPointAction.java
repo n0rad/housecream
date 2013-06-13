@@ -18,7 +18,7 @@
 package net.awired.housecream.server.api.domain.inpoint;
 
 import javax.persistence.Entity;
-import net.awired.ajsl.persistence.entity.IdEntityImpl;
+import net.awired.generic.jpa.entity.IdEntityImpl;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 
 @Entity

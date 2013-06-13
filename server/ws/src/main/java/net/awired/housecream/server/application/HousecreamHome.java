@@ -21,7 +21,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import net.awired.ajsl.core.io.FileLocker;
+import net.awired.core.io.FileLocker;
 import net.awired.housecream.server.Housecream;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

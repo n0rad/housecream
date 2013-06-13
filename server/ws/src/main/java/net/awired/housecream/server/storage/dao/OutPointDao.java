@@ -19,7 +19,7 @@ package net.awired.housecream.server.storage.dao;
 
 import java.util.List;
 import javax.persistence.TypedQuery;
-import net.awired.ajsl.persistence.dao.impl.GenericDaoImpl;
+import net.awired.generic.jpa.dao.impl.GenericDaoImpl;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import org.springframework.stereotype.Repository;
 

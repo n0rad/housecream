@@ -17,7 +17,7 @@
  */
 package net.awired.housecream.camel.restmcu;
 
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.restmcu.api.domain.line.RestMcuLine;
 import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.api.resource.client.RestMcuLineResource;

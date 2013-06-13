@@ -21,9 +21,9 @@ import java.io.Serializable;
 import javax.inject.Inject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.ajsl.persistence.dao.ReadDao;
-import net.awired.ajsl.persistence.entity.IdEntity;
+import net.awired.core.lang.exception.NotFoundException;
+import net.awired.generic.jpa.dao.ReadDao;
+import net.awired.generic.jpa.entity.IdEntity;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import org.springframework.context.ApplicationContext;
 

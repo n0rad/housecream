@@ -18,8 +18,8 @@
 package net.awired.housecream.server.application;
 
 import javax.servlet.ServletContextEvent;
-import net.awired.ajsl.web.WarManifestUtils;
 import net.awired.housecream.server.Housecream;
+import net.awired.servlet.sample.html.template.WarManifestUtils;
 import org.springframework.web.context.ContextLoaderListener;
 
 public class HousecreamContextLoaderListener extends ContextLoaderListener {

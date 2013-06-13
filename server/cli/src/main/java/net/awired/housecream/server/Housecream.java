@@ -25,8 +25,8 @@ import java.io.OutputStream;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import net.awired.ajsl.core.io.JarManifestUtils;
-import net.awired.ajsl.os.ApplicationHomeFactory;
+import net.awired.core.io.JarManifestUtils;
+import net.awired.operating.system.specific.ApplicationHomeFactory;
 
 public enum Housecream {
     INSTANCE;

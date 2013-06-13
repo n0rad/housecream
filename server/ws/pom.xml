@@ -92,14 +92,14 @@
 			<artifactId>housecream-server-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-ws</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.jaxrs.client.server</groupId>
+			<artifactId>jaxrs-client-server</artifactId>
+			<version>${jaxrs-client-server.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-web</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.servlet.sample.html.template</groupId>
+			<artifactId>servlet-sample-html-template</artifactId>
+			<version>${servlet-sample-html-template.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -165,9 +165,9 @@
 
 		<!-- Logger -->
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-log</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.logback.prettier</groupId>
+			<artifactId>logback-prettier</artifactId>
+			<version>${logback-prettier.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -198,9 +198,9 @@
 
 		<!-- DB -->
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-persistence</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.generic.jpa</groupId>
+			<artifactId>generic-jpa</artifactId>
+			<version>${generic-jpa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -242,9 +242,9 @@
 
 		<!-- ENGINE -->
 		<dependency>
-			<groupId>net.awired.aclm</groupId>
-			<artifactId>aclm</artifactId>
-			<version>${aclm.version}</version>
+			<groupId>net.awired.typed.command.line.parser</groupId>
+			<artifactId>typed-command-line-parser</artifactId>
+			<version>${typed-command-line-parser.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>

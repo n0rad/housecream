@@ -18,8 +18,8 @@
 package net.awired.housecream.server.storage.dao;
 
 import java.util.List;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.ajsl.persistence.dao.impl.GenericDaoImpl;
+import net.awired.core.lang.exception.NotFoundException;
+import net.awired.generic.jpa.dao.impl.GenericDaoImpl;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;

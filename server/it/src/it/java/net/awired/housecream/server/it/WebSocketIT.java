@@ -6,10 +6,10 @@ import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_
 import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import static org.junit.Assert.assertEquals;
 import java.util.List;
-import net.awired.ajsl.test.RestServerRule;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.zone.Land;
+import net.awired.jaxrs.junit.RestServerRule;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotify;
 import net.awired.restmcu.it.resource.LatchBoardResource;

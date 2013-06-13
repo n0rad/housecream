@@ -24,8 +24,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-import net.awired.ajsl.persistence.entity.Order;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.generic.jpa.entity.Order;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.domain.rule.Rules;
 

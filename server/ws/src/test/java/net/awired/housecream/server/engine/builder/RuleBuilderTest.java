@@ -17,13 +17,13 @@
  */
 package net.awired.housecream.server.engine.builder;
 
-import static net.awired.ajsl.core.lang.Caster.cast;
+import static net.awired.core.lang.Caster.cast;
 import static net.awired.housecream.server.api.domain.rule.TriggerType.NON_RETRIGGER;
 import static org.fest.assertions.api.Assertions.assertThat;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
-import net.awired.ajsl.core.lang.Caster;
+import net.awired.core.lang.Caster;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;

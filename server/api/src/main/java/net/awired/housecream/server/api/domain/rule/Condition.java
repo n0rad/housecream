@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import net.awired.ajsl.persistence.entity.IdEntityImpl;
+import net.awired.generic.jpa.entity.IdEntityImpl;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

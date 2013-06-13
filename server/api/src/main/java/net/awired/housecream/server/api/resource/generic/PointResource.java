@@ -20,7 +20,7 @@ package net.awired.housecream.server.api.resource.generic;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 
 public interface PointResource {
 

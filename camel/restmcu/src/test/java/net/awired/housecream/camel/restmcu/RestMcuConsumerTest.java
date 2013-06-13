@@ -21,7 +21,7 @@ import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.INPUT;
 import static net.awired.restmcu.api.domain.line.RestMcuLineNotifyCondition.SUP_OR_EQUAL;
 import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import static net.awired.restmcu.it.builder.NotifBuilder.notif;
-import net.awired.ajsl.test.RestServerRule;
+import net.awired.jaxrs.junit.RestServerRule;
 import net.awired.restmcu.api.domain.board.RestMcuBoardNotification;
 import net.awired.restmcu.api.domain.board.RestMcuBoardNotificationType;
 import net.awired.restmcu.api.domain.line.RestMcuLineNotification;

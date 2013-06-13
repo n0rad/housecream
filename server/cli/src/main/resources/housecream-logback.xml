@@ -3,11 +3,9 @@
         <resetJUL>true</resetJUL>
     </contextListener>
     <conversionRule conversionWord="colorlevel"
-        converterClass="net.awired.ajsl.log.ColorLevelCompositeConverter" />
+        converterClass="net.awired.logback.prettier.ColorLevelCompositeConverter" />
     <conversionRule conversionWord="bold"
-        converterClass="net.awired.ajsl.log.BoldCompositeConverter" />
-
-
+        converterClass="net.awired.logback.prettier.BoldCompositeConverter" />
 
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -27,7 +25,7 @@
 		<encoder>
 			<pattern><![CDATA[%blue(%d{HH:mm:ss.SSS}) [%-10.10thread] %colorlevel(%-5level) %-45.45(%41C{41}:%L) - %msg%n]]></pattern>
 		</encoder>
-		<filter class="net.awired.ajsl.log.OutFilter" />
+		<filter class="net.awired.logback.prettier.OutFilter" />
 	</appender>
 	<appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
 		<target>System.err</target>
@@ -35,7 +33,7 @@
 		<encoder>
 			<pattern><![CDATA[%boldBlue(%d{HH:mm:ss.SSS}) %bold([%-10.10thread]) %colorlevel(%-5level) %bold(%-45.45(%41C{41}:%L)) - %colorlevel(%msg) %n]]></pattern>
 		</encoder>
-		<filter class="net.awired.ajsl.log.ErrFilter" />
+		<filter class="net.awired.logback.prettier.ErrFilter" />
 	</appender>
 
 	<logger name="net.awired" level="INFO" />

@@ -1,6 +1,6 @@
 package net.awired.housecream.server.it.server.it.floor;
 
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.it.HcWsItServer;
 import org.junit.Rule;
 import org.junit.Test;

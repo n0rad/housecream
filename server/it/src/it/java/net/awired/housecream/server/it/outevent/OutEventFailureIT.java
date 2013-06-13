@@ -4,13 +4,13 @@ import static net.awired.housecream.server.api.domain.outPoint.OutPointType.LIGH
 import static net.awired.restmcu.api.domain.line.RestMcuLineDirection.OUTPUT;
 import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
 import static org.fest.assertions.api.Assertions.assertThat;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
-import net.awired.ajsl.core.lang.exception.UpdateException;
-import net.awired.ajsl.test.RestServerRule;
+import net.awired.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.UpdateException;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.HcWsItSession;
+import net.awired.jaxrs.junit.RestServerRule;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;
 import org.junit.Assert;

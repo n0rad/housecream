@@ -17,9 +17,9 @@
  */
 package net.awired.housecream.server.it.api;
 
-import net.awired.ajsl.security.Token;
 import net.awired.housecream.server.api.resource.OauthResource;
 import net.awired.housecream.server.it.HcWsItSession;
+import net.awired.jaxrs.oauth2.Token;
 
 public class OauthApi {
 

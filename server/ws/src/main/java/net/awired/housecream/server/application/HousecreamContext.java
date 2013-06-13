@@ -19,7 +19,7 @@ package net.awired.housecream.server.application;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import net.awired.ajsl.core.io.NetworkUtils;
+import net.awired.core.io.NetworkUtils;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -17,7 +17,7 @@
  */
 package net.awired.housecream.server.it;
 
-import net.awired.ajsl.core.io.NetworkUtils;
+import net.awired.core.io.NetworkUtils;
 
 public class HcWsItContext {
 

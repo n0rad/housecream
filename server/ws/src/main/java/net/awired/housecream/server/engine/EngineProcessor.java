@@ -21,7 +21,7 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.PointState;
 import net.awired.housecream.server.engine.builder.RuleBuilder;

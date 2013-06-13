@@ -25,7 +25,7 @@ import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import net.awired.ajsl.persistence.entity.IdEntityImpl;
+import net.awired.generic.jpa.entity.IdEntityImpl;
 
 @Entity
 @XmlRootElement

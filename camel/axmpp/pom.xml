@@ -22,18 +22,18 @@
 			<version>${camel.version}</version>
 		</dependency>
 
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-xmpp</artifactId>
-            <version>${camel.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-xmpp</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
 
 
 		<!-- TESTS -->
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-test</artifactId>
-			<version>${ajsl.version}</version>
+			<groupId>net.awired.jaxrs.junit</groupId>
+			<artifactId>jaxrs-junit</artifactId>
+			<version>${jaxrs-junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

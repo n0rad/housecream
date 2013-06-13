@@ -17,13 +17,13 @@
  */
 package net.awired.housecream.server.it;
 
-import net.awired.ajsl.security.Token;
-import net.awired.ajsl.ws.rest.RestSession;
 import net.awired.housecream.server.it.api.InpointApi;
 import net.awired.housecream.server.it.api.OauthApi;
 import net.awired.housecream.server.it.api.OutpointApi;
 import net.awired.housecream.server.it.api.RuleApi;
 import net.awired.housecream.server.it.api.ZoneApi;
+import net.awired.jaxrs.client.server.rest.RestSession;
+import net.awired.jaxrs.oauth2.Token;
 
 public class HcWsItSession extends RestSession<HcWsItSession, HcWsItClient> {
 

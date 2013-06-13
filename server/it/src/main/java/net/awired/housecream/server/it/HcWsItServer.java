@@ -17,8 +17,8 @@
  */
 package net.awired.housecream.server.it;
 
-import net.awired.ajsl.test.LoggingRule;
-import net.awired.ajsl.ws.rest.RestBuilder;
+import net.awired.jaxrs.client.server.rest.RestBuilder;
+import net.awired.jaxrs.junit.LoggingRule;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
 public class HcWsItServer extends LoggingRule {

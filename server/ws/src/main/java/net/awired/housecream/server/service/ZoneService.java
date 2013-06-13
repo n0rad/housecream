@@ -23,7 +23,7 @@ import java.util.List;
 import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.zone.Zone;

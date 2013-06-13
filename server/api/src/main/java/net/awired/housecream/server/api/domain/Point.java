@@ -27,8 +27,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import net.awired.ajsl.persistence.entity.IdEntityImpl;
-import net.awired.ajsl.persistence.validator.ForeignId;
+import net.awired.generic.jpa.entity.IdEntityImpl;
+import net.awired.generic.jpa.validator.ForeignId;
 import com.google.common.base.Objects;
 
 @MappedSuperclass

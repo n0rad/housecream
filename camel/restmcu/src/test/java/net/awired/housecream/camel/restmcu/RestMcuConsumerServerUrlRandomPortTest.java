@@ -18,7 +18,7 @@
 package net.awired.housecream.camel.restmcu;
 
 import static net.awired.restmcu.it.builder.LineInfoBuilder.line;
-import net.awired.ajsl.test.RestServerRule;
+import net.awired.jaxrs.junit.RestServerRule;
 import net.awired.restmcu.api.domain.line.RestMcuLineDirection;
 import net.awired.restmcu.it.resource.LatchBoardResource;
 import net.awired.restmcu.it.resource.LatchLineResource;

@@ -18,16 +18,16 @@
 package net.awired.housecream.server.cli;
 
 import java.io.File;
-import net.awired.aclm.argument.CliArgumentManager;
-import net.awired.aclm.argument.CliArgumentParseException;
-import net.awired.aclm.argument.args.CliNoParamArgument;
-import net.awired.aclm.argument.args.CliOneParamArgument;
-import net.awired.aclm.param.CliParamEnum;
-import net.awired.aclm.param.CliParamFile;
-import net.awired.aclm.param.CliParamInt;
-import net.awired.aclm.param.CliParamString;
 import net.awired.housecream.server.FileInfoEnum;
 import net.awired.housecream.server.Housecream;
+import net.awired.typed.command.line.parser.argument.CliArgumentManager;
+import net.awired.typed.command.line.parser.argument.CliArgumentParseException;
+import net.awired.typed.command.line.parser.argument.args.CliNoParamArgument;
+import net.awired.typed.command.line.parser.argument.args.CliOneParamArgument;
+import net.awired.typed.command.line.parser.param.CliParamEnum;
+import net.awired.typed.command.line.parser.param.CliParamFile;
+import net.awired.typed.command.line.parser.param.CliParamInt;
+import net.awired.typed.command.line.parser.param.CliParamString;
 
 class ArgumentManager extends CliArgumentManager {
 

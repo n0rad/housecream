@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import net.awired.ajsl.persistence.entity.NestedSetEntityImpl;
+import net.awired.generic.jpa.entity.NestedSetEntityImpl;
 import net.awired.housecream.server.api.domain.CoordinateShape;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

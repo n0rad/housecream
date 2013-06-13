@@ -18,7 +18,7 @@
 package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;

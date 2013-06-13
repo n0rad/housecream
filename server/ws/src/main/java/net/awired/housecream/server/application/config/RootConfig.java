@@ -35,7 +35,7 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @EnableAsync
 @EnableScheduling
 @EnableMBeanExport
-@ComponentScan(basePackages = { "net.awired.housecream", "net.awired.ajsl" })
+@ComponentScan(basePackages = { "net.awired" })
 public class RootConfig implements AsyncConfigurer, SchedulingConfigurer {
 
     @Bean

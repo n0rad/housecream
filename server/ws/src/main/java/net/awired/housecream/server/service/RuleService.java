@@ -18,7 +18,7 @@
 package net.awired.housecream.server.service;
 
 import javax.inject.Inject;
-import net.awired.ajsl.core.lang.exception.NotFoundException;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.resource.RuleResource;
 import net.awired.housecream.server.storage.dao.RuleDao;

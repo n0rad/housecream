@@ -20,7 +20,7 @@ package net.awired.housecream.camel.restmcu;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import net.awired.ajsl.ws.rest.RestBuilder;
+import net.awired.jaxrs.client.server.rest.RestBuilder;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;

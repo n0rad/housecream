@@ -24,13 +24,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-import net.awired.ajsl.persistence.entity.Order;
-import net.awired.ajsl.security.Secured;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
+import net.awired.generic.jpa.entity.Order;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.security.Scopes;
+import net.awired.jaxrs.oauth2.Secured;
 
 @Path("/inpoints")
 public interface InPointsResource {

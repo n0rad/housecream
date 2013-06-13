@@ -16,6 +16,23 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>net.awired.javascript.bean.validation</groupId>
+			<artifactId>javascript-bean-validation-js</artifactId>
+			<version>${javascript-bean-validation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.generic.jpa</groupId>
+			<artifactId>generic-jpa</artifactId>
+			<version>${generic-jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.awired.jaxrs.oauth2</groupId>
+			<artifactId>jaxrs-oauth2</artifactId>
+			<version>${jaxrs-oauth2.version}</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
 			<version>2.0-m10</version>
@@ -26,11 +43,6 @@
 			<version>1.1.0.Alpha1</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.client-bean-validation</groupId>
-			<artifactId>cbv-js</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
@@ -40,28 +52,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.wordnik</groupId> -->
-<!-- 			<artifactId>swagger-annotations_2.9.1</artifactId> -->
-<!-- 			<version>${swagger.version}</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>jsr311-api</artifactId> -->
-<!-- 					<groupId>javax.ws.rs</groupId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
-		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-persistence</artifactId>
-			<version>${ajsl.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-security</artifactId>
-			<version>${ajsl.version}</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
