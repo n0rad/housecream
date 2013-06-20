@@ -11,13 +11,12 @@
 			classpath*:META-INF/cxf/cxf.xml
 			classpath*:META-INF/cxf/cxf-extension-jaxrs-binding.xml
 			classpath*:META-INF/cxf/cxf-servlet.xml
-			classpath*:META-INF/spring/*-context.xml
 		</param-value>
 	</context-param>
 
 	<init-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>net.awired.housecream.server.application.context.**</param-value>
+		<param-value>net.awired.housecream.server.application.config.**</param-value>
 	</init-param>
 
 	<listener>

@@ -25,6 +25,5 @@ import lombok.Data;
 public class Event {
     private long pointId;
     private float value;
-
     //    private Severity severity; // INFORM, (ERROR, WARNING), ALERT, DYNAMIC... 
 }
