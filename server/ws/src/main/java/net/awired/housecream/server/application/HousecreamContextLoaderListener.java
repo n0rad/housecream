@@ -17,27 +17,26 @@
  */
 package net.awired.housecream.server.application;
 
+import static net.awired.housecream.server.application.HousecreamHome.HOUSECREAM_HOME;
 import javax.servlet.ServletContextEvent;
-import net.awired.housecream.server.Housecream;
-import net.awired.servlet.sample.html.template.WarManifestUtils;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
 
 public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
+    public HousecreamContextLoaderListener(WebApplicationContext webApplicationContext) {
+        super(webApplicationContext);
+    }
+
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        Housecream.INSTANCE.init();
-
-        Housecream.INSTANCE.updateVersion(WarManifestUtils.getWarManifestAttribute(event.getServletContext(),
-                Housecream.VERSION_MANIFEST_KEY));
-
-        HousecreamHome.INSTANCE.init();
+        HOUSECREAM_HOME.start();
         super.contextInitialized(event);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        HousecreamHome.INSTANCE.close();
+        HOUSECREAM_HOME.stop();
         super.contextDestroyed(event);
     }
 }

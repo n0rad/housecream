@@ -17,11 +17,11 @@
  */
 package net.awired.housecream.server.cli;
 
+import static net.awired.housecream.server.Housecream.HOUSECREAM;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.ProtectionDomain;
-import net.awired.housecream.server.Housecream;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
@@ -39,18 +39,16 @@ public class Main {
             return;
         }
 
-        Housecream hc = Housecream.INSTANCE;
-
         if (argManager.displayFile.isSet()) {
             argManager.displayFile.getParamOneValue().display();
             System.exit(0);
         }
 
         if (argManager.info.isSet()) {
-            System.out.println("Housecream version          : " + hc.getVersion());
-            System.out.println("Housecream home             : " + hc.getHome());
-            System.out.println("Housecream log conf         : " + hc.getLogbackConf());
-            System.out.println("Housecream plugin directory : " + hc.getPluginDirectory());
+            System.out.println("Housecream version          : " + HOUSECREAM.getVersion());
+            System.out.println("Housecream home             : " + HOUSECREAM.getHome());
+            System.out.println("Housecream log conf         : " + HOUSECREAM.getLogbackConf());
+            System.out.println("Housecream plugin directory : " + HOUSECREAM.getPluginDirectory());
             System.exit(0);
         }
 
@@ -59,14 +57,14 @@ public class Main {
             System.exit(0);
         }
 
-        hc.init();
+        HOUSECREAM.init();
         runServer();
     }
 
     public void clearDb() {
         try {
-            System.out.println("Clearing database in home folder : " + Housecream.INSTANCE.getHome());
-            deleteRecursively(new File(Housecream.INSTANCE.getHome(), "db"));
+            System.out.println("Clearing database in home folder : " + HOUSECREAM.getHome());
+            deleteRecursively(new File(HOUSECREAM.getHome(), "db"));
         } catch (IOException e) {
         }
     }

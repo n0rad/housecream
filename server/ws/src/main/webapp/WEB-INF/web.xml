@@ -2,39 +2,6 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<display-name>Housecream Server</display-name>
-	<description>Server part of Housecream</description>
-
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath*:META-INF/cxf/cxf.xml
-			classpath*:META-INF/cxf/cxf-extension-jaxrs-binding.xml
-			classpath*:META-INF/cxf/cxf-servlet.xml
-		</param-value>
-	</context-param>
-
-	<init-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>net.awired.housecream.server.application.config.**</param-value>
-	</init-param>
-
-	<listener>
-		<listener-class>net.awired.housecream.server.application.HousecreamContextLoaderListener</listener-class>
-
-	</listener>
-
-	<servlet>
-		<servlet-name>CXFServlet</servlet-name>
-		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-		<!-- <async-supported>true</async-supported> -->
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CXFServlet</servlet-name>
-		<url-pattern>/ws/*</url-pattern>
-	</servlet-mapping>
-
 	<mime-mapping>
 		<extension>ico</extension>
 		<mime-type>image/x-icon</mime-type>

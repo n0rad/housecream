@@ -29,9 +29,9 @@ import net.awired.core.io.JarManifestUtils;
 import net.awired.operating.system.specific.ApplicationHomeFactory;
 
 public enum Housecream {
-    INSTANCE;
+    HOUSECREAM;
 
-    private static final String HOUSECREAM_NAME = "Housecream";
+    public static final String HOUSECREAM_NAME = "Housecream";
     //    private static final String HOUSECREAM_CONF = "housecream.conf";
     public static final String HOUSECREAM_HOME_KEY = "HOUSECREAM_HOME";
 
@@ -79,7 +79,7 @@ public enum Housecream {
         inited = true;
     }
 
-    public void updateVersion(String versionFromWar) {
+    public void discoveredVersion(String versionFromWar) {
         if (versionFromWar != null && (version == null || VERSION_UNKNOWN.equals(version))) {
             version = versionFromWar;
         }

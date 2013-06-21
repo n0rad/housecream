@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
-@Configuration()
+@Configuration
 public class ValidationConfig {
 
     @Bean(name = "validator")

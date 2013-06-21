@@ -43,8 +43,7 @@ class ArgumentManager extends CliArgumentManager {
         getUsageDisplayer().setUsageShort(true);
 
         // -d
-        displayFile = new CliOneParamArgument<FileInfoEnum>('d', new CliParamEnum<FileInfoEnum>("file",
-                FileInfoEnum.class));
+        displayFile = new CliOneParamArgument<>('d', new CliParamEnum<>("file", FileInfoEnum.class));
         displayFile.setDescription("Display an information file and exit");
         displayFile.setName("display");
         addArg(displayFile);
@@ -59,14 +58,14 @@ class ArgumentManager extends CliArgumentManager {
         CliParamInt portParam = new CliParamInt("port");
         portParam.setNegativable(false);
         portParam.setZeroable(false);
-        portArg = new CliOneParamArgument<Integer>('p', portParam);
+        portArg = new CliOneParamArgument<>('p', portParam);
         portArg.setParamOneDefValue(4242);
         portArg.setName("port");
         portArg.setDescription("Port for servlet Contrainer");
         addArg(portArg);
 
         // -c
-        contextPath = new CliOneParamArgument<String>('c', new CliParamString("contextPath"));
+        contextPath = new CliOneParamArgument<>('c', new CliParamString("contextPath"));
         contextPath.setParamOneDefValue("/");
         contextPath.setName("contextpath");
         contextPath.setDescription("Context path to access the application");
@@ -79,7 +78,7 @@ class ArgumentManager extends CliArgumentManager {
         addArg(info);
 
         // -r
-        rootFolder = new CliOneParamArgument<File>('r', new CliParamFile("home") {
+        rootFolder = new CliOneParamArgument<>('r', new CliParamFile("home") {
             @Override
             public File parse(String param) throws CliArgumentParseException {
                 File res = super.parse(param);
@@ -87,7 +86,7 @@ class ArgumentManager extends CliArgumentManager {
                 return res;
             }
         });
-        rootFolder.setParamOneDefValue(Housecream.INSTANCE.findDefaultOsHomeDirectory());
+        rootFolder.setParamOneDefValue(Housecream.HOUSECREAM.findDefaultOsHomeDirectory());
         rootFolder.setName("home");
         rootFolder.setDescription("Housecream root folder (override system property : "
                 + Housecream.HOUSECREAM_HOME_KEY + ")");
