@@ -41,7 +41,7 @@ public class ArgumentManager extends CliArgumentManager {
     private final CliOneParamArgument<InetAddress> cassandraHost;
     private final CliOneParamArgument<Integer> cassandraPort;
     private final CliOneParamArgument<String> cassandraLogin;
-    private final CliOneParamArgument<String> cassandraPassword;
+    private final CliNoParamArgument cassandraPassword;
 
     private final CliNoParamArgument info;
     private final CliOneParamArgument<File> rootFolder;
@@ -114,31 +114,55 @@ public class ArgumentManager extends CliArgumentManager {
         addArg(rootFolder);
 
         // -H
-        cassandraHost = new CliOneParamArgument<>('H', new CliParamInetAddress("host"));
+        cassandraHost = new CliOneParamArgument<>('H', new CliParamInetAddress("host") {
+            @Override
+            public InetAddress parse(String param) throws CliArgumentParseException {
+                InetAddress res = super.parse(param);
+                System.setProperty(Housecream.CASSANDRA_HOST_KEY, param);
+                return res;
+            }
+        });
         cassandraHost.setName("db-host");
         cassandraHost.setDescription("Host to connect to Cassandra. Start embedded if not provided");
         addArg(cassandraHost);
 
         // -P
-        CliParamInt paramOneArgument = new CliParamInt("port");
+        CliParamInt paramOneArgument = new CliParamInt("port") {
+            @Override
+            public Integer parse(String param) throws CliArgumentParseException {
+                Integer res = super.parse(param);
+                System.setProperty(Housecream.CASSANDRA_PORT_KEY, param);
+                return res;
+            }
+
+        };
         paramOneArgument.setNegativable(false);
         paramOneArgument.setZeroable(false);
-
         cassandraPort = new CliOneParamArgument<>('P', paramOneArgument);
         cassandraPort.setName("db-port");
         cassandraPort.setDescription("Port to connect to Cassandra");
+        cassandraPort.addNeededArgument(cassandraHost);
         addArg(cassandraPort);
 
         // -L
-        cassandraLogin = new CliOneParamArgument<>('L', new CliParamString("username"));
+        cassandraLogin = new CliOneParamArgument<>('L', new CliParamString("username") {
+            @Override
+            public String parse(String param) {
+                String parse = super.parse(param);
+                System.setProperty(Housecream.CASSANDRA_USERNAME_KEY, param);
+                return parse;
+            }
+        });
         cassandraLogin.setName("db-login");
         cassandraLogin.setDescription("Login to connect to Cassandra");
+        cassandraLogin.addNeededArgument(cassandraHost);
         addArg(cassandraLogin);
 
         // -S
-        cassandraPassword = new CliOneParamArgument<>('S', new CliParamString("password"));
+        cassandraPassword = new CliNoParamArgument('S');
         cassandraPassword.setName("db-password");
-        cassandraPassword.setDescription("Password to connect to Cassandra");
+        cassandraPassword.setDescription("Ask password to connect to Cassandra. Using secured prompt");
+        cassandraPassword.addNeededArgument(cassandraLogin);
         addArg(cassandraPassword);
 
     }
@@ -167,7 +191,7 @@ public class ArgumentManager extends CliArgumentManager {
         return cassandraLogin;
     }
 
-    public CliOneParamArgument<String> getCassandraPassword() {
+    public CliNoParamArgument getCassandraPassword() {
         return cassandraPassword;
     }
 

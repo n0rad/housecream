@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.ProtectionDomain;
+import net.awired.housecream.server.Housecream;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
@@ -37,6 +38,15 @@ public class Main {
     public void run(String[] args) {
         if (!argManager.parseWithSuccess(args)) {
             return;
+        }
+
+        if (argManager.getCassandraPassword().isSet()) {
+            java.io.Console cons;
+            char[] password;
+            if ((cons = System.console()) != null
+                    && (password = cons.readPassword("%s", "Cassandra password: ")) != null) {
+                System.setProperty(Housecream.CASSANDRA_PASSWORD_KEY, new String(password));
+            }
         }
 
         if (argManager.getDisplayFile().isSet()) {
@@ -91,6 +101,9 @@ public class Main {
         connector.setMaxIdleTime(1000 * 60 * 60);
         connector.setSoLingerTime(-1);
         connector.setPort(argManager.getHousecreamPort().getParamOneValue());
+        if (argManager.getHousecreamHost().isSet()) {
+            connector.setHost(argManager.getHousecreamHost().getParamOneValue().getHostName());
+        }
         server.setConnectors(new Connector[] { connector });
 
         WebAppContext context = new WebAppContext();
