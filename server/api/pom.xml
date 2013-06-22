@@ -21,9 +21,9 @@
 			<version>${javascript-bean-validation.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.generic.jpa</groupId>
-			<artifactId>generic-jpa</artifactId>
-			<version>${generic-jpa.version}</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>net.awired.jaxrs.oauth2</groupId>
@@ -47,17 +47,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.commons</groupId> -->
-<!-- 			<artifactId>commons-lang3</artifactId> -->
-<!-- 			<version>3.1</version> -->
-<!-- 		</dependency> -->
 
 		<!-- TODO dependencies that sux -->
 		<dependency>

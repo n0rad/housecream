@@ -95,7 +95,7 @@ public class ServiceConfig {
         sf.setAddress("/");
         sf.setStaticSubresourceResolution(true);
 
-        ArrayList<Object> arrayList = new ArrayList<Object>();
+        ArrayList<Object> arrayList = new ArrayList<>();
         arrayList.add(encodingContext.jacksonJsonProvider());
         arrayList.add(encodingContext.jAXBElementProvider());
         arrayList.add(new GenericExceptionMapper());

@@ -41,6 +41,13 @@
 			<artifactId>jetty-webapp</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.11.8</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -57,6 +64,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
+							<excludeScope>runtime</excludeScope>
 							<includeScope>compile</includeScope>
 							<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
 						</configuration>

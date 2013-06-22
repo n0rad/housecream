@@ -39,7 +39,7 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 public class RootConfig implements AsyncConfigurer, SchedulingConfigurer {
 
     @Bean
-    public PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
         PropertySourcesPlaceholderConfigurer placeholder = new PropertySourcesPlaceholderConfigurer();
         //        placeholder.setLocation(new ClassPathResource("/META-INF/spring/database.properties"));
         return placeholder;

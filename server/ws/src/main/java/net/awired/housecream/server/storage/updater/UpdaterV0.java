@@ -15,18 +15,17 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package net.awired.housecream.server.application;
+package net.awired.housecream.server.storage.updater;
 
-import me.prettyprint.cassandra.model.ConfigurableConsistencyLevel;
-import me.prettyprint.cassandra.service.OperationType;
-import me.prettyprint.hector.api.HConsistencyLevel;
+import net.awired.core.updater.Updater;
+import org.springframework.stereotype.Component;
 
-public class ConsistencyLevelPolicy extends ConfigurableConsistencyLevel {
+@Component
+public class UpdaterV0 implements Updater {
 
-    public ConsistencyLevelPolicy() {
-        setDefaultReadConsistencyLevel(HConsistencyLevel.QUORUM);
-        setDefaultWriteConsistencyLevel(HConsistencyLevel.QUORUM);
+    @Override
+    public void update() {
 
-        setConsistencyLevelForCfOperation(HConsistencyLevel.ONE, "elements", OperationType.READ);
     }
+
 }

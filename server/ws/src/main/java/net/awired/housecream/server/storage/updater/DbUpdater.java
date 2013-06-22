@@ -15,34 +15,34 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package net.awired.housecream.server.api.domain.rule;
+package net.awired.housecream.server.storage.updater;
 
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import lombok.Data;
-import net.awired.housecream.server.api.domain.IdEntityImpl;
+import static net.awired.core.updater.Version.V;
+import java.util.HashSet;
+import net.awired.core.updater.Update;
+import net.awired.core.updater.UpdateRunner;
+import net.awired.core.updater.Version;
 
-@Data
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Condition extends IdEntityImpl<Long> {
+public class DbUpdater extends UpdateRunner {
 
-    private static final long serialVersionUID = 1L;
-
-    private long pointId;
-    private float value;
-    @NotNull
-    private ConditionType type;
-
-    public Condition() {
+    public DbUpdater() {
+        super("Housecream DB", new HashSet<Update>() {
+            {
+                add(new Update(V(0), new UpdaterV0()));
+            }
+        });
     }
 
-    public Condition(long pointId, float value, ConditionType type) {
-        this.pointId = pointId;
-        this.value = value;
-        this.type = type;
+    @Override
+    protected Version getCurrentVersion() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected void setNewVersion(Version version) {
+        // TODO Auto-generated method stub
+
     }
 
 }

@@ -33,12 +33,12 @@ import net.awired.housecream.server.api.domain.Point;
 query = "SELECT i FROM InPoint i where zoneId = :" + InPoint.QUERY_PARAM_ZONE_ID) })
 public class InPoint extends Point {
 
+    private static final long serialVersionUID = 42L;
+
     public static final String QUERY_BY_ZONE = "QUERY_BY_ZONE";
     public static final String QUERY_PARAM_ZONE_ID = "QUERY_PARAM_ZONE_ID";
 
     //    private Date lastUpdate; // input only
-
-    private static final long serialVersionUID = 1L;
 
     //    @EnumNotEmpty
     //    @ApiProperty(value = "type of point", allowableValues = "any")

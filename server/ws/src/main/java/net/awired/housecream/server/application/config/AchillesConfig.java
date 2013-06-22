@@ -1,3 +1,20 @@
+/**
+ *
+ *     Housecream.org project
+ *     Copyright (C) Awired.net
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
 package net.awired.housecream.server.application.config;
 
 import info.archinnov.achilles.entity.manager.ThriftEntityManager;
@@ -9,6 +26,7 @@ import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.factory.HFactory;
+import net.awired.housecream.server.application.CassandraEmbedded;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,19 +36,19 @@ import com.google.common.collect.ImmutableMap;
 @Configuration
 public class AchillesConfig {
 
-    @Value("${cassandra.hosts:localhost}")
+    //    @Value("${cassandra.hosts}")
     private String cassandraHosts;
 
-    @Value("${cassandra.keyspace:oauth}")
+    @Value("${cassandra.keyspace:housecream}")
     private String keyspaceName;
 
-    @Value("${cassandra.user:oauth}")
+    @Value("${cassandra.user:housecream}")
     private String user;
 
     @Value("${cassandra.cluster.clean:true}")
     private boolean cleanClusterShutdown;
 
-    @Value("${cassandra.password:oauth}")
+    @Value("${cassandra.password:}")
     private String password;
 
     @Autowired
@@ -49,6 +67,9 @@ public class AchillesConfig {
     @Bean
     public Cluster cluster() {
         Map<String, String> credentials = ImmutableMap.of("username", user, "password", password);
+        if (cassandraHosts == null) {
+            cassandraHosts = "localhost:" + CassandraEmbedded.CASSANDRA_EMBEDDED.getThriftPort();
+        }
         return HFactory.getOrCreateCluster("housecream", new CassandraHostConfigurator(cassandraHosts), credentials);
     }
 

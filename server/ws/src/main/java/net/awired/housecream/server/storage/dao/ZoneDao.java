@@ -17,15 +17,36 @@
  */
 package net.awired.housecream.server.storage.dao;
 
-import net.awired.generic.jpa.dao.impl.NestedSetDaoImpl;
+import java.util.List;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ZoneDao extends NestedSetDaoImpl<Zone, Long> {
+public class ZoneDao {
 
-    public ZoneDao() {
-        super(Zone.class, Long.class);
+    public Zone find(Long paramOneValue) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Zone> findAll() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void delete(long zoneId) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void save(Zone zone) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void deleteAll() {
+        // TODO Auto-generated method stub
+
     }
 
 }

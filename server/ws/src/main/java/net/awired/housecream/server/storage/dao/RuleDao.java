@@ -18,43 +18,34 @@
 package net.awired.housecream.server.storage.dao;
 
 import java.util.List;
-import net.awired.core.lang.exception.NotFoundException;
-import net.awired.generic.jpa.dao.impl.GenericDaoImpl;
-import net.awired.housecream.server.api.domain.rule.Condition;
-import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RuleDao extends GenericDaoImpl<EventRule, Long> {
+public class RuleDao {
 
-    public RuleDao() {
-        super(EventRule.class, Long.class);
+    public void delete(long ruleId) {
+        // TODO Auto-generated method stub
+
     }
 
-    @Override
-    public EventRule find(Long id) throws NotFoundException {
-        EventRule find = super.find(id);
-        for (@SuppressWarnings("unused")
-        Condition condition : find.getConditions()) {
-        }
-        for (@SuppressWarnings("unused")
-        Consequence consequence : find.getConsequences()) {
-        }
-        return find;
+    public void save(EventRule rule) {
+        // TODO Auto-generated method stub
+
     }
 
-    @Override
+    public EventRule find(long ruleId) {
+        return null;
+    }
+
     public List<EventRule> findAll() {
-        List<EventRule> findList = super.findAll();
-        for (EventRule eventRule : findList) {
-            for (@SuppressWarnings("unused")
-            Condition condition : eventRule.getConditions()) {
-            }
-            for (@SuppressWarnings("unused")
-            Consequence consequence : eventRule.getConsequences()) {
-            }
-        }
-        return findList;
+        // TODO Auto-generated method stub
+        return null;
     }
+
+    public void deleteAll() {
+        // TODO Auto-generated method stub
+
+    }
+
 }

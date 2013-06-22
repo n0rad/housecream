@@ -30,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName(Land.ZONE_TYPE_NAME)
 public class Land extends Zone {
 
+    private static final long serialVersionUID = 42L;
+
     public static final String ZONE_TYPE_NAME = "land";
 
     @Override

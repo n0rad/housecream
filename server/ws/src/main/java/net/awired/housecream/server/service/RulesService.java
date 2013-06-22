@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
-import net.awired.generic.jpa.entity.Order;
+import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.domain.rule.Rules;
 import net.awired.housecream.server.api.resource.RulesResource;
@@ -32,12 +32,10 @@ import net.awired.housecream.server.engine.builder.RuleBuilder;
 import net.awired.housecream.server.storage.dao.RuleDao;
 import org.drools.definition.KnowledgePackage;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
-@Transactional
 public class RulesService implements RulesResource {
 
     @Inject

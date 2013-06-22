@@ -17,23 +17,51 @@
  */
 package net.awired.housecream.server.storage.dao;
 
+import info.archinnov.achilles.entity.manager.ThriftEntityManager;
 import java.util.List;
-import javax.persistence.TypedQuery;
-import net.awired.generic.jpa.dao.impl.GenericDaoImpl;
+import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InPointDao extends GenericDaoImpl<InPoint, Long> {
+public class InPointDao {
 
-    public InPointDao() {
-        super(InPoint.class, Long.class);
-    }
+    @Autowired
+    private ThriftEntityManager em;
 
     public List<InPoint> findByZone(long zoneId) {
-        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_ZONE, InPoint.class);
-        query.setParameter(InPoint.QUERY_PARAM_ZONE_ID, zoneId);
-        return findList(query);
+        //        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_ZONE, InPoint.class);
+        //        query.setParameter(InPoint.QUERY_PARAM_ZONE_ID, zoneId);
+        //        return findList(query);
+        return null;
+    }
+
+    public InPoint find(long pointId) throws NotFoundException {
+        return null;
+    }
+
+    public List<InPoint> findFiltered(Object object, Object object2, Object object3, Object object4, Object object5) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void delete(Long id) {
+        // TODO Auto-generated method stub        
+    }
+
+    public List<InPoint> findAll() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public InPoint save(InPoint inPoint) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Long findFilteredCount(String search, List<String> searchProperties) {
+        return null;
     }
 
 }

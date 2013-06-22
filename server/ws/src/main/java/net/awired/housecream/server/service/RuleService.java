@@ -23,12 +23,10 @@ import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.resource.RuleResource;
 import net.awired.housecream.server.storage.dao.RuleDao;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
-@Transactional
 public class RuleService implements RuleResource {
 
     @Inject

@@ -23,7 +23,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
-import net.awired.generic.jpa.entity.Order;
+import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.zone.Area;
 import net.awired.housecream.server.api.domain.zone.Building;
 import net.awired.housecream.server.api.domain.zone.Field;
@@ -35,12 +35,10 @@ import net.awired.housecream.server.api.domain.zone.Zones;
 import net.awired.housecream.server.api.resource.ZonesResource;
 import net.awired.housecream.server.storage.dao.ZoneDao;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
-@Transactional
 public class ZonesService implements ZonesResource {
 
     @Inject

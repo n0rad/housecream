@@ -27,10 +27,9 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import net.awired.generic.jpa.entity.IdEntityImpl;
-import net.awired.generic.jpa.validator.ForeignId;
-import com.google.common.base.Objects;
+import lombok.Data;
 
+@Data
 @MappedSuperclass
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public abstract class Point extends IdEntityImpl<Long> {
@@ -51,29 +50,16 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     @NotNull
     @Column(unique = true)
-    private String uri;
+    private String stringUri;
 
     //TODO    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
-    @ForeignId(daoName = "zoneDao")
+    //    @ForeignId(daoName = "zoneDao")
     private Long zoneId;
 
     @Transient
     private Float value;
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this) //
-                .add("id", id) //
-                .add("description", description) //
-                .add("uri", uri) //
-                .add("zoneId", zoneId) //
-                .add("value", value) //
-                .toString();
-    }
-
     //    private Device device;
-
-    ////////////////////////
 
     @Override
     @XmlElement
@@ -86,54 +72,20 @@ public abstract class Point extends IdEntityImpl<Long> {
         super.setId(id);
     }
 
-    ///////////////////////////
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setUri(URI uri) {
         if (uri == null) {
-            this.uri = null;
+            this.stringUri = null;
         } else {
-            this.uri = uri.toString();
+            this.stringUri = uri.toString();
         }
     }
 
     public URI getUri() {
         try {
-            return new URI(uri);
+            return new URI(stringUri);
         } catch (URISyntaxException e) {
             throw new IllegalStateException("Cannot rebuild uri", e);
         }
-    }
-
-    public Long getZoneId() {
-        return zoneId;
-    }
-
-    public void setZoneId(Long zoneId) {
-        this.zoneId = zoneId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Float getValue() {
-        return value;
-    }
-
-    public void setValue(Float value) {
-        this.value = value;
     }
 
 }

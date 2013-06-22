@@ -15,34 +15,45 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package net.awired.housecream.server.api.domain.rule;
+package net.awired.housecream.server.api.domain;
 
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 import lombok.Data;
-import net.awired.housecream.server.api.domain.IdEntityImpl;
 
 @Data
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Condition extends IdEntityImpl<Long> {
+@MappedSuperclass
+@XmlAccessorType(XmlAccessType.NONE)
+public abstract class NestedSetEntityImpl<KEY_TYPE extends Serializable> implements NestedSet<KEY_TYPE> {
 
-    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue
+    protected Long id;
 
-    private long pointId;
-    private float value;
-    @NotNull
-    private ConditionType type;
+    @Column(nullable = true)
+    protected Long parentId;
+    protected Long threadId; // null on root
+    protected Long left;
+    protected Long right;
 
-    public Condition() {
+    ///////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    @XmlElement
+    public Long getLeft() {
+        return left;
     }
 
-    public Condition(long pointId, float value, ConditionType type) {
-        this.pointId = pointId;
-        this.value = value;
-        this.type = type;
+    @Override
+    @XmlElement
+    public Long getRight() {
+        return right;
     }
 
 }

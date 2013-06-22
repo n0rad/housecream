@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 
@@ -35,13 +36,13 @@ public class EncodingConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(Include.NON_NULL);
         objectMapper.setAnnotationIntrospector(new AnnotationIntrospectorPair(new JacksonAnnotationIntrospector(),
-                new JaxbAnnotationIntrospector()));
+                new JaxbAnnotationIntrospector(TypeFactory.defaultInstance())));
         return objectMapper;
     }
 
     @Bean(name = "jaxbProvider")
     public JAXBElementProvider<Object> jAXBElementProvider() {
-        return new JAXBElementProvider<Object>();
+        return new JAXBElementProvider<>();
     }
 
     @Bean(name = "jsonProvider")

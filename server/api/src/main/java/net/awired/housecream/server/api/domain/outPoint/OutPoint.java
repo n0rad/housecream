@@ -32,7 +32,7 @@ import net.awired.housecream.server.api.domain.Point;
 query = "SELECT i FROM OutPoint i where zoneId = :" + OutPoint.QUERY_PARAM_ZONE_ID) })
 public class OutPoint extends Point {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 42L;
 
     public static final String QUERY_PARAM_ZONE_ID = "QUERY_PARAM_ZONE_ID";
     public static final String QUERY_BY_ZONE = "QUERY_PARAM_ZONE_ID";

@@ -15,18 +15,28 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package net.awired.housecream.server.application;
+package net.awired.housecream.server.api.domain;
 
-import me.prettyprint.cassandra.model.ConfigurableConsistencyLevel;
-import me.prettyprint.cassandra.service.OperationType;
-import me.prettyprint.hector.api.HConsistencyLevel;
+import java.io.Serializable;
+import javax.persistence.MappedSuperclass;
 
-public class ConsistencyLevelPolicy extends ConfigurableConsistencyLevel {
+@MappedSuperclass
+public interface NestedSet<KEY_TYPE extends Serializable> extends IdEntity<KEY_TYPE> {
 
-    public ConsistencyLevelPolicy() {
-        setDefaultReadConsistencyLevel(HConsistencyLevel.QUORUM);
-        setDefaultWriteConsistencyLevel(HConsistencyLevel.QUORUM);
+    Long getParentId();
 
-        setConsistencyLevelForCfOperation(HConsistencyLevel.ONE, "elements", OperationType.READ);
-    }
+    void setParentId(KEY_TYPE parentId);
+
+    Long getThreadId();
+
+    void setThreadId(KEY_TYPE threadId);
+
+    Long getLeft();
+
+    void setLeft(Long left);
+
+    Long getRight();
+
+    void setRight(Long right);
+
 }

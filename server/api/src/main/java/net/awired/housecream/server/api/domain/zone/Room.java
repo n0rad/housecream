@@ -31,6 +31,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName(Room.ZONE_TYPE_NAME)
 public class Room extends Zone {
 
+    private static final long serialVersionUID = 42L;
+
     public static final String ZONE_TYPE_NAME = "room";
 
     @Override

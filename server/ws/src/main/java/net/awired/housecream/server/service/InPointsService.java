@@ -25,7 +25,7 @@ import javax.ws.rs.POST;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.core.lang.exception.NotFoundException;
-import net.awired.generic.jpa.entity.Order;
+import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 import net.awired.housecream.server.api.domain.inpoint.InPoints;
@@ -35,12 +35,10 @@ import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
-@Transactional
 public class InPointsService implements InPointsResource {
 
     @Inject

@@ -18,21 +18,26 @@
 package net.awired.housecream.server;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
+import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import net.awired.core.io.JarManifestUtils;
+import net.awired.housecream.server.cli.ArgumentManager;
 import net.awired.operating.system.specific.ApplicationHomeFactory;
+import net.awired.typed.command.line.parser.argument.args.CliOneParamArgument;
 
 public enum Housecream {
     HOUSECREAM;
 
     public static final String HOUSECREAM_NAME = "Housecream";
-    //    private static final String HOUSECREAM_CONF = "housecream.conf";
+    private static final String HOUSECREAM_CONF = "housecream.conf";
     public static final String HOUSECREAM_HOME_KEY = "HOUSECREAM_HOME";
 
     private static final String LOG_CONF_FILE_PATH_KEY = "logback.configurationFile";
@@ -44,7 +49,7 @@ public enum Housecream {
     private File home;
     private String version;
     private File logbackConf;
-    //    private File housecreamConf;
+    private File housecreamConf;
     private File pluginDirectory;
     private boolean inited = false;
 
@@ -55,7 +60,7 @@ public enum Housecream {
             version = VERSION_UNKNOWN;
         }
         logbackConf = new File(home, LOG_CONF_FILE_NAME);
-        //        housecreamConf = new File(home, HOUSECREAM_CONF);
+        housecreamConf = new File(home, HOUSECREAM_CONF);
         pluginDirectory = new File(home, "plugins");
     }
 
@@ -85,7 +90,10 @@ public enum Housecream {
         }
     }
 
-    public void printInfo() {
+    public void updateConfig(ArgumentManager manager) {
+        Properties config = readConfig();
+        updateConfig(config, manager);
+        writeConfig(config);
     }
 
     public File getHome() {
@@ -96,10 +104,73 @@ public enum Housecream {
         return version;
     }
 
-    //////////////////////////////////
+    public File getHousecreamConf() {
+        return housecreamConf;
+    }
+
+    public File getPluginDirectory() {
+        return pluginDirectory;
+    }
+
+    public File getLogbackConf() {
+        return logbackConf;
+    }
 
     public File findDefaultOsHomeDirectory() {
         return ApplicationHomeFactory.getApplicationHome().getFolder(HOUSECREAM_NAME);
+    }
+
+    //////////////////////////////////
+
+    private void updateConfig(Properties config, ArgumentManager manager) {
+        CliOneParamArgument<InetAddress> cassandraHost = manager.getCassandraHost();
+        CliOneParamArgument<Integer> cassandraPort = manager.getCassandraPort();
+        CliOneParamArgument<String> cassandraLogin = manager.getCassandraLogin();
+        CliOneParamArgument<String> cassandraPassword = manager.getCassandraPassword();
+        CliOneParamArgument<InetAddress> housecreamHost = manager.getHousecreamHost();
+        CliOneParamArgument<String> housecreamContextPath = manager.getHousecreamContextPath();
+        CliOneParamArgument<Integer> housecreamPort = manager.getHousecreamPort();
+
+        if (cassandraHost.isSet()) {
+            config.setProperty(cassandraHost.getName(), cassandraHost.getParamOneValue().toString());
+        }
+        if (cassandraPort.isSet()) {
+            config.setProperty(cassandraPort.getName(), cassandraPort.getParamOneValue().toString());
+        }
+        if (cassandraLogin.isSet()) {
+            config.setProperty(cassandraLogin.getName(), cassandraLogin.getParamOneValue());
+        }
+        if (cassandraPassword.isSet()) {
+            config.setProperty(cassandraPassword.getName(), cassandraPassword.getParamOneValue());
+        }
+
+        if (housecreamHost.isSet()) {
+            config.setProperty(housecreamHost.getName(), housecreamHost.getParamOneValue().toString());
+        }
+        if (housecreamContextPath.isSet()) {
+            config.setProperty(housecreamContextPath.getName(), housecreamContextPath.getParamOneValue());
+        }
+        if (housecreamPort.isSet()) {
+            config.setProperty(housecreamPort.getName(), housecreamPort.getParamOneValue().toString());
+        }
+    }
+
+    private Properties readConfig() {
+        Properties config = new Properties();
+        try (FileInputStream inStream = new FileInputStream(getHousecreamConf())) {
+            config.load(inStream);
+            return config;
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read configuration file " + getHousecreamConf());
+        }
+    }
+
+    private void writeConfig(Properties config) {
+        try {
+            config.store(new FileOutputStream(getHousecreamConf()), null);
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot write configuration file " + getHousecreamConf());
+        }
     }
 
     private File findHomeDir() {
@@ -162,18 +233,6 @@ public enum Housecream {
                 }
             }
         }
-    }
-
-    //    public File getHousecreamConf() {
-    //        return housecreamConf;
-    //    }
-
-    public File getPluginDirectory() {
-        return pluginDirectory;
-    }
-
-    public File getLogbackConf() {
-        return logbackConf;
     }
 
 }

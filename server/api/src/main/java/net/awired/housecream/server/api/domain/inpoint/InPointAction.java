@@ -17,11 +17,10 @@
  */
 package net.awired.housecream.server.api.domain.inpoint;
 
-import javax.persistence.Entity;
-import net.awired.generic.jpa.entity.IdEntityImpl;
+import net.awired.housecream.server.api.domain.IdEntityImpl;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 
-@Entity
+//@Entity
 public class InPointAction extends IdEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;

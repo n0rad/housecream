@@ -22,8 +22,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import com.google.common.base.Objects;
+import lombok.Data;
 
+@Data
 @XmlRootElement(name = "rules")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Rules {
@@ -40,27 +41,4 @@ public class Rules {
         this.total = total;
     }
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this) //
-                .add("total", total) //
-                .add("rules", rules) //
-                .toString();
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
-
-    public List<EventRule> getRules() {
-        return rules;
-    }
-
-    public void setRules(List<EventRule> rules) {
-        this.rules = rules;
-    }
 }

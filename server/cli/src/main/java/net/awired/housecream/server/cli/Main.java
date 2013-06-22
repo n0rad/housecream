@@ -39,12 +39,12 @@ public class Main {
             return;
         }
 
-        if (argManager.displayFile.isSet()) {
-            argManager.displayFile.getParamOneValue().display();
+        if (argManager.getDisplayFile().isSet()) {
+            argManager.getDisplayFile().getParamOneValue().display();
             System.exit(0);
         }
 
-        if (argManager.info.isSet()) {
+        if (argManager.getInfo().isSet()) {
             System.out.println("Housecream version          : " + HOUSECREAM.getVersion());
             System.out.println("Housecream home             : " + HOUSECREAM.getHome());
             System.out.println("Housecream log conf         : " + HOUSECREAM.getLogbackConf());
@@ -52,22 +52,22 @@ public class Main {
             System.exit(0);
         }
 
-        if (argManager.clearDb.isSet()) {
-            clearDb();
-            System.exit(0);
-        }
+        //        if (argManager.getClearDb().isSet()) {
+        //            clearDb();
+        //            System.exit(0);
+        //        }
 
         HOUSECREAM.init();
         runServer();
     }
 
-    public void clearDb() {
-        try {
-            System.out.println("Clearing database in home folder : " + HOUSECREAM.getHome());
-            deleteRecursively(new File(HOUSECREAM.getHome(), "db"));
-        } catch (IOException e) {
-        }
-    }
+    //    public void clearDb() {
+    //        try {
+    //            System.out.println("Clearing database in home folder : " + HOUSECREAM.getHome());
+    //            deleteRecursively(new File(HOUSECREAM.getHome(), "db"));
+    //        } catch (IOException e) {
+    //        }
+    //    }
 
     public void deleteRecursively(File directory) throws IOException {
         // Symbolic links will have different canonical and absolute paths
@@ -90,12 +90,12 @@ public class Main {
         // Set some timeout options to make debugging easier.
         connector.setMaxIdleTime(1000 * 60 * 60);
         connector.setSoLingerTime(-1);
-        connector.setPort(argManager.portArg.getParamOneValue());
+        connector.setPort(argManager.getHousecreamPort().getParamOneValue());
         server.setConnectors(new Connector[] { connector });
 
         WebAppContext context = new WebAppContext();
         context.setServer(server);
-        context.setContextPath(argManager.contextPath.getParamOneValue());
+        context.setContextPath(argManager.getHousecreamContextPath().getParamOneValue());
 
         ProtectionDomain protectionDomain = Main.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
