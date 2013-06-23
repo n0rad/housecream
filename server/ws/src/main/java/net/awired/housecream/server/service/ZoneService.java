@@ -34,11 +34,10 @@ import net.awired.housecream.server.storage.dao.OutPointDao;
 import net.awired.housecream.server.storage.dao.ZoneDao;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import com.google.common.io.ByteStreams;
 
-@Service
+//@Service
 @Validated
 public class ZoneService implements ZoneResource {
 

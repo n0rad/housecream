@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
+import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
@@ -42,10 +43,12 @@ public class InPointService implements InPointResource {
     private EngineProcessor engine;
 
     @Inject
-    private InPointsService inPointsService;
+    private InPointsResource inPointsService;
 
     @Override
     public InPoint getInPoint(long inPointId) throws NotFoundException {
+        inPointsService.deleteAllInPoints();
+
         InPoint point = pointDao.find(inPointId);
         try {
             point.setValue(engine.getPointState(inPointId));

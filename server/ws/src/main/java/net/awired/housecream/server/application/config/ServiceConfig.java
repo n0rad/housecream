@@ -22,23 +22,23 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
-import net.awired.housecream.server.service.InPointService;
-import net.awired.housecream.server.service.InPointsService;
-import net.awired.housecream.server.service.OutPointService;
-import net.awired.housecream.server.service.OutPointsService;
+import net.awired.housecream.server.api.resource.InPointResource;
+import net.awired.housecream.server.api.resource.InPointsResource;
+import net.awired.housecream.server.api.resource.OutPointResource;
+import net.awired.housecream.server.api.resource.OutPointsResource;
+import net.awired.housecream.server.api.resource.RuleResource;
+import net.awired.housecream.server.api.resource.RulesResource;
+import net.awired.housecream.server.api.resource.UserResource;
+import net.awired.housecream.server.api.resource.UsersResource;
+import net.awired.housecream.server.api.resource.ZonesResource;
 import net.awired.housecream.server.service.ResourceService;
-import net.awired.housecream.server.service.RuleService;
-import net.awired.housecream.server.service.RulesService;
-import net.awired.housecream.server.service.UserService;
-import net.awired.housecream.server.service.UsersService;
-import net.awired.housecream.server.service.ZoneService;
-import net.awired.housecream.server.service.ZonesService;
 import net.awired.jaxrs.client.server.resource.mapper.NotFoundExceptionMapper;
 import net.awired.jaxrs.client.server.resource.mapper.UpdateExceptionMapper;
 import net.awired.jaxrs.client.server.resource.mapper.ValidationExceptionMapper;
 import net.awired.jaxrs.client.server.resource.mapper.generic.GenericExceptionMapper;
 import net.awired.jaxrs.client.server.resource.mapper.generic.RuntimeExceptionMapper;
 import net.awired.jaxrs.client.server.resource.mapper.generic.WebApplicationExceptionMapper;
+import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
@@ -53,28 +53,33 @@ public class ServiceConfig {
     @Inject
     private ResourceService resourceService;
     @Inject
-    private InPointService inPointService;
+    private InPointResource inPointService;
     @Inject
-    private InPointsService inPointsService;
+    private InPointsResource inPointsService;
     @Inject
-    private OutPointService outPointService;
+    private OutPointResource outPointService;
     @Inject
-    private OutPointsService outPointsService;
+    private OutPointsResource outPointsService;
     @Inject
-    private RuleService ruleService;
+    private RuleResource ruleService;
     @Inject
-    private RulesService rulesService;
+    private RulesResource rulesService;
+    //    @Inject
+    //    private ZoneResource zoneService;
     @Inject
-    private ZoneService zoneService;
+    private ZonesResource zonesService;
     @Inject
-    private ZonesService zonesService;
+    private UserResource userService;
     @Inject
-    private UserService userService;
-    @Inject
-    private UsersService usersService;
+    private UsersResource usersService;
 
     @Autowired
     private EncodingConfig encodingContext;
+
+    @Bean(name = "cxf", destroyMethod = "shutdown")
+    public SpringBus cxf() {
+        return new SpringBus();
+    }
 
     @Bean(name = "restRouter")
     public Server server() {
@@ -88,7 +93,7 @@ public class ServiceConfig {
                 outPointsService, //
                 ruleService, //
                 rulesService, //
-                zoneService, //
+                //                zoneService, //
                 zonesService, //
                 userService, //
                 usersService);
@@ -105,7 +110,7 @@ public class ServiceConfig {
         arrayList.add(new NotFoundExceptionMapper());
         arrayList.add(new UpdateExceptionMapper());
         sf.setProviders(Arrays.asList(encodingContext.jacksonJsonProvider(), encodingContext.jAXBElementProvider()));
-        Map<Object, Object> extensions = new HashMap<Object, Object>();
+        Map<Object, Object> extensions = new HashMap<>();
         extensions.put("json", "application/json");
         extensions.put("xml", "application/xml");
         sf.setExtensionMappings(extensions);

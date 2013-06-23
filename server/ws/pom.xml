@@ -16,6 +16,23 @@
 	</parent>
 
 	<dependencies>
+	       <dependency>
+           <groupId>cglib</groupId>
+           <artifactId>cglib</artifactId>
+           <version>2.2.2</version>
+       </dependency>
+      <dependency>
+           <groupId>org.springframework</groupId>
+           <artifactId>spring-aspects</artifactId>
+           <version>${spring.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.aspectj</groupId>
+           <artifactId>aspectjweaver</artifactId>
+           <version>1.6.10</version>
+       </dependency>
+	
+	
 		<!-- RUNNABLE WAR -->
 		<dependency>
 			<groupId>net.awired.housecream.server</groupId>
@@ -198,7 +215,7 @@
 		<!-- Cassandra -->
 		<dependency>
 			<groupId>info.archinnov</groupId>
-			<artifactId>achilles-thrift</artifactId>
+			<artifactId>achilles-cql</artifactId>
 			<version>${achilles.version}</version>
 			<exclusions>
                 <exclusion>

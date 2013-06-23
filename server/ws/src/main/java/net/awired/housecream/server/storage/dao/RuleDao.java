@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.storage.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import org.springframework.stereotype.Repository;
@@ -40,7 +41,7 @@ public class RuleDao {
 
     public List<EventRule> findAll() {
         // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<>();
     }
 
     public void deleteAll() {

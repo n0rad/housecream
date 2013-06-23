@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.storage.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Order;
@@ -30,7 +31,7 @@ public class OutPointDao {
         //        TypedQuery<OutPoint> query = entityManager.createNamedQuery(OutPoint.QUERY_BY_ZONE, OutPoint.class);
         //        query.setParameter(OutPoint.QUERY_PARAM_ZONE_ID, zoneId);
         //        return findList(query);
-        return null;
+        return new ArrayList<>();
     }
 
     public OutPoint find(long l) throws NotFoundException {
@@ -40,7 +41,7 @@ public class OutPointDao {
 
     public List<OutPoint> findAll() {
         // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<>();
     }
 
     public void delete(Long id) {
@@ -50,7 +51,7 @@ public class OutPointDao {
     public List<OutPoint> findFiltered(Integer length, Integer start, String search, List<String> searchProperties,
             List<Order> orders) {
         // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<>();
     }
 
     public Long findFilteredCount(String search, List<String> searchProperties) {

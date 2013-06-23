@@ -109,7 +109,6 @@ public class Main {
         WebAppContext context = new WebAppContext();
         context.setServer(server);
         context.setContextPath(argManager.getHousecreamContextPath().getParamOneValue());
-
         ProtectionDomain protectionDomain = Main.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
         context.setDescriptor(location.toExternalForm() + "/WEB-INF/web.xml");

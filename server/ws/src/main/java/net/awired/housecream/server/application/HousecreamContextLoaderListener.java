@@ -17,19 +17,21 @@
  */
 package net.awired.housecream.server.application;
 
+import static net.awired.housecream.server.Housecream.HOUSECREAM;
+import static net.awired.housecream.server.Housecream.VERSION_MANIFEST_KEY;
 import static net.awired.housecream.server.application.HousecreamHome.HOUSECREAM_HOME;
 import javax.servlet.ServletContextEvent;
+import net.awired.servlet.sample.html.template.WarManifestUtils;
 import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.WebApplicationContext;
 
 public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
-    public HousecreamContextLoaderListener(WebApplicationContext webApplicationContext) {
-        super(webApplicationContext);
-    }
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        HOUSECREAM.init();
+        HOUSECREAM.discoveredVersion(WarManifestUtils.getWarManifestAttribute(event.getServletContext(),
+                VERSION_MANIFEST_KEY));
+
         HOUSECREAM_HOME.start();
         super.contextInitialized(event);
     }

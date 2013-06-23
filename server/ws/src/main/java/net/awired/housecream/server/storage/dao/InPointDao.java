@@ -17,7 +17,8 @@
  */
 package net.awired.housecream.server.storage.dao;
 
-import info.archinnov.achilles.entity.manager.ThriftEntityManager;
+import info.archinnov.achilles.entity.manager.CQLEntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
@@ -28,7 +29,7 @@ import org.springframework.stereotype.Repository;
 public class InPointDao {
 
     @Autowired
-    private ThriftEntityManager em;
+    private CQLEntityManager em;
 
     public List<InPoint> findByZone(long zoneId) {
         //        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_ZONE, InPoint.class);
@@ -43,7 +44,7 @@ public class InPointDao {
 
     public List<InPoint> findFiltered(Object object, Object object2, Object object3, Object object4, Object object5) {
         // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<>();
     }
 
     public void delete(Long id) {
@@ -52,7 +53,7 @@ public class InPointDao {
 
     public List<InPoint> findAll() {
         // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<>();
     }
 
     public InPoint save(InPoint inPoint) {
