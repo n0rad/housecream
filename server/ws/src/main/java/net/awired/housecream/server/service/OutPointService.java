@@ -17,7 +17,6 @@
  */
 package net.awired.housecream.server.service;
 
-import javax.inject.Inject;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
@@ -25,6 +24,7 @@ import net.awired.housecream.server.command.CommandService;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.OutEvent;
 import net.awired.housecream.server.storage.dao.OutPointDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -32,13 +32,13 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class OutPointService implements OutPointResource {
 
-    @Inject
+    @Autowired
     private OutPointDao pointDao;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private CommandService commandService;
 
     @Override

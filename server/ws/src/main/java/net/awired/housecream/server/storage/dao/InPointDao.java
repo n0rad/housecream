@@ -17,19 +17,19 @@
  */
 package net.awired.housecream.server.storage.dao;
 
-import info.archinnov.achilles.entity.manager.CQLEntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import com.datastax.driver.core.Session;
 
 @Repository
 public class InPointDao {
 
     @Autowired
-    private CQLEntityManager em;
+    private Session session;
 
     public List<InPoint> findByZone(long zoneId) {
         //        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_ZONE, InPoint.class);

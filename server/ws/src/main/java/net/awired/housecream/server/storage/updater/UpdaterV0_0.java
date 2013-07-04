@@ -18,14 +18,27 @@
 package net.awired.housecream.server.storage.updater;
 
 import net.awired.core.updater.Updater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.datastax.driver.core.Session;
 
 @Component
-public class UpdaterV0 implements Updater {
+public class UpdaterV0_0 implements Updater {
+
+    @Autowired
+    private Session session;
 
     @Override
     public void update() {
-
+        session.execute("CREATE TABLE version (version text PRIMARY KEY);");
+        session.execute("CREATE TABLE songs (" //
+                + "id uuid PRIMARY KEY," //
+                + "title text," //
+                + "album text," //
+                + "artist text,"// 
+                + "tags set<text>," //
+                + "data blob" //
+                + ");");
     }
 
 }

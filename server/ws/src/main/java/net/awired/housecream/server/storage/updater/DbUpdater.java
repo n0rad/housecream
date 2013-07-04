@@ -17,32 +17,68 @@
  */
 package net.awired.housecream.server.storage.updater;
 
-import static net.awired.core.updater.Version.V;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.insertInto;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.select;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import javax.annotation.PostConstruct;
 import net.awired.core.updater.Update;
 import net.awired.core.updater.UpdateRunner;
+import net.awired.core.updater.Updater;
 import net.awired.core.updater.Version;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Session;
+import com.datastax.driver.core.exceptions.InvalidQueryException;
 
-public class DbUpdater extends UpdateRunner {
+@Component
+public class DbUpdater {
 
-    public DbUpdater() {
-        super("Housecream DB", new HashSet<Update>() {
-            {
-                add(new Update(V(0), new UpdaterV0()));
+    @Autowired
+    private Session session;
+
+    @Autowired
+    private ApplicationContext context;
+
+    private UpdateRunner updateRunner;
+
+    @PostConstruct
+    public void update() {
+        updateRunner = new UpdateRunner("Housecream DB", springBeansToUpdate(context.getBeansOfType(Updater.class))) {
+
+            @Override
+            protected Version getCurrentVersion() {
+                try {
+                    Row version = session.execute(select("version").from("version")).one();
+                    if (version == null) {
+                        return null;
+                    }
+                    return Version.parse(version.getString(0));
+                } catch (InvalidQueryException e) {
+                    return null;
+                }
             }
-        });
+
+            @Override
+            protected void setNewVersion(Version version) {
+                session.execute(insertInto("version").value("version", version));
+            }
+
+        };
+        updateRunner.updateToLatest();
     }
 
-    @Override
-    protected Version getCurrentVersion() {
-        // TODO Auto-generated method stub
-        return null;
+    private Set<Update> springBeansToUpdate(Map<String, Updater> beans) {
+        Set<Update> updates = new HashSet<>();
+        for (String beanName : beans.keySet()) {
+            Updater bean = beans.get(beanName);
+            String name = bean.getClass().getName();
+            String version = name.substring(name.indexOf("V") + 1).replaceAll("_", ".");
+            updates.add(new Update(Version.parse(version), bean));
+        }
+        return updates;
     }
-
-    @Override
-    protected void setNewVersion(Version version) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

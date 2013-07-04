@@ -20,7 +20,6 @@ package net.awired.housecream.server.command;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
-import javax.inject.Inject;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
@@ -35,6 +34,7 @@ import net.awired.typed.command.line.parser.argument.args.CliNoParamArgument;
 import net.awired.typed.command.line.parser.argument.args.CliOneParamArgument;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.google.common.base.Charsets;
 
@@ -43,19 +43,19 @@ public class CliProcessor implements Processor {
 
     private CommandArgumentManager argumentManager = new CommandArgumentManager();
 
-    @Inject
+    @Autowired
     private InPointDao inPointDao;
 
-    @Inject
+    @Autowired
     private OutPointDao outPointDao;
 
-    @Inject
+    @Autowired
     private ZoneDao zoneDao;
 
-    @Inject
+    @Autowired
     private RuleDao ruleDao;
 
-    @Inject
+    @Autowired
     private CommandService commandService;
 
     @Override

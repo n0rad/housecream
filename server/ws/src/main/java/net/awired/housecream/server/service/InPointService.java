@@ -17,7 +17,6 @@
  */
 package net.awired.housecream.server.service;
 
-import javax.inject.Inject;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
@@ -26,6 +25,7 @@ import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -33,16 +33,16 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class InPointService implements InPointResource {
 
-    @Inject
+    @Autowired
     private InPointDao pointDao;
 
-    @Inject
+    @Autowired
     private DynamicRouteManager routeManager;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private InPointsResource inPointsService;
 
     @Override

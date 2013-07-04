@@ -17,13 +17,13 @@
  */
 package net.awired.housecream.server.router;
 
-import javax.inject.Inject;
 import net.awired.housecream.server.api.domain.rule.Consequence;
 import net.awired.housecream.server.engine.EngineProcessor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,7 +33,7 @@ public class OutEndProcessor implements Processor {
 
     public static final String CONSEQUENCE_HEADER = "HC_CONSEQUENCE";
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
     @Override

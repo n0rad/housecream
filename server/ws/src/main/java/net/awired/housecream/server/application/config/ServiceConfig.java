@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import javax.inject.Inject;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.api.resource.OutPointResource;
@@ -50,27 +49,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServiceConfig {
 
-    @Inject
+    @Autowired
     private ResourceService resourceService;
-    @Inject
+    @Autowired
     private InPointResource inPointService;
-    @Inject
+    @Autowired
     private InPointsResource inPointsService;
-    @Inject
+    @Autowired
     private OutPointResource outPointService;
-    @Inject
+    @Autowired
     private OutPointsResource outPointsService;
-    @Inject
+    @Autowired
     private RuleResource ruleService;
-    @Inject
+    @Autowired
     private RulesResource rulesService;
     //    @Inject
     //    private ZoneResource zoneService;
-    @Inject
+    @Autowired
     private ZonesResource zonesService;
-    @Inject
+    @Autowired
     private UserResource userService;
-    @Inject
+    @Autowired
     private UsersResource usersService;
 
     @Autowired

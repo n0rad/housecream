@@ -27,15 +27,22 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.slf4j.LoggerFactory;
 
 public class Main {
     private final ArgumentManager argManager = new ArgumentManager();
 
     public static void main(String[] args) {
-        new Main().run(args);
+        try {
+            new Main().run(args);
+        } catch (Throwable e) {
+            LoggerFactory.getLogger(Main.class).error("Global error", e);
+            e.printStackTrace();
+            System.exit(3);
+        }
     }
 
-    public void run(String[] args) {
+    public void run(String[] args) throws Exception {
         if (!argManager.parseWithSuccess(args)) {
             return;
         }
@@ -68,6 +75,12 @@ public class Main {
         //        }
 
         HOUSECREAM.init();
+
+        if (argManager.getStartAsService().isSet()) {
+            System.out.close();
+            System.err.close();
+        }
+
         runServer();
     }
 
@@ -93,7 +106,7 @@ public class Main {
         }
     }
 
-    public void runServer() {
+    public void runServer() throws Exception {
         final Server server = new Server();
         SocketConnector connector = new SocketConnector();
 
@@ -115,13 +128,9 @@ public class Main {
         context.setWar(location.toExternalForm());
 
         server.setHandler(context);
-        try {
-            server.start();
-            server.setStopAtShutdown(true);
-            server.join();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(100);
-        }
+
+        server.start();
+        server.setStopAtShutdown(true);
+        server.join();
     }
 }

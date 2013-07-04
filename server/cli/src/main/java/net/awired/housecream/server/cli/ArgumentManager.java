@@ -43,6 +43,7 @@ public class ArgumentManager extends CliArgumentManager {
     private final CliOneParamArgument<String> cassandraLogin;
     private final CliNoParamArgument cassandraPassword;
 
+    private final CliNoParamArgument startAsService;
     private final CliNoParamArgument info;
     private final CliOneParamArgument<File> rootFolder;
     //    private final CliNoParamArgument clearDb;
@@ -51,6 +52,12 @@ public class ArgumentManager extends CliArgumentManager {
     public ArgumentManager() {
         super("housecream");
         getUsageDisplayer().setUsageShort(true);
+
+        // -s
+        startAsService = new CliNoParamArgument('s');
+        startAsService.setName("service");
+        startAsService.setDescription("Start Housecream as a service");
+        addArg(startAsService);
 
         // -d
         displayFile = new CliOneParamArgument<>('d', new CliParamEnum<>("file", FileInfoEnum.class));
@@ -205,5 +212,9 @@ public class ArgumentManager extends CliArgumentManager {
 
     public CliOneParamArgument<FileInfoEnum> getDisplayFile() {
         return displayFile;
+    }
+
+    public CliNoParamArgument getStartAsService() {
+        return startAsService;
     }
 }

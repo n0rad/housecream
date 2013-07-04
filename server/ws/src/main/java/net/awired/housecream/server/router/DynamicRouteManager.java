@@ -21,7 +21,6 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import javax.inject.Inject;
 import net.awired.housecream.plugins.api.HousecreamPlugin;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.service.PluginService;
@@ -30,6 +29,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.RouteDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,13 +37,13 @@ public class DynamicRouteManager extends RouteBuilder {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Inject
+    @Autowired
     private CamelContext camelContext;
 
-    @Inject
+    @Autowired
     private InEventTransformer eventTransformer;
 
-    @Inject
+    @Autowired
     private PluginService pluginService;
 
     private Map<URI, RouteDefinition> pointRoutes = Collections.synchronizedMap(new HashMap<URI, RouteDefinition>());

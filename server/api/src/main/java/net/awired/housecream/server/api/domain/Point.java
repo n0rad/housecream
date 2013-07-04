@@ -54,7 +54,7 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     //TODO    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     //    @ForeignId(daoName = "zoneDao")
-    private Long zoneId;
+    //    private Long zoneId;
 
     @Transient
     private Float value;

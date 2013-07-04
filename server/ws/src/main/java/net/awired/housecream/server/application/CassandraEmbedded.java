@@ -18,13 +18,17 @@
 package net.awired.housecream.server.application;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import java.io.File;
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.apache.cassandra.config.DatabaseDescriptor;
-import org.apache.cassandra.db.commitlog.CommitLog;
-import org.apache.cassandra.io.util.FileUtils;
+import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanInfo;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import org.apache.cassandra.service.CassandraDaemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,34 +36,29 @@ import org.slf4j.LoggerFactory;
 public enum CassandraEmbedded {
     CASSANDRA_EMBEDDED;
 
-    //    private static final String INTERNAL_CASSANDRA_KEYSPACE = "system";
-    //    private static final String INTERNAL_CASSANDRA_AUTH_KEYSPACE = "system_auth";
-    //    private static final String INTERNAL_CASSANDRA_TRACES_KEYSPACE = "system_traces";
-
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private CassandraDaemon cassandraDaemon;
     private ExecutorService executor;
+    private CassandraConfig config;
 
-    public void start(File cassandraHome, CassandraConfig config) {
-        if (cassandraDaemon != null) {
-            log.warn("Cassandra is already started");
+    public void start(CassandraConfig config) {
+        this.config = config;
+        if (isAlreadyRunning()) {
+            log.info("Cassandra is already running, not starting new one");
             return;
         }
-        log.info("Starting Cassandra...");
 
-        File configFile = new File(cassandraHome, "cassandraConfig.yaml");
-        config.writeToFile(configFile);
-        System.setProperty("cassandra.config", "file:" + configFile.getAbsolutePath());
+        log.info("Starting Cassandra...");
+        config.write();
+        System.setProperty("cassandra.config", "file:" + config.getConfigFile().getAbsolutePath());
         System.setProperty("cassandra-foreground", "true");
 
-        cleanupAndLeaveDirs();
         final CountDownLatch startupLatch = new CountDownLatch(1);
         executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                cassandraDaemon = new CassandraDaemon();
+                CassandraDaemon cassandraDaemon = new CassandraDaemon();
                 cassandraDaemon.activate();
                 startupLatch.countDown();
             }
@@ -72,80 +71,23 @@ public enum CassandraEmbedded {
         }
     }
 
-    public void stop() {
-        log.info("Stopping cassandra embedded server...");
-        cassandraDaemon.stop();
-        cassandraDaemon = null;
-    }
-
-    public boolean isStarted() {
-        return cassandraDaemon != null;
-    }
-
-    public String getThriftHost() {
-        checkStarted();
-        return DatabaseDescriptor.getRpcAddress().getHostName();
-    }
-
-    public int getThriftPort() {
-        checkStarted();
-        return DatabaseDescriptor.getRpcPort();
-    }
-
-    public String getCqlHost() {
-        checkStarted();
-        return DatabaseDescriptor.getNativeTransportAddress().getHostName();
-    }
-
-    public int getCqlPort() {
-        checkStarted();
-        return DatabaseDescriptor.getNativeTransportPort();
-    }
-
-    //    public void dropKeyspaces(Cluster cluster) {
-    //        List<KeyspaceDefinition> keyspaces = cluster.describeKeyspaces();
-    //        for (KeyspaceDefinition keyspaceDefinition : keyspaces) {
-    //            String keyspaceName = keyspaceDefinition.getName();
-    //            if (!INTERNAL_CASSANDRA_KEYSPACE.equals(keyspaceName)
-    //                    && !INTERNAL_CASSANDRA_AUTH_KEYSPACE.equals(keyspaceName)
-    //                    && !INTERNAL_CASSANDRA_TRACES_KEYSPACE.equals(keyspaceName)) {
-    //                cluster.dropKeyspace(keyspaceName);
-    //            }
-    //        }
-    //    }
-
-    //////////////////////////////////////
-
-    private void checkStarted() {
-        if (!isStarted()) {
-            throw new IllegalStateException("Cassandra is not started");
-        }
-    }
-
-    private void cleanupAndLeaveDirs() {
-        DatabaseDescriptor.createAllDirectories();
-        cleanup();
-        DatabaseDescriptor.createAllDirectories();
-        CommitLog.instance.resetUnsafe();
-    }
-
-    private void cleanup() {
-        String[] directoryNames = { DatabaseDescriptor.getCommitLogLocation(), };
-        for (String dirName : directoryNames) {
-            File dir = new File(dirName);
-            if (!dir.exists()) {
-                throw new RuntimeException("No such directory: " + dir.getAbsolutePath());
+    private boolean isAlreadyRunning() {
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        try {
+            MBeanInfo mBeanInfo = mbs.getMBeanInfo(new ObjectName("org.apache.cassandra.db:type=StorageService"));
+            if (mBeanInfo != null) {
+                return true;
             }
-            FileUtils.deleteRecursive(dir);
-        }
-
-        for (String dirName : DatabaseDescriptor.getAllDataFileLocations()) {
-            File dir = new File(dirName);
-            if (!dir.exists()) {
-                throw new RuntimeException("No such directory: " + dir.getAbsolutePath());
-            }
-            FileUtils.deleteRecursive(dir);
+            return false;
+        } catch (InstanceNotFoundException e) {
+            return false;
+        } catch (IntrospectionException | MalformedObjectNameException | ReflectionException e) {
+            throw new IllegalStateException("Cannot check if cassandra is already running", e);
         }
     }
 
+    public CassandraConfig getConfig() {
+        config.load();
+        return config;
+    }
 }

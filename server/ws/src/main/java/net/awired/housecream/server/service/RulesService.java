@@ -20,7 +20,6 @@ package net.awired.housecream.server.service;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.Order;
@@ -31,6 +30,7 @@ import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.builder.RuleBuilder;
 import net.awired.housecream.server.storage.dao.RuleDao;
 import org.drools.definition.KnowledgePackage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -38,16 +38,16 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class RulesService implements RulesResource {
 
-    @Inject
+    @Autowired
     private RuleDao ruleDao;
 
-    @Inject
+    @Autowired
     private RuleBuilder ruleBuilder;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private ValidationService validationService;
 
     @Override

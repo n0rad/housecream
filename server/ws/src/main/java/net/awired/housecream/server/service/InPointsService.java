@@ -20,7 +20,6 @@ package net.awired.housecream.server.service;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.ws.rs.POST;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
@@ -34,6 +33,7 @@ import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.router.DynamicRouteManager;
 import net.awired.housecream.server.storage.dao.InPointDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -41,19 +41,19 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class InPointsService implements InPointsResource {
 
-    @Inject
+    @Autowired
     private InPointDao inPointDao;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private DynamicRouteManager routeManager;
 
-    @Inject
+    @Autowired
     private ValidationService validationService;
 
-    @Inject
+    @Autowired
     private PluginService pluginService;
 
     @PostConstruct

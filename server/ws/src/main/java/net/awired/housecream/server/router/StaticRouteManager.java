@@ -17,12 +17,12 @@
  */
 package net.awired.housecream.server.router;
 
-import javax.inject.Inject;
 import net.awired.housecream.server.command.CliProcessor;
 import net.awired.housecream.server.engine.EngineProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,28 +36,28 @@ public class StaticRouteManager extends RouteBuilder {
     public static final String SEDA_DELAY = "seda:delay";
     //    public static final String EVENT_HOLDER_QUEUE = "seda:eventHolder?concurrentConsumers=50";
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private EngineResultSplitter splitter;
 
-    @Inject
+    @Autowired
     private CliProcessor cliProcessor;
 
-    @Inject
+    @Autowired
     private ConsequenceDelayer delayer;
 
-    @Inject
+    @Autowired
     private ConsequenceProcessor consequenceProcessor;
 
-    @Inject
+    @Autowired
     private OutDynamicRouter dynamicRouter;
 
-    @Inject
+    @Autowired
     private OutEndProcessor endProcessor;
 
-    @Inject
+    @Autowired
     private ActionAggregationStrategy aggregationStrategy;
 
     @Override

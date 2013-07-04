@@ -23,7 +23,7 @@ import static net.awired.housecream.server.application.CassandraEmbedded.CASSAND
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import net.awired.core.io.FileLocker;
+import net.awired.core.io.file.FileLocker;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,11 +55,12 @@ public enum HousecreamHome {
     }
 
     private void startCassandra() {
-        CASSANDRA_EMBEDDED.start(new File(HOUSECREAM.getHome(), CASSANDRA_DIRECTORY_NAME), new CassandraConfig());
+        CASSANDRA_EMBEDDED.start(new CassandraConfig("Housecream Cluster", new File(HOUSECREAM.getHome(),
+                CASSANDRA_DIRECTORY_NAME)));
     }
 
     public void stop() {
-        CASSANDRA_EMBEDDED.stop();
+        //        CASSANDRA_EMBEDDED.stop();
         lock.close();
         inited = false;
     }

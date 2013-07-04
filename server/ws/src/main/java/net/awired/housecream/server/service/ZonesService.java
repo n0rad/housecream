@@ -20,7 +20,6 @@ package net.awired.housecream.server.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Inject;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.Order;
@@ -34,6 +33,7 @@ import net.awired.housecream.server.api.domain.zone.Zone;
 import net.awired.housecream.server.api.domain.zone.Zones;
 import net.awired.housecream.server.api.resource.ZonesResource;
 import net.awired.housecream.server.storage.dao.ZoneDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -41,10 +41,10 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class ZonesService implements ZonesResource {
 
-    @Inject
+    @Autowired
     public ZoneDao zoneDao;
 
-    @Inject
+    @Autowired
     private ValidationService validationService;
 
     @Override

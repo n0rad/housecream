@@ -18,7 +18,6 @@
 package net.awired.housecream.server.router;
 
 import java.util.Map;
-import javax.inject.Inject;
 import net.awired.housecream.plugins.api.OutHousecreamPlugin;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.rule.TriggerType;
@@ -31,6 +30,7 @@ import org.apache.camel.Processor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,16 +38,16 @@ public class ConsequenceProcessor implements Processor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Inject
+    @Autowired
     private OutPointDao outputDao;
 
-    @Inject
+    @Autowired
     private PluginService pluginService;
 
-    @Inject
+    @Autowired
     private OutDynamicRouter outRouter;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
     @Override

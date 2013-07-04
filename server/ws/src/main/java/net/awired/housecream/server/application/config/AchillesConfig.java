@@ -17,12 +17,7 @@
  */
 package net.awired.housecream.server.application.config;
 
-import static net.awired.housecream.server.application.CassandraEmbedded.CASSANDRA_EMBEDDED;
-import info.archinnov.achilles.entity.manager.CQLEntityManager;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.Session;
 
 @Configuration
 public class AchillesConfig {
@@ -45,41 +40,41 @@ public class AchillesConfig {
     //    @Autowired
     //    private Cluster cluster;
 
-    @Bean
-    public CQLEntityManager achillesEntityManager() {
-
-        //        createKeyspace();
-        //        createTables();
-        //
-        //        Map<String, Object> configMap = new HashMap<>();
-        //        //        configMap.put("achilles.cassandra.cluster", cluster());
-        //        configMap.put(FORCE_CF_CREATION_PARAM, true);
-        //        configMap.put(KEYSPACE_NAME_PARAM, "housecream");
-        //        configMap.put("achilles.entity.packages", "net.awired");
-        //        configMap.put("achilles.cassandra.connection.contactPoints", CASSANDRA_EMBEDDED.getCqlHost());
-        //        configMap.put("achilles.cassandra.connection.port", String.valueOf(CASSANDRA_EMBEDDED.getCqlPort()));
-        //
-        //        return new CQLEntityManagerFactory(configMap).createEntityManager();
-        return null;
-    }
-
-    private void createTables() {
-        Cluster cluster = Cluster.builder().addContactPoint(CASSANDRA_EMBEDDED.getCqlHost())
-                .withPort(CASSANDRA_EMBEDDED.getCqlPort()).build();
-
-        Session session = cluster.connect("housecream");
-        session.execute("create table achilles_counter_table(fqcn text,pk text,key text,counter_value counter, primary key ((fqcn,pk),key))");
-    }
-
-    private void createKeyspace() {
-        Cluster cluster = Cluster.builder().addContactPoint(CASSANDRA_EMBEDDED.getCqlHost())
-                .withPort(CASSANDRA_EMBEDDED.getCqlPort()).build();
-
-        Session session = cluster.connect();
-        session.execute("CREATE KEYSPACE housecream WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};");
-        session.shutdown();
-
-    }
+    //    @Bean
+    //    public CQLEntityManager achillesEntityManager() {
+    //
+    //        //        createKeyspace();
+    //        //        createTables();
+    //        //
+    //        //        Map<String, Object> configMap = new HashMap<>();
+    //        //        //        configMap.put("achilles.cassandra.cluster", cluster());
+    //        //        configMap.put(FORCE_CF_CREATION_PARAM, true);
+    //        //        configMap.put(KEYSPACE_NAME_PARAM, "housecream");
+    //        //        configMap.put("achilles.entity.packages", "net.awired");
+    //        //        configMap.put("achilles.cassandra.connection.contactPoints", CASSANDRA_EMBEDDED.getCqlHost());
+    //        //        configMap.put("achilles.cassandra.connection.port", String.valueOf(CASSANDRA_EMBEDDED.getCqlPort()));
+    //        //
+    //        //        return new CQLEntityManagerFactory(configMap).createEntityManager();
+    //        return null;
+    //    }
+    //
+    //    private void createTables() {
+    //        Cluster cluster = Cluster.builder().addContactPoint(CASSANDRA_EMBEDDED.getCqlHost())
+    //                .withPort(CASSANDRA_EMBEDDED.getCqlPort()).build();
+    //
+    //        Session session = cluster.connect("housecream");
+    //        session.execute("create table achilles_counter_table(fqcn text,pk text,key text,counter_value counter, primary key ((fqcn,pk),key))");
+    //    }
+    //
+    //    private void createKeyspace() {
+    //        Cluster cluster = Cluster.builder().addContactPoint(CASSANDRA_EMBEDDED.getCqlHost())
+    //                .withPort(CASSANDRA_EMBEDDED.getCqlPort()).build();
+    //
+    //        Session session = cluster.connect();
+    //        session.execute("CREATE KEYSPACE housecream WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};");
+    //        session.shutdown();
+    //
+    //    }
     //    @Bean
     //    public Cluster cluster() {
     //        String hostname = CASSANDRA_EMBEDDED.getCqlHost();

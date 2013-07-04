@@ -20,7 +20,6 @@ package net.awired.housecream.server.engine;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.inject.Inject;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.PointState;
@@ -40,6 +39,7 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.FactHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -51,10 +51,10 @@ public class EngineProcessor implements Processor {
     private final StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
     private KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "hcs.droolsLogs");
 
-    @Inject
+    @Autowired
     private StateService stateService;
 
-    @Inject
+    @Autowired
     private RuleBuilder ruleBuilder;
 
     public EngineProcessor() {

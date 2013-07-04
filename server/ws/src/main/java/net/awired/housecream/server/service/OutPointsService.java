@@ -20,7 +20,6 @@ package net.awired.housecream.server.service;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.core.lang.exception.NotFoundException;
@@ -33,6 +32,7 @@ import net.awired.housecream.server.api.resource.OutPointsResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.storage.dao.OutPointDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -40,16 +40,16 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class OutPointsService implements OutPointsResource {
 
-    @Inject
+    @Autowired
     private OutPointDao outPointDao;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private ValidationService validationService;
 
-    @Inject
+    @Autowired
     private PluginService pluginService;
 
     @PostConstruct

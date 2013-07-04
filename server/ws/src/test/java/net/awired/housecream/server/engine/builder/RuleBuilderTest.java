@@ -17,13 +17,13 @@
  */
 package net.awired.housecream.server.engine.builder;
 
-import static net.awired.core.lang.Caster.cast;
+import static net.awired.core.lang.Cast.cast;
 import static net.awired.housecream.server.api.domain.rule.TriggerType.NON_RETRIGGER;
 import static org.fest.assertions.api.Assertions.assertThat;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
-import net.awired.core.lang.Caster;
+import net.awired.core.lang.Cast;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.rule.Condition;
 import net.awired.housecream.server.api.domain.rule.ConditionType;
@@ -176,7 +176,7 @@ public class RuleBuilderTest {
         engine.process(exchange);
         List<Action> actions = exchange.getIn().getBody(Actions.class).getActions();
         assertThat(actions).hasSize(2);
-        assertThat(Caster.cast(actions, Consequence.class)).contains(delayed0, direct1);
+        assertThat(Cast.cast(actions, Consequence.class)).contains(delayed0, direct1);
         Action currentDelayAction = actions.get(actions.indexOf(delayed0));
         engine.setPointState(43, 1f);
 

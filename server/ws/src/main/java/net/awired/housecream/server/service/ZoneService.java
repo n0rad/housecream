@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import javax.activation.DataHandler;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
@@ -34,6 +33,7 @@ import net.awired.housecream.server.storage.dao.OutPointDao;
 import net.awired.housecream.server.storage.dao.ZoneDao;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import com.google.common.io.ByteStreams;
 
@@ -41,19 +41,19 @@ import com.google.common.io.ByteStreams;
 @Validated
 public class ZoneService implements ZoneResource {
 
-    @Inject
+    @Autowired
     private ZoneDao zoneDao;
 
-    @Inject
+    @Autowired
     private InPointDao inPointDao;
 
-    @Inject
+    @Autowired
     private OutPointDao outPointDao;
 
-    @Inject
+    @Autowired
     private EngineProcessor engine;
 
-    @Inject
+    @Autowired
     private ZonesService zonesService;
 
     @Override

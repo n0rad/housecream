@@ -17,11 +17,11 @@
  */
 package net.awired.housecream.server.application.config;
 
-import javax.inject.Inject;
 import net.awired.housecream.server.router.StaticRouteManager;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.javaconfig.SingleRouteCamelConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -29,7 +29,7 @@ import org.springframework.context.annotation.DependsOn;
 @Configuration
 public class CamelRouteConfig extends SingleRouteCamelConfiguration {
 
-    @Inject
+    @Autowired
     private StaticRouteManager manager;
 
     //    @Override

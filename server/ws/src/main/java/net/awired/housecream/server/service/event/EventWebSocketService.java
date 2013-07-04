@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import net.awired.housecream.server.api.domain.PointState;
 import org.eclipse.jetty.server.Server;
@@ -31,6 +30,7 @@ import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class EventWebSocketService {
 
-    @Inject
+    @Autowired
     private ObjectMapper objectMapper;
 
     private Server server;
