@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.service;
 
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.resource.InPointResource;
@@ -46,7 +47,7 @@ public class InPointService implements InPointResource {
     private InPointsResource inPointsService;
 
     @Override
-    public InPoint getInPoint(long inPointId) throws NotFoundException {
+    public InPoint getInPoint(UUID inPointId) throws NotFoundException {
         inPointsService.deleteAllInPoints();
 
         InPoint point = pointDao.find(inPointId);
@@ -59,7 +60,7 @@ public class InPointService implements InPointResource {
     }
 
     @Override
-    public void deleteInPoint(long inPointId) {
+    public void deleteInPoint(UUID inPointId) {
         try {
             InPoint point = pointDao.find(inPointId);
             routeManager.removeInRoute(point);
@@ -70,16 +71,15 @@ public class InPointService implements InPointResource {
     }
 
     @Override
-    public Float getPointValue(long pointId) throws NotFoundException {
+    public Float getPointValue(UUID pointId) throws NotFoundException {
         return engine.getPointState(pointId);
     }
 
     @Override
-    public InPoint updateInPoint(long pointId, InPoint inPoint) throws PluginNotFoundException {
-        if (pointId != inPoint.getId()) {
+    public InPoint updateInPoint(UUID pointId, InPoint inPoint) throws PluginNotFoundException {
+        if (pointId.equals(inPoint.getId())) {
             throw new IllegalStateException("pointId do not match payload sent");
         }
         return inPointsService.createInPoint(inPoint);
     }
-
 }

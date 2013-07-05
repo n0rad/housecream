@@ -64,7 +64,7 @@
 		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
 		<javascript-bean-validation.version>0.1-SNAPSHOT</javascript-bean-validation.version>
 
-        <achilles.version>1.8.2-SNAPSHOT</achilles.version>
+        <achilles.version>1.8.3-SNAPSHOT</achilles.version>
 
 
 		<hibernate.version>4.1.4.Final</hibernate.version>

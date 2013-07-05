@@ -19,23 +19,27 @@ package net.awired.housecream.server.api.domain.rule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
-import net.awired.housecream.server.api.domain.IdEntityImpl;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class EventRule extends IdEntityImpl<Long> {
+public class EventRule {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    private UUID id;
 
     @NotNull
     @Column(unique = true)

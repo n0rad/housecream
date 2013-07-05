@@ -19,6 +19,7 @@ package net.awired.housecream.server.service;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.it.builder.InPointBuilder;
@@ -43,11 +44,13 @@ public class InPointServiceTest {
 
     @Test
     public void should_fill_state_in_point_before_return() throws Exception {
-        InPoint inpoint = new InPointBuilder().build();
-        when(inPointDao.find(42L)).thenReturn(inpoint);
-        when(processor.getPointState(42L)).thenReturn(44.44f);
+        UUID inPointId = UUID.randomUUID();
 
-        InPoint inPoint = service.getInPoint(42L);
+        InPoint inpoint = new InPointBuilder().build();
+        when(inPointDao.find(inPointId)).thenReturn(inpoint);
+        when(processor.getPointState(inPointId)).thenReturn(44.44f);
+
+        InPoint inPoint = service.getInPoint(inPointId);
 
         assertThat(inPoint.getValue()).isEqualTo(44.44f);
     }

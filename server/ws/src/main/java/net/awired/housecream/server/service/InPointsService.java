@@ -19,6 +19,7 @@ package net.awired.housecream.server.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.POST;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
@@ -27,7 +28,6 @@ import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
-import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.resource.InPointsResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
@@ -101,9 +101,9 @@ public class InPointsService implements InPointsResource {
     }
 
     @Override
-    public InPoints getInPoints(Integer length, Integer start, String search, List<String> searchProperties,
+    public List<InPoint> getInPoints(Integer length, UUID start, String search, List<String> searchProperties,
             List<Order> orders) {
-        List<InPoint> inPointsFiltered = inPointDao.findFiltered(length, start, search, searchProperties, orders);
+        List<InPoint> inPointsFiltered = inPointDao.findFiltered(length, start);
         for (InPoint inPoint : inPointsFiltered) {
             try {
                 inPoint.setValue(engine.getPointState(inPoint.getId()));
@@ -111,8 +111,7 @@ public class InPointsService implements InPointsResource {
                 // nothing to do if we don't have the value in holder
             }
         }
-        Long count = inPointDao.findFilteredCount(search, searchProperties);
-        return new InPoints(inPointsFiltered, count);
+        return inPointsFiltered;
     }
 
     @Override

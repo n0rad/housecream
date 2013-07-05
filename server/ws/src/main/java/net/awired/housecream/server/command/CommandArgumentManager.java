@@ -17,12 +17,13 @@
  */
 package net.awired.housecream.server.command;
 
+import java.util.UUID;
 import net.awired.typed.command.line.parser.argument.CliArgumentManager;
 import net.awired.typed.command.line.parser.argument.CliArgumentParseException;
 import net.awired.typed.command.line.parser.argument.args.CliNoParamArgument;
 import net.awired.typed.command.line.parser.argument.args.CliOneParamArgument;
 import net.awired.typed.command.line.parser.param.CliParamFloat;
-import net.awired.typed.command.line.parser.param.CliParamLong;
+import net.awired.typed.command.line.parser.param.CliParamUuid;
 
 public class CommandArgumentManager extends CliArgumentManager {
 
@@ -31,7 +32,7 @@ public class CommandArgumentManager extends CliArgumentManager {
     private final CliNoParamArgument rule;
     private final CliNoParamArgument zone;
     private final CliOneParamArgument<Float> value;
-    private final CliOneParamArgument<Long> id;
+    private final CliOneParamArgument<UUID> id;
 
     protected CommandArgumentManager() {
         super("");
@@ -56,11 +57,11 @@ public class CommandArgumentManager extends CliArgumentManager {
         zone.setDescription("Display zone informations");
         addArg(zone);
 
-        value = new CliOneParamArgument<Float>('v', new CliParamFloat("value"));
+        value = new CliOneParamArgument<>('v', new CliParamFloat("value"));
         value.setDescription("Set value of an outpoint");
         addArg(value);
 
-        id = new CliOneParamArgument<Long>('0', new CliParamLong("Id"));
+        id = new CliOneParamArgument<>('0', new CliParamUuid("Id"));
         id.setDescription("Display informations about a specific element");
         setDefaultArgument(id);
 
@@ -108,7 +109,7 @@ public class CommandArgumentManager extends CliArgumentManager {
         return zone;
     }
 
-    public CliOneParamArgument<Long> getId() {
+    public CliOneParamArgument<UUID> getId() {
         return id;
     }
 

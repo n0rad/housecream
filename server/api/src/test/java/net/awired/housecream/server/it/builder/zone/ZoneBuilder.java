@@ -17,11 +17,12 @@
  */
 package net.awired.housecream.server.it.builder.zone;
 
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.zone.Zone;
 
 public abstract class ZoneBuilder<T extends ZoneBuilder<T>> {
 
-    private Long id;
+    private UUID id;
     private String name;
     private Long parentId;
 
@@ -33,7 +34,7 @@ public abstract class ZoneBuilder<T extends ZoneBuilder<T>> {
 
     //////////////////
 
-    public T id(Long id) {
+    public T id(UUID id) {
         this.id = id;
         return (T) this;
     }

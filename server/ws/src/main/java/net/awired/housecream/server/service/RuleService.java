@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.service;
 
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import net.awired.housecream.server.api.resource.RuleResource;
@@ -33,12 +34,12 @@ public class RuleService implements RuleResource {
     private RuleDao ruleDao;
 
     @Override
-    public void deleteRule(long ruleId) {
+    public void deleteRule(UUID ruleId) {
         ruleDao.delete(ruleId);
     }
 
     @Override
-    public EventRule getRule(long ruleId) throws NotFoundException {
+    public EventRule getRule(UUID ruleId) throws NotFoundException {
         return ruleDao.find(ruleId);
     }
 }

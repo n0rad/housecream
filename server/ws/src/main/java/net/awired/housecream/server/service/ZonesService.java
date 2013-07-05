@@ -20,6 +20,7 @@ package net.awired.housecream.server.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.Order;
@@ -30,7 +31,6 @@ import net.awired.housecream.server.api.domain.zone.Floor;
 import net.awired.housecream.server.api.domain.zone.Land;
 import net.awired.housecream.server.api.domain.zone.Room;
 import net.awired.housecream.server.api.domain.zone.Zone;
-import net.awired.housecream.server.api.domain.zone.Zones;
 import net.awired.housecream.server.api.resource.ZonesResource;
 import net.awired.housecream.server.storage.dao.ZoneDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class ZonesService implements ZonesResource {
 
     @Override
     public Map<String, ClientValidatorInfo> getZoneValidator() {
-        Map<String, ClientValidatorInfo> validators = new HashMap<String, ClientValidatorInfo>();
+        Map<String, ClientValidatorInfo> validators = new HashMap<>();
         validators.put(Land.class.getSimpleName(), validationService.getValidatorInfo(Land.class));
         validators.put(Building.class.getSimpleName(), validationService.getValidatorInfo(Building.class));
         validators.put(Floor.class.getSimpleName(), validationService.getValidatorInfo(Floor.class));
@@ -66,12 +66,9 @@ public class ZonesService implements ZonesResource {
     }
 
     @Override
-    public Zones getZones(Integer length, Integer start, String search, List<String> searchProperties,
+    public List<Zone> getZones(Integer length, UUID start, String search, List<String> searchProperties,
             List<Order> orders) {
-        List<Zone> findAll = zoneDao.findAll();
-        Zones zones = new Zones();
-        zones.setZones(findAll);
-        zones.setTotal((long) findAll.size());
+        List<Zone> zones = zoneDao.findAll();
         return zones;
     }
 

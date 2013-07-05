@@ -23,6 +23,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import net.awired.core.lang.Cast;
 import net.awired.housecream.server.api.domain.Event;
 import net.awired.housecream.server.api.domain.rule.Condition;
@@ -57,6 +58,11 @@ public class RuleBuilderTest {
     @InjectMocks
     private RuleBuilder ruleBuilder = new RuleBuilder();
 
+    private UUID a42 = UUID.randomUUID();
+    private UUID a43 = UUID.randomUUID();
+    private UUID a44 = UUID.randomUUID();
+    private UUID a45 = UUID.randomUUID();
+
     @InjectMocks
     private EngineProcessor engine;
 
@@ -75,8 +81,8 @@ public class RuleBuilderTest {
 
         EventRule rule = new EventRule();
         rule.setName("my first rule");
-        rule.getConditions().add(new Condition(44, 1, ConditionType.event));
-        rule.getConsequences().add(new Consequence(45, 1));
+        rule.getConditions().add(new Condition(a44, 1, ConditionType.event));
+        rule.getConsequences().add(new Consequence(a45, 1));
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
 
         engine.registerPackages(build);
@@ -84,14 +90,14 @@ public class RuleBuilderTest {
         Exchange exchange = new DefaultExchange((CamelContext) null);
         Message in = new DefaultMessage();
         Event e = new Event();
-        e.setPointId(44);
+        e.setPointId(a44);
         e.setValue(1f);
         in.setBody(e);
         exchange.setIn(in);
 
         engine.process(exchange);
 
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(45);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(a45);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
     }
 
@@ -101,16 +107,16 @@ public class RuleBuilderTest {
         EventRule rule = new EventRule();
         rule.setSalience(100);
         rule.setName("set 43 to 1 when 43=0 or !42");
-        rule.getConditions().add(new Condition(42, 1, ConditionType.event));
-        rule.getConditions().add(new Condition(43, 0, ConditionType.state));
-        rule.getConsequences().add(new Consequence(43, 1));
+        rule.getConditions().add(new Condition(a42, 1, ConditionType.event));
+        rule.getConditions().add(new Condition(a43, 0, ConditionType.state));
+        rule.getConsequences().add(new Consequence(a43, 1));
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
         // rule 2
         EventRule rule2 = new EventRule();
         rule2.setName("set 43 to 0 when 43=1");
-        rule2.getConditions().add(new Condition(42, 1, ConditionType.event));
-        rule2.getConditions().add(new Condition(43, 1, ConditionType.state));
-        rule2.getConsequences().add(new Consequence(43, 0));
+        rule2.getConditions().add(new Condition(a42, 1, ConditionType.event));
+        rule2.getConditions().add(new Condition(a43, 1, ConditionType.state));
+        rule2.getConsequences().add(new Consequence(a43, 0));
         Collection<KnowledgePackage> build2 = ruleBuilder.build(rule2);
         engine.registerPackages(build);
         engine.registerPackages(build2);
@@ -118,16 +124,16 @@ public class RuleBuilderTest {
         Exchange exchange = buildExchange(1f);
         engine.process(exchange);
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(43);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(a43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(1f);
 
         engine.findAndRemoveActionFromFacts(exchange.getIn().getBody(Actions.class).getActions().get(0)); // remove action
-        engine.setPointState(43, 1f); // save new state
+        engine.setPointState(a43, 1f); // save new state
 
         exchange = buildExchange(1f);
         engine.process(exchange);
         assertThat(exchange.getIn().getBody(Actions.class).getActions()).hasSize(1);
-        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(43);
+        assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getOutPointId()).isEqualTo(a43);
         assertThat(exchange.getIn().getBody(Actions.class).getActions().get(0).getValue()).isEqualTo(0f);
     }
 
@@ -136,10 +142,10 @@ public class RuleBuilderTest {
         // rule
         EventRule rule = new EventRule();
         rule.setName("non retrigger 43 on push on 42");
-        rule.getConditions().add(new Condition(42, 1, ConditionType.event));
-        rule.getConditions().add(new Condition(43, 0, ConditionType.state));
-        Consequence direct1 = new Consequence(43, 1);
-        Consequence delayed0 = new Consequence(43, 0, 1000, NON_RETRIGGER);
+        rule.getConditions().add(new Condition(a42, 1, ConditionType.event));
+        rule.getConditions().add(new Condition(a43, 0, ConditionType.state));
+        Consequence direct1 = new Consequence(a43, 1);
+        Consequence delayed0 = new Consequence(a43, 0, 1000, NON_RETRIGGER);
         rule.getConsequences().add(delayed0);
         rule.getConsequences().add(direct1);
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
@@ -152,7 +158,7 @@ public class RuleBuilderTest {
         assertThat(cast(exchange.getIn().getBody(Actions.class).getActions(), Consequence.class)).containsOnly(
                 delayed0, direct1);
 
-        engine.setPointState(43, 1f);
+        engine.setPointState(a43, 1f);
 
         exchange = buildExchange(1f);
         engine.process(exchange);
@@ -164,9 +170,9 @@ public class RuleBuilderTest {
         // rule
         EventRule rule = new EventRule();
         rule.setName("Retrigger 43 on push on 42");
-        rule.getConditions().add(new Condition(42, 1, ConditionType.event));
-        Consequence direct1 = new Consequence(43, 1);
-        Consequence delayed0 = new Consequence(43, 0, 1000, TriggerType.RETRIGGER);
+        rule.getConditions().add(new Condition(a42, 1, ConditionType.event));
+        Consequence direct1 = new Consequence(a43, 1);
+        Consequence delayed0 = new Consequence(a43, 0, 1000, TriggerType.RETRIGGER);
         rule.getConsequences().add(direct1);
         rule.getConsequences().add(delayed0);
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
@@ -178,7 +184,7 @@ public class RuleBuilderTest {
         assertThat(actions).hasSize(2);
         assertThat(Cast.cast(actions, Consequence.class)).contains(delayed0, direct1);
         Action currentDelayAction = actions.get(actions.indexOf(delayed0));
-        engine.setPointState(43, 1f);
+        engine.setPointState(a43, 1f);
 
         exchange = buildExchange(1f);
         engine.process(exchange);
@@ -191,7 +197,7 @@ public class RuleBuilderTest {
         Exchange exchange = new DefaultExchange((CamelContext) null);
         Message in = new DefaultMessage();
         Event e = new Event();
-        e.setPointId(42);
+        e.setPointId(a42);
         e.setValue(value);
         in.setBody(e);
         exchange.setIn(in);

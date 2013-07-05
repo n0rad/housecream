@@ -19,12 +19,12 @@ package net.awired.housecream.server.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
 import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.rule.EventRule;
-import net.awired.housecream.server.api.domain.rule.Rules;
 import net.awired.housecream.server.api.resource.RulesResource;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.engine.builder.RuleBuilder;
@@ -78,13 +78,10 @@ public class RulesService implements RulesResource {
     }
 
     @Override
-    public Rules getRules(Integer length, Integer start, String search, List<String> searchProperties,
+    public List<EventRule> getRules(Integer length, UUID start, String search, List<String> searchProperties,
             List<Order> orders) {
         List<EventRule> findAll = ruleDao.findAll();
-        Rules zones = new Rules();
-        zones.setRules(findAll);
-        zones.setTotal((long) findAll.size());
-        return zones;
+        return findAll;
     }
 
 }

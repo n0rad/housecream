@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.api.resource;
 
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,13 +32,13 @@ import net.awired.housecream.server.api.resource.generic.PointResource;
 public interface InPointResource extends PointResource {
 
     @PUT
-    InPoint updateInPoint(@PathParam("id") long inPointId, @Valid InPoint inPoint) throws PluginNotFoundException;
+    InPoint updateInPoint(@PathParam("id") UUID inPointId, @Valid InPoint inPoint) throws PluginNotFoundException;
 
     @GET
-    InPoint getInPoint(@PathParam("id") long inPointId) throws NotFoundException;
+    InPoint getInPoint(@PathParam("id") UUID inPointId) throws NotFoundException;
 
     @DELETE
-    void deleteInPoint(@PathParam("id") long inPointId);
+    void deleteInPoint(@PathParam("id") UUID inPointId);
     //    @GET
     //    @Path("/value")
     //    Float getInPointValue(@PathParam("id") long inPointId);

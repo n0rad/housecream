@@ -17,22 +17,18 @@
  */
 package net.awired.housecream.server.engine;
 
+import java.util.UUID;
+import lombok.Data;
+
+@Data
 public class OutEvent {
 
-    private final long outPointId;
+    private final UUID outPointId;
     private final Float value;
 
-    public OutEvent(long outPointId, Float value) {
+    public OutEvent(UUID outPointId, Float value) {
         this.outPointId = outPointId;
         this.value = value;
-    }
-
-    public long getOutPointId() {
-        return outPointId;
-    }
-
-    public Float getValue() {
-        return value;
     }
 
 }

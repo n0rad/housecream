@@ -17,6 +17,8 @@
  */
 package net.awired.housecream.server.api.domain.zone;
 
+import java.util.UUID;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
@@ -24,12 +26,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import lombok.Data;
 import net.awired.housecream.server.api.domain.CoordinateShape;
-import net.awired.housecream.server.api.domain.NestedSetEntityImpl;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -45,13 +45,18 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Land.class, name = Land.ZONE_TYPE_NAME),
         @JsonSubTypes.Type(value = Room.class, name = Room.ZONE_TYPE_NAME),
         @JsonSubTypes.Type(value = Field.class, name = Field.ZONE_TYPE_NAME) })
-public abstract class Zone extends NestedSetEntityImpl<Long> {
+public abstract class Zone {
 
     private static final long serialVersionUID = 42L;
+
+    @Id
+    private UUID id;
 
     @NotNull
     @Size(min = 1, max = 20)
     private String name;
+
+    private Long parentId;
 
     private String imageMime;
     @Lob
@@ -61,27 +66,5 @@ public abstract class Zone extends NestedSetEntityImpl<Long> {
     private String parentZoneCoordinates;
 
     // TODO   private Integer ordering;
-
-    @Override
-    @XmlElement
-    public Long getParentId() {
-        return super.getParentId();
-    }
-
-    @Override
-    public void setParentId(Long parentId) {
-        super.setParentId(parentId);
-    }
-
-    @Override
-    @XmlElement
-    public Long getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(Long id) {
-        super.setId(id);
-    }
 
 }

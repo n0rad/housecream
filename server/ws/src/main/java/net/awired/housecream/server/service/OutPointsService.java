@@ -19,6 +19,7 @@ package net.awired.housecream.server.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.client.bean.validation.js.service.ValidationService;
@@ -27,7 +28,6 @@ import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
-import net.awired.housecream.server.api.domain.outPoint.OutPoints;
 import net.awired.housecream.server.api.resource.OutPointsResource;
 import net.awired.housecream.server.api.resource.PluginNotFoundException;
 import net.awired.housecream.server.engine.EngineProcessor;
@@ -71,9 +71,9 @@ public class OutPointsService implements OutPointsResource {
     }
 
     @Override
-    public OutPoints getInPoints(Integer length, Integer start, String search, List<String> searchProperties,
+    public List<OutPoint> getInPoints(Integer length, UUID start, String search, List<String> searchProperties,
             List<Order> orders) {
-        List<OutPoint> outPointsFiltered = outPointDao.findFiltered(length, start, search, searchProperties, orders);
+        List<OutPoint> outPointsFiltered = outPointDao.findFiltered(length, start);
         for (OutPoint outPoint : outPointsFiltered) {
             try {
                 engine.getPointState(outPoint.getId());
@@ -81,8 +81,7 @@ public class OutPointsService implements OutPointsResource {
                 // nothing to do
             }
         }
-        Long count = outPointDao.findFilteredCount(search, searchProperties);
-        return new OutPoints(outPointsFiltered, count);
+        return outPointsFiltered;
     }
 
     @Override

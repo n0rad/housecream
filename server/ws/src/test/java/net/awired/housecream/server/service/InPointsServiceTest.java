@@ -21,8 +21,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
-import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.it.builder.InPointBuilder;
 import net.awired.housecream.server.storage.dao.InPointDao;
@@ -46,12 +46,14 @@ public class InPointsServiceTest {
 
     @Test
     public void should_add_value_before_return() throws Exception {
-        List<InPoint> value = Arrays.asList(new InPointBuilder().id(43).build());
-        when(inPointDao.findFiltered(null, null, null, null, null)).thenReturn(value);
-        when(engine.getPointState(43)).thenReturn(42f);
+        UUID inPointId = UUID.randomUUID();
 
-        InPoints inPoints = service.getInPoints(null, null, null, null, null);
+        List<InPoint> value = Arrays.asList(new InPointBuilder().id(inPointId).build());
+        when(inPointDao.findFiltered(null, null)).thenReturn(value);
+        when(engine.getPointState(inPointId)).thenReturn(42f);
 
-        assertThat(inPoints.getInPoints().get(0).getValue()).isEqualTo(42);
+        List<InPoint> inPoints = service.getInPoints(null, null, null, null, null);
+
+        assertThat(inPoints.get(0).getValue()).isEqualTo(42);
     }
 }

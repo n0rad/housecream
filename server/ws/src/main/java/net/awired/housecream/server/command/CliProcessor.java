@@ -20,6 +20,7 @@ package net.awired.housecream.server.command;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
@@ -83,7 +84,7 @@ public class CliProcessor implements Processor {
         exchange.getIn().setBody(baos.toString(Charsets.UTF_8.displayName()));
     }
 
-    private void processRule(CliNoParamArgument rule, CliOneParamArgument<Long> id, PrintStream ps)
+    private void processRule(CliNoParamArgument rule, CliOneParamArgument<UUID> id, PrintStream ps)
             throws NotFoundException {
         if (id.isSet()) {
             EventRule find = ruleDao.find(id.getParamOneValue());
@@ -94,7 +95,7 @@ public class CliProcessor implements Processor {
         }
     }
 
-    private void processZone(CliNoParamArgument zone, CliOneParamArgument<Long> id, PrintStream ps)
+    private void processZone(CliNoParamArgument zone, CliOneParamArgument<UUID> id, PrintStream ps)
             throws NotFoundException {
         if (id.isSet()) {
             Zone find = zoneDao.find(id.getParamOneValue());
@@ -105,7 +106,7 @@ public class CliProcessor implements Processor {
         }
     }
 
-    private void processInPoint(CliNoParamArgument inpoint, CliOneParamArgument<Long> id, PrintStream ps)
+    private void processInPoint(CliNoParamArgument inpoint, CliOneParamArgument<UUID> id, PrintStream ps)
             throws NotFoundException {
         if (id.isSet()) {
             InPoint find = inPointDao.find(id.getParamOneValue());
@@ -116,7 +117,7 @@ public class CliProcessor implements Processor {
         }
     }
 
-    private void processOutPoint(CliNoParamArgument outpoint, CliOneParamArgument<Long> id,
+    private void processOutPoint(CliNoParamArgument outpoint, CliOneParamArgument<UUID> id,
             CliOneParamArgument<Float> value, PrintStream ps) throws NotFoundException {
         if (id.isSet()) {
             if (value.isSet()) {

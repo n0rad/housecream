@@ -19,13 +19,14 @@ package net.awired.housecream.server.storage.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.rule.EventRule;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RuleDao {
 
-    public void delete(long ruleId) {
+    public void delete(UUID ruleId) {
         // TODO Auto-generated method stub
 
     }
@@ -35,7 +36,7 @@ public class RuleDao {
 
     }
 
-    public EventRule find(long ruleId) {
+    public EventRule find(UUID ruleId) {
         return null;
     }
 

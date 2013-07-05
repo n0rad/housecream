@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.service;
 
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.resource.OutPointResource;
@@ -42,12 +43,12 @@ public class OutPointService implements OutPointResource {
     private CommandService commandService;
 
     @Override
-    public Float getPointValue(long pointId) throws NotFoundException {
+    public Float getPointValue(UUID pointId) throws NotFoundException {
         return engine.getPointState(pointId);
     }
 
     @Override
-    public OutPoint getOutPoint(long outPointId) throws NotFoundException {
+    public OutPoint getOutPoint(UUID outPointId) throws NotFoundException {
         OutPoint find = pointDao.find(outPointId);
         try {
             find.setValue(engine.getPointState(outPointId));
@@ -58,7 +59,7 @@ public class OutPointService implements OutPointResource {
     }
 
     @Override
-    public void deleteOutPoint(long outPointId) {
+    public void deleteOutPoint(UUID outPointId) {
         try {
             OutPoint point = pointDao.find(outPointId);
             pointDao.delete(point.getId());
@@ -68,7 +69,7 @@ public class OutPointService implements OutPointResource {
     }
 
     @Override
-    public void setValue(long outPointId, Float value) throws Exception {
+    public void setValue(UUID outPointId, Float value) throws Exception {
         commandService.processOutEvent(new OutEvent(outPointId, value));
     }
 }

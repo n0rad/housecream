@@ -18,6 +18,7 @@
 package net.awired.housecream.server.api.resource;
 
 import java.util.List;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -37,29 +38,29 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 public interface ZoneResource {
 
     @PUT
-    Zone updateZone(@PathParam("id") long zoneId, @Valid Zone zone) throws NotFoundException;
+    Zone updateZone(@PathParam("id") UUID zoneId, @Valid Zone zone) throws NotFoundException;
 
     @GET
-    Zone getZone(@PathParam("id") long zoneId) throws NotFoundException;
+    Zone getZone(@PathParam("id") UUID zoneId) throws NotFoundException;
 
     @DELETE
-    void deleteZone(@PathParam("id") long zoneId);
+    void deleteZone(@PathParam("id") UUID zoneId);
 
     @POST
     @Path("/image")
     @Consumes("multipart/form-data")
-    void uploadImage(@PathParam("id") long zoneId, MultipartBody body) throws NotFoundException;
+    void uploadImage(@PathParam("id") UUID zoneId, MultipartBody body) throws NotFoundException;
 
     @GET
     @Path("/image")
-    Response getImage(@PathParam("id") long zoneId) throws NotFoundException;
+    Response getImage(@PathParam("id") UUID zoneId) throws NotFoundException;
 
     @GET
     @Path("/inpoints")
-    List<InPoint> getInPoints(@PathParam("id") long zoneId);
+    List<InPoint> getInPoints(@PathParam("id") UUID zoneId);
 
     @GET
     @Path("/outpoints")
-    List<OutPoint> getOutPoints(@PathParam("id") long zoneId);
+    List<OutPoint> getOutPoints(@PathParam("id") UUID zoneId);
 
 }

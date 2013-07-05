@@ -22,7 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedHashMap;
+import net.awired.core.io.PortFinder;
 import org.apache.cassandra.config.Config;
 import org.apache.cassandra.config.Config.CommitLogSync;
 import org.apache.cassandra.config.Config.DiskFailurePolicy;
@@ -47,22 +47,6 @@ public class CassandraConfig {
         this.cassandraHome = cassandraHome;
         this.configFile = new File(cassandraHome, "config.yaml");
 
-        //        lines.add("seed_provider:");
-        //        lines.add("    - class_name: org.apache.cassandra.locator.SimpleSeedProvider");
-        //        lines.add("      parameters:");
-        //        lines.add("          - seeds: \"127.0.0.1\"");
-        //
-        //        lines.add("storage_port: 7000");
-        //        lines.add("ssl_storage_port: 7001");
-        //        lines.add("listen_address: 127.0.0.1");
-        //
-        //        lines.add("start_native_transport: true");
-        //        lines.add("native_transport_port: 9042");
-        //        lines.add("start_rpc: true");
-        //        lines.add("rpc_address: localhost");
-        //        lines.add("rpc_keepalive: true");
-        //        lines.add("rpc_server_type: sync");
-
         config.cluster_name = clusterName;
         //        config.initial_token = "";
         config.hinted_handoff_enabled = true;
@@ -79,16 +63,9 @@ public class CassandraConfig {
         config.row_cache_size_in_mb = 0;
         config.row_cache_save_period = 0;
         config.row_cache_provider = "SerializingCacheProvider";
-        //            config.saved_caches_directory= /var/lib/cassandra/saved_caches;
         config.commitlog_sync = CommitLogSync.periodic;
         config.commitlog_sync_period_in_ms = 10000;
         config.commitlog_segment_size_in_mb = 32;
-        LinkedHashMap<String, Object> hashMap = new LinkedHashMap<>();
-        hashMap.put("class_name", org.apache.cassandra.locator.SimpleSeedProvider.class.getName());
-        //        Map<String, String> hashMap2 = new LinkedHashMap<>();
-        //        hashMap2.put("seeds", "127.0.0.1");
-        //        hashMap.put("parameters", Arrays.asList(hashMap2));
-        //        config.seed_provider = new SeedProviderDef(hashMap);
         config.flush_largest_memtables_at = 0.75;
         config.reduce_cache_sizes_at = 0.85;
         config.reduce_cache_capacity_to = 0.6;
@@ -128,12 +105,9 @@ public class CassandraConfig {
         config.request_scheduler = org.apache.cassandra.scheduler.NoScheduler.class.getName();
         config.index_interval = 128;
         config.server_encryption_options.internode_encryption = InternodeEncryption.none;
-        //        config.server_encryption_options.keystore = "conf/.keystore";
         config.server_encryption_options.keystore_password = "cassandra";
-        //        config.server_encryption_options.truststore = "conf/.truststore";
         config.server_encryption_options.truststore_password = "cassandra";
         config.client_encryption_options.enabled = false;
-        //        config.client_encryption_options.keystore = "conf/.keystore";
         config.client_encryption_options.keystore_password = "cassandra";
         config.internode_compression = InternodeCompression.all;
         config.inter_dc_tcp_nodelay = true;
@@ -142,7 +116,6 @@ public class CassandraConfig {
 
     private void updateWithHomePath(File cassandraHome) {
         String absolutePath = cassandraHome.getAbsolutePath();
-
         config.client_encryption_options.keystore = absolutePath + "/keystore";
         config.data_file_directories = new String[] { absolutePath + "/data" };
         config.commitlog_directory = absolutePath + "/commitlog";
@@ -183,8 +156,6 @@ public class CassandraConfig {
         }
     }
 
-    /////////////////////////////////////////////
-
     private Yaml getYaml() {
         org.yaml.snakeyaml.constructor.Constructor constructor = new org.yaml.snakeyaml.constructor.Constructor(
                 Config.class);
@@ -193,6 +164,10 @@ public class CassandraConfig {
         constructor.addTypeDescription(seedDesc);
         Yaml yaml = new Yaml(new Loader(constructor));
         return yaml;
+    }
+
+    public Config underlyingConfig() {
+        return config;
     }
 
     public File getConfigFile() {
@@ -207,8 +182,42 @@ public class CassandraConfig {
         return config.listen_address;
     }
 
-    //    res.add("storage_port: " + (storagePort == null ? PortFinder.findAvailableBetween(7001, 7991) : storagePort));
-    //    res.add("rpc_port: " + (thriftPort == null ? PortFinder.findAvailableBetween(9161, 9961) : thriftPort));
-    //    res.add("native_transport_port: " + (cqlPort == null ? PortFinder.findAvailableBetween(9043, 9160) : cqlPort));
+    public CassandraConfig cqlPort(int port) {
+        config.native_transport_port = port;
+        return this;
+    }
+
+    public CassandraConfig thriftPort(int port) {
+        config.rpc_port = port;
+        return this;
+    }
+
+    public CassandraConfig randomPorts() {
+        storageRandomPort();
+        storageSslRandomPort();
+        cqlRandomPort();
+        thriftRandomPort();
+        return this;
+    }
+
+    public CassandraConfig storageRandomPort() {
+        config.storage_port = PortFinder.randomAvailable();
+        return this;
+    }
+
+    public CassandraConfig storageSslRandomPort() {
+        config.ssl_storage_port = PortFinder.randomAvailable();
+        return this;
+    }
+
+    public CassandraConfig cqlRandomPort() {
+        config.native_transport_port = PortFinder.randomAvailable();
+        return this;
+    }
+
+    public CassandraConfig thriftRandomPort() {
+        config.rpc_port = PortFinder.randomAvailable();
+        return this;
+    }
 
 }

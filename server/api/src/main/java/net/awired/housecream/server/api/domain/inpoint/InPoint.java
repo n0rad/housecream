@@ -34,7 +34,6 @@ public class InPoint extends Point {
     //    private Date lastUpdate; // input only
 
     //    @EnumNotEmpty
-    //    @ApiProperty(value = "type of point", allowableValues = "any")
     private InPointType type;
 
     ////////////////////////////////////
@@ -43,7 +42,6 @@ public class InPoint extends Point {
         this.type = type;
     }
 
-    //    @ApiProperty(value = "type of point", allowableValues = "any")
     @XmlElement
     public InPointType getType() {
         return type;

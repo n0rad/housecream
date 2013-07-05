@@ -20,6 +20,7 @@ package net.awired.housecream.server.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 import javax.activation.DataHandler;
 import javax.ws.rs.core.Response;
 import net.awired.core.lang.exception.NotFoundException;
@@ -57,17 +58,17 @@ public class ZoneService implements ZoneResource {
     private ZonesService zonesService;
 
     @Override
-    public Zone getZone(long zoneId) throws NotFoundException {
+    public Zone getZone(UUID zoneId) throws NotFoundException {
         return zoneDao.find(zoneId);
     }
 
     @Override
-    public void deleteZone(long zoneId) {
+    public void deleteZone(UUID zoneId) {
         zoneDao.delete(zoneId);
     }
 
     @Override
-    public void uploadImage(long zoneId, MultipartBody body) throws NotFoundException {
+    public void uploadImage(UUID zoneId, MultipartBody body) throws NotFoundException {
         List<Attachment> allAttachments = body.getAllAttachments();
         Zone zone = zoneDao.find(zoneId);
         DataHandler dataHandler = allAttachments.get(0).getDataHandler();
@@ -82,13 +83,13 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
-    public Response getImage(long zoneId) throws NotFoundException {
+    public Response getImage(UUID zoneId) throws NotFoundException {
         Zone find = zoneDao.find(zoneId);
         return Response.ok(find.getImage()).type(find.getImageMime()).build();
     }
 
     @Override
-    public List<InPoint> getInPoints(long zoneId) {
+    public List<InPoint> getInPoints(UUID zoneId) {
         List<InPoint> findByZone = inPointDao.findByZone(zoneId);
         for (InPoint inPoint : findByZone) {
             try {
@@ -102,7 +103,7 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
-    public List<OutPoint> getOutPoints(long zoneId) {
+    public List<OutPoint> getOutPoints(UUID zoneId) {
         List<OutPoint> findByZone = outPointDao.findByZone(zoneId);
         for (OutPoint outPoint : findByZone) {
             try {
@@ -116,7 +117,7 @@ public class ZoneService implements ZoneResource {
     }
 
     @Override
-    public Zone updateZone(long zoneId, Zone zone) throws NotFoundException {
+    public Zone updateZone(UUID zoneId, Zone zone) throws NotFoundException {
         if (zoneId != zone.getId()) {
             throw new IllegalStateException("zoneId do not match payload sent");
         }

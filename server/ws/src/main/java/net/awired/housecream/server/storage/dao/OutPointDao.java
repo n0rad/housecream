@@ -19,22 +19,22 @@ package net.awired.housecream.server.storage.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
-import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OutPointDao {
 
-    public List<OutPoint> findByZone(long zoneId) {
+    public List<OutPoint> findByZone(UUID zoneId) {
         //        TypedQuery<OutPoint> query = entityManager.createNamedQuery(OutPoint.QUERY_BY_ZONE, OutPoint.class);
         //        query.setParameter(OutPoint.QUERY_PARAM_ZONE_ID, zoneId);
         //        return findList(query);
         return new ArrayList<>();
     }
 
-    public OutPoint find(long l) throws NotFoundException {
+    public OutPoint find(UUID outPointId) throws NotFoundException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -44,23 +44,17 @@ public class OutPointDao {
         return new ArrayList<>();
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         // TODO Auto-generated method stub
-    }
-
-    public List<OutPoint> findFiltered(Integer length, Integer start, String search, List<String> searchProperties,
-            List<Order> orders) {
-        // TODO Auto-generated method stub
-        return new ArrayList<>();
-    }
-
-    public Long findFilteredCount(String search, List<String> searchProperties) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     public void save(OutPoint outPoint) {
         // TODO Auto-generated method stub
 
+    }
+
+    public List<OutPoint> findFiltered(Integer length, UUID start) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

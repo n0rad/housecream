@@ -18,6 +18,7 @@
 package net.awired.housecream.server.api.resource;
 
 import java.util.List;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,14 +29,13 @@ import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
-import net.awired.housecream.server.api.domain.outPoint.OutPoints;
 
 @Path("/outpoints")
 public interface OutPointsResource {
 
     @GET
-    OutPoints getInPoints(@QueryParam("length") Integer length, //
-            @QueryParam("start") Integer start, //
+    List<OutPoint> getInPoints(@QueryParam("length") Integer length, //
+            @QueryParam("start") UUID start, //
             @QueryParam("search") String search, //
             @QueryParam("searchProperty") List<String> searchProperties, //
             @QueryParam("order") List<Order> orders);

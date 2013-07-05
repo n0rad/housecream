@@ -17,15 +17,16 @@
  */
 package net.awired.housecream.server.api.domain;
 
+import java.util.UUID;
 import lombok.Data;
 
 @Data
 public class PointState {
 
-    private long pointId;
+    private UUID pointId;
     private float value;
 
-    public PointState(long pointId, float value) {
+    public PointState(UUID pointId, float value) {
         this.pointId = pointId;
         this.value = value;
     }

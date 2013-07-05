@@ -19,6 +19,7 @@ package net.awired.housecream.server.service;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.engine.EngineProcessor;
 import net.awired.housecream.server.it.builder.OutPointBuilder;
@@ -43,11 +44,12 @@ public class OutPointServiceTest {
 
     @Test
     public void should_set_value_before_return() throws Exception {
+        UUID outPointId = UUID.randomUUID();
         OutPoint value = new OutPointBuilder().build();
-        when(outPointDao.find(42L)).thenReturn(value);
-        when(engine.getPointState(42L)).thenReturn(44.44f);
+        when(outPointDao.find(outPointId)).thenReturn(value);
+        when(engine.getPointState(outPointId)).thenReturn(44.44f);
 
-        OutPoint outPoint = service.getOutPoint(42L);
+        OutPoint outPoint = service.getOutPoint(outPointId);
 
         assertThat(outPoint.getValue()).isEqualTo(44.44f);
     }

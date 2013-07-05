@@ -18,6 +18,7 @@
 package net.awired.housecream.server.engine;
 
 import java.util.Collection;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import net.awired.core.lang.exception.NotFoundException;
@@ -126,7 +127,7 @@ public class EngineProcessor implements Processor {
         kbase.addKnowledgePackages(packages);
     }
 
-    public void setPointState(long pointId, Float currentValue) {
+    public void setPointState(UUID pointId, Float currentValue) {
         log.debug("Set point state pointId={}, value={}", pointId, currentValue);
         PointState state = new PointState(pointId, currentValue);
         //TODO may be a problem as we insert before remove
@@ -139,7 +140,7 @@ public class EngineProcessor implements Processor {
         logCurrentFacts("after add point state");
     }
 
-    public float getPointState(long pointId) throws NotFoundException {
+    public float getPointState(UUID pointId) throws NotFoundException {
         Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair == null) {
             throw new NotFoundException("Point state not found for pointId : " + pointId);
@@ -147,7 +148,7 @@ public class EngineProcessor implements Processor {
         return pair.getLeft().getValue();
     }
 
-    public void removePointState(long pointId) {
+    public void removePointState(UUID pointId) {
         log.debug("Removing point state for id : {}" + pointId);
         Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair != null) {

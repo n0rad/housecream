@@ -17,16 +17,19 @@
  */
 package net.awired.housecream.server.storage.dao;
 
+import info.archinnov.achilles.entity.manager.CQLEntityManager;
 import java.util.List;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ZoneDao {
 
-    public Zone find(Long paramOneValue) {
-        // TODO Auto-generated method stub
-        return null;
+    private CQLEntityManager em;
+
+    public Zone find(UUID zoneId) {
+        return em.find(Zone.class, zoneId);
     }
 
     public List<Zone> findAll() {
@@ -34,19 +37,16 @@ public class ZoneDao {
         return null;
     }
 
-    public void delete(long zoneId) {
+    public void delete(UUID zoneId) {
         // TODO Auto-generated method stub
 
     }
 
     public void save(Zone zone) {
-        // TODO Auto-generated method stub
-
+        em.persist(zone);
     }
 
     public void deleteAll() {
-        // TODO Auto-generated method stub
-
     }
 
 }

@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.storage.updater;
 
+import static info.archinnov.achilles.counter.AchillesCounter.CQL_COUNTER_TABLE;
 import net.awired.core.updater.Updater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,15 +31,18 @@ public class UpdaterV0_0 implements Updater {
 
     @Override
     public void update() {
+
         session.execute("CREATE TABLE version (version text PRIMARY KEY);");
-        session.execute("CREATE TABLE songs (" //
-                + "id uuid PRIMARY KEY," //
-                + "title text," //
-                + "album text," //
-                + "artist text,"// 
-                + "tags set<text>," //
-                + "data blob" //
-                + ");");
+
+        StringBuilder tableAchillesCounter = new StringBuilder();
+        tableAchillesCounter.append("CREATE TABLE ").append(CQL_COUNTER_TABLE).append("(");
+        tableAchillesCounter.append("fqcn text,");
+        tableAchillesCounter.append("primary_key text,");
+        tableAchillesCounter.append("property_name text,");
+        tableAchillesCounter.append("counter_value counter,");
+        tableAchillesCounter.append("primary key((fqcn,primary_key),property_name))");
+
+        session.execute(tableAchillesCounter.toString());
     }
 
 }

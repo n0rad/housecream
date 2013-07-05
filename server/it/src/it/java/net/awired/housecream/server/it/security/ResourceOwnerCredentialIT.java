@@ -1,6 +1,7 @@
 package net.awired.housecream.server.it.security;
 
-import net.awired.housecream.server.api.domain.inpoint.InPoints;
+import java.util.List;
+import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.it.HcWsItServer;
 import net.awired.housecream.server.it.HcWsItSession;
 import org.junit.Rule;
@@ -17,7 +18,7 @@ public class ResourceOwnerCredentialIT {
 
         session.authenticate();
 
-        InPoints list = session.inpoint().list();
+        List<InPoint> list = session.inpoint().list();
 
         //        assertThat(token.getAccessToken()).isNotNull();
 

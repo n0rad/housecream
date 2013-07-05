@@ -19,22 +19,24 @@ package net.awired.housecream.server.api.domain;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import lombok.Data;
 
 @Data
-@MappedSuperclass
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public abstract class Point extends IdEntityImpl<Long> {
+public abstract class Point {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    private UUID id;
 
     //    private Coordinate position;
     //    private List<Coordinate> coverage;
@@ -54,23 +56,12 @@ public abstract class Point extends IdEntityImpl<Long> {
 
     //TODO    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     //    @ForeignId(daoName = "zoneDao")
-    //    private Long zoneId;
+    private UUID zoneId;
 
     @Transient
     private Float value;
 
     //    private Device device;
-
-    @Override
-    @XmlElement
-    public Long getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(Long id) {
-        super.setId(id);
-    }
 
     public void setUri(URI uri) {
         if (uri == null) {

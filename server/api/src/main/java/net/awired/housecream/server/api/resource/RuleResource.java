@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.api.resource;
 
+import java.util.UUID;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -28,9 +29,9 @@ import net.awired.housecream.server.api.domain.rule.EventRule;
 public interface RuleResource {
 
     @DELETE
-    void deleteRule(@PathParam("id") long ruleId);
+    void deleteRule(@PathParam("id") UUID ruleId);
 
     @GET
-    EventRule getRule(@PathParam("id") long ruleId) throws NotFoundException;
+    EventRule getRule(@PathParam("id") UUID ruleId) throws NotFoundException;
 
 }

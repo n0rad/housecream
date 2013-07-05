@@ -17,21 +17,21 @@
  */
 package net.awired.housecream.server.api.domain.rule;
 
+import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
-import net.awired.housecream.server.api.domain.IdEntityImpl;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Condition extends IdEntityImpl<Long> {
+public class Condition {
 
     private static final long serialVersionUID = 1L;
 
-    private long pointId;
+    private UUID pointId;
     private float value;
     @NotNull
     private ConditionType type;
@@ -39,7 +39,7 @@ public class Condition extends IdEntityImpl<Long> {
     public Condition() {
     }
 
-    public Condition(long pointId, float value, ConditionType type) {
+    public Condition(UUID pointId, float value, ConditionType type) {
         this.pointId = pointId;
         this.value = value;
         this.type = type;

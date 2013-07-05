@@ -42,7 +42,7 @@ public class WebSocketIT {
         List<Event> events = webSocket.awaitEvents();
 
         assertEquals(1, events.size());
-        assertEquals(pir.getId(), (Long) events.get(0).getPointId());
+        assertEquals(pir.getId(), events.get(0).getPointId());
         assertEquals(1f, events.get(0).getValue(), 0f);
     }
 }

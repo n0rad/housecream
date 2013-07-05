@@ -18,6 +18,7 @@
 package net.awired.housecream.server.api.resource;
 
 import java.util.List;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,7 +29,6 @@ import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
-import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.security.Scopes;
 import net.awired.jaxrs.oauth2.Secured;
 
@@ -44,8 +44,8 @@ public interface InPointsResource {
 
     @GET
     @Secured(Scopes.Events.class)
-    InPoints getInPoints(@QueryParam("length") Integer length, //
-            @QueryParam("start") Integer start, //
+    List<InPoint> getInPoints(@QueryParam("length") Integer length, //
+            @QueryParam("start") UUID start, //
             @QueryParam("search") String search, //
             @QueryParam("searchProperty") List<String> searchProperties, //
             @QueryParam("order") List<Order> orders);

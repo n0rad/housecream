@@ -17,20 +17,21 @@
  */
 package net.awired.housecream.server.api.domain.rule;
 
+import java.util.UUID;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
-import net.awired.housecream.server.api.domain.IdEntityImpl;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Consequence extends IdEntityImpl<Long> {
+public class Consequence {
 
     private static final long serialVersionUID = 1L;
 
-    private long outPointId;
+    private UUID id;
+    private UUID outPointId;
     private float value;
     private long delayMili;
     private TriggerType triggerType;
@@ -38,18 +39,18 @@ public class Consequence extends IdEntityImpl<Long> {
     public Consequence() {
     }
 
-    public Consequence(long outPointId, float value) {
+    public Consequence(UUID outPointId, float value) {
         this.outPointId = outPointId;
         this.value = value;
     }
 
-    public Consequence(long outPointId, float value, long delayMili) {
+    public Consequence(UUID outPointId, float value, long delayMili) {
         this.outPointId = outPointId;
         this.value = value;
         this.delayMili = delayMili;
     }
 
-    public Consequence(long outPointId, float value, long delayMili, TriggerType trigger) {
+    public Consequence(UUID outPointId, float value, long delayMili, TriggerType trigger) {
         this.outPointId = outPointId;
         this.value = value;
         this.delayMili = delayMili;

@@ -19,16 +19,17 @@ package net.awired.housecream.server.it.builder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
 
 public class InPointBuilder {
 
-    private Long id;
+    private UUID id;
     private String name;
     private InPointType type;
     private URI uri;
-    private Long zoneId;
+    private UUID zoneId;
 
     public static InPointBuilder in() {
         return new InPointBuilder();
@@ -46,12 +47,12 @@ public class InPointBuilder {
         return inPoint;
     }
 
-    public InPointBuilder id(long id) {
+    public InPointBuilder id(UUID id) {
         this.id = id;
         return this;
     }
 
-    public InPointBuilder zoneId(long zoneId) {
+    public InPointBuilder zoneId(UUID zoneId) {
         this.zoneId = zoneId;
         return this;
     }

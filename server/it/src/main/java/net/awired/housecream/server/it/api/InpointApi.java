@@ -18,10 +18,11 @@
 package net.awired.housecream.server.it.api;
 
 import static net.awired.housecream.server.it.builder.InPointBuilder.in;
+import java.util.List;
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
 import net.awired.housecream.server.api.domain.inpoint.InPointType;
-import net.awired.housecream.server.api.domain.inpoint.InPoints;
 import net.awired.housecream.server.api.domain.zone.Zone;
 import net.awired.housecream.server.api.resource.InPointResource;
 import net.awired.housecream.server.api.resource.InPointsResource;
@@ -42,7 +43,7 @@ public class InpointApi {
         return inpoint;
     }
 
-    public InPoints list() {
+    public List<InPoint> list() {
         return session.getServer().getResource(InPointsResource.class, session)
                 .getInPoints(null, null, null, null, null);
     }
@@ -51,7 +52,7 @@ public class InpointApi {
         session.getServer().getResource(InPointsResource.class, session).deleteAllInPoints();
     }
 
-    public InPoint getPoint(long pointId) throws NotFoundException {
+    public InPoint getPoint(UUID pointId) throws NotFoundException {
         return session.getServer().getResource(InPointResource.class, session).getInPoint(pointId);
     }
 

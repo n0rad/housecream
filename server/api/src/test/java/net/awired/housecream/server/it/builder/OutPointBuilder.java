@@ -19,6 +19,7 @@ package net.awired.housecream.server.it.builder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.outPoint.OutPoint;
 import net.awired.housecream.server.api.domain.outPoint.OutPointType;
 
@@ -27,7 +28,7 @@ public class OutPointBuilder {
     private URI uri;
     private OutPointType type;
     private String name;
-    private long zoneId;
+    private UUID zoneId;
 
     public static OutPointBuilder out() {
         return new OutPointBuilder();
@@ -66,7 +67,7 @@ public class OutPointBuilder {
         return this;
     }
 
-    public OutPointBuilder zoneId(long zoneId) {
+    public OutPointBuilder zoneId(UUID zoneId) {
         this.zoneId = zoneId;
         return this;
     }

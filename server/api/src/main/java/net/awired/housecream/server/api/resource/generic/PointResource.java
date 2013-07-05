@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.api.resource.generic;
 
+import java.util.UUID;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,6 +27,6 @@ public interface PointResource {
 
     @GET
     @Path("/value")
-    Float getPointValue(@PathParam("id") long pointId) throws NotFoundException;
+    Float getPointValue(@PathParam("id") UUID pointId) throws NotFoundException;
 
 }

@@ -19,6 +19,7 @@ package net.awired.housecream.server.api.resource;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,14 +29,13 @@ import javax.ws.rs.QueryParam;
 import net.awired.client.bean.validation.js.domain.ClientValidatorInfo;
 import net.awired.housecream.server.api.domain.Order;
 import net.awired.housecream.server.api.domain.zone.Zone;
-import net.awired.housecream.server.api.domain.zone.Zones;
 
 @Path("/zones")
 public interface ZonesResource {
 
     @GET
-    Zones getZones(@QueryParam("length") Integer length, //
-            @QueryParam("start") Integer start, //
+    List<Zone> getZones(@QueryParam("length") Integer length, //
+            @QueryParam("start") UUID start, //
             @QueryParam("search") String search, //
             @QueryParam("searchProperty") List<String> searchProperties, //
             @QueryParam("order") List<Order> orders);

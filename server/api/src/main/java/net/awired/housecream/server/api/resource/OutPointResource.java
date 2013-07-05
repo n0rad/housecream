@@ -17,6 +17,7 @@
  */
 package net.awired.housecream.server.api.resource;
 
+import java.util.UUID;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -30,13 +31,13 @@ import net.awired.housecream.server.api.resource.generic.PointResource;
 public interface OutPointResource extends PointResource {
 
     @GET
-    OutPoint getOutPoint(@PathParam("id") long outPointId) throws NotFoundException;
+    OutPoint getOutPoint(@PathParam("id") UUID outPointId) throws NotFoundException;
 
     @DELETE
-    void deleteOutPoint(@PathParam("id") long outPointId);
+    void deleteOutPoint(@PathParam("id") UUID outPointId);
 
     @PUT
     @Path("/value")
-    void setValue(@PathParam("id") long outPointId, Float value) throws Exception;
+    void setValue(@PathParam("id") UUID outPointId, Float value) throws Exception;
 
 }

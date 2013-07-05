@@ -17,38 +17,46 @@
  */
 package net.awired.housecream.server.storage.dao;
 
+import info.archinnov.achilles.entity.manager.CQLEntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.awired.core.lang.exception.NotFoundException;
 import net.awired.housecream.server.api.domain.inpoint.InPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.datastax.driver.core.Session;
 
 @Repository
 public class InPointDao {
 
-    @Autowired
-    private Session session;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public List<InPoint> findByZone(long zoneId) {
+    @Autowired
+    private CQLEntityManager em;
+
+    public List<InPoint> findByZone(UUID zoneId) {
         //        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_ZONE, InPoint.class);
         //        query.setParameter(InPoint.QUERY_PARAM_ZONE_ID, zoneId);
         //        return findList(query);
         return null;
     }
 
-    public InPoint find(long pointId) throws NotFoundException {
-        return null;
+    public InPoint find(UUID pointId) throws NotFoundException {
+        InPoint find = em.find(InPoint.class, pointId);
+        if (find == null) {
+            throw new NotFoundException("Cannot found InPoint with id : " + pointId);
+        }
+        return find;
     }
 
-    public List<InPoint> findFiltered(Object object, Object object2, Object object3, Object object4, Object object5) {
-        // TODO Auto-generated method stub
-        return new ArrayList<>();
-    }
-
-    public void delete(Long id) {
-        // TODO Auto-generated method stub        
+    public void delete(UUID id) {
+        try {
+            em.remove(find(id));
+        } catch (NotFoundException e) {
+            log.warn("cannot remove not found inpoint with id : " + id);
+        }
     }
 
     public List<InPoint> findAll() {
@@ -57,11 +65,12 @@ public class InPointDao {
     }
 
     public InPoint save(InPoint inPoint) {
-        // TODO Auto-generated method stub
-        return null;
+        em.persist(inPoint);
+        return inPoint;
     }
 
-    public Long findFilteredCount(String search, List<String> searchProperties) {
+    public List<InPoint> findFiltered(Integer length, UUID start) {
+        // TODO Auto-generated method stub
         return null;
     }
 

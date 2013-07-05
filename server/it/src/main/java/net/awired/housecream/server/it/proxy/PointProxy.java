@@ -20,11 +20,12 @@ package net.awired.housecream.server.it.proxy;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.awired.housecream.server.api.domain.Point;
 
 public class PointProxy<T> extends ProxyClass<T> {
 
-    private final List<Long> points = new ArrayList<Long>();
+    private final List<UUID> points = new ArrayList<>();
 
     public PointProxy(T o) {
         super(o);
@@ -45,7 +46,7 @@ public class PointProxy<T> extends ProxyClass<T> {
         }
     }
 
-    public List<Long> getPoints() {
+    public List<UUID> getPoints() {
         return points;
     }
 

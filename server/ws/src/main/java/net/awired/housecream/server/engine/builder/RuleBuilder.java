@@ -39,7 +39,8 @@ public class RuleBuilder {
 
     public static final String RULE_PACKAGE = "net.awired.housecream.server.service.rule";
 
-    private static final String[] IMPORTS = new String[] { "net.awired.housecream.server.engine.*", //
+    private static final String[] IMPORTS = new String[] { "java.util.*", //   
+            "net.awired.housecream.server.engine.*", //
             "net.awired.housecream.server.api.domain.*", //
             "net.awired.housecream.server.api.domain.rule.*" };
 
@@ -94,7 +95,7 @@ public class RuleBuilder {
                 appendCondition(builder, rule);
 
                 builder.append("$retrigger:");
-                builder.append("Action(outPointId == (long)" + consequence.getOutPointId() + ")\n");
+                builder.append("Action(outPointId == (UUID)" + consequence.getOutPointId() + ")\n");
                 builder.append("    then\n");
                 builder.append("retract($retrigger);\n");
                 builder.append("end\n");
@@ -154,7 +155,7 @@ public class RuleBuilder {
         builder.append("    when\n");
         builder.append("$outEvent : OutEvent()");
         builder.append("    then\n");
-        builder.append("insert(new ConsequenceAction((long)$outEvent.getOutPointId(), (float)$outEvent.getValue(), 0, null));");
+        builder.append("insert(new ConsequenceAction((UUID)$outEvent.getOutPointId(), (float)$outEvent.getValue(), 0, null));");
         builder.append("end\n");
         String generateDrl = builder.toString();
 
