@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.awired.housecream.server</groupId>
+	<groupId>org.housecream.server</groupId>
 	<artifactId>housecream-server-ws</artifactId>
 	<name>Housecream Server - WS</name>
 	<packaging>war</packaging>
 
 	<parent>
-		<groupId>net.awired.housecream</groupId>
+		<groupId>org.housecream</groupId>
 		<artifactId>housecream</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../</relativePath>
@@ -35,11 +35,11 @@
 
 		<!-- RUNNABLE WAR -->
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
+			<groupId>org.housecream.server</groupId>
 			<artifactId>housecream-server-cli</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.bootstrap</groupId>
+			<groupId>fr.norad.bootstrap</groupId>
 			<artifactId>bootstrap-java</artifactId>
 			<version>${bootstrap.version}</version>
 			<scope>provided</scope>
@@ -47,30 +47,8 @@
 
 		<!-- PLUGINS -->
 		<dependency>
-			<groupId>net.awired.housecream.plugins</groupId>
-			<artifactId>housecream-plugins-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.housecream.plugins</groupId>
-			<artifactId>housecream-plugins-restmcu</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>jsr311-api</artifactId>
-					<groupId>javax.ws.rs</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.housecream.plugins</groupId>
-			<artifactId>housecream-plugins-mail</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.housecream.plugins</groupId>
-			<artifactId>housecream-plugins-xmpp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.awired.housecream.plugins</groupId>
-			<artifactId>housecream-plugins-solar</artifactId>
+			<groupId>org.housecream.server</groupId>
+			<artifactId>housecream-server-plugins</artifactId>
 		</dependency>
 
 
@@ -95,16 +73,21 @@
 
 		<!-- WEB -->
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
+			<groupId>org.housecream.server</groupId>
 			<artifactId>housecream-server-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.jaxrs.client.server</groupId>
+			<groupId>fr.norad.jaxrs.client.server</groupId>
 			<artifactId>jaxrs-client-server</artifactId>
 			<version>${jaxrs-client-server.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.servlet.sample.html.template</groupId>
+		  <groupId>fr.norad.jaxrs.doc</groupId>
+		  <artifactId>jaxrs-doc-core</artifactId>
+		  <version>${jaxrs-doc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.norad.servlet.sample.html.template</groupId>
 			<artifactId>servlet-sample-html-template</artifactId>
 			<version>${servlet-sample-html-template.version}</version>
 		</dependency>
@@ -172,7 +155,7 @@
 
 		<!-- Logger -->
 		<dependency>
-			<groupId>net.awired.logback.prettier</groupId>
+			<groupId>fr.norad.logback.prettier</groupId>
 			<artifactId>logback-prettier</artifactId>
 			<version>${logback-prettier.version}</version>
 		</dependency>
@@ -219,7 +202,6 @@
 		<!-- <version>1.0.4.1</version> -->
 		<!-- <scope>provided</scope> -->
 		<!-- </dependency> -->
-
 		<dependency>
 			<groupId>info.archinnov</groupId>
 			<artifactId>achilles-cql</artifactId>
@@ -246,7 +228,7 @@
 
 		<!-- ENGINE -->
 		<dependency>
-			<groupId>net.awired.typed.command.line.parser</groupId>
+			<groupId>fr.norad.typed.command.line.parser</groupId>
 			<artifactId>typed-command-line-parser</artifactId>
 			<version>${typed-command-line-parser.version}</version>
 		</dependency>
@@ -268,7 +250,7 @@
 
 		<!-- TESTS -->
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
+			<groupId>org.housecream.server</groupId>
 			<artifactId>housecream-server-api</artifactId>
 			<type>test-jar</type>
 			<scope>test</scope>
@@ -290,7 +272,7 @@
 							<mainClass>Bootstrap</mainClass>
 						</manifest>
 						<manifestEntries>
-							<Bootstrap-MainClass>net.awired.housecream.server.cli.Main</Bootstrap-MainClass>
+							<Bootstrap-MainClass>org.housecream.server.cli.Main</Bootstrap-MainClass>
 							<Bootstrap-ClassPath>META-INF/lib</Bootstrap-ClassPath>
 							<HousecreamVersion>${project.version}</HousecreamVersion>
 						</manifestEntries>
@@ -323,7 +305,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>net.awired.bootstrap</groupId>
+									<groupId>fr.norad.bootstrap</groupId>
 									<artifactId>bootstrap-java</artifactId>
 									<version>${bootstrap.version}</version>
 									<overWrite>false</overWrite>
@@ -341,7 +323,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>net.awired.housecream.server</groupId>
+									<groupId>org.housecream.server</groupId>
 									<artifactId>housecream-server-cli</artifactId>
 									<version>${project.version}</version>
 									<overWrite>false</overWrite>

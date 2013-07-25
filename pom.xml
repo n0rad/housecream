@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.awired.housecream</groupId>
+	<groupId>org.housecream</groupId>
 	<artifactId>housecream</artifactId>
 	<name>Housecream</name>
 	<version>0.0.1-SNAPSHOT</version>
@@ -12,9 +12,9 @@
 	<description><![CDATA[Housecream is an advanced home automation server aiming to give you unlimited control over your house]]></description>
 
 	<parent>
-		<groupId>net.awired.parent</groupId>
+		<groupId>org.housecream.parent</groupId>
 		<artifactId>parent-java</artifactId>
-		<version>1.16</version>
+		<version>1.19-SNAPSHOT</version>
 	</parent>
 
 	<licenses>
@@ -26,21 +26,12 @@
 	</licenses>
 
 	<modules>
-		<module>camel/restmcu</module>
-		<module>camel/solar</module>
-		<module>camel/axmpp</module>
-
-		<module>plugins/api</module>
-		<module>plugins/restmcu</module>
-		<module>plugins/mail</module>
-		<module>plugins/xmpp</module>
-		<module>plugins/solar</module>
-
 		<module>server/api</module>
+		<module>server/plugins-api</module>
+		<module>server/plugins</module>
 		<module>server/cli</module>
 		<module>server/ws</module>
 		<module>server/it</module>
-
 		<module>web</module>
 		<module>release</module>
 	</modules>
@@ -51,20 +42,22 @@
 			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
 		<jacoco.file.path>/tmp/jacoco-hc.data</jacoco.file.path>
 
-        <logback-prettier.version>0.2</logback-prettier.version>
-        <typed-command-line-parser.version>0.2.1-SNAPSHOT</typed-command-line-parser.version>
-		<bootstrap.version>1.0</bootstrap.version>
-        <operating-system-specific.version>0.5-SNAPSHOT</operating-system-specific.version>
-        <jaxrs-oauth2.version>0.5-SNAPSHOT</jaxrs-oauth2.version>
-        <generic-jpa.version>0.5-SNAPSHOT</generic-jpa.version>
-        <jaxrs-client-server.version>0.5-SNAPSHOT</jaxrs-client-server.version>
-        <servlet-sample-html-template.version>0.5-SNAPSHOT</servlet-sample-html-template.version>
-        <logback-prettier.version>0.5-SNAPSHOT</logback-prettier.version>
-        <jaxrs-junit.version>0.5-SNAPSHOT</jaxrs-junit.version>
+		<logback-prettier.version>0.2</logback-prettier.version>
+		<typed-command-line-parser.version>0.3</typed-command-line-parser.version>
+		<bootstrap.version>1.1</bootstrap.version>
+		<operating-system-specific.version>0.5-SNAPSHOT</operating-system-specific.version>
+		<jaxrs-oauth2.version>0.5-SNAPSHOT</jaxrs-oauth2.version>
+		<generic-jpa.version>0.5-SNAPSHOT</generic-jpa.version>
+		<jaxrs-client-server.version>0.5-SNAPSHOT</jaxrs-client-server.version>
+		<jaxrs-junit.version>0.5-SNAPSHOT</jaxrs-junit.version>
+		<jaxrs-doc.version>0.1-SNAPSHOT</jaxrs-doc.version>
+		<servlet-sample-html-template.version>0.5-SNAPSHOT</servlet-sample-html-template.version>
+		<logback-prettier.version>0.5</logback-prettier.version>
 		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
 		<javascript-bean-validation.version>0.1-SNAPSHOT</javascript-bean-validation.version>
+		<camel-components.version>0.1-SNAPSHOT</camel-components.version>
 
-        <achilles.version>1.8.3-SNAPSHOT</achilles.version>
+		<achilles.version>1.8.2</achilles.version>
 
 
 		<hibernate.version>4.1.4.Final</hibernate.version>
@@ -90,80 +83,48 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
+				<groupId>org.housecream.server</groupId>
 				<artifactId>housecream-server-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
+				<groupId>org.housecream.server</groupId>
 				<artifactId>housecream-server-api</artifactId>
 				<version>${project.version}</version>
 				<type>test-jar</type>
 			</dependency>
 			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
+				<groupId>org.housecream.server</groupId>
 				<artifactId>housecream-server-cli</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
+				<groupId>org.housecream.server</groupId>
 				<artifactId>housecream-server-ws</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 			</dependency>
 			<dependency>
-				<groupId>net.awired.housecream.server</groupId>
+				<groupId>org.housecream.server</groupId>
 				<artifactId>housecream-server-ws</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>net.awired.housecream</groupId>
+				<groupId>org.housecream</groupId>
 				<artifactId>housecream-web</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 			</dependency>
-
-			<!-- CAMEL -->
 			<dependency>
-				<groupId>net.awired.housecream.camel</groupId>
-				<artifactId>housecream-camel-restmcu</artifactId>
+				<groupId>org.housecream.server</groupId>
+				<artifactId>housecream-server-plugins-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>net.awired.housecream.camel</groupId>
-				<artifactId>housecream-camel-restmcu</artifactId>
-				<version>${project.version}</version>
-				<type>test-jar</type>
-			</dependency>
-
-			<!-- PLUGINS -->
-			<dependency>
-				<groupId>net.awired.housecream.plugins</groupId>
-				<artifactId>housecream-plugins-api</artifactId>
+				<groupId>org.housecream.server</groupId>
+				<artifactId>housecream-server-plugins</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.plugins</groupId>
-				<artifactId>housecream-plugins-restmcu</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.plugins</groupId>
-				<artifactId>housecream-plugins-mail</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.plugins</groupId>
-				<artifactId>housecream-plugins-xmpp</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.awired.housecream.plugins</groupId>
-				<artifactId>housecream-plugins-solar</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-
 		</dependencies>
 	</dependencyManagement>
 

@@ -1,0 +1,3 @@
+org.housecream.plugins.mail.MailHousecreamPlugin
+org.housecream.plugins.restmcu.RestMcuHousecreamPlugin
+org.housecream.plugins.xmpp.XmppHousecreamPlugin

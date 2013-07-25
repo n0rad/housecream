@@ -6,7 +6,7 @@
 	<packaging>war</packaging>
 
 	<parent>
-		<groupId>net.awired.housecream</groupId>
+		<groupId>org.housecream</groupId>
 		<artifactId>housecream</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
@@ -19,8 +19,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.ajsl</groupId>
-			<artifactId>ajsl-web</artifactId>
+			<groupId>fr.norad.servlet.sample.html.template</groupId>
+			<artifactId>servlet-sample-html-template</artifactId>
 			<version>0.5-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
@@ -37,15 +37,15 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>Bootstrap</mainClass>
-                        </manifest>
-                        <manifestEntries>
-                            <HousecreamVersion>${project.version}</HousecreamVersion>
-                            <HousecreamWebServiceUrl>${housecream.webservice.url}</HousecreamWebServiceUrl>
-                        </manifestEntries>
-                    </archive>
+					<archive>
+						<manifest>
+							<mainClass>Bootstrap</mainClass>
+						</manifest>
+						<manifestEntries>
+							<HousecreamVersion>${project.version}</HousecreamVersion>
+							<HousecreamWebServiceUrl>${housecream.webservice.url}</HousecreamWebServiceUrl>
+						</manifestEntries>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>

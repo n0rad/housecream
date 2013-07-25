@@ -1,0 +1,34 @@
+{
+    "folders":
+    [
+        // add paths per directory you want to show
+        {
+            // relative paths to the root
+            "path": "/",
+            // optionally give it a different name
+            "name": "My Project",
+            // possible folders to exclude
+            "folder_exclude_patterns": [
+                "node_modules",
+                "images"
+            ],
+            // possible files to exclude
+            "file_exclude_patterns": [
+                "._*",
+                "*.ico",
+                "*.swf",
+                "*.tar",
+                "*.zip",
+                "*.7z",
+                "*.rar",
+                "*.sublime-workspace",
+                ".ghignore",
+                ".gitignore"
+            ]
+        }
+    ],
+    "settings":
+    {
+       "tab_size": 4
+    }
+}

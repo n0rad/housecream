@@ -9,7 +9,7 @@
 	</error-page>
 	<servlet>
 		<servlet-name>ToIndex</servlet-name>
-		<servlet-class>net.awired.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
+		<servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
 		<init-param>
 			<param-name>indexMapping</param-name>
 			<param-value>/index.html</param-value>
@@ -22,7 +22,7 @@
 
 	<servlet>
 		<servlet-name>indexServlet</servlet-name>
-		<servlet-class>net.awired.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
+		<servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
 		<init-param>
 			<param-name>tplPath</param-name>
 			<param-value>/index.html</param-value>

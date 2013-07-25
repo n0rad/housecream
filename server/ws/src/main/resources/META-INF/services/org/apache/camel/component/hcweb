@@ -1,1 +1,1 @@
-class=net.awired.housecream.server.component.HcWebComponent
+class=org.housecream.server.component.HcWebComponent

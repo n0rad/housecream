@@ -11,7 +11,7 @@
 	classpath*:META-INF/cxf/cxf.xml
 	classpath*:META-INF/cxf/cxf-extension-jaxrs-binding.xml
 	classpath*:META-INF/cxf/cxf-servlet.xml
-	net.awired.housecream.server.application.config.**
+	org.housecream.server.application.config.**
 	</param-value>
 	</context-param>
 
@@ -21,7 +21,7 @@
 	</context-param>
 
 	<listener>
-		<listener-class>net.awired.housecream.server.application.HousecreamContextLoaderListener</listener-class>
+		<listener-class>org.housecream.server.application.HousecreamContextLoaderListener</listener-class>
 	</listener>
 
 	<servlet>
@@ -54,7 +54,7 @@
 	</error-page>
 	<servlet>
 		<servlet-name>ToIndex</servlet-name>
-		<servlet-class>net.awired.ajsl.web.ToIndexForwardedServlet</servlet-class>
+		<servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
 		<init-param>
 			<param-name>indexMapping</param-name>
 			<param-value>/index.html</param-value>
@@ -67,7 +67,7 @@
 
 	<servlet>
 		<servlet-name>indexServlet</servlet-name>
-		<servlet-class>net.awired.ajsl.web.IndexTemplateServlet</servlet-class>
+		<servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
 		<init-param>
 			<param-name>tplPath</param-name>
 			<param-value>/index.html</param-value>

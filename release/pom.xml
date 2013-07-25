@@ -9,7 +9,7 @@
     <url>http://housecream.org</url>
 
     <parent>
-        <groupId>net.awired.housecream</groupId>
+        <groupId>org.housecream</groupId>
         <artifactId>housecream</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
@@ -21,23 +21,23 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
+			<groupId>org.housecream.server</groupId>
 			<artifactId>housecream-server-ws</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.housecream</groupId>
+			<groupId>org.housecream</groupId>
 			<artifactId>housecream-web</artifactId>
 			<type>war</type>
 		</dependency>
 
 		<!-- runnable war -->
 		<dependency>
-			<groupId>net.awired.housecream.server</groupId>
+			<groupId>org.housecream.server</groupId>
 			<artifactId>housecream-server-cli</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.bootstrap</groupId>
+			<groupId>fr.norad.bootstrap</groupId>
 			<artifactId>bootstrap-java</artifactId>
 			<version>${bootstrap.version}</version>
 			<scope>provided</scope>
@@ -58,7 +58,7 @@
 							<mainClass>Bootstrap</mainClass>
 						</manifest>
 						<manifestEntries>
-							<Bootstrap-MainClass>net.awired.housecream.server.cli.Main</Bootstrap-MainClass>
+							<Bootstrap-MainClass>org.housecream.server.cli.Main</Bootstrap-MainClass>
 							<Bootstrap-Classpath>META-INF/lib</Bootstrap-Classpath>
 							<HousecreamVersion>${project.version}</HousecreamVersion>
 							<HousecreamWebServiceUrl>${housecream.webservice.url}</HousecreamWebServiceUrl>
@@ -92,7 +92,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>net.awired.bootstrap</groupId>
+									<groupId>fr.norad.bootstrap</groupId>
 									<artifactId>bootstrap-java</artifactId>
 									<version>${bootstrap.version}</version>
 									<overWrite>false</overWrite>
@@ -110,7 +110,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>net.awired.housecream.server</groupId>
+									<groupId>org.housecream.server</groupId>
 									<artifactId>housecream-server-cli</artifactId>
 									<version>${project.version}</version>
 									<overWrite>false</overWrite>
@@ -134,7 +134,7 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>net.awired.housecream.server</groupId>
+					<groupId>org.housecream.server</groupId>
 					<artifactId>housecream-server-ws</artifactId>
 				</dependency>
 			</dependencies>

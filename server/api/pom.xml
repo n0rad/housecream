@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.awired.housecream.server</groupId>
+	<groupId>org.housecream.server</groupId>
 	<artifactId>housecream-server-api</artifactId>
 	<name>Housecream Server - API</name>
 
 	<parent>
-		<groupId>net.awired.housecream</groupId>
+		<groupId>org.housecream</groupId>
 		<artifactId>housecream</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../</relativePath>
@@ -16,7 +16,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.javascript.bean.validation</groupId>
+			<groupId>fr.norad.javascript.bean.validation</groupId>
 			<artifactId>javascript-bean-validation-js</artifactId>
 			<version>${javascript-bean-validation.version}</version>
 		</dependency>
@@ -25,8 +25,14 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>1.0.1.Final</version>
 		</dependency>
+        <dependency>
+          <groupId>fr.norad.jaxrs.doc</groupId>
+          <artifactId>jaxrs-doc-annotations</artifactId>
+          <version>${jaxrs-doc.version}</version>
+        </dependency>
+
 		<dependency>
-			<groupId>net.awired.jaxrs.oauth2</groupId>
+			<groupId>fr.norad.jaxrs.oauth2</groupId>
 			<artifactId>jaxrs-oauth2</artifactId>
 			<version>${jaxrs-oauth2.version}</version>
 		</dependency>

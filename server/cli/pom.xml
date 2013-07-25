@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.awired.housecream.server</groupId>
+	<groupId>org.housecream.server</groupId>
 	<artifactId>housecream-server-cli</artifactId>
 	<name>Housecream Server - Cli</name>
 
 	<parent>
-		<groupId>net.awired.housecream</groupId>
+		<groupId>org.housecream</groupId>
 		<artifactId>housecream</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../</relativePath>
@@ -16,17 +16,17 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.awired.typed.command.line.parser</groupId>
+			<groupId>fr.norad.typed.command.line.parser</groupId>
 			<artifactId>typed-command-line-parser</artifactId>
 			<version>${typed-command-line-parser.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.logback.prettier</groupId>
+			<groupId>fr.norad.logback.prettier</groupId>
 			<artifactId>logback-prettier</artifactId>
 			<version>${logback-prettier.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.awired.operating.system.specific</groupId>
+			<groupId>fr.norad.operating.system.specific</groupId>
 			<artifactId>operating-system-specific</artifactId>
 			<version>${operating-system-specific.version}</version>
 		</dependency>
