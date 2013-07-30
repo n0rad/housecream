@@ -6,7 +6,7 @@
 	<groupId>org.housecream</groupId>
 	<artifactId>housecream</artifactId>
 	<name>Housecream</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://housecream.org</url>
 	<description><![CDATA[Housecream is an advanced home automation server aiming to give you unlimited control over your house]]></description>
