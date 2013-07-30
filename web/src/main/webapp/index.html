@@ -1,89 +1,47 @@
 <!doctype html>
-<html lang="en" ng-app="housecream">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 <head>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Housecream.org | Advanced home automation server to control your house</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="cache-control" content="no-cache" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta name="author" content="n0rad" />
 <meta name="reply-to" content="contact@housecream.org" />
+<link rel="shortcut icon" href="favicon.ico" />
 
-<base href="${contextPath}/" />
+<base href="/" /><!-- ${contextPath} -->
 
-<link href="favicon.ico" rel="shortcut icon" />
-<link href="lib/bootstrap/css/bootstrap.css${versioningQuery}" type="text/css" rel="stylesheet" />
-<link href="lib/bootstrap/css/bootstrap-responsive.css${versioningQuery}" type="text/css" rel="stylesheet" />
-<link href="lib/angular-ui/angular-ui.css${versioningQuery}" type="text/css" rel="stylesheet" />
-<link href="css/housecream.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<!-- build:css({.tmp,app}) styles/main.css -->
+<link rel="stylesheet" href="styles/housecream.css">
+<!-- <link rel="stylesheet" href="bower_components/bootstrap-sass/"> -->
+<!-- endbuild -->
 
+</head>
+<body ng-app="housecream">
+	<!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
 
-<!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-<![endif]-->
-
-<!--[if lte IE 8]>
-    <script> window.myCustomTags = []; </script>
-    <script src="build/angular-ui-ieshiv.js"></script>
-<![endif]-->
-
-<script type="text/javascript">
-	var hcVersioning = '${versioning}', hcVersion = '${version}', hcWsUrl = '${hcWsUrl}';
-</script>
-<script src="lib/awired/utils.js${versioningQuery}"></script>
-<!-- <script src="lib/jquery/jquery-1.9.1.js${versioningQuery}"></script> -->
-<!-- <script src="lib/bootstrap/js/bootstrap.js${versioningQuery}"></script> -->
-
-<script src="lib/angular/angular.js${versioningQuery}"></script>
-<script src="lib/angular/angular-resource.js${versioningQuery}"></script>
-<script src="lib/angular-ui/angular-ui.js${versioningQuery}"></script>
-<script src="lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.1.0.js${versioningQuery}"></script>
+	<!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
 
 
-<script src="js/housecream.js${versioningQuery}"></script>
-<script src="js/controllers/NavbarController.js${versioningQuery}"></script>
-
-<script src="js/controllers/admin/AdminController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/InpointTableController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/InpointFormController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/OutpointTableController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/OutpointFormController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/ZoneTableController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/ZoneFormController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/RuleTableController.js${versioningQuery}"></script>
-<script src="js/controllers/admin/RuleFormController.js${versioningQuery}"></script>
-
-<script src="js/controllers/index/IndexController.js${versioningQuery}"></script>
-<script src="js/controllers/index/ZoneController.js${versioningQuery}"></script>
-
-<!-- Javascript needed for map & canvas manipulation -->
-<script src="js/utils/leaflet-tools.js${versioningQuery}"></script>
-<script src="js/utils/openlayers-tools.js${versioningQuery}"></script>
-<script src="lib/leaflet/leaflet-src.js${versioningQuery}"></script>
-<script src="lib/openlayer/openlayers.js${versioningQuery}"></script>
-<script src="js/controllers/index/LeafletController.js${versioningQuery}"></script>
-<script src="js/controllers/index/OpenLayersController.js${versioningQuery}"></script>
-<link href="css/leaflet.css${versioningQuery}" type="text/css" rel="stylesheet" />
-<link href="css/housecream-map.css${versioningQuery}" type="text/css" rel="stylesheet" />
-<!--[if IE]>
-    <link href="css/leaflet.ie.css${versioningQuery}" type="text/css" rel="stylesheet" />
-<![endif]-->
-
-
-    <script src="js/services/InPoints.js${versioningQuery}"></script>
-    <script src="js/services/OutPoints.js${versioningQuery}"></script>
-    <script src="js/services/Zones.js${versioningQuery}"></script>
-    <script src="js/services/Rules.js${versioningQuery}"></script>
-
-    </head>
-    <body>
-        <header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
-            <div class="navbar-inner">
-                <a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
-                <ul class="nav">
-                    <li ng-class="{active: routeIs('/')}"><a href="">Home</a></li>
-                    <li ng-class="{active: routeIs('/admin')}"><a href="admin">Admin</a></li>
-                    <!-- 					<li ng-class="{active: routeIs('/who-we-are')}"><a href="${contextPath}/who-we-are">Who we are</a></li> -->
+	<header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
+		<div class="navbar-inner">
+			<a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
+			<ul class="nav">
+				<li ng-class="{active: routeIs('/')}"><a href="">Home</a></li>
+				<li ng-class="{active: routeIs('/admin')}"><a href="admin">Admin</a></li>
+				<!-- 					<li ng-class="{active: routeIs('/who-we-are')}"><a href="${contextPath}/who-we-are">Who we are</a></li> -->
 			</ul>
 			<!-- 				<ul class="nav pull-right"> -->
 			<!-- 					<li ng-class="{active: routeIs('/help')}"><a href="${contextPath}/help">Help</a></li> -->
@@ -101,5 +59,52 @@
 			</p>
 		</div>
 	</footer>
+
+
+
+	<script type="text/javascript">
+		var hcVersioning = '${versioning}', hcVersion = '${version}', hcWsUrl = '${hcWsUrl}';
+	</script>
+	<script src="bower_components/angular/angular.js"></script>
+
+	<!-- build:js({.tmp,app}) scripts/scripts.js -->
+	<script src="scripts/housecream.js"></script>
+	<script src="scripts/controllers/NavbarController.js"></script>
+    <script src="scripts/controllers/admin/AdminController.js"></script>
+    <script src="scripts/controllers/index/IndexController.js"></script>
+    <script src="scripts/controllers/index/LeafletController.js"></script>
+    <script src="scripts/controllers/index/OpenLayersController.js"></script>
+	<!-- endbuild -->
+
+	<!-- build:js scripts/plugins.js -->
+	<script src="bower_components/jquery/jquery.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-modal.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-transition.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-button.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-typeahead.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-carousel.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
+	<script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>
+	<!-- endbuild -->
+
+	<!-- build:js scripts/modules.js -->
+	<script src="bower_components/angular-resource/angular-resource.js"></script>
+	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+	<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+
+    <script src="bower_components/angular-ui-bootstrap/src/dropdownToggle/dropdownToggle.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
+
+    <script src="bower_components/leaflet/src/Leaflet.js"></script>
+<!--     <script src="bower_components/leaflet/src/map/Map.js"></script> -->
+
+	<!-- endbuild -->
+
 </body>
 </html>

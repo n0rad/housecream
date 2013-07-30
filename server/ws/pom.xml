@@ -82,9 +82,9 @@
 			<version>${jaxrs-client-server.version}</version>
 		</dependency>
 		<dependency>
-		  <groupId>fr.norad.jaxrs.doc</groupId>
-		  <artifactId>jaxrs-doc-core</artifactId>
-		  <version>${jaxrs-doc.version}</version>
+			<groupId>fr.norad.jaxrs.doc</groupId>
+			<artifactId>jaxrs-doc-core</artifactId>
+			<version>${jaxrs-doc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.norad.servlet.sample.html.template</groupId>
@@ -334,6 +334,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 

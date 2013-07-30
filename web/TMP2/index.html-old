@@ -1,0 +1,51 @@
+<!-- <link href="lib/bootstrap/css/bootstrap.css${versioningQuery}" type="text/css" rel="stylesheet" /> -->
+<!-- <link href="lib/bootstrap/css/bootstrap-responsive.css${versioningQuery}" type="text/css" rel="stylesheet" /> -->
+<!-- <link href="lib/angular-ui/angular-ui.css${versioningQuery}" type="text/css" rel="stylesheet" /> -->
+<!-- <link href="css/housecream.css${versioningQuery}" type="text/css" rel="stylesheet" /> -->
+
+
+    <script src="lib/awired/utils.js${versioningQuery}"></script>
+    <!-- <script src="lib/jquery/jquery-1.9.1.js${versioningQuery}"></script> -->
+    <!-- <script src="lib/bootstrap/js/bootstrap.js${versioningQuery}"></script> -->
+
+    <script src="lib/angular/angular.js${versioningQuery}"></script>
+    <script src="lib/angular/angular-resource.js${versioningQuery}"></script>
+    <script src="lib/angular-ui/angular-ui.js${versioningQuery}"></script>
+    <script src="lib/angular-ui-bootstrap/ui-bootstrap-tpls-0.1.0.js${versioningQuery}"></script>
+
+
+    <script src="js/housecream.js${versioningQuery}"></script>
+    <script src="js/controllers/NavbarController.js${versioningQuery}"></script>
+
+    <script src="js/controllers/admin/AdminController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/InpointTableController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/InpointFormController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/OutpointTableController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/OutpointFormController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/ZoneTableController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/ZoneFormController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/RuleTableController.js${versioningQuery}"></script>
+    <script src="js/controllers/admin/RuleFormController.js${versioningQuery}"></script>
+
+    <script src="js/controllers/index/IndexController.js${versioningQuery}"></script>
+    <script src="js/controllers/index/ZoneController.js${versioningQuery}"></script>
+
+    <!-- Javascript needed for map & canvas manipulation -->
+    <script src="js/utils/leaflet-tools.js${versioningQuery}"></script>
+    <script src="js/utils/openlayers-tools.js${versioningQuery}"></script>
+    <script src="lib/leaflet/leaflet-src.js${versioningQuery}"></script>
+    <script src="lib/openlayer/openlayers.js${versioningQuery}"></script>
+    <script src="js/controllers/index/LeafletController.js${versioningQuery}"></script>
+    <script src="js/controllers/index/OpenLayersController.js${versioningQuery}"></script>
+    <link href="css/leaflet.css${versioningQuery}" type="text/css" rel="stylesheet" />
+    <link href="css/housecream-map.css${versioningQuery}" type="text/css" rel="stylesheet" />
+    <!--[if IE]>
+    <link href="css/leaflet.ie.css${versioningQuery}" type="text/css" rel="stylesheet" />
+<![endif]-->
+
+
+    <script src="js/services/InPoints.js${versioningQuery}"></script>
+    <script src="js/services/OutPoints.js${versioningQuery}"></script>
+    <script src="js/services/Zones.js${versioningQuery}"></script>
+    <script src="js/services/Rules.js${versioningQuery}"></script>
+

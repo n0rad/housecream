@@ -12,3 +12,6 @@ target/
 .pmd
 .checkstyle
 .idea
+.sass-cache/
+.tmp/
+bower_components/
