@@ -17,6 +17,7 @@
 package org.housecream.server.api.domain.zone;
 
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -27,8 +28,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import org.housecream.server.api.domain.CoordinateShape;
 import lombok.Data;
+import org.housecream.server.api.domain.CoordinateShape;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -51,6 +52,7 @@ public abstract class Zone {
     @Id
     private UUID id;
 
+    @Column
     @NotNull
     @Size(min = 1, max = 20)
     private String name;

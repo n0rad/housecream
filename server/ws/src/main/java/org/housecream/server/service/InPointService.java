@@ -47,8 +47,6 @@ public class InPointService implements InPointResource {
 
     @Override
     public InPoint getInPoint(UUID inPointId) throws NotFoundException {
-        inPointsService.deleteAllInPoints();
-
         InPoint point = pointDao.find(inPointId);
         try {
             point.setValue(engine.getPointState(inPointId));

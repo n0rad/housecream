@@ -28,12 +28,22 @@ public class InPointDaoTest {
     public AchillesRule<InPointDao> db = new AchillesRule<>("org.housecream", InPointDao.class);
 
     @Test
-    public void should_() throws Exception {
+    public void should_test() throws Exception {
         InPoint inPoint = new InPoint();
         inPoint.setName("salut!");
         inPoint.setId(UUID.randomUUID());
         db.dao().save(inPoint);
 
         assertThat(db.dao().find(inPoint.getId()).getName()).isEqualTo("salut!");
+    }
+
+    @Test
+    public void should_test2() throws Exception {
+        InPoint inPoint = new InPoint();
+        inPoint.setName("salut2!");
+        inPoint.setId(UUID.randomUUID());
+        db.dao().save(inPoint);
+
+        assertThat(db.dao().find(inPoint.getId()).getName()).isEqualTo("salut2!");
     }
 }

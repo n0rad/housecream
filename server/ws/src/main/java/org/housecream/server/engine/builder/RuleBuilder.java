@@ -67,20 +67,20 @@ public class RuleBuilder {
 
         for (Consequence consequence : rule.getConsequences()) {
             if (consequence.getTriggerType() == TriggerType.NON_RETRIGGER) {
-                builder.append("not Action(outPointId == (long)");
+                builder.append("not Action(outPointId == UUID.fromString(\"");
                 builder.append(consequence.getOutPointId());
-                builder.append(")\n");
+                builder.append("\"))\n");
             } else {
-                builder.append("not ConsequenceAction(outPointId == (long)");
+                builder.append("not ConsequenceAction(outPointId == UUID.fromString(\"");
                 builder.append(consequence.getOutPointId());
-                builder.append(")\n");
+                builder.append("\"))\n");
             }
         }
 
         builder.append("    then\n");
         for (Consequence consequence : rule.getConsequences()) {
-            builder.append("insert(new ConsequenceAction((long)" + consequence.getOutPointId() + ",(float)"
-                    + consequence.getValue() + ", " + consequence.getDelayMili() + ", "
+            builder.append("insert(new ConsequenceAction(UUID.fromString(\"" + consequence.getOutPointId()
+                    + "\"),(float)" + consequence.getValue() + ", " + consequence.getDelayMili() + ", "
                     + buildTriggerJavaType(consequence.getTriggerType()) + "));\n");
         }
         builder.append("end\n");
@@ -94,7 +94,7 @@ public class RuleBuilder {
                 appendCondition(builder, rule);
 
                 builder.append("$retrigger:");
-                builder.append("Action(outPointId == (UUID)" + consequence.getOutPointId() + ")\n");
+                builder.append("Action(outPointId == UUID.fromString(\"" + consequence.getOutPointId() + "\"))\n");
                 builder.append("    then\n");
                 builder.append("retract($retrigger);\n");
                 builder.append("end\n");
@@ -120,15 +120,15 @@ public class RuleBuilder {
             if (condition.getType() == ConditionType.event) {
                 builder.append("Event");
             } else if (condition.getType() == ConditionType.state) {
-                builder.append("not PointState(pointId == ");
+                builder.append("not PointState(pointId == UUID.fromString(\"");
                 builder.append(condition.getPointId());
-                builder.append(") || PointState");
+                builder.append("\")) || PointState");
             } else {
                 throw new RuntimeException("unknown condition type " + condition.getType());
             }
-            builder.append("(pointId == ");
+            builder.append("(pointId == UUID.fromString(\"");
             builder.append(condition.getPointId());
-            builder.append(", value == ");
+            builder.append("\"), value == ");
             builder.append(condition.getValue());
             builder.append(")");
             builder.append('\n');
@@ -154,7 +154,7 @@ public class RuleBuilder {
         builder.append("    when\n");
         builder.append("$outEvent : OutEvent()");
         builder.append("    then\n");
-        builder.append("insert(new ConsequenceAction((UUID)$outEvent.getOutPointId(), (float)$outEvent.getValue(), 0, null));");
+        builder.append("insert(new ConsequenceAction($outEvent.getOutPointId(), (float)$outEvent.getValue(), 0, null));");
         builder.append("end\n");
         String generateDrl = builder.toString();
 

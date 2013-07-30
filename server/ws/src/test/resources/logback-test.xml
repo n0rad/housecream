@@ -26,6 +26,8 @@
 
     <logger name="fr.norad" level="INFO" />
     <logger name="org.housecream" level="INFO" />
+    <logger name="ACHILLES_DDL" level="DEBUG" />
+    <logger name="info.archinnov" level="DEBUG" />
 
 	<root>
 		<level value="INFO" />

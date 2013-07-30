@@ -22,7 +22,6 @@ import static info.archinnov.achilles.configuration.CQLConfigurationParameters.K
 import static info.archinnov.achilles.configuration.ConfigurationParameters.ENSURE_CONSISTENCY_ON_JOIN_PARAM;
 import static info.archinnov.achilles.configuration.ConfigurationParameters.ENTITY_PACKAGES_PARAM;
 import static info.archinnov.achilles.configuration.ConfigurationParameters.FORCE_CF_CREATION_PARAM;
-import static info.archinnov.achilles.counter.AchillesCounter.CQL_COUNTER_TABLE;
 import static org.housecream.server.application.CassandraEmbedded.CASSANDRA_EMBEDDED;
 import info.archinnov.achilles.entity.manager.CQLEntityManager;
 import info.archinnov.achilles.entity.manager.CQLEntityManagerFactory;
@@ -74,15 +73,6 @@ public class AchillesRule<DAO> extends ExternalResource {
             // ok if it exists
         }
         session.execute("USE test");
-
-        StringBuilder tableAchillesCounter = new StringBuilder();
-        tableAchillesCounter.append("CREATE TABLE ").append(CQL_COUNTER_TABLE).append("(");
-        tableAchillesCounter.append("fqcn text,");
-        tableAchillesCounter.append("primary_key text,");
-        tableAchillesCounter.append("property_name text,");
-        tableAchillesCounter.append("counter_value counter,");
-        tableAchillesCounter.append("primary key((fqcn,primary_key),property_name))");
-        session.execute(tableAchillesCounter.toString());
 
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(ENTITY_PACKAGES_PARAM, packageScan);
