@@ -4,7 +4,6 @@ var housecream = angular.module('housecream', [ 'ngResource', 'ui.bootstrap.drop
 
 housecream.constant('hcWsUrl', hcWsUrl);
 housecream.constant('hcVersion', hcVersion);
-housecream.constant('hcVersioning', hcVersioning);
 
 housecream.config(function($routeProvider, $locationProvider) {
 

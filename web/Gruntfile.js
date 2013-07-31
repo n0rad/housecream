@@ -44,17 +44,43 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server']
       },
+      stringreplace: {
+  	    files: ['<%= yeoman.app %>/index.html'],
+  	    tasks: ['string-replace:server'],
+  	  },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
+          '{.tmp,<%= yeoman.app %>}/{,*/}?.html',
           '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
+    },
+    'string-replace': {
+      server: {
+          files: {
+            '.tmp/index.html': '<%= yeoman.app %>/index.html'
+          },
+          options: {
+            replacements: [{
+            	pattern: /\$\{contextPath\}/,
+                replacement: ''
+            }, {
+            	pattern: /\$\{hcWsUrl\}/,
+            	replacement: 'ws/'
+            }, {
+            	pattern: /\$\{version\}/,
+            	replacement: '0.0.0-DEV'
+            }, {
+              pattern: /\$\{fullWebPath\}/,
+              replacement: 'http://localhost:<%= connect.options.port %>'
+            }]
+          }
+        }
     },
     connect: {
       options: {
@@ -278,7 +304,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'compass:server'
+        'compass:server',
+        'string-replace:server'
       ],
       test: [
         'coffee',
@@ -359,7 +386,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'jshint',
+//    'jshint',
     'test',
     'build'
   ]);

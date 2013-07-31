@@ -16,7 +16,7 @@
 <meta name="reply-to" content="contact@housecream.org" />
 <link rel="shortcut icon" href="favicon.ico" />
 
-<base href="/" /><!-- ${contextPath} -->
+<base href="${contextPath}/" />
 
 <!-- build:css({.tmp,app}) styles/main.css -->
 <link rel="stylesheet" href="styles/housecream.css">
@@ -25,85 +25,83 @@
 
 </head>
 <body ng-app="housecream">
-	<!--[if lt IE 7]>
+ <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
 
-	<!--[if lt IE 9]>
+ <!--[if lt IE 9]>
       <script src="bower_components/es5-shim/es5-shim.js"></script>
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
 
-	<header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
-		<div class="navbar-inner">
-			<a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
-			<ul class="nav">
-				<li ng-class="{active: routeIs('/')}"><a href="">Home</a></li>
-				<li ng-class="{active: routeIs('/admin')}"><a href="admin">Admin</a></li>
-				<!-- 					<li ng-class="{active: routeIs('/who-we-are')}"><a href="${contextPath}/who-we-are">Who we are</a></li> -->
-			</ul>
-			<!-- 				<ul class="nav pull-right"> -->
-			<!-- 					<li ng-class="{active: routeIs('/help')}"><a href="${contextPath}/help">Help</a></li> -->
-			<!-- 				</ul> -->
-		</div>
-	</header>
+ <header class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController">
+  <div class="navbar-inner">
+   <a class="brand" target="_self" href="${fullWebPath}">Housecream</a>
+   <ul class="nav">
+    <li ng-class="{active: routeIs('/')}"><a href="">Home</a></li>
+    <li ng-class="{active: routeIs('/admin')}"><a href="admin">Admin</a></li>
+    <!-- 					<li ng-class="{active: routeIs('/who-we-are')}"><a href="${contextPath}/who-we-are">Who we are</a></li> -->
+   </ul>
+   <!-- 				<ul class="nav pull-right"> -->
+   <!-- 					<li ng-class="{active: routeIs('/help')}"><a href="${contextPath}/help">Help</a></li> -->
+   <!-- 				</ul> -->
+  </div>
+ </header>
 
-	<ng-view>loading..........</ng-view>
+ <ng-view>loading..........</ng-view>
 
-	<footer class="container-fluid">
-		<div id="container" class="row-fluid"></div>
-		<div>
-			<p>
-				<strong>&copy; <a href="http://housecream.awired.net">Housecream</a></strong>
-			</p>
-		</div>
-	</footer>
+ <footer class="container-fluid">
+  <div id="container" class="row-fluid"></div>
+  <div>
+   <p>
+    <strong>&copy; <a href="http://housecream.awired.net">Housecream</a></strong>
+   </p>
+  </div>
+ </footer>
 
+ <script type="text/javascript">
+    var hcVersion = '${version}', hcWsUrl = '${hcWsUrl}';
+  </script>
+ <script src="bower_components/angular/angular.js"></script>
 
+ <!-- build:js({.tmp,app}) scripts/scripts.js -->
+ <script src="scripts/housecream.js"></script>
+ <script src="scripts/controllers/NavbarController.js"></script>
+ <script src="scripts/controllers/admin/AdminController.js"></script>
+ <script src="scripts/controllers/index/IndexController.js"></script>
+ <script src="scripts/controllers/index/LeafletController.js"></script>
+ <script src="scripts/controllers/index/OpenLayersController.js"></script>
+ <!-- endbuild -->
 
-	<script type="text/javascript">
-		var hcVersioning = '${versioning}', hcVersion = '${version}', hcWsUrl = '${hcWsUrl}';
-	</script>
-	<script src="bower_components/angular/angular.js"></script>
+ <!-- build:js scripts/plugins.js -->
+ <script src="bower_components/jquery/jquery.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-modal.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-transition.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-button.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-typeahead.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-carousel.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
+ <script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>
+ <!-- endbuild -->
 
-	<!-- build:js({.tmp,app}) scripts/scripts.js -->
-	<script src="scripts/housecream.js"></script>
-	<script src="scripts/controllers/NavbarController.js"></script>
-    <script src="scripts/controllers/admin/AdminController.js"></script>
-    <script src="scripts/controllers/index/IndexController.js"></script>
-    <script src="scripts/controllers/index/LeafletController.js"></script>
-    <script src="scripts/controllers/index/OpenLayersController.js"></script>
-	<!-- endbuild -->
+ <!-- build:js scripts/modules.js -->
+ <script src="bower_components/angular-resource/angular-resource.js"></script>
+ <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+ <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 
-	<!-- build:js scripts/plugins.js -->
-	<script src="bower_components/jquery/jquery.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-modal.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-transition.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-button.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-typeahead.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-carousel.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
-	<script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>
-	<!-- endbuild -->
+ <script src="bower_components/angular-ui-bootstrap/src/dropdownToggle/dropdownToggle.js"></script>
+ <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
 
-	<!-- build:js scripts/modules.js -->
-	<script src="bower_components/angular-resource/angular-resource.js"></script>
-	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-	<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+ <script src="bower_components/leaflet/src/Leaflet.js"></script>
 
-    <script src="bower_components/angular-ui-bootstrap/src/dropdownToggle/dropdownToggle.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
-
-    <script src="bower_components/leaflet/src/Leaflet.js"></script>
-
-	<!-- endbuild -->
+ <!-- endbuild -->
 
 </body>
 </html>
