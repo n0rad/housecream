@@ -1,38 +1,48 @@
 'use strict';
 
 housecream.factory('InPoints', function($resource, hcWsUrl) {
-//	var res = $resource(hcWsUrl + '/inpoints/:id', {
-//		id : '@id'
-//	}, {list : {method : 'GET',isArray : true},
-//		get : {method : 'GET',params : {}},
-//		save : {method : 'POST',params : {}},
-//		update : {method : 'PUT',params : {}},
-//		'delete' : {method : 'DELETE',params : {}}});
-//	// res.validator = res.query.bind($resource(hcWsUrl +
-//	// '/inpoints/validator'));
-//	return res;
-	
-	var inpoints = $resource(hcWsUrl + '/inpoints/:listCtrl:id/:elemCtrl', {
-		id: "@id", listCtrl: "@listCtrl", elemCtrl: "@elemCtrl"},
-		{validator: {method: "GET", params: {listCtrl: "validator"}},
-		value: {method: "GET", params: {elemCtrl: "value"}}
-	});
-	return inpoints;
+  // var res = $resource(hcWsUrl + '/inpoints/:id', {
+  // id : '@id'
+  // }, {list : {method : 'GET',isArray : true},
+  // get : {method : 'GET',params : {}},
+  // save : {method : 'POST',params : {}},
+  // update : {method : 'PUT',params : {}},
+  // 'delete' : {method : 'DELETE',params : {}}});
+  // // res.validator = res.query.bind($resource(hcWsUrl +
+  // // '/inpoints/validator'));
+  // return res;
+
+  var inpoints = $resource(hcWsUrl + '/inpoints/:listCtrl:id/:elemCtrl', {
+    id : '@id',
+    listCtrl : '@listCtrl',
+    elemCtrl : '@elemCtrl'
+  }, {
+    validator : {
+      method : 'GET',
+      params : {
+        listCtrl : 'validator'
+      }
+    },
+    value : {
+      method : 'GET',
+      params : {
+        elemCtrl : 'value'
+      }
+    }
+  });
+  return inpoints;
 });
 
-//GET http://.../api.cfm/messages
-//POST http://.../api.cfm/messages/clear-all
-//GET http://.../api.cfm/messages/4
-//POST http://.../api.cfm/messages/8/archive
+// GET http://.../api.cfm/messages
+// POST http://.../api.cfm/messages/clear-all
+// GET http://.../api.cfm/messages/4
+// POST http://.../api.cfm/messages/8/archive
 
-//messages.query();
-//messages.clear();
-//messages.get({id : 4});
-//messages.archive({id : 8});
-//"./api.cfm/messages/:listController:id/:docController"
-
-
-
+// messages.query();
+// messages.clear();
+// messages.get({id : 4});
+// messages.archive({id : 8});
+// "./api.cfm/messages/:listController:id/:docController"
 
 // define(['jquery'],
 // function($) {

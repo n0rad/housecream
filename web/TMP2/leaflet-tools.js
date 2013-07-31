@@ -1,12 +1,15 @@
+'use strict';
+
 (function() {
   var LeafMap;
   LeafMap = (function() {
     function LeafMap(options) {
-      if (options === null)
+      if (options === null) {
         options = {};
-      if (options.zoom === null)
+      }
+      if (options.zoom === null) {
         options.zoom = 1;
-
+      }
       var _this = this;
       this.image = new Image();
       this.image.src = options.src;
@@ -33,9 +36,9 @@
           var sy = tilePoint.y * virtualTileSize;
           ctx.drawImage(_this.image, sx, sy, virtualTileSize, virtualTileSize, 0, 0, tileSize, tileSize);
           console.log(tilePoint);
-        }
+        };
         canvasTiles.addTo(_this.map);
-        _this.map.addEventListener("zoomend",
+        _this.map.addEventListener('zoomend',
             function(e) {
               var currentZoom = e.target._zoom;
               this.setMaxBounds([ [ 0, 0 ],
@@ -53,9 +56,6 @@
       // }).addTo(this.map);
     }
 
-    LeafMap.prototype.updateLayer = function(layerName) {
-
-    };
     return LeafMap;
   })();
 

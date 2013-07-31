@@ -7,7 +7,7 @@ housecream.factory('OutPoints', function($resource, hcWsUrl) {
 		save: {method: 'POST', params: {}},
 		update: {method: 'PUT', params: {}},
 		'delete': {method: 'DELETE', params: {}}
-	});	
+	});
 });
 
 
