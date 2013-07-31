@@ -321,7 +321,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
@@ -329,7 +329,6 @@ module.exports = function (grunt) {
       'concurrent:server',
       'configureProxies',
       'connect:livereload',
-      'open',
       'watch'
     ]);
   });
