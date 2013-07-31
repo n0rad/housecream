@@ -13,7 +13,7 @@
     	 exclude : [],
     	 reporters : ['progress'],
 
-    	 port : 8080,
+    	 port : 8180,
     	 runnerPort : 9100,
 
     	 colors : true,

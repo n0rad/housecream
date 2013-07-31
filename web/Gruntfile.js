@@ -45,9 +45,9 @@ module.exports = function (grunt) {
         tasks: ['compass:server']
       },
       stringreplace: {
-  	    files: ['<%= yeoman.app %>/index.html'],
-  	    tasks: ['string-replace:server'],
-  	  },
+        files: ['<%= yeoman.app %>/index.html'],
+        tasks: ['string-replace:server'],
+      },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
@@ -62,25 +62,25 @@ module.exports = function (grunt) {
     },
     'string-replace': {
       server: {
-          files: {
-            '.tmp/index.html': '<%= yeoman.app %>/index.html'
-          },
-          options: {
-            replacements: [{
-            	pattern: /\$\{contextPath\}/,
-                replacement: ''
-            }, {
-            	pattern: /\$\{hcWsUrl\}/,
-            	replacement: 'ws/'
-            }, {
-            	pattern: /\$\{version\}/,
-            	replacement: '0.0.0-DEV'
-            }, {
-              pattern: /\$\{fullWebPath\}/,
-              replacement: 'http://localhost:<%= connect.options.port %>'
-            }]
-          }
+        files: {
+          '.tmp/index.html': '<%= yeoman.app %>/index.html'
+        },
+        options: {
+          replacements: [{
+            pattern: /\$\{contextPath\}/,
+            replacement: ''
+          }, {
+            pattern: /\$\{hcWsUrl\}/,
+            replacement: 'ws/'
+          }, {
+            pattern: /\$\{version\}/,
+            replacement: '0.0.0-DEV'
+          }, {
+            pattern: /\$\{fullWebPath\}/,
+            replacement: 'http://localhost:<%= connect.options.port %>'
+          }]
         }
+      }
     },
     connect: {
       options: {
@@ -103,8 +103,8 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               modRewrite([
-			    '!\\.\\w+$ /index.html'
-			  ]),
+                '!\\.\\w+$ /index.html'
+              ]),
               proxySnippet,
               lrSnippet,
               mountFolder(connect, '.tmp'),
@@ -386,7 +386,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-//    'jshint',
+    'jshint',
     'test',
     'build'
   ]);
