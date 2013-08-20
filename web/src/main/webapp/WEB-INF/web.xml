@@ -28,10 +28,6 @@
 			<param-value>/index.html</param-value>
 		</init-param>
 		<init-param>
-			<param-name>versioningParamName</param-name>
-			<param-value>version.property</param-value>
-		</init-param>
-		<init-param>
 			<param-name>version.property</param-name>
 			<param-value>HousecreamVersion</param-value>
 		</init-param>

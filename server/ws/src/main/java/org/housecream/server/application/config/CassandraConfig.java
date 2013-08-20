@@ -67,7 +67,7 @@ public class CassandraConfig {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(ENTITY_PACKAGES_PARAM, "org.housecream");
         configMap.put(CONNECTION_CONTACT_POINTS_PARAM, host);
-        configMap.put(CONNECTION_PORT_PARAM, port + "");
+        configMap.put(CONNECTION_PORT_PARAM, port);
         configMap.put(KEYSPACE_NAME_PARAM, "housecream");
         configMap.put(FORCE_CF_CREATION_PARAM, true);
         configMap.put(ENSURE_CONSISTENCY_ON_JOIN_PARAM, true);
