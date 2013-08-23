@@ -18,57 +18,47 @@
 		<dependency>
 			<groupId>fr.norad.javascript.bean.validation</groupId>
 			<artifactId>javascript-bean-validation-js</artifactId>
-			<version>${javascript-bean-validation.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
 		</dependency>
         <dependency>
           <groupId>fr.norad.jaxrs.doc</groupId>
           <artifactId>jaxrs-doc-annotations</artifactId>
-          <version>${jaxrs-doc.version}</version>
         </dependency>
 
 		<dependency>
 			<groupId>fr.norad.jaxrs.oauth2</groupId>
 			<artifactId>jaxrs-oauth2</artifactId>
-			<version>${jaxrs-oauth2.version}</version>
 		</dependency>
 
 
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
-			<version>2.0-m10</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Alpha1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- TODO dependencies that sux -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
 		</dependency>
 
 	</dependencies>
@@ -76,9 +66,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.2</version>
 				<executions>
 					<execution>
 						<goals>

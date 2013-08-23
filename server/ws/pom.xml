@@ -19,17 +19,14 @@
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
-			<version>2.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.10</version>
 		</dependency>
 
 
@@ -41,7 +38,6 @@
 		<dependency>
 			<groupId>fr.norad.bootstrap</groupId>
 			<artifactId>bootstrap-java</artifactId>
-			<version>${bootstrap.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -56,7 +52,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -68,7 +63,6 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.7-b41</version>
 		</dependency>
 
 		<!-- WEB -->
@@ -79,50 +73,41 @@
 		<dependency>
 			<groupId>fr.norad.jaxrs.client.server</groupId>
 			<artifactId>jaxrs-client-server</artifactId>
-			<version>${jaxrs-client-server.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.norad.jaxrs.doc</groupId>
 			<artifactId>jaxrs-doc-core</artifactId>
-			<version>${jaxrs-doc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.norad.servlet.sample.html.template</groupId>
 			<artifactId>servlet-sample-html-template</artifactId>
-			<version>${servlet-sample-html-template.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
 		</dependency>
 
 		<!-- WEBSOCKET -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-websocket</artifactId>
-			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
 		</dependency>
 
 
@@ -130,12 +115,10 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
-			<version>${camel.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
-			<version>${camel.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>spring-aop</artifactId>
@@ -150,39 +133,32 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring-javaconfig</artifactId>
-			<version>${camel.version}</version>
 		</dependency>
 
 		<!-- Logger -->
 		<dependency>
 			<groupId>fr.norad.logback.prettier</groupId>
 			<artifactId>logback-prettier</artifactId>
-			<version>${logback-prettier.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
 		</dependency>
 
 		<!-- Cassandra -->
@@ -196,16 +172,9 @@
 		<!-- <artifactId>cassandra-driver-core</artifactId> -->
 		<!-- <version>1.0.0</version> -->
 		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.xerial.snappy</groupId> -->
-		<!-- <artifactId>snappy-java</artifactId> -->
-		<!-- <version>1.0.4.1</version> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>info.archinnov</groupId>
 			<artifactId>achilles-cql</artifactId>
-			<version>${achilles.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>log4j</groupId>
@@ -228,7 +197,6 @@
 		<dependency>
 			<groupId>org.xerial.snappy</groupId>
 			<artifactId>snappy-java</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 
 
@@ -236,22 +204,18 @@
 		<dependency>
 			<groupId>fr.norad.typed.command.line.parser</groupId>
 			<artifactId>typed-command-line-parser</artifactId>
-			<version>${typed-command-line-parser.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-core</artifactId>
-			<version>5.4.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-compiler</artifactId>
-			<version>5.4.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.4.2</version>
 		</dependency>
 
 		<!-- TESTS -->
@@ -269,9 +233,7 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -298,9 +260,7 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.3</version>
 				<executions>
 					<execution>
 						<id>unpack</id>

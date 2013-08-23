@@ -24,22 +24,18 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-mail</artifactId>
-			<version>${camel.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.housecream.camel</groupId>
 			<artifactId>camel-components-restmcu</artifactId>
-			<version>${camel-components.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.housecream.camel</groupId>
 			<artifactId>camel-components-solar</artifactId>
-			<version>${camel-components.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.housecream.camel</groupId>
 			<artifactId>camel-components-axmpp</artifactId>
-			<version>${camel-components.version}</version>
 		</dependency>
 	</dependencies>
 

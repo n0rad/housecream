@@ -22,12 +22,10 @@
 		<dependency>
 			<groupId>fr.norad.jaxrs.client.server</groupId>
 			<artifactId>jaxrs-client-server</artifactId>
-			<version>${jaxrs-client-server.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.norad.jaxrs.junit</groupId>
 			<artifactId>jaxrs-junit</artifactId>
-			<version>${jaxrs-junit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.housecream.restmcu</groupId>
@@ -38,24 +36,20 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-websocket</artifactId>
-			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-security</artifactId>
-			<version>${jetty.version}</version>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
-			<version>${cxf.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>spring-web</artifactId>
@@ -67,7 +61,6 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
 		</dependency>
 
 
@@ -92,12 +85,10 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.easytesting</groupId>
 			<artifactId>fest-assert-core</artifactId>
-			<version>${festassert.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -118,7 +109,6 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
 					<systemProperties>
@@ -143,7 +133,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.11</version>
 				<configuration>
 					<excludes>
 						<exclude>**/**IT.java</exclude>
@@ -224,7 +213,6 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>1.7</version>
 						<executions>
 							<execution>
 								<id>reserve-ports</id>
