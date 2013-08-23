@@ -77,7 +77,7 @@ public class AchillesRule<DAO> extends ExternalResource {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(ENTITY_PACKAGES_PARAM, packageScan);
         configMap.put(CONNECTION_CONTACT_POINTS_PARAM, CASSANDRA_EMBEDDED.getConfig().getCqlHost());
-        configMap.put(CONNECTION_PORT_PARAM, CASSANDRA_EMBEDDED.getConfig().getCqlPort() + "");
+        configMap.put(CONNECTION_PORT_PARAM, CASSANDRA_EMBEDDED.getConfig().getCqlPort());
         configMap.put(KEYSPACE_NAME_PARAM, "test");
         configMap.put(FORCE_CF_CREATION_PARAM, true);
         configMap.put(ENSURE_CONSISTENCY_ON_JOIN_PARAM, true);
