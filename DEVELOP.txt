@@ -1,0 +1,5 @@
+# sudo apt-get install git
+
+# sudo apt-get install npm rubygems
+# sudo npm install -g bower
+# sudo gem install compass

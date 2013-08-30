@@ -1,0 +1,50 @@
+<form class="form-horizontal" ng-controller="ZoneFormController">
+	<div class="row">
+		<div class="span6">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label" for="name">Name</label>
+					<div class="controls">
+						<input type="text" class="input-large" id="name" name="name" ng-model="zone.name"> <span class="help-inline"></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="type">Parent zone</label>
+					<div class="parentId controls">
+						<div class="btn-group">
+		                    <select name="type" ng-model="zone.parentId" ng-options="z.id as z.name for z in zones">
+    		                    <option value=""></option>
+		                    </select>
+<!-- 							<a class="btn dropdown-toggle btn-success input-large" data-toggle="dropdown" href="#"> Zone <span -->
+<!-- 								class="caret" style="float: right;"></span> -->
+<!-- 							</a> <select class="hide" name="parentId"><option value=""></option></select> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a href="" data-id=""><i class="icon-pencil"></i> <strong>Land</strong></a></li> -->
+<!-- 							</ul> -->
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="zoneimg">Zone image</label>
+					<div class="controls">
+						<input class="input-file" id="zoneimg" type="file">
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="span6">
+			<img height="100px" src="">
+		</div>
+	</div>
+    <div class="imageMap hide"></div>
+
+	<div class="form-actions">
+		<input type="submit" class="btn btn-primary" value="{{actionLabel}}" ng-disabled="isClean() || myForm.$invalid" ng-click="{{actionLabel}}()" />
+		<a class="pushState btn" href="admin/zone">Cancel</a>
+        <button ng-click="destroy()" ng-show="zone.id" class="btn btn-danger">Delete</button>
+
+		<div class="control-group error">
+			<span class="help-inline"></span>
+		</div>
+	</div>
+</form>

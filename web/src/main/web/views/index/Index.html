@@ -1,0 +1,15 @@
+<div class="span3" id="widget"></div>
+<div id="content" class="span9 section-body"></div>
+
+<div>
+    <tabs>
+        <pane ng-href="{{pane.title}}" ng-repeat="pane in panes" title="{{pane.title}}" heading="{{pane.title}}" active="pane.active">
+            <div ng-include src="pane.templateUrl"></div>
+            {{pane.content}}
+        </pane>
+    </tabs>
+    <div class="row-fluid">
+        <button class="btn" ng-click="panes[0].active = true">Select second tab</button>
+        <button class="btn" ng-click="panes[1].active = true">Select third tab</button>
+    </div>
+</div>

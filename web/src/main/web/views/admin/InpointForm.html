@@ -1,0 +1,66 @@
+<div ng-controller="InpointFormController">
+<form name="inpointForm" class="form-horizontal">
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="name">Name <span class="mandatory">*</span></label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="name" ng-model="inpoint.name" name="name" placeholder="Push button 42" required>
+				<span class="help-inline"></span>
+			</div>
+		</div>
+        <div class="control-group">
+            <label class="control-label" for="description">Description</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" ng-model="inpoint.description" name="description" placeholder="Push button in living entrance">
+                <span class="help-inline"></span>
+            </div>
+        </div>
+		<div class="control-group">
+			<label class="control-label" for="url">Uri <span class="mandatory">*</span></label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" ng-model="inpoint.uri" name="uri" placeholder="restmcu://192.168.30.4/42">
+				<p class="help-block">Camel uri to access the point</p>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Point type</label>
+			<div class="controls">
+				<select name="type" ng-model="inpoint.type" ng-options="c.name for c in inpointTypes"></select>
+				<span class="help-inline"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="type">Zone</label>
+            <div class="controls">
+                  <select name="type" ng-model="zone.parentId" ng-options="z.id as z.name for z in zones">
+                      <option value=""></option>
+                  </select>
+                <span class="help-inline"></span>
+            </div>
+<!-- 			<div class="zoneId controls"> -->
+<!-- 				<div class="btn-group"> -->
+<!-- 					<a class="btn dropdown-toggle btn-success input-xlarge" data-toggle="dropdown" href="#"> Zone <span -->
+<!-- 						class="caret" style="float: right;"></span> -->
+<!-- 					</a> <select class="hide" name="zoneId"><option value=""></option></select> -->
+<!-- 					<ul class="dropdown-menu"> -->
+<!-- 						<li><a href="" data-id=""><strong>Zone</strong></a></li> -->
+<!-- 					</ul> -->
+<!-- 					<span class="help-inline"></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+		</div>
+
+		<div class="form-actions">
+            <input type="submit" class="btn btn-success" ng-click="{{actionLabel}}()" value="{{actionLabel}}" ng-disabled="isSaveDisabled()"/>
+            <button class="btn btn-primary" ng-click="reset()" ng-disabled="isResetDisabled()">Reset</button>
+			<a class="pushState btn" href="admin/inpoint">Cancel</a>
+            <button class="btn btn-danger" ng-click="destroy()" ng-show="inpoint.id" >Delete</button>
+          
+			<div class="control-group error">
+				<span class="help-inline"></span>
+			</div>
+
+		</div>
+	</fieldset>
+</form>
+</div>
