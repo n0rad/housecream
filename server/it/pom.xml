@@ -30,7 +30,6 @@
 		<dependency>
 			<groupId>org.housecream.restmcu</groupId>
 			<artifactId>restmcu-api</artifactId>
-			<version>${restmcu.version}</version>
 		</dependency>
 
 		<dependency>
@@ -78,7 +77,6 @@
 		<dependency>
 			<groupId>org.housecream.restmcu</groupId>
 			<artifactId>restmcu-it</artifactId>
-			<version>${restmcu.version}</version>
 			<scope>test</scope>
 		</dependency>
 

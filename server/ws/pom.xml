@@ -75,10 +75,6 @@
 			<artifactId>jaxrs-client-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>fr.norad.jaxrs.doc</groupId>
-			<artifactId>jaxrs-doc-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>fr.norad.servlet.sample.html.template</groupId>
 			<artifactId>servlet-sample-html-template</artifactId>
 		</dependency>
@@ -98,6 +94,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+		<!-- DOC -->
+		<dependency>
+			<groupId>fr.norad.jaxrs.doc</groupId>
+			<artifactId>jaxrs-doc-core</artifactId>
 		</dependency>
 
 		<!-- WEBSOCKET -->

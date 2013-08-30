@@ -30,6 +30,11 @@
 			<artifactId>housecream-web</artifactId>
 			<type>war</type>
 		</dependency>
+        <dependency>
+            <groupId>fr.norad.jaxrs.doc</groupId>
+            <artifactId>jaxrs-doc-web-bootstrap</artifactId>
+            <type>war</type>
+        </dependency>
 
 		<!-- runnable war -->
 		<dependency>
@@ -71,6 +76,13 @@
 							</includes>
 						</resource>
 					</webResources>
+                    <overlays>
+                        <overlay>
+                            <groupId>fr.norad.jaxrs.doc</groupId>
+                            <artifactId>jaxrs-doc-web-bootstrap</artifactId>
+                            <targetPath>doc</targetPath>
+                        </overlay>
+                    </overlays>
 				</configuration>
 			</plugin>
 

@@ -2,12 +2,12 @@
     config.set({
     	basePath : '',
     	files : [
-    	         'src/main/webapp/bower_components/angular/angular.js',
-    	         'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
-    	         'src/main/webapp/scripts/*.js',
-    	         'src/main/webapp/scripts/**/*.js',
-    	         'src/test/webapp/mock/**/*.js',
-    	         'src/test/webapp/spec/**/*.js'
+    	         'src/main/web/bower_components/angular/angular.js',
+    	         'src/main/web/bower_components/angular-mocks/angular-mocks.js',
+    	         'src/main/web/scripts/*.js',
+    	         'src/main/web/scripts/**/*.js',
+    	         'src/test/web/mock/**/*.js',
+    	         'src/test/web/spec/**/*.js'
     	       ],
     	 frameworks : ["jasmine"],
     	 exclude : [],

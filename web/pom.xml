@@ -21,20 +21,16 @@
 		<dependency>
 			<groupId>fr.norad.servlet.sample.html.template</groupId>
 			<artifactId>servlet-sample-html-template</artifactId>
-			<version>0.5-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>housecream-web</finalName>
-		<sourceDirectory>src/main/webapp</sourceDirectory>
-		<testSourceDirectory>src/test/webapp</testSourceDirectory>
 
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
 				<configuration>
                     <webResources>
                         <resource>
@@ -56,17 +52,13 @@
 
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
 				<configuration>
 					<filesets>
 						<fileset>
 							<directory>.tmp</directory>
 						</fileset>
 						<fileset>
-							<directory>src/main/webapp/bower_components</directory>
-						</fileset>
-						<fileset>
-							<directory>node_modules</directory>
+							<directory>src/main/web/bower_components</directory>
 						</fileset>
 					</filesets>
 				</configuration>
@@ -84,7 +76,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<yeomanProjectDirectory>src/main/webapp</yeomanProjectDirectory>
+					<yeomanProjectDirectory>.</yeomanProjectDirectory>
 				</configuration>
 			</plugin>
 

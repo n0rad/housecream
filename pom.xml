@@ -42,37 +42,16 @@
 			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
 		<jacoco.file.path>/tmp/jacoco-hc.data</jacoco.file.path>
 
-		<logback-prettier.version>0.2</logback-prettier.version>
-		<typed-command-line-parser.version>0.3</typed-command-line-parser.version>
-		<bootstrap.version>1.1</bootstrap.version>
-		<operating-system-specific.version>0.5-SNAPSHOT</operating-system-specific.version>
-		<jaxrs-oauth2.version>0.5-SNAPSHOT</jaxrs-oauth2.version>
-		<generic-jpa.version>0.5-SNAPSHOT</generic-jpa.version>
-		<jaxrs-client-server.version>0.5-SNAPSHOT</jaxrs-client-server.version>
-		<jaxrs-junit.version>0.5-SNAPSHOT</jaxrs-junit.version>
+        <restmcu.version>0.1-SNAPSHOT</restmcu.version>
+
 		<jaxrs-doc.version>0.1-SNAPSHOT</jaxrs-doc.version>
-		<servlet-sample-html-template.version>0.5-SNAPSHOT</servlet-sample-html-template.version>
-		<logback-prettier.version>0.5</logback-prettier.version>
-		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
-		<javascript-bean-validation.version>0.1-SNAPSHOT</javascript-bean-validation.version>
 		<camel-components.version>0.1-SNAPSHOT</camel-components.version>
-
-		<achilles.version>2.0.3</achilles.version>
-
-
-		<hibernate.version>4.1.4.Final</hibernate.version>
 		<jetty.version>8.1.7.v20120910</jetty.version>
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<camel.version>2.10.1</camel.version>
 		<cxf.version>2.7.5</cxf.version>
 		<jackson.version>2.1.4</jackson.version>
-
-		<guava.version>13.0</guava.version>
-
 		<slf4j.version>1.7.5</slf4j.version>
-		<logback.version>1.0.13</logback.version>
-
-		<!-- TEST -->
 		<jacoco.version>0.5.5.201112152213</jacoco.version>
 	</properties>
 
@@ -134,12 +113,18 @@
 				<artifactId>jaxrs-doc-core</artifactId>
 				<version>${jaxrs-doc.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>fr.norad.jaxrs.doc</groupId>
+				<artifactId>jaxrs-doc-web-bootstrap</artifactId>
+				<version>${jaxrs-doc.version}</version>
+				<type>war</type>
+			</dependency>
 
 			<!-- SECURITY -->
 			<dependency>
 				<groupId>fr.norad.jaxrs.oauth2</groupId>
 				<artifactId>jaxrs-oauth2</artifactId>
-				<version>${jaxrs-oauth2.version}</version>
+				<version>0.5-SNAPSHOT</version>
 			</dependency>
 
 			<!-- JAXRS -->
@@ -156,7 +141,7 @@
 			<dependency>
 				<groupId>fr.norad.jaxrs.client.server</groupId>
 				<artifactId>jaxrs-client-server</artifactId>
-				<version>${jaxrs-client-server.version}</version>
+				<version>0.5-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.jaxrs</groupId>
@@ -173,7 +158,7 @@
 			<dependency>
 				<groupId>info.archinnov</groupId>
 				<artifactId>achilles-cql</artifactId>
-				<version>${achilles.version}</version>
+				<version>2.0.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.xerial.snappy</groupId>
@@ -186,7 +171,7 @@
 			<dependency>
 				<groupId>fr.norad.javascript.bean.validation</groupId>
 				<artifactId>javascript-bean-validation-js</artifactId>
-				<version>${javascript-bean-validation.version}</version>
+				<version>0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.validation</groupId>
@@ -255,17 +240,17 @@
 			<dependency>
 				<groupId>fr.norad.typed.command.line.parser</groupId>
 				<artifactId>typed-command-line-parser</artifactId>
-				<version>${typed-command-line-parser.version}</version>
+				<version>0.3</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.norad.operating.system.specific</groupId>
 				<artifactId>operating-system-specific</artifactId>
-				<version>${operating-system-specific.version}</version>
+				<version>0.5-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.norad.bootstrap</groupId>
 				<artifactId>bootstrap-java</artifactId>
-				<version>${bootstrap.version}</version>
+				<version>1.1</version>
 				<scope>provided</scope>
 			</dependency>
 
@@ -273,7 +258,7 @@
 			<dependency>
 				<groupId>fr.norad.logback.prettier</groupId>
 				<artifactId>logback-prettier</artifactId>
-				<version>${logback-prettier.version}</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -298,7 +283,7 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>${logback.version}</version>
+				<version>1.0.13</version>
 			</dependency>
 
 			<!-- WEB -->
@@ -330,7 +315,7 @@
 			<dependency>
 				<groupId>fr.norad.servlet.sample.html.template</groupId>
 				<artifactId>servlet-sample-html-template</artifactId>
-				<version>${servlet-sample-html-template.version}</version>
+				<version>0.6</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -349,7 +334,7 @@
 			<dependency>
 				<groupId>fr.norad.jaxrs.junit</groupId>
 				<artifactId>jaxrs-junit</artifactId>
-				<version>${jaxrs-junit.version}</version>
+				<version>0.5-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
@@ -360,6 +345,17 @@
 				<groupId>org.easytesting</groupId>
 				<artifactId>fest-assert-core</artifactId>
 				<version>2.0M8</version>
+			</dependency>
+			<dependency>
+				<groupId>org.housecream.restmcu</groupId>
+				<artifactId>restmcu-api</artifactId>
+				<version>${restmcu.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.housecream.restmcu</groupId>
+				<artifactId>restmcu-it</artifactId>
+				<version>${restmcu.version}</version>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- CAMEL -->
@@ -443,6 +439,10 @@
 		<defaultGoal>clean verify</defaultGoal>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
 				<plugin>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.2</version>

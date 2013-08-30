@@ -52,12 +52,16 @@
 		<error-code>404</error-code>
 		<location>/notFoundResource</location>
 	</error-page>
+
 	<servlet>
 		<servlet-name>ToIndex</servlet-name>
 		<servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
 		<init-param>
-			<param-name>indexMapping</param-name>
-			<param-value>/index.html</param-value>
+			<param-name>indexMappings</param-name>
+			<param-value>
+			     /doc/ : /doc/index.html
+			     / : /index.html
+			</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -73,10 +77,6 @@
 			<param-value>/index.html</param-value>
 		</init-param>
 		<init-param>
-			<param-name>versioningParamName</param-name>
-			<param-value>version.property</param-value>
-		</init-param>
-		<init-param>
 			<param-name>version.property</param-name>
 			<param-value>HousecreamVersion</param-value>
 		</init-param>
@@ -90,9 +90,35 @@
 		<url-pattern>/index.html</url-pattern>
 	</servlet-mapping>
 
+    <servlet>
+        <servlet-name>docServlet</servlet-name>
+        <servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
+        <init-param>
+            <param-name>tplPath</param-name>
+            <param-value>/doc/index.html</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextPathSuffix</param-name>
+            <param-value>/doc</param-value>
+        </init-param>
+        <init-param>
+            <param-name>version.property</param-name>
+            <param-value>HousecreamVersion</param-value>
+        </init-param>
+        <init-param>
+            <param-name>hcWsUrl.property</param-name>
+            <param-value>HousecreamWebServiceUrl</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>docServlet</servlet-name>
+        <url-pattern>/doc/index.html</url-pattern>
+    </servlet-mapping>
+
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-		<welcome-file>server.html</welcome-file>
+		<welcome-file>doc/index.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>
