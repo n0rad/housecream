@@ -17,6 +17,7 @@
 
 	<properties>
 		<housecream.webservice.url>ws</housecream.webservice.url>
+		<doc.service.url>../ws</doc.service.url>
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,7 @@
 							<Bootstrap-Classpath>META-INF/lib</Bootstrap-Classpath>
 							<HousecreamVersion>${project.version}</HousecreamVersion>
 							<HousecreamWebServiceUrl>${housecream.webservice.url}</HousecreamWebServiceUrl>
+							<docServiceUrl>${doc.service.url}</docServiceUrl>
 						</manifestEntries>
 					</archive>
 					<webResources>

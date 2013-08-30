@@ -106,8 +106,8 @@
             <param-value>HousecreamVersion</param-value>
         </init-param>
         <init-param>
-            <param-name>hcWsUrl.property</param-name>
-            <param-value>HousecreamWebServiceUrl</param-value>
+            <param-name>docServiceUrl.property</param-name>
+            <param-value>docServiceUrl</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
