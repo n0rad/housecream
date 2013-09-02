@@ -98,7 +98,15 @@ public class ArgumentManager extends CliArgumentManager {
         addArg(housecreamPort);
 
         // -c
-        housecreamContextPath = new CliOneParamArgument<>('c', new CliParamString("contextPath"));
+        housecreamContextPath = new CliOneParamArgument<>('c', new CliParamString("contextPath") {
+            @Override
+            public String parse(String param) {
+                if (param.charAt(0) != '/') {
+                    return '/' + param;
+                }
+                return param;
+            }
+        });
         housecreamContextPath.setParamOneDefValue("/");
         housecreamContextPath.setName("contextpath");
         housecreamContextPath.setDescription("Context path to access the application");
