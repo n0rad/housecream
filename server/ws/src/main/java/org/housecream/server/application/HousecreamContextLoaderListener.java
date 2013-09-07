@@ -20,13 +20,11 @@ import static org.housecream.server.Housecream.HOUSECREAM;
 import static org.housecream.server.Housecream.VERSION_MANIFEST_KEY;
 import static org.housecream.server.application.HousecreamHome.HOUSECREAM_HOME;
 import javax.servlet.ServletContextEvent;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import fr.norad.servlet.sample.html.template.WarManifestUtils;
 
 public class HousecreamContextLoaderListener extends ContextLoaderListener {
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -36,12 +34,12 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
         HOUSECREAM_HOME.start();
         super.contextInitialized(event);
-        log.info("Housecream server is ready !");
+        LoggerFactory.getLogger(getClass()).info("Housecream server is ready !");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        log.info("Housecream server is shutting down");
+        LoggerFactory.getLogger(getClass()).info("Housecream server is shutting down");
         HOUSECREAM_HOME.stop();
         super.contextDestroyed(event);
     }

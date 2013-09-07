@@ -42,7 +42,7 @@
 			-XX:HeapDumpPath=${project.build.directory}</cargo.jvm.args>
 		<jacoco.file.path>/tmp/jacoco-hc.data</jacoco.file.path>
 
-        <restmcu.version>0.1-SNAPSHOT</restmcu.version>
+		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
 
 		<jaxrs-doc.version>0.1-SNAPSHOT</jaxrs-doc.version>
 		<camel-components.version>0.1-SNAPSHOT</camel-components.version>
@@ -159,6 +159,12 @@
 				<groupId>info.archinnov</groupId>
 				<artifactId>achilles-cql</artifactId>
 				<version>2.0.3</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.xerial.snappy</groupId>
