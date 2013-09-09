@@ -17,24 +17,19 @@
 package org.housecream.server.api.domain;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public abstract class Point {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
     private UUID id;
 
     //    private Coordinate position;
@@ -42,40 +37,22 @@ public abstract class Point {
 
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(unique = true)
     private String name;
 
-    @Column
     @Size(min = 0, max = 100)
     private String description;
 
     @NotNull
-    @Column(unique = true)
-    private String stringUri;
+    private URI uri;
 
     //TODO    @Min(value = 1, message = "{org.hibernate.validator.constraints.NotEmpty.message}")
     //    @ForeignId(daoName = "zoneDao")
     private UUID zoneId;
 
-    @Transient
+    @JsonIgnore
+    @XmlTransient
     private Float value;
 
     //    private Device device;
-
-    public void setUri(URI uri) {
-        if (uri == null) {
-            this.stringUri = null;
-        } else {
-            this.stringUri = uri.toString();
-        }
-    }
-
-    public URI getUri() {
-        try {
-            return new URI(stringUri);
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException("Cannot rebuild uri", e);
-        }
-    }
 
 }

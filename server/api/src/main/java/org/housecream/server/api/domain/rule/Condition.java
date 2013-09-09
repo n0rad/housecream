@@ -28,8 +28,6 @@ import lombok.Data;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Condition {
 
-    private static final long serialVersionUID = 1L;
-
     private UUID pointId;
     private float value;
     @NotNull

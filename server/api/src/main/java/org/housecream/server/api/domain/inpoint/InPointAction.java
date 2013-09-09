@@ -21,8 +21,6 @@ import org.housecream.server.api.domain.outPoint.OutPoint;
 //@Entity
 public class InPointAction {
 
-    private static final long serialVersionUID = 1L;
-
     private InPoint inPoint;
     private OutPoint OutPoint;
     private String action; // should contain a point as its may be the output

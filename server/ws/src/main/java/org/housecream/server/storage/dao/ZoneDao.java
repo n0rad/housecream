@@ -16,19 +16,28 @@
  */
 package org.housecream.server.storage.dao;
 
-import info.archinnov.achilles.entity.manager.CQLEntityManager;
 import java.util.List;
 import java.util.UUID;
+import org.housecream.server.api.domain.inpoint.InPoint;
+import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.zone.Zone;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import com.datastax.driver.core.Session;
 
 @Repository
 public class ZoneDao {
 
-    private CQLEntityManager em;
+    private Session session;
+
+    @Autowired
+    public ZoneDao(Session session) {
+        this.session = session;
+
+    }
 
     public Zone find(UUID zoneId) {
-        return em.find(Zone.class, zoneId);
+        return null;
     }
 
     public List<Zone> findAll() {
@@ -37,15 +46,23 @@ public class ZoneDao {
     }
 
     public void delete(UUID zoneId) {
-        // TODO Auto-generated method stub
-
     }
 
     public void save(Zone zone) {
-        em.persist(zone);
     }
 
     public void deleteAll() {
+    }
+
+    public List<OutPoint> findOutPoints(UUID zoneId) {
+        return null;
+    }
+
+    public List<InPoint> findInPoints(UUID zoneId) {
+        //        TypedQuery<InPoint> query = entityManager.createNamedQuery(InPoint.QUERY_BY_ZONE, InPoint.class);
+        //        query.setParameter(InPoint.QUERY_PARAM_ZONE_ID, zoneId);
+        //        return findList(query);
+        return null;
     }
 
 }

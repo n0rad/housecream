@@ -29,7 +29,6 @@ import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.zone.Zone;
 import org.housecream.server.api.resource.ZoneResource;
 import org.housecream.server.engine.EngineProcessor;
-import org.housecream.server.storage.dao.InPointDao;
 import org.housecream.server.storage.dao.OutPointDao;
 import org.housecream.server.storage.dao.ZoneDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,6 @@ public class ZoneService implements ZoneResource {
 
     @Autowired
     private ZoneDao zoneDao;
-
-    @Autowired
-    private InPointDao inPointDao;
 
     @Autowired
     private OutPointDao outPointDao;
@@ -89,7 +85,7 @@ public class ZoneService implements ZoneResource {
 
     @Override
     public List<InPoint> getInPoints(UUID zoneId) {
-        List<InPoint> findByZone = inPointDao.findByZone(zoneId);
+        List<InPoint> findByZone = zoneDao.findInPoints(zoneId);
         for (InPoint inPoint : findByZone) {
             try {
                 inPoint.setValue(engine.getPointState(inPoint.getId()));
@@ -103,7 +99,7 @@ public class ZoneService implements ZoneResource {
 
     @Override
     public List<OutPoint> getOutPoints(UUID zoneId) {
-        List<OutPoint> findByZone = outPointDao.findByZone(zoneId);
+        List<OutPoint> findByZone = zoneDao.findOutPoints(zoneId);
         for (OutPoint outPoint : findByZone) {
             try {
                 outPoint.setValue(engine.getPointState(outPoint.getId()));

@@ -17,11 +17,6 @@
 package org.housecream.server.api.domain.zone;
 
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -34,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Data
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @XmlRootElement(name = "zone")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlSeeAlso({ Area.class, Building.class, Floor.class, Land.class, Room.class, Field.class })
@@ -47,12 +41,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Field.class, name = Field.ZONE_TYPE_NAME) })
 public abstract class Zone {
 
-    private static final long serialVersionUID = 42L;
-
-    @Id
     private UUID id;
 
-    @Column
     @NotNull
     @Size(min = 1, max = 20)
     private String name;
@@ -60,7 +50,6 @@ public abstract class Zone {
     private Long parentId;
 
     private String imageMime;
-    @Lob
     private byte[] image;
 
     private CoordinateShape parentZoneCoordinatesShape;

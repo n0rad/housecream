@@ -121,7 +121,7 @@ public class CassandraConfig {
         config.server_encryption_options.keystore = absolutePath + "/keystore";
         config.server_encryption_options.truststore = absolutePath + "/truststore";
         config.client_encryption_options.keystore = absolutePath + "/keystore";
-        config.saved_caches_directory = absolutePath + "saved_caches";
+        config.saved_caches_directory = absolutePath + "/saved_caches";
     }
 
     public void load() {

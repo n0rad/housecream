@@ -17,33 +17,92 @@
 package org.housecream.server.storage.dao;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.junit.Rule;
 import org.junit.Test;
+import fr.norad.core.lang.exception.NotFoundException;
 
 public class InPointDaoTest {
 
     @Rule
-    public AchillesRule<InPointDao> db = new AchillesRule<>("org.housecream", InPointDao.class);
+    public CassandraDaoRule<InPointDao> db = new CassandraDaoRule<>(InPointDao.class, "session");
 
     @Test
-    public void should_test() throws Exception {
+    public void should_find_simple_map() throws Exception {
         InPoint inPoint = new InPoint();
         inPoint.setName("salut!");
         inPoint.setId(UUID.randomUUID());
+        inPoint.setUri(URI.create("genre:style"));
         db.dao().save(inPoint);
 
-        assertThat(db.dao().find(inPoint.getId()).getName()).isEqualTo("salut!");
+        InPoint find = db.dao().find(inPoint.getId());
+
+        assertThat(find.getId()).isEqualTo(inPoint.getId());
+        assertThat(find.getName()).isEqualTo("salut!");
+        assertThat(find.getUri()).isEqualTo(URI.create("genre:style"));
     }
 
     @Test
-    public void should_test2() throws Exception {
+    public void should_provide_uuid() throws Exception {
         InPoint inPoint = new InPoint();
-        inPoint.setName("salut2!");
-        inPoint.setId(UUID.randomUUID());
+        inPoint.setName("salut!");
+        inPoint.setUri(URI.create("genre:style"));
         db.dao().save(inPoint);
 
-        assertThat(db.dao().find(inPoint.getId()).getName()).isEqualTo("salut2!");
+        assertThat(inPoint.getId()).isNotNull();
+    }
+
+    @Test
+    public void should_find_all() throws Exception {
+        InPoint inPoint = new InPoint();
+        inPoint.setName("salut!");
+        inPoint.setUri(URI.create("genre:style"));
+        db.dao().save(inPoint);
+
+        InPoint inPoint2 = new InPoint();
+        inPoint2.setName("salut!2");
+        inPoint2.setUri(URI.create("genre:style2"));
+        db.dao().save(inPoint2);
+
+        List<InPoint> findAll = db.dao().findAll();
+
+        assertThat(findAll).contains(inPoint, inPoint2);
+    }
+
+    @Test
+    public void should_delete() throws Exception {
+        InPoint inPoint = new InPoint();
+        inPoint.setName("salut!");
+        inPoint.setUri(URI.create("genre:style"));
+        db.dao().save(inPoint);
+
+        db.dao().delete(inPoint.getId());
+
+        assertThat(db.dao().findAll()).isEmpty();
+    }
+
+    @Test
+    public void should_delete_all() throws Exception {
+        InPoint inPoint = new InPoint();
+        inPoint.setName("salut!");
+        inPoint.setUri(URI.create("genre:style"));
+        db.dao().save(inPoint);
+
+        InPoint inPoint2 = new InPoint();
+        inPoint2.setName("salut!2");
+        inPoint2.setUri(URI.create("genre:style2"));
+        db.dao().save(inPoint2);
+
+        db.dao().deleteAll();
+
+        assertThat(db.dao().findAll()).isEmpty();
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void should_throw_exception_on_not_found() throws Exception {
+        db.dao().find(UUID.randomUUID());
     }
 }

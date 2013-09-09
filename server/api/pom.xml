@@ -19,10 +19,6 @@
 			<groupId>fr.norad.javascript.bean.validation</groupId>
 			<artifactId>javascript-bean-validation-js</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-		</dependency>
         <dependency>
           <groupId>fr.norad.jaxrs.doc</groupId>
           <artifactId>jaxrs-doc-annotations</artifactId>

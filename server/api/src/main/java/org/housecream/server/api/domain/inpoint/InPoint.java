@@ -16,7 +16,6 @@
  */
 package org.housecream.server.api.domain.inpoint;
 
-import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,10 +24,7 @@ import org.housecream.server.api.domain.Point;
 
 @XmlRootElement(name = "InPoint")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@Entity
 public class InPoint extends Point {
-
-    private static final long serialVersionUID = 42L;
 
     //    private Date lastUpdate; // input only
 

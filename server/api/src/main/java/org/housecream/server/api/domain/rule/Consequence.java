@@ -27,8 +27,6 @@ import lombok.Data;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Consequence {
 
-    private static final long serialVersionUID = 1L;
-
     private UUID id;
     private UUID outPointId;
     private float value;
