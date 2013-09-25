@@ -25,14 +25,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import org.housecream.server.api.domain.Order;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 import fr.norad.client.bean.validation.js.domain.ClientValidatorInfo;
 
 @Path("/rules")
 public interface RulesResource {
 
     @GET
-    List<EventRule> getRules(@QueryParam("length") Integer length, //
+    List<Rule> getRules(@QueryParam("length") Integer length, //
             @QueryParam("start") UUID start, //
             @QueryParam("search") String search, //
             @QueryParam("searchProperty") List<String> searchProperties, //
@@ -42,7 +42,7 @@ public interface RulesResource {
     void deleteAllRules();
 
     @PUT
-    EventRule createRule(@Valid EventRule rule);
+    Rule createRule(@Valid Rule rule);
 
     @GET
     @Path("/validator")

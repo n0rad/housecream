@@ -24,7 +24,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.outPoint.OutPoint;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 import org.housecream.server.api.domain.zone.Zone;
 import org.housecream.server.engine.OutEvent;
 import org.housecream.server.storage.dao.InPointDao;
@@ -86,10 +86,10 @@ public class CliProcessor implements Processor {
     private void processRule(CliNoParamArgument rule, CliOneParamArgument<UUID> id, PrintStream ps)
             throws NotFoundException {
         if (id.isSet()) {
-            EventRule find = ruleDao.find(id.getParamOneValue());
+            Rule find = ruleDao.find(id.getParamOneValue());
             ps.print(find.toString());
         } else {
-            List<EventRule> findAll = ruleDao.findAll();
+            List<Rule> findAll = ruleDao.findAll();
             ps.print(findAll.toString());
         }
     }

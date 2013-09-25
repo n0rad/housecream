@@ -28,7 +28,7 @@ import fr.norad.core.lang.exception.NotFoundException;
 public class InPointDaoTest {
 
     @Rule
-    public CassandraDaoRule<InPointDao> db = new CassandraDaoRule<>(InPointDao.class, "session");
+    public CassandraDaoRule<InPointDao> db = new CassandraDaoRule<>(InPointDao.class);
 
     @Test
     public void should_find_simple_map() throws Exception {
@@ -74,6 +74,8 @@ public class InPointDaoTest {
 
     @Test
     public void should_delete() throws Exception {
+        db.truncateColumnFamilies();
+
         InPoint inPoint = new InPoint();
         inPoint.setName("salut!");
         inPoint.setUri(URI.create("genre:style"));

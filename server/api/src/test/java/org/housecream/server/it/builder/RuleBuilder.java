@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.housecream.server.api.domain.rule.Condition;
 import org.housecream.server.api.domain.rule.Consequence;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 
 public class RuleBuilder {
 
@@ -32,8 +32,8 @@ public class RuleBuilder {
         return new RuleBuilder();
     }
 
-    public EventRule build() {
-        EventRule eventRule = new EventRule();
+    public Rule build() {
+        Rule eventRule = new Rule();
         eventRule.setName(name);
         if (!consequences.isEmpty()) {
             eventRule.setConsequences(consequences);

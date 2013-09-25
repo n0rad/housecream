@@ -27,7 +27,7 @@ import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.resource.generic.PointResource;
 import fr.norad.core.lang.exception.NotFoundException;
 
-@Path("/inpoints/{id:\\d+}")
+@Path("/inpoints/{id:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}")
 public interface InPointResource extends PointResource {
 
     @PUT

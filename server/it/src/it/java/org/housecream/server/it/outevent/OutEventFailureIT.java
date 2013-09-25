@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import fr.norad.core.lang.exception.NotFoundException;
 import fr.norad.core.lang.exception.UpdateException;
+import fr.norad.jaxrs.client.server.rest.RestBuilder;
 import fr.norad.jaxrs.junit.RestServerRule;
 
 public class OutEventFailureIT {
@@ -38,11 +39,12 @@ public class OutEventFailureIT {
     public HcWsItServer hcs = new HcWsItServer();
 
     @Rule
-    public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
+    public RestServerRule restmcu = new RestServerRule(new RestBuilder().withExceptionMapper(),
+            "http://localhost:5879/", board, line);
 
     @Test
     public void should_send_failure_if_cannot_set_output() throws Exception {
-        HcWsItSession session = hcs.session();
+        HcWsItSession session = hcs.session().asJson();
         Land land = session.zone().createLand("landName");
         OutPoint light = session.outpoint().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
 

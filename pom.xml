@@ -141,7 +141,7 @@
 			<dependency>
 				<groupId>fr.norad.jaxrs.client.server</groupId>
 				<artifactId>jaxrs-client-server</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.6-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.jaxrs</groupId>
@@ -153,7 +153,7 @@
 			<dependency>
 				<groupId>org.apache.cassandra</groupId>
 				<artifactId>cassandra-all</artifactId>
-				<version>1.2.6</version>
+				<version>2.0.1</version>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -176,7 +176,7 @@
 			<dependency>
 				<groupId>com.datastax.cassandra</groupId>
 				<artifactId>cassandra-driver-core</artifactId>
-				<version>1.0.3</version>
+				<version>2.0.0-beta1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.xerial.snappy</groupId>

@@ -18,9 +18,6 @@ package org.housecream.server.service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
-import javax.annotation.PostConstruct;
-import org.housecream.server.api.domain.Order;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.outPoint.OutPointType;
@@ -51,13 +48,13 @@ public class OutPointsService implements OutPointsResource {
     @Autowired
     private PluginService pluginService;
 
-    @PostConstruct
-    public void postConstruct() {
-        List<OutPoint> findAll = outPointDao.findAll();
-        //        for (OutPoint outPoint : findAll) {
-        //            routeManager.registerPointRoute(outPoint);
-        //        }
-    }
+    //    @PostConstruct
+    //    public void postConstruct() {
+    //        List<OutPoint> findAll = outPointDao.findAll();
+    //        for (OutPoint outPoint : findAll) {
+    //            routeManager.registerPointRoute(outPoint);
+    //        }
+    //    }
 
     @Override
     public void deleteAllOutPoints() {
@@ -70,17 +67,16 @@ public class OutPointsService implements OutPointsResource {
     }
 
     @Override
-    public List<OutPoint> getInPoints(Integer length, UUID start, String search, List<String> searchProperties,
-            List<Order> orders) {
-        List<OutPoint> outPointsFiltered = outPointDao.findFiltered(length, start);
-        for (OutPoint outPoint : outPointsFiltered) {
+    public List<OutPoint> getInPoints() {
+        List<OutPoint> outPoints = outPointDao.findAll();
+        for (OutPoint outPoint : outPoints) {
             try {
                 engine.getPointState(outPoint.getId());
             } catch (NotFoundException e) {
                 // nothing to do
             }
         }
-        return outPointsFiltered;
+        return outPoints;
     }
 
     @Override

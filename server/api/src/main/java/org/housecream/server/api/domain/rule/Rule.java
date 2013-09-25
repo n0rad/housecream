@@ -29,14 +29,14 @@ import lombok.Data;
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EventRule {
+public class Rule {
 
     private UUID id;
 
     @NotNull
     private String name;
 
-    private Integer salience;
+    private int salience;
 
     @Valid
     private List<Condition> conditions = new ArrayList<>();

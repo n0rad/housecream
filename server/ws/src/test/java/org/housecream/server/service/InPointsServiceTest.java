@@ -48,10 +48,10 @@ public class InPointsServiceTest {
         UUID inPointId = UUID.randomUUID();
 
         List<InPoint> value = Arrays.asList(new InPointBuilder().id(inPointId).build());
-        when(inPointDao.findFiltered(null, null)).thenReturn(value);
+        when(inPointDao.findAll()).thenReturn(value);
         when(engine.getPointState(inPointId)).thenReturn(42f);
 
-        List<InPoint> inPoints = service.getInPoints(null, null, null, null, null);
+        List<InPoint> inPoints = service.getInPoints();
 
         assertThat(inPoints.get(0).getValue()).isEqualTo(42);
     }

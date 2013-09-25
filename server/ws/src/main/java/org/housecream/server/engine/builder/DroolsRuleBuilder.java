@@ -25,14 +25,14 @@ import org.drools.io.ResourceFactory;
 import org.housecream.server.api.domain.rule.Condition;
 import org.housecream.server.api.domain.rule.ConditionType;
 import org.housecream.server.api.domain.rule.Consequence;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 import org.housecream.server.api.domain.rule.TriggerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RuleBuilder {
+public class DroolsRuleBuilder {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -43,7 +43,7 @@ public class RuleBuilder {
             "org.housecream.server.api.domain.*", //
             "org.housecream.server.api.domain.rule.*" };
 
-    public Collection<KnowledgePackage> build(EventRule rule) {
+    public Collection<KnowledgePackage> build(Rule rule) {
         final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 
         String generateDrl = generateDrl(rule);
@@ -58,7 +58,7 @@ public class RuleBuilder {
         return kbuilder.getKnowledgePackages();
     }
 
-    private String generateDrl(EventRule rule) {
+    private String generateDrl(Rule rule) {
         StringBuilder builder = new StringBuilder(300);
         appendHeader(builder, rule);
 
@@ -104,18 +104,16 @@ public class RuleBuilder {
         return builder.toString();
     }
 
-    private void appendHeader(StringBuilder builder, EventRule rule) {
+    private void appendHeader(StringBuilder builder, Rule rule) {
         builder.append("package " + RULE_PACKAGE + ";\n\n");
         for (String importClass : IMPORTS) {
             builder.append("import " + importClass + ";\n");
         }
         builder.append("\nrule \"" + rule.getName() + "\"\n");
-        if (rule.getSalience() != null) {
-            builder.append("salience " + rule.getSalience() + '\n');
-        }
+        builder.append("salience " + rule.getSalience() + '\n');
     }
 
-    private void appendCondition(StringBuilder builder, EventRule rule) {
+    private void appendCondition(StringBuilder builder, Rule rule) {
         for (Condition condition : rule.getConditions()) {
             if (condition.getType() == ConditionType.event) {
                 builder.append("Event");
@@ -146,7 +144,7 @@ public class RuleBuilder {
         final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 
         StringBuilder builder = new StringBuilder(300);
-        EventRule eventRule = new EventRule();
+        Rule eventRule = new Rule();
         eventRule.setName("outEvent");
         eventRule.setSalience(1);
         appendHeader(builder, eventRule);

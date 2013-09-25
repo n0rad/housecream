@@ -14,23 +14,27 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package org.housecream.server.api.resource;
+package org.housecream.server.storage.dao;
 
-import java.util.UUID;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import org.housecream.server.api.domain.rule.Rule;
-import fr.norad.core.lang.exception.NotFoundException;
+import static org.fest.assertions.api.Assertions.assertThat;
+import org.housecream.server.api.domain.zone.Zone;
+import org.housecream.server.it.builder.zone.LandBuilder;
+import org.junit.Rule;
+import org.junit.Test;
 
-@Path("/rules/{id}")
-public interface RuleResource {
+public class ZoneDaoTest {
 
-    @DELETE
-    void deleteRule(@PathParam("id") UUID ruleId);
+    @Rule
+    public CassandraDaoRule<ZoneDao> db = new CassandraDaoRule<>(ZoneDao.class);
 
-    @GET
-    Rule getRule(@PathParam("id") UUID ruleId) throws NotFoundException;
+    @Test
+    public void should_save_zone() throws Exception {
+        Zone zone = new LandBuilder().name("name").build();
+
+        db.dao().save(zone);
+
+        assertThat(zone.getId()).isNotNull();
+        assertThat(db.dao().find(zone.getId())).isEqualTo(zone);
+    }
 
 }

@@ -17,14 +17,11 @@
 package org.housecream.server.api.resource;
 
 import java.util.List;
-import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import org.housecream.server.api.domain.Order;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.inpoint.InPointType;
 import org.housecream.server.api.security.Scopes;
@@ -43,11 +40,7 @@ public interface InPointsResource {
 
     @GET
     @Secured(Scopes.Events.class)
-    List<InPoint> getInPoints(@QueryParam("length") Integer length, //
-            @QueryParam("start") UUID start, //
-            @QueryParam("search") String search, //
-            @QueryParam("searchProperty") List<String> searchProperties, //
-            @QueryParam("order") List<Order> orders);
+    List<InPoint> getInPoints();
 
     @DELETE
     void deleteAllInPoints();

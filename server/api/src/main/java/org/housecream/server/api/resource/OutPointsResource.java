@@ -17,14 +17,11 @@
 package org.housecream.server.api.resource;
 
 import java.util.List;
-import java.util.UUID;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import org.housecream.server.api.domain.Order;
 import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.outPoint.OutPointType;
 import fr.norad.client.bean.validation.js.domain.ClientValidatorInfo;
@@ -33,11 +30,7 @@ import fr.norad.client.bean.validation.js.domain.ClientValidatorInfo;
 public interface OutPointsResource {
 
     @GET
-    List<OutPoint> getInPoints(@QueryParam("length") Integer length, //
-            @QueryParam("start") UUID start, //
-            @QueryParam("search") String search, //
-            @QueryParam("searchProperty") List<String> searchProperties, //
-            @QueryParam("order") List<Order> orders);
+    List<OutPoint> getInPoints();
 
     @DELETE
     void deleteAllOutPoints();

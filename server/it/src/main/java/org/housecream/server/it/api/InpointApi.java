@@ -43,8 +43,7 @@ public class InpointApi {
     }
 
     public List<InPoint> list() {
-        return session.getServer().getResource(InPointsResource.class, session)
-                .getInPoints(null, null, null, null, null);
+        return session.getServer().getResource(InPointsResource.class, session).getInPoints();
     }
 
     public void deleteAll() {

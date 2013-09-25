@@ -1,3 +1,19 @@
+/**
+ *
+ *     Copyright (C) Housecream.org
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
 package org.housecream.server.storage.updater;
 
 import static com.datastax.driver.core.querybuilder.QueryBuilder.select;
@@ -27,8 +43,8 @@ public class DbUpdater extends ApplicationUpdater {
         } catch (AlreadyExistsException e) {
             //nothing to do
         }
-        updateStatement = session.prepare("insert into version(version, names) VALUES (?, ?)").enableTracing();
-        selectStatement = session.prepare("select names from version where version = ?").enableTracing();
+        updateStatement = session.prepare("INSERT INTO version(version, names) VALUES (?, ?)");
+        selectStatement = session.prepare("SELECT names FROM version WHERE version = ?");
     }
 
     @Override

@@ -18,10 +18,8 @@ package org.housecream.server.service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.POST;
-import org.housecream.server.api.domain.Order;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.inpoint.InPointType;
 import org.housecream.server.api.resource.InPointsResource;
@@ -100,17 +98,16 @@ public class InPointsService implements InPointsResource {
     }
 
     @Override
-    public List<InPoint> getInPoints(Integer length, UUID start, String search, List<String> searchProperties,
-            List<Order> orders) {
-        List<InPoint> inPointsFiltered = inPointDao.findFiltered(length, start);
-        for (InPoint inPoint : inPointsFiltered) {
+    public List<InPoint> getInPoints() {
+        List<InPoint> inPoints = inPointDao.findAll();
+        for (InPoint inPoint : inPoints) {
             try {
                 inPoint.setValue(engine.getPointState(inPoint.getId()));
             } catch (NotFoundException e) {
                 // nothing to do if we don't have the value in holder
             }
         }
-        return inPointsFiltered;
+        return inPoints;
     }
 
     @Override

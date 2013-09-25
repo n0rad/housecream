@@ -33,7 +33,7 @@ import org.housecream.server.api.domain.Event;
 import org.housecream.server.api.domain.rule.Condition;
 import org.housecream.server.api.domain.rule.ConditionType;
 import org.housecream.server.api.domain.rule.Consequence;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 import org.housecream.server.api.domain.rule.TriggerType;
 import org.housecream.server.engine.Action;
 import org.housecream.server.engine.Actions;
@@ -48,13 +48,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RuleBuilderTest {
+public class DroolsRuleBuilderTest {
 
     @Mock
     private StateService stateService;
 
     @InjectMocks
-    private RuleBuilder ruleBuilder = new RuleBuilder();
+    private DroolsRuleBuilder ruleBuilder = new DroolsRuleBuilder();
 
     private UUID a42 = UUID.randomUUID();
     private UUID a43 = UUID.randomUUID();
@@ -77,7 +77,7 @@ public class RuleBuilderTest {
     @Test
     public void should_change_state_for_simple_rule() throws Exception {
 
-        EventRule rule = new EventRule();
+        Rule rule = new Rule();
         rule.setName("my first rule");
         rule.getConditions().add(new Condition(a44, 1, ConditionType.event));
         rule.getConsequences().add(new Consequence(a45, 1));
@@ -102,7 +102,7 @@ public class RuleBuilderTest {
     @Test
     public void should_toggle_from_pushbutton_starting_with_on_if_no_state() throws Exception {
         // rule
-        EventRule rule = new EventRule();
+        Rule rule = new Rule();
         rule.setSalience(100);
         rule.setName("set 43 to 1 when 43=0 or !42");
         rule.getConditions().add(new Condition(a42, 1, ConditionType.event));
@@ -110,7 +110,7 @@ public class RuleBuilderTest {
         rule.getConsequences().add(new Consequence(a43, 1));
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
         // rule 2
-        EventRule rule2 = new EventRule();
+        Rule rule2 = new Rule();
         rule2.setName("set 43 to 0 when 43=1");
         rule2.getConditions().add(new Condition(a42, 1, ConditionType.event));
         rule2.getConditions().add(new Condition(a43, 1, ConditionType.state));
@@ -138,7 +138,7 @@ public class RuleBuilderTest {
     @Test
     public void should_handle_non_retriggerable() throws Exception {
         // rule
-        EventRule rule = new EventRule();
+        Rule rule = new Rule();
         rule.setName("non retrigger 43 on push on 42");
         rule.getConditions().add(new Condition(a42, 1, ConditionType.event));
         rule.getConditions().add(new Condition(a43, 0, ConditionType.state));
@@ -166,7 +166,7 @@ public class RuleBuilderTest {
     @Test
     public void should_handle_retrigger_before_end_of_delay() throws Exception {
         // rule
-        EventRule rule = new EventRule();
+        Rule rule = new Rule();
         rule.setName("Retrigger 43 on push on 42");
         rule.getConditions().add(new Condition(a42, 1, ConditionType.event));
         Consequence direct1 = new Consequence(a43, 1);

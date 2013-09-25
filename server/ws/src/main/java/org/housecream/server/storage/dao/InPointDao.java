@@ -87,11 +87,6 @@ public class InPointDao {
         return inPoint;
     }
 
-    public List<InPoint> findFiltered(Integer length, UUID start) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     //////////////////////////////////////
 
     private InPoint map(Row row) {

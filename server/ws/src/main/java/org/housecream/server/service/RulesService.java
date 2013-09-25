@@ -22,10 +22,10 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import org.drools.definition.KnowledgePackage;
 import org.housecream.server.api.domain.Order;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 import org.housecream.server.api.resource.RulesResource;
 import org.housecream.server.engine.EngineProcessor;
-import org.housecream.server.engine.builder.RuleBuilder;
+import org.housecream.server.engine.builder.DroolsRuleBuilder;
 import org.housecream.server.storage.dao.RuleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class RulesService implements RulesResource {
     private RuleDao ruleDao;
 
     @Autowired
-    private RuleBuilder ruleBuilder;
+    private DroolsRuleBuilder ruleBuilder;
 
     @Autowired
     private EngineProcessor engine;
@@ -50,7 +50,7 @@ public class RulesService implements RulesResource {
     private ValidationService validationService;
 
     @Override
-    public EventRule createRule(EventRule rule) {
+    public Rule createRule(Rule rule) {
         ruleDao.save(rule);
         Collection<KnowledgePackage> build = ruleBuilder.build(rule);
         engine.registerPackages(build);
@@ -59,13 +59,13 @@ public class RulesService implements RulesResource {
 
     @Override
     public ClientValidatorInfo getRuleValidator() {
-        return validationService.getValidatorInfo(EventRule.class);
+        return validationService.getValidatorInfo(Rule.class);
     }
 
     @PostConstruct
     public void postConstruct() {
-        List<EventRule> findAll = ruleDao.findAll();
-        for (EventRule rule : findAll) {
+        List<Rule> findAll = ruleDao.findAll();
+        for (Rule rule : findAll) {
             Collection<KnowledgePackage> build = ruleBuilder.build(rule);
             engine.registerPackages(build);
         }
@@ -77,9 +77,9 @@ public class RulesService implements RulesResource {
     }
 
     @Override
-    public List<EventRule> getRules(Integer length, UUID start, String search, List<String> searchProperties,
+    public List<Rule> getRules(Integer length, UUID start, String search, List<String> searchProperties,
             List<Order> orders) {
-        List<EventRule> findAll = ruleDao.findAll();
+        List<Rule> findAll = ruleDao.findAll();
         return findAll;
     }
 

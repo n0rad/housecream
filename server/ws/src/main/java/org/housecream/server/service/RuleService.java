@@ -17,7 +17,7 @@
 package org.housecream.server.service;
 
 import java.util.UUID;
-import org.housecream.server.api.domain.rule.EventRule;
+import org.housecream.server.api.domain.rule.Rule;
 import org.housecream.server.api.resource.RuleResource;
 import org.housecream.server.storage.dao.RuleDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class RuleService implements RuleResource {
     }
 
     @Override
-    public EventRule getRule(UUID ruleId) throws NotFoundException {
+    public Rule getRule(UUID ruleId) throws NotFoundException {
         return ruleDao.find(ruleId);
     }
 }

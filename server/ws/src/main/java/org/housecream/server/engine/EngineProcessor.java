@@ -35,7 +35,7 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.FactHandle;
 import org.housecream.server.api.domain.Event;
 import org.housecream.server.api.domain.PointState;
-import org.housecream.server.engine.builder.RuleBuilder;
+import org.housecream.server.engine.builder.DroolsRuleBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class EngineProcessor implements Processor {
     private StateService stateService;
 
     @Autowired
-    private RuleBuilder ruleBuilder;
+    private DroolsRuleBuilder ruleBuilder;
 
     public EngineProcessor() {
         //        System.setProperty("drools.assertBehaviour", "identity");

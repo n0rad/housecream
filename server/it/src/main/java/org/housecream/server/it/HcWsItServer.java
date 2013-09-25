@@ -22,7 +22,7 @@ import fr.norad.jaxrs.junit.LoggingRule;
 
 public class HcWsItServer extends LoggingRule {
 
-    private RestBuilder context = new RestBuilder();
+    private RestBuilder context = new RestBuilder().withExceptionMapper();
 
     private WebSocketClientFactory factory;
 

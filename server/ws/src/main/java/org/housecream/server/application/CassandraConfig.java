@@ -61,13 +61,9 @@ public class CassandraConfig {
         config.key_cache_save_period = 14400;
         config.row_cache_size_in_mb = 0;
         config.row_cache_save_period = 0;
-        config.row_cache_provider = "SerializingCacheProvider";
         config.commitlog_sync = CommitLogSync.periodic;
         config.commitlog_sync_period_in_ms = 10000;
         config.commitlog_segment_size_in_mb = 32;
-        config.flush_largest_memtables_at = 0.75;
-        config.reduce_cache_sizes_at = 0.85;
-        config.reduce_cache_capacity_to = 0.6;
         config.concurrent_reads = 32;
         config.concurrent_writes = 32;
         config.memtable_flush_queue_size = 4;

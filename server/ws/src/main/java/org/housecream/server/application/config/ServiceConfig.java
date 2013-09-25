@@ -17,7 +17,6 @@
 package org.housecream.server.application.config;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cxf.bus.spring.SpringBus;
@@ -102,16 +101,16 @@ public class ServiceConfig {
         sf.setAddress("/");
         sf.setStaticSubresourceResolution(true);
 
-        ArrayList<Object> arrayList = new ArrayList<>();
-        arrayList.add(encodingContext.jacksonJsonProvider());
-        arrayList.add(encodingContext.jAXBElementProvider());
-        arrayList.add(new GenericExceptionMapper());
-        arrayList.add(new RuntimeExceptionMapper());
-        arrayList.add(new WebApplicationExceptionMapper());
-        arrayList.add(new ValidationExceptionMapper());
-        arrayList.add(new NotFoundExceptionMapper());
-        arrayList.add(new UpdateExceptionMapper());
-        sf.setProviders(Arrays.asList(encodingContext.jacksonJsonProvider(), encodingContext.jAXBElementProvider()));
+        ArrayList<Object> providers = new ArrayList<>();
+        providers.add(encodingContext.jacksonJsonProvider());
+        providers.add(encodingContext.jAXBElementProvider());
+        providers.add(new GenericExceptionMapper());
+        providers.add(new RuntimeExceptionMapper());
+        providers.add(new WebApplicationExceptionMapper());
+        providers.add(new ValidationExceptionMapper());
+        providers.add(new NotFoundExceptionMapper());
+        providers.add(new UpdateExceptionMapper());
+        sf.setProviders(providers);
         Map<Object, Object> extensions = new HashMap<>();
         extensions.put("json", "application/json");
         extensions.put("xml", "application/xml");
