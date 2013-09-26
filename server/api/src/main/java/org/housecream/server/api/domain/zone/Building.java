@@ -37,4 +37,9 @@ public class Building extends Zone {
         return super.getParentId();
     }
 
+    @Override
+    public String type() {
+        return ZONE_TYPE_NAME;
+    }
+
 }

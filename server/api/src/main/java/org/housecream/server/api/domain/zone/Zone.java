@@ -55,6 +55,27 @@ public abstract class Zone {
     private CoordinateShape parentZoneCoordinatesShape;
     private String parentZoneCoordinates;
 
+    public abstract String type();
+
     // TODO   private Integer ordering;
+
+    public static Zone createZoneByType(String type) {
+        switch (type) {
+            case Area.ZONE_TYPE_NAME:
+                return new Area();
+            case Building.ZONE_TYPE_NAME:
+                return new Building();
+            case Room.ZONE_TYPE_NAME:
+                return new Room();
+            case Field.ZONE_TYPE_NAME:
+                return new Field();
+            case Floor.ZONE_TYPE_NAME:
+                return new Floor();
+            case Land.ZONE_TYPE_NAME:
+                return new Land();
+            default:
+                throw new IllegalStateException("Unkown zone : " + type);
+        }
+    }
 
 }

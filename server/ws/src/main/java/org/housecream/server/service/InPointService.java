@@ -75,7 +75,7 @@ public class InPointService implements InPointResource {
     @Override
     public InPoint updateInPoint(UUID pointId, InPoint inPoint) throws PluginNotFoundException {
         if (pointId.equals(inPoint.getId())) {
-            throw new IllegalStateException("pointId do not match payload sent");
+            throw new IllegalStateException("pointId do not match payload content");
         }
         return inPointsService.createInPoint(inPoint);
     }

@@ -37,4 +37,9 @@ public class Room extends Zone {
         return super.getParentId();
     }
 
+    @Override
+    public String type() {
+        return ZONE_TYPE_NAME;
+    }
+
 }

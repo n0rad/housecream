@@ -43,8 +43,7 @@ public class ZoneDao {
     public ZoneDao(Session session) {
         this.session = session;
         allStatement = session.prepare("SELECT * from zones");
-        insertStatement = session
-                .prepare("BEGIN BATCH INSERT INTO zones(id, name, parentId) VALUES (?,?,?) APPLY BATCH");
+        insertStatement = session.prepare("BEGIN BATCH INSERT INTO zones(id, name, type) VALUES (?,?,?) APPLY BATCH");
         selectStatement = session.prepare("SELECT * FROM zones WHERE id = ?");
         deleteStatement = session.prepare("DELETE FROM zones WHERE id = ?");
 
@@ -77,7 +76,8 @@ public class ZoneDao {
             zone.setId(UUID.randomUUID());
         }
         session.execute(insertStatement.bind(zone.getId(), //
-                zone.getName() //
+                zone.getName(), //
+                zone.type() //
                 ));
         return zone;
     }
@@ -98,7 +98,10 @@ public class ZoneDao {
     }
 
     private Zone map(Row row) {
-        return null;
+        Zone zone = Zone.createZoneByType(row.getString("type"));
+        zone.setId(row.getUUID("id"));
+        zone.setName(row.getString("name"));
+        return zone;
     }
 
 }

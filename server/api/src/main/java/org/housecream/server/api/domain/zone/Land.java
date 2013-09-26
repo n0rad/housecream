@@ -34,4 +34,10 @@ public class Land extends Zone {
     public Long getParentId() {
         return super.getParentId();
     }
+
+    @Override
+    public String type() {
+        return ZONE_TYPE_NAME;
+    }
+
 }

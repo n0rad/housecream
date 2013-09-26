@@ -46,7 +46,7 @@ public class V0 extends ApplicationVersion {
                         + "salience int )");
                 session.execute("CREATE TABLE zones(id UUID PRIMARY KEY," //
                         + "name text," //
-                        + "parentId UUID)");
+                        + "type text)");
                 session.execute("CREATE TABLE pointZone(id UUID PRIMARY KEY," //
                         + "name text," //
                         + "parentId UUID)");

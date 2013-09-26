@@ -19,7 +19,6 @@ package org.housecream.server.service;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ws.rs.POST;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.inpoint.InPointType;
 import org.housecream.server.api.resource.InPointsResource;
@@ -77,7 +76,6 @@ public class InPointsService implements InPointsResource {
         }
     }
 
-    @POST
     @Override
     public InPoint createInPoint(InPoint inPoint) throws PluginNotFoundException {
         inPoint.setUri(pluginService.validateAndNormalizeURI(inPoint.getUri()));
