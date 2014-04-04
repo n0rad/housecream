@@ -24,7 +24,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.drools.runtime.rule.FactHandle;
 import org.housecream.server.api.domain.PointState;
-import org.housecream.server.service.event.EventWebSocketService;
+import org.housecream.server.service.EventWebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

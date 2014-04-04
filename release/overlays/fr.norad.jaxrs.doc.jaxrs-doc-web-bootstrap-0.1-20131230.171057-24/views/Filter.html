@@ -1,0 +1,32 @@
+<div ng-cloak="" class="nav-collapse collapse" ng-controller="FilterController">
+  <p class="navbar-text pull-right">
+              <!--Logged in as <a href="#" class="navbar-link">Username</a>-->
+  </p>
+  <ul class="nav">
+    <li class="dropdown">
+        <a class="dropdown-toggle">
+          <i class="icon-book icon-white"></i>
+          {{currentProject | default: 'Project'}}
+          <b class="caret"></b>
+        </a>
+       <ul class="dropdown-menu">
+        <li ng-repeat="(project,version) in projects" ng-model="currentProject">
+          <a href="{{project}}">{{project}}</a>
+        </li>
+      </ul>
+    </li>
+    <li ng-hide="!currentProject" class="dropdown">
+        <a class="dropdown-toggle">
+          <i class="icon-th-list icon-white"></i>
+            {{currentVersion | default: 'Version'}}
+          <b class="caret"></b>
+        </a>
+      <ul class="dropdown-menu">
+        <li ng-repeat="(version,file) in projects[currentProject]">
+          <a href="{{currentProject}}/{{version}}">{{version}}</a>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</div>

@@ -1,13 +1,12 @@
 package org.housecream.server.it;
 
-import org.housecream.server.it.HcWsItServer;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 public class ZoneCreationIT {
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     @Test
     public void should_create_zone() throws Exception {
@@ -30,7 +29,7 @@ public class ZoneCreationIT {
         //        //        Attachment attach = AttachmentUtil.createAttachment(ds.getInputStream(), headers);
         //        //        attachments.add(attach);
         //
-        //        //        BindingProvider bp = (BindingProvider) client;
+        //        //        BindingProvider bp = (BindingProvider) clients;
         //        //        java.util.Map<String, Object> reqContext = bp.getRequestContext();
         //        //        reqContext.put(Message.ATTACHMENTS, attachments);
         //
@@ -68,6 +67,6 @@ public class ZoneCreationIT {
         //
         //        MultipartBody body = new MultipartBody(att);
         //        zoneResource.uploadImage(zoneId, body);
-        //        MultipartBody body2 = client.post(body, MultipartBody.class);
+        //        MultipartBody body2 = clients.post(body, MultipartBody.class);
     }
 }

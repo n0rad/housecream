@@ -23,6 +23,7 @@ import java.util.UUID;
 import org.housecream.server.api.domain.rule.Condition;
 import org.housecream.server.api.domain.rule.Consequence;
 import org.housecream.server.api.domain.rule.Rule;
+import org.housecream.server.storage.CassandraDaoRule;
 import org.junit.Test;
 
 public class RuleDaoTest {

@@ -46,7 +46,6 @@ public class ZoneDao {
         insertStatement = session.prepare("BEGIN BATCH INSERT INTO zones(id, name, type) VALUES (?,?,?) APPLY BATCH");
         selectStatement = session.prepare("SELECT * FROM zones WHERE id = ?");
         deleteStatement = session.prepare("DELETE FROM zones WHERE id = ?");
-
     }
 
     public Zone find(UUID zoneId) throws NotFoundException {
@@ -78,7 +77,7 @@ public class ZoneDao {
         session.execute(insertStatement.bind(zone.getId(), //
                 zone.getName(), //
                 zone.type() //
-                ));
+        ));
         return zone;
     }
 

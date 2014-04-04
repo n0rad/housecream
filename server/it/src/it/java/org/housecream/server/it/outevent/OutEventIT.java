@@ -8,8 +8,8 @@ import org.housecream.restmcu.it.resource.LatchBoardResource;
 import org.housecream.restmcu.it.resource.LatchLineResource;
 import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.zone.Land;
-import org.housecream.server.it.HcWsItServer;
-import org.housecream.server.it.HcWsItSession;
+import org.housecream.server.it.ItServer;
+import org.housecream.server.it.ItSession;
 import org.junit.Rule;
 import org.junit.Test;
 import fr.norad.jaxrs.junit.RestServerRule;
@@ -17,7 +17,7 @@ import fr.norad.jaxrs.junit.RestServerRule;
 public class OutEventIT {
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
@@ -28,11 +28,11 @@ public class OutEventIT {
 
     @Test
     public void should_send_output_value_synchronously() throws Exception {
-        HcWsItSession session = hcs.session();
-        Land land = session.zone().createLand("landName");
-        OutPoint light = session.outpoint().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
+        ItSession session = hcs.session();
+        Land land = session.zones().createLand("landName");
+        OutPoint light = session.outpoints().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
 
-        session.outpoint().setValue(light, 45f);
+        session.outpoints().setValue(light, 45f);
 
         assertThat(line.getLineValue(3)).isEqualTo(45f);
     }

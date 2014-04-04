@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import javax.annotation.PostConstruct;
 import org.housecream.plugins.api.HousecreamPlugin;
-import org.housecream.server.api.resource.PluginNotFoundException;
+import org.housecream.server.api.exception.PluginNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

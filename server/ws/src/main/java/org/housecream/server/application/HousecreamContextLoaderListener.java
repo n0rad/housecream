@@ -29,12 +29,18 @@ public class HousecreamContextLoaderListener extends ContextLoaderListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         HOUSECREAM.init();
+        LoggerFactory.getLogger(getClass()).info("Housecream starting !!");
+        try {
         HOUSECREAM.discoveredVersion(WarManifestUtils.getWarManifestAttribute(event.getServletContext(),
                 VERSION_MANIFEST_KEY));
 
         HOUSECREAM_HOME.start();
         super.contextInitialized(event);
-        LoggerFactory.getLogger(getClass()).info("Housecream server is ready !");
+        LoggerFactory.getLogger(getClass()).info("Housecream server is ready !!");
+        } catch (Exception e) {
+            LoggerFactory.getLogger(getClass()).error("Failed to start Housecream Server", e);
+            throw e;
+        }
     }
 
     @Override

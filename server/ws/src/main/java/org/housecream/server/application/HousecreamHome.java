@@ -51,6 +51,7 @@ public enum HousecreamHome {
         logHousecreamInfo();
         lockHomeDirectory();
         if (System.getProperty(CASSANDRA_HOST_KEY) == null) {
+            log.info("No '" + CASSANDRA_HOST_KEY + "' system property set. Using Cassandra embedded");
             startCassandraEmbedded();
         }
         updateDbVersion();

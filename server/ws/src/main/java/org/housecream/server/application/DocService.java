@@ -16,27 +16,20 @@
  */
 package org.housecream.server.application;
 
+import static org.housecream.server.Housecream.HOUSECREAM;
+import static org.housecream.server.Housecream.HOUSECREAM_NAME;
 import java.util.Arrays;
 import javax.ws.rs.Path;
 import org.springframework.stereotype.Service;
-import fr.norad.jaxrs.doc.DocConfig;
-import fr.norad.jaxrs.doc.parser.ModelJacksonParser;
-import fr.norad.jaxrs.doc.resource.GenericDocService;
+import fr.norad.jaxrs.doc.JaxrsDocProcessorFactory;
+import fr.norad.jaxrs.doc.resource.GenericJaxrsDocService;
 
 @Service
 @Path("/")
-public class DocService extends GenericDocService {
-
-    private final DocConfig config;
-
-    public DocService() {
-        config = new DocConfig(Arrays.asList("org.housecream"));
-        config.setModelParser(new ModelJacksonParser(config));
-    }
+public class DocService extends GenericJaxrsDocService {
 
     @Override
-    protected DocConfig getDocConfig() {
-        return config;
+    protected JaxrsDocProcessorFactory getProcessorFactory() {
+        return new JaxrsDocProcessorFactory(Arrays.asList("org.housecream"), HOUSECREAM_NAME, HOUSECREAM.getVersion());
     }
-
 }

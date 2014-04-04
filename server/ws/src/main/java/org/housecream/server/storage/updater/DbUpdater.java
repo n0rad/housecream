@@ -26,8 +26,9 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.AlreadyExistsException;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
-import fr.norad.core.updater.ApplicationUpdater;
-import fr.norad.core.updater.Version;
+import fr.norad.updater.ApplicationUpdater;
+import fr.norad.updater.Version;
+
 
 public class DbUpdater extends ApplicationUpdater {
 

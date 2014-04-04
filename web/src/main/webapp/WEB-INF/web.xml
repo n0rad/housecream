@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	version="2.5">
-	<error-page>
-		<error-code>404</error-code>
-		<location>/notFoundResource</location>
-	</error-page>
-	<servlet>
-		<servlet-name>ToIndex</servlet-name>
-		<servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
-		<init-param>
-			<param-name>indexMapping</param-name>
-			<param-value>/index.html</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ToIndex</servlet-name>
-		<url-pattern>/notFoundResource</url-pattern>
-	</servlet-mapping>
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+    <error-page>
+        <error-code>404</error-code>
+        <location>/notFoundResource</location>
+    </error-page>
+    <servlet>
+        <servlet-name>ToIndex</servlet-name>
+        <servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
+        <init-param>
+            <param-name>indexMapping</param-name>
+            <param-value>/index.html</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ToIndex</servlet-name>
+        <url-pattern>/notFoundResource</url-pattern>
+    </servlet-mapping>
 
-	<servlet>
-		<servlet-name>indexServlet</servlet-name>
-		<servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
-		<init-param>
-			<param-name>tplPath</param-name>
-			<param-value>/index.html</param-value>
-		</init-param>
-		<init-param>
-			<param-name>version.property</param-name>
-			<param-value>HousecreamVersion</param-value>
-		</init-param>
-		<init-param>
-			<param-name>hcWsUrl.property</param-name>
-			<param-value>HousecreamWebServiceUrl</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>indexServlet</servlet-name>
-		<url-pattern>/index.html</url-pattern>
-	</servlet-mapping>
+    <servlet>
+        <servlet-name>indexServlet</servlet-name>
+        <servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
+        <init-param>
+            <param-name>tplPath</param-name>
+            <param-value>/index.html</param-value>
+        </init-param>
+        <init-param>
+            <param-name>version.property</param-name>
+            <param-value>HousecreamVersion</param-value>
+        </init-param>
+        <init-param>
+            <param-name>clientId.property</param-name>
+            <param-value>HousecreamWebClientId</param-value>
+        </init-param>
+        <init-param>
+            <param-name>clientSecret.property</param-name>
+            <param-value>HousecreamWebClientSecret</param-value>
+        </init-param>
+        <init-param>
+            <param-name>hcWsUrl.property</param-name>
+            <param-value>HousecreamWebServiceUrl</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>indexServlet</servlet-name>
+        <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

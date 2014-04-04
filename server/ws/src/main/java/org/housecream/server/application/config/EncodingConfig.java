@@ -30,23 +30,27 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 @Configuration
 public class EncodingConfig {
 
-    @Bean(name = "objectMapper")
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
+    {
         objectMapper.setSerializationInclusion(Include.NON_NULL);
         objectMapper.setAnnotationIntrospector(new AnnotationIntrospectorPair(new JacksonAnnotationIntrospector(),
                 new JaxbAnnotationIntrospector(TypeFactory.defaultInstance())));
-        return objectMapper;
     }
 
-    @Bean(name = "jaxbProvider")
-    public JAXBElementProvider<Object> jAXBElementProvider() {
-        return new JAXBElementProvider<>();
+    @Bean(name = "objectMapper")
+    public static ObjectMapper objectMapper() {
+        return objectMapper;
     }
 
     @Bean(name = "jsonProvider")
     public JacksonJsonProvider jacksonJsonProvider() {
         return new JacksonJsonProvider(objectMapper());
+    }
+
+    @Bean(name = "jaxbProvider")
+    public JAXBElementProvider<Object> jAXBElementProvider() {
+        return new JAXBElementProvider<>();
     }
 
 }

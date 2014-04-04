@@ -1,43 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.housecream.server</groupId>
-	<artifactId>housecream-server-plugins</artifactId>
-	<name>Housecream Server - Plugins</name>
+    <groupId>org.housecream.server</groupId>
+    <artifactId>housecream-server-plugins</artifactId>
+    <name>Housecream Server - Plugins</name>
 
-	<parent>
-		<groupId>org.housecream</groupId>
-		<artifactId>housecream</artifactId>
-		<version>0.1-SNAPSHOT</version>
-		<relativePath>../../</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.housecream</groupId>
+        <artifactId>housecream</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../../</relativePath>
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.housecream.server</groupId>
-			<artifactId>housecream-server-plugins-api</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.housecream.server</groupId>
+            <artifactId>housecream-server-plugins-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
 
-		<!-- plugins -->
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-mail</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.housecream.camel</groupId>
-			<artifactId>camel-components-restmcu</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.housecream.camel</groupId>
-			<artifactId>camel-components-solar</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.housecream.camel</groupId>
-			<artifactId>camel-components-axmpp</artifactId>
-		</dependency>
-	</dependencies>
+        <!-- plugins -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-quartz2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-xmpp</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <!-- SOLAR -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <!-- RESTMCU -->
+        <dependency>
+            <groupId>fr.norad.jaxrs.client.server</groupId>
+            <artifactId>jaxrs-client-server-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.housecream.restmcu</groupId>
+            <artifactId>restmcu-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+        </dependency>
+        <!-- TESTS -->
+        <dependency>
+            <groupId>org.housecream.restmcu</groupId>
+            <artifactId>restmcu-it</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+    </dependencies>
 
 </project>
 

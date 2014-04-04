@@ -1,6 +1,6 @@
 package org.housecream.server.it.zone;
 
-import org.housecream.server.it.HcWsItServer;
+import org.housecream.server.it.ItServer;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -10,7 +10,7 @@ public class ZoneCreationIT {
     public ExpectedException exception = ExpectedException.none();
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     //    @Test
     //    public void should_not_create_zone_without_name() {

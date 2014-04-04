@@ -19,6 +19,7 @@ package org.housecream.server.storage.dao;
 import static org.fest.assertions.api.Assertions.assertThat;
 import org.housecream.server.api.domain.zone.Zone;
 import org.housecream.server.it.builder.zone.LandBuilder;
+import org.housecream.server.storage.CassandraDaoRule;
 import org.junit.Rule;
 import org.junit.Test;
 

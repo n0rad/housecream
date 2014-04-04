@@ -22,7 +22,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableMBeanExport;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -37,12 +36,6 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @ComponentScan(basePackages = "org.housecream")
 public class RootConfig implements AsyncConfigurer, SchedulingConfigurer {
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer placeholder = new PropertySourcesPlaceholderConfigurer();
-        //        placeholder.setLocation(new ClassPathResource("/META-INF/spring/database.properties"));
-        return placeholder;
-    }
 
     @Override
     public Executor getAsyncExecutor() {

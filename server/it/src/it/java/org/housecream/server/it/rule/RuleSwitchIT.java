@@ -16,8 +16,8 @@ import org.housecream.restmcu.it.resource.LatchLineResource;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.zone.Land;
-import org.housecream.server.it.HcWsItServer;
-import org.housecream.server.it.HcWsItSession;
+import org.housecream.server.it.ItServer;
+import org.housecream.server.it.ItSession;
 import org.junit.Rule;
 import org.junit.Test;
 import fr.norad.jaxrs.junit.RestServerRule;
@@ -30,18 +30,18 @@ public class RuleSwitchIT {
             .addLine(line(3).direction(OUTPUT).build());
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_turn_on_the_light_when_someone_is_detected() throws Exception {
-        HcWsItSession session = hcs.session();
-        Land land = session.zone().createLand("landName");
-        InPoint pir = session.inpoint().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
-        OutPoint light = session.outpoint().create("my light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
-        session.rule().create("my first rule", condition(pir, 1, event), consequence(light, 1));
+        ItSession session = hcs.session();
+        Land land = session.zones().createLand("landName");
+        InPoint pir = session.inpoints().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
+        OutPoint light = session.outpoints().create("my light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
+        session.rules().create("my first rules", condition(pir, 1, event), consequence(light, 1));
 
         board.sendNotif(notif().line(line.lineInfo(2)).val(1).notify(SUP_OR_EQUAL, 1).build());
 

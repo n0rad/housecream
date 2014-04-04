@@ -1,280 +1,295 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.housecream.server</groupId>
-	<artifactId>housecream-server-ws</artifactId>
-	<name>Housecream Server - WS</name>
-	<packaging>war</packaging>
+    <groupId>org.housecream.server</groupId>
+    <artifactId>housecream-server-ws</artifactId>
+    <name>Housecream Server - WS</name>
+    <packaging>war</packaging>
 
-	<parent>
-		<groupId>org.housecream</groupId>
-		<artifactId>housecream</artifactId>
-		<version>0.1-SNAPSHOT</version>
-		<relativePath>../../</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.housecream</groupId>
+        <artifactId>housecream</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../../</relativePath>
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-		</dependency>
-
-
-		<!-- RUNNABLE WAR -->
-		<dependency>
-			<groupId>org.housecream.server</groupId>
-			<artifactId>housecream-server-cli</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.norad.bootstrap</groupId>
-			<artifactId>bootstrap-java</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- PLUGINS -->
-		<dependency>
-			<groupId>org.housecream.server</groupId>
-			<artifactId>housecream-server-plugins</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
 
 
-		<!-- CORE -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.norad.core</groupId>
-			<artifactId>core</artifactId>
-		</dependency>
+        <!-- RUNNABLE WAR -->
+        <dependency>
+            <groupId>org.housecream.server</groupId>
+            <artifactId>housecream-server-cli</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.bootstrap</groupId>
+            <artifactId>bootstrap-java</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-		</dependency>
-
-		<!-- WEB -->
-		<dependency>
-			<groupId>org.housecream.server</groupId>
-			<artifactId>housecream-server-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.norad.jaxrs.client.server</groupId>
-			<artifactId>jaxrs-client-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.norad.servlet.sample.html.template</groupId>
-			<artifactId>servlet-sample-html-template</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-
-		<!-- DOC -->
-		<dependency>
-			<groupId>fr.norad.jaxrs.doc</groupId>
-			<artifactId>jaxrs-doc-core</artifactId>
-		</dependency>
-
-		<!-- WEBSOCKET -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-		</dependency>
+        <!-- PLUGINS -->
+        <dependency>
+            <groupId>org.housecream.server</groupId>
+            <artifactId>housecream-server-plugins</artifactId>
+        </dependency>
 
 
-		<!-- CAMEL -->
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-spring</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-aop</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-tx</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-spring-javaconfig</artifactId>
-		</dependency>
+        <!-- CORE -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.core</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
 
-		<!-- Logger -->
-		<dependency>
-			<groupId>fr.norad.logback.prettier</groupId>
-			<artifactId>logback-prettier</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jul-to-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+        </dependency>
 
-		<!-- Cassandra -->
-		<dependency>
-			<groupId>org.apache.cassandra</groupId>
-			<artifactId>cassandra-all</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
-		</dependency>
+        <!-- WEB -->
+        <dependency>
+            <groupId>org.housecream.server</groupId>
+            <artifactId>housecream-server-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.jaxrs.client.server</groupId>
+            <artifactId>jaxrs-client-server-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.servlet.sample.html.template</groupId>
+            <artifactId>servlet-sample-html-template</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.jaxrs.oauth2</groupId>
+            <artifactId>oauth2-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.jaxrs.oauth2</groupId>
+            <artifactId>oauth2-client</artifactId>
+        </dependency>
 
+        <!-- DOC -->
+        <dependency>
+            <groupId>fr.norad.jaxrs.doc</groupId>
+            <artifactId>jaxrs-doc-core</artifactId>
+        </dependency>
 
-		<!-- ENGINE -->
-		<dependency>
-			<groupId>fr.norad.typed.command.line.parser</groupId>
-			<artifactId>typed-command-line-parser</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-compiler</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-		</dependency>
-
-		<!-- TESTS -->
-		<dependency>
-			<groupId>org.housecream.server</groupId>
-			<artifactId>housecream-server-api</artifactId>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <!-- WEBSOCKET -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+        </dependency>
 
 
-	<build>
-		<finalName>housecream-ws</finalName>
+        <!-- CAMEL -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-aop</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-tx</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-javaconfig</artifactId>
+        </dependency>
 
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>Bootstrap</mainClass>
-						</manifest>
-						<manifestEntries>
-							<Bootstrap-MainClass>org.housecream.server.cli.Main</Bootstrap-MainClass>
-							<Bootstrap-ClassPath>META-INF/lib</Bootstrap-ClassPath>
-							<HousecreamVersion>${project.version}</HousecreamVersion>
-						</manifestEntries>
-					</archive>
-					<webResources>
-						<resource>
-							<directory>../../</directory>
-							<includes>
-								<include>LICENCE.txt</include>
-								<include>README.rst</include>
-								<include>INSTALL.txt</include>
-								<include>CHANGELOG.txt</include>
-							</includes>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
+        <!-- Logger -->
+        <dependency>
+            <groupId>fr.norad.logback.prettier</groupId>
+            <artifactId>logback-prettier</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
 
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>fr.norad.bootstrap</groupId>
-									<artifactId>bootstrap-java</artifactId>
-									<version>${bootstrap.version}</version>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.housecream.server</groupId>
-									<artifactId>housecream-server-cli</artifactId>
-									<version>${project.version}</version>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF/lib</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+        <!-- Cassandra -->
+        <dependency>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>cassandra-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.updater</groupId>
+            <artifactId>updater</artifactId>
+        </dependency>
 
-		</plugins>
-	</build>
+
+        <!-- ENGINE -->
+        <dependency>
+            <groupId>fr.norad.typed.command.line.parser</groupId>
+            <artifactId>typed-command-line-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+        </dependency>
+
+        <!-- TESTS -->
+        <dependency>
+            <groupId>org.housecream.server</groupId>
+            <artifactId>housecream-server-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <finalName>housecream-ws</finalName>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>Bootstrap</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Bootstrap-MainClass>org.housecream.server.cli.Main</Bootstrap-MainClass>
+                            <Bootstrap-ClassPath>META-INF/lib</Bootstrap-ClassPath>
+                            <HousecreamVersion>${project.version}</HousecreamVersion>
+                        </manifestEntries>
+                    </archive>
+                    <webResources>
+                        <resource>
+                            <directory>../../</directory>
+                            <includes>
+                                <include>LICENCE.txt</include>
+                                <include>README.rst</include>
+                                <include>INSTALL.txt</include>
+                                <include>CHANGELOG.txt</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>fr.norad.bootstrap</groupId>
+                                    <artifactId>bootstrap-java</artifactId>
+                                    <version>${bootstrap.version}</version>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}/${project.build.finalName}
+                                    </outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.housecream.server</groupId>
+                                    <artifactId>housecream-server-cli</artifactId>
+                                    <version>${project.version}</version>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>
+                                        ${project.build.directory}/${project.build.finalName}/META-INF/lib
+                                    </outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
 

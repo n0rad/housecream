@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import org.housecream.server.api.domain.inpoint.InPoint;
+import org.housecream.server.storage.CassandraDaoRule;
 import org.junit.Rule;
 import org.junit.Test;
 import fr.norad.core.lang.exception.NotFoundException;

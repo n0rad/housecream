@@ -1,0 +1,15 @@
+<div class="span3" ng-controller="ApiGroupController">
+  <accordion>
+    <accordion-group heading="{{root}}" ng-repeat="(root, group) in projectDefinition.apiGroups">
+      <ul class="js-guides">
+        <li ng-repeat="(path, operationGroup) in group">
+          <div class="card-methods" ng-repeat="method in operationGroup.methods" ng-hide="operationGroup.methods.length == 1
+          && operationGroup.methods.indexOf('GET') >= 0">
+              <span class="card-method {{method}}" title="{{method}}"></span>
+          </div>
+          <a href="{{currentProject}}/{{currentVersion}}/apiGroup{{path}}">{{path}}</a>
+        </li>
+      </ul>
+    </accordion-group>
+  </accordion>
+</div>

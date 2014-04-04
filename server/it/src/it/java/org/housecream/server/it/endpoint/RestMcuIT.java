@@ -7,8 +7,8 @@ import static org.housecream.server.api.domain.inpoint.InPointType.PIR;
 import org.housecream.restmcu.it.resource.LatchBoardResource;
 import org.housecream.restmcu.it.resource.LatchLineResource;
 import org.housecream.server.api.domain.zone.Land;
-import org.housecream.server.it.HcWsItServer;
-import org.housecream.server.it.HcWsItSession;
+import org.housecream.server.it.ItServer;
+import org.housecream.server.it.ItSession;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,16 +22,16 @@ public class RestMcuIT {
             .addLine(line(2).direction(OUTPUT).value(1).build());
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_update_notify_url_on_creation() throws Exception {
-        HcWsItSession session = hcs.session();
-        Land land = session.zone().createLand("land");
-        session.inpoint().create("my pir", land, PIR, "restmcu://127.0.0.1:5879/2");
+        ItSession session = hcs.session();
+        Land land = session.zones().createLand("land");
+        session.inpoints().create("my pir", land, PIR, "restmcu://127.0.0.1:5879/2");
 
         assertThat(board.awaitUpdateSettings().getNotifyUrl()).isNotNull();
     }

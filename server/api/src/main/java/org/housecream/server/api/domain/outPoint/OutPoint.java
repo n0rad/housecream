@@ -20,7 +20,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.housecream.server.api.domain.Point;
+import lombok.Data;
 
+@Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class OutPoint extends Point {
@@ -29,13 +31,5 @@ public class OutPoint extends Point {
     public static final String QUERY_BY_ZONE = "QUERY_PARAM_ZONE_ID";
 
     private OutPointType type;
-
-    public OutPointType getType() {
-        return type;
-    }
-
-    public void setType(OutPointType type) {
-        this.type = type;
-    }
 
 }

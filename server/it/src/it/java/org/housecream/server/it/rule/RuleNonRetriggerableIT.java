@@ -21,8 +21,8 @@ import org.housecream.restmcu.it.resource.LatchLineResource;
 import org.housecream.server.api.domain.inpoint.InPoint;
 import org.housecream.server.api.domain.outPoint.OutPoint;
 import org.housecream.server.api.domain.zone.Land;
-import org.housecream.server.it.HcWsItServer;
-import org.housecream.server.it.HcWsItSession;
+import org.housecream.server.it.ItServer;
+import org.housecream.server.it.ItSession;
 import org.junit.Rule;
 import org.junit.Test;
 import fr.norad.jaxrs.junit.RestServerRule;
@@ -35,18 +35,18 @@ public class RuleNonRetriggerableIT {
             .addLine(line(3).direction(OUTPUT).value(1).build());
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     @Rule
     public RestServerRule restmcu = new RestServerRule("http://localhost:5879/", board, line);
 
     @Test
     public void should_not_retrigger_on_repush() throws Exception {
-        HcWsItSession session = hcs.session();
-        Land land = session.zone().createLand("land");
-        InPoint pir = session.inpoint().create("my pir", land, PIR, "restmcu://127.0.0.1:5879/2");
-        OutPoint light = session.outpoint().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
-        session.rule().create("firstrule", condition(pir, 1, event), //
+        ItSession session = hcs.session();
+        Land land = session.zones().createLand("land");
+        InPoint pir = session.inpoints().create("my pir", land, PIR, "restmcu://127.0.0.1:5879/2");
+        OutPoint light = session.outpoints().create("light1", land, LIGHT, "restmcu://127.0.0.1:5879/3");
+        session.rules().create("firstrule", condition(pir, 1, event), //
                 asList(consequence(light, 1), consequence(light, 0, 5000, NON_RETRIGGER)));
 
         RestMcuLineNotification pinNotif1 = notif().lineId(2).oldVal(0).val(1).notify(SUP_OR_EQUAL, 1).build();

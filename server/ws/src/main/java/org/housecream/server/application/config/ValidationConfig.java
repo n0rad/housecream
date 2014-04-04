@@ -25,7 +25,7 @@ import fr.norad.client.bean.validation.js.service.ValidationService;
 @Configuration
 public class ValidationConfig {
 
-    @Bean(name = "validator")
+    @Bean(name = "validator", destroyMethod = "")
     public LocalValidatorFactoryBean localValidatorFactoryBean() {
         return new LocalValidatorFactoryBean();
     }

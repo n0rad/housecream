@@ -1,28 +1,39 @@
 package org.housecream.server.it.security;
 
-import java.util.List;
-import org.housecream.server.api.domain.inpoint.InPoint;
-import org.housecream.server.it.HcWsItServer;
-import org.housecream.server.it.HcWsItSession;
-import org.junit.Ignore;
+import org.assertj.core.api.Assertions;
+import org.housecream.server.it.ItServer;
+import org.housecream.server.it.ItSession;
 import org.junit.Rule;
 import org.junit.Test;
+import fr.norad.jaxrs.oauth2.api.SecurityUnauthorizedException;
+import fr.norad.jaxrs.oauth2.api.User;
 
 public class ResourceOwnerCredentialIT {
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
+
+
+    @Test(expected = SecurityUnauthorizedException.class)
+    public void should_throw_exception_if_no_authorized() {
+        hcs.session().props().getProperties();
+    }
 
     @Test
-    @Ignore("not implemented yet")
-    public void should_create_user_and_authenticate() throws Exception {
-        HcWsItSession session = hcs.session("n0rad", "password");
+    public void should_increment_failed_attempts() throws Exception {
+        User user = new User();
+        user.setUsername("n0rad");
+        user.setPassword("password");
 
-        session.authenticate();
+        ItSession adminSession = hcs.session("admin", "admin");
+        adminSession.users().create(user);
 
-        List<InPoint> list = session.inpoint().list();
+        try {
+            hcs.session("n0rad", "badpassword").users().get("n0rad");
+        } catch (Exception e) {
+            System.out.println("yop");
+        }
 
-        //        assertThat(token.getAccessToken()).isNotNull();
-
+        Assertions.assertThat(adminSession.users().get("n0rad").getFailedLoginAttempt()).isEqualTo(1);
     }
 }

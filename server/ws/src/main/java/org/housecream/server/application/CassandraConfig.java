@@ -48,7 +48,7 @@ public class CassandraConfig {
 
         config.cluster_name = clusterName;
         //        config.initial_token = "";
-        config.hinted_handoff_enabled = true;
+        config.hinted_handoff_enabled = "true";
         config.max_hint_window_in_ms = 10800000; // 3 hours
         config.hinted_handoff_throttle_in_kb = 1024;
         config.max_hints_delivery_threads = 2;
@@ -112,7 +112,7 @@ public class CassandraConfig {
     private void updateWithHomePath(File cassandraHome) {
         String absolutePath = cassandraHome.getAbsolutePath();
         config.client_encryption_options.keystore = absolutePath + "/keystore";
-        config.data_file_directories = new String[] { absolutePath + "/data" };
+        config.data_file_directories = new String[]{absolutePath + "/data"};
         config.commitlog_directory = absolutePath + "/commitlog";
         config.server_encryption_options.keystore = absolutePath + "/keystore";
         config.server_encryption_options.truststore = absolutePath + "/truststore";

@@ -24,7 +24,7 @@ import javax.ws.rs.PathParam;
 public interface RestMcuDebugResource {
 
     /**
-     * debug call to set value of input pin for client/stub tests only
+     * debug call to set value of input pin for clients/stub tests only
      */
     @PUT
     @Path("/{pinId}/value")

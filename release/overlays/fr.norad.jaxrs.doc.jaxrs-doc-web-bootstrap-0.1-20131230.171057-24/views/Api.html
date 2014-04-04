@@ -1,0 +1,68 @@
+<div class="span9" ng-controller="ApiController">
+
+    <h2 title="">{{currentApiUrl}}</h2>
+
+    <div ng-repeat="operation in currentApiGroup.operations">
+        <h3>{{operation.summary}}</h3>
+        <pre title="{{operation.operationClass}}.{{operation.methodName}}"> <span class="label label-method-{{operation.httpMethod}}">{{operation.httpMethod}}</span> <span ng-class="{deprecated: operation.deprecated}">{{operation.path}}</span></pre>
+        <div>{{operation.description}}</div>
+
+        <h6>Request</h6>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Map Class</th>
+                <th>List</th>
+                <th>Encoded</th>
+                <th>Default Value</th>
+                <th>Allowed Values</th>
+            </tr>
+            <tr ng-repeat="parameter in operation.parameters" ng-class="{deprecated: parameter.deprecated}">
+                <td>{{parameter.type}}</td>
+                <td title="{{parameter.paramClass}}" class="name">{{parameter.name}}</td>
+                <td>{{parameter.description}}</td>
+                <td>{{parameter.mapKeyClass}}</td>
+                <td>{{parameter.asList}}</td>
+                <td>{{parameter.encoded}}</td>
+                <td>{{parameter.defaultValue}}</td>
+                <td>{{parameter.allowedValues}}</td>
+            </tr>
+        </table>
+
+        <h6>Response</h6>
+
+        <!--                   <div ng-controller="Ctrl2"> -->
+        <!--                     Date format: <input ng-model="format"> <hr/> -->
+        <!--                     Current time is: <span my-current-time="format"></span> -->
+        <!--                   </div> -->
+
+        <!--                  <table> -->
+        <!--                     <tr> -->
+        <!--                         <th>Code</th> -->
+        <!--                         <th>Description</th> -->
+        <!--                     </tr> -->
+        <!--                     <tr> -->
+        <!--                         <td>200</td> -->
+        <!--                         <td>Success</td> -->
+        <!--                     </tr> -->
+        <!--                     <tr> -->
+        <!--                         <td>404</td> -->
+        <!--                         <td>Not found</td> -->
+        <!--                     </tr> -->
+        <!--                  </table> -->
+
+        {{operation.responseAsList}}
+        {{operation.responseMapKeyClass}}
+        <br>
+        {{operation.responseClass}}
+
+        <div>
+            <pre>{<div ng-repeat="(propName, prop) in models[operation.responseClass].properties"><span style="font-weight:bold">{{propName}}</span>: <span title="{{prop.propertyClass}}">{{prop.propertyClass | classShortName}}</span>,
+            </div>}</pre>
+        </div>
+
+
+    </div>
+</div>

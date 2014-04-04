@@ -1,94 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<display-name>Housecream Server</display-name>
-	<description>Server part of Housecream</description>
+    <display-name>Housecream Server</display-name>
+    <description>Server part of Housecream</description>
 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-	classpath*:META-INF/cxf/cxf.xml
-	classpath*:META-INF/cxf/cxf-extension-jaxrs-binding.xml
-	classpath*:META-INF/cxf/cxf-servlet.xml
-	org.housecream.server.application.config.**
-	</param-value>
-	</context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/META-INF/cxf/cxf.xml
+            classpath*:/META-INF/cxf/cxf-extension-jaxrs-binding.xml
+            classpath*:/META-INF/cxf/cxf-servlet.xml
+            org.housecream.server.application.config.**
+        </param-value>
+    </context-param>
 
-	<context-param>
-		<param-name>contextClass</param-name>
-		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-	</context-param>
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
 
-	<listener>
-		<listener-class>org.housecream.server.application.HousecreamContextLoaderListener</listener-class>
-	</listener>
+    <listener>
+        <listener-class>org.housecream.server.application.HousecreamContextLoaderListener</listener-class>
+    </listener>
 
-	<servlet>
-		<servlet-name>CXFServlet</servlet-name>
-		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-		<!-- <async-supported>true</async-supported> -->
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CXFServlet</servlet-name>
-		<url-pattern>/ws/*</url-pattern>
-	</servlet-mapping>
-
-
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <!-- <async-supported>true</async-supported> -->
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
 
 
+    <mime-mapping>
+        <extension>ico</extension>
+        <mime-type>image/x-icon</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>rst</extension>
+        <mime-type>text/plain</mime-type>
+    </mime-mapping>
 
-	<mime-mapping>
-		<extension>ico</extension>
-		<mime-type>image/x-icon</mime-type>
-	</mime-mapping>
-	<mime-mapping>
-		<extension>rst</extension>
-		<mime-type>text/plain</mime-type>
-	</mime-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/notFoundResource</location>
+    </error-page>
 
-	<error-page>
-		<error-code>404</error-code>
-		<location>/notFoundResource</location>
-	</error-page>
+    <servlet>
+        <servlet-name>ToIndex</servlet-name>
+        <servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
+        <init-param>
+            <param-name>indexMappings</param-name>
+            <param-value>
+                /doc/ : /doc/index.html
+                / : /index.html
+            </param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ToIndex</servlet-name>
+        <url-pattern>/notFoundResource</url-pattern>
+    </servlet-mapping>
 
-	<servlet>
-		<servlet-name>ToIndex</servlet-name>
-		<servlet-class>fr.norad.servlet.sample.html.template.ToIndexForwardedServlet</servlet-class>
-		<init-param>
-			<param-name>indexMappings</param-name>
-			<param-value>
-			     /doc/ : /doc/index.html
-			     / : /index.html
-			</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ToIndex</servlet-name>
-		<url-pattern>/notFoundResource</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>indexServlet</servlet-name>
-		<servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
-		<init-param>
-			<param-name>tplPath</param-name>
-			<param-value>/index.html</param-value>
-		</init-param>
-		<init-param>
-			<param-name>version.property</param-name>
-			<param-value>HousecreamVersion</param-value>
-		</init-param>
-		<init-param>
-			<param-name>hcWsUrl.property</param-name>
-			<param-value>HousecreamWebServiceUrl</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>indexServlet</servlet-name>
-		<url-pattern>/index.html</url-pattern>
-	</servlet-mapping>
+    <servlet>
+        <servlet-name>indexServlet</servlet-name>
+        <servlet-class>fr.norad.servlet.sample.html.template.IndexTemplateServlet</servlet-class>
+        <init-param>
+            <param-name>tplPath</param-name>
+            <param-value>/index.html</param-value>
+        </init-param>
+        <init-param>
+            <param-name>version.property</param-name>
+            <param-value>HousecreamVersion</param-value>
+        </init-param>
+        <init-param>
+            <param-name>hcWsUrl.property</param-name>
+            <param-value>HousecreamWebServiceUrl</param-value>
+        </init-param>
+        <init-param>
+            <param-name>clientId.property</param-name>
+            <param-value>HousecreamWebClientId</param-value>
+        </init-param>
+        <init-param>
+            <param-name>clientSecret.property</param-name>
+            <param-value>HousecreamWebClientSecret</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>indexServlet</servlet-name>
+        <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>docServlet</servlet-name>
@@ -116,9 +121,9 @@
     </servlet-mapping>
 
 
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>doc/index.html</welcome-file>
-	</welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>doc/index.html</welcome-file>
+    </welcome-file-list>
 
 </web-app>

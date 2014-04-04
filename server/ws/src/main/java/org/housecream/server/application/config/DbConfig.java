@@ -20,6 +20,7 @@ import static org.housecream.server.Housecream.CASSANDRA_HOST_KEY;
 import static org.housecream.server.Housecream.CASSANDRA_PASSWORD_KEY;
 import static org.housecream.server.Housecream.CASSANDRA_PORT_KEY;
 import static org.housecream.server.Housecream.CASSANDRA_USERNAME_KEY;
+import javax.annotation.PostConstruct;
 import org.housecream.server.storage.updater.DbUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +48,19 @@ public class DbConfig {
     @Value("#{systemProperties['" + CASSANDRA_PASSWORD_KEY + "']}")
     private String password;
 
-    @Bean(destroyMethod = "shutdown")
+    @Bean(destroyMethod = "close")
     public Cluster cluster() {
         return Cluster.builder().addContactPoint(host).withPort(port).build();
     }
 
-    @Bean(destroyMethod = "shutdown")
+    @PostConstruct
+    private void postcontruct() {
+        if (port == null) {
+            port = 9042;
+        }
+    }
+
+    @Bean(destroyMethod = "close")
     public Session session() {
         log.info("Creating cassandra session");
         Session session = cluster().connect();

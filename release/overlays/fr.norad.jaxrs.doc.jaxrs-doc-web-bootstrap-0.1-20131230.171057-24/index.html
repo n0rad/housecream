@@ -1,0 +1,62 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Jaxrs-doc</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <base href="${contextPath}/">
+
+
+    <link rel="stylesheet" href="styles/6070c521.main.css">
+    
+</head>
+  <body ng-app="jaxrs-doc" ng-controller="GlobalController">
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a ng-cloak="" class="brand" href="#">Jaxrs Doc</a>
+          <ng-include src="'views/Filter.html'"></ng-include>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        <ui-view>loading..........</ui-view>
+        <hr>
+      <footer>
+        <p>&copy; <a href="http://github.com/n0rad/jaxrs-doc">Jaxrs doc</a></p>
+      </footer>
+    </div>
+  
+    <script type="text/javascript">
+      var docServiceUrl = '${docServiceUrl}';
+    </script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <script src="scripts/d1b51aad.scripts.js"></script>
+
+        <script src="scripts/bd6ce9e3.plugins.js"></script>
+
+        <script src="scripts/a7bb59d3.modules.js"></script>
+</body>
+</html>

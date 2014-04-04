@@ -1,0 +1,20 @@
+<object-stream>
+<org.drools.audit.event.RuleBaseLogEvent>
+  <type>16</type>
+  <packageName>org.housecream.server.service.rule</packageName>
+</org.drools.audit.event.RuleBaseLogEvent>
+<org.drools.audit.event.RuleBaseLogEvent>
+  <type>20</type>
+  <packageName>org.housecream.server.service.rule</packageName>
+  <ruleName>outEvent</ruleName>
+</org.drools.audit.event.RuleBaseLogEvent>
+<org.drools.audit.event.RuleBaseLogEvent>
+  <type>21</type>
+  <packageName>org.housecream.server.service.rule</packageName>
+  <ruleName>outEvent</ruleName>
+</org.drools.audit.event.RuleBaseLogEvent>
+<org.drools.audit.event.RuleBaseLogEvent>
+  <type>17</type>
+  <packageName>org.housecream.server.service.rule</packageName>
+</org.drools.audit.event.RuleBaseLogEvent>
+</object-stream>

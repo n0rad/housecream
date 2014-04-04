@@ -1,7 +1,7 @@
 package org.housecream.server.it.server.it.floor;
 
 import java.util.UUID;
-import org.housecream.server.it.HcWsItServer;
+import org.housecream.server.it.ItServer;
 import org.junit.Rule;
 import org.junit.Test;
 import fr.norad.core.lang.exception.NotFoundException;
@@ -9,15 +9,16 @@ import fr.norad.core.lang.exception.NotFoundException;
 public class InPointIT {
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     @Test
     public void should_success_on_delete_not_existing_point() {
-        hcs.session().inpoint().internalInpointResource().deleteInPoint(UUID.randomUUID());
+        UUID inPointId = UUID.randomUUID();
+        hcs.session().inpoints().internalInpointResource(inPointId).deleteInPoint(inPointId);
     }
 
     @Test(expected = NotFoundException.class)
     public void should_not_found_not_exists_point() throws Exception {
-        hcs.session().inpoint().getPoint(UUID.randomUUID());
+        hcs.session().inpoints().getPoint(UUID.randomUUID());
     }
 }

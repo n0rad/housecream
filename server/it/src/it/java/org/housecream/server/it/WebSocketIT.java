@@ -20,7 +20,7 @@ import fr.norad.jaxrs.junit.RestServerRule;
 public class WebSocketIT {
 
     @Rule
-    public HcWsItServer hcs = new HcWsItServer();
+    public ItServer hcs = new ItServer();
 
     private LatchBoardResource board = new LatchBoardResource("127.0.0.1:5879");
     private LatchLineResource line = new LatchLineResource() //
@@ -31,10 +31,10 @@ public class WebSocketIT {
 
     @Test
     public void should_notify_client_on_event_received() throws Exception {
-        HcWsItSession session = hcs.session();
-        Land land = session.zone().createLand("landName");
-        InPoint pir = session.inpoint().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
-        HcWebWebSocket webSocket = session.webSocket();
+        ItSession session = hcs.session();
+        Land land = session.zones().createLand("landName");
+        InPoint pir = session.inpoints().create("my pir1", land, PIR, "restmcu://127.0.0.1:5879/2");
+        HcWebSocket webSocket = session.webSocket();
         RestMcuLineNotification notif = new RestMcuLineNotification(2, 0f, 1f,
                 new RestMcuLineNotify(SUP_OR_EQUAL, 1f));
         board.sendNotif(notif);
