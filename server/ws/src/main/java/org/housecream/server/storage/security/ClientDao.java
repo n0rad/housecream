@@ -20,7 +20,7 @@ import static com.google.common.collect.Sets.newHashSet;
 import static fr.norad.jaxrs.oauth2.api.spec.domain.GrantType.password;
 import javax.annotation.PostConstruct;
 import org.housecream.server.Housecream;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.application.security.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -44,7 +44,7 @@ public class ClientDao implements ClientRepository {
     private final PreparedStatement insertQuery;
 
     @Autowired
-    private HcProperties props;
+    private Config props;
 
     @Autowired
     public ClientDao(Session session) {

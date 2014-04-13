@@ -68,6 +68,7 @@ public enum Housecream {
         if (inited) {
             return;
         }
+
         System.setProperty(HOUSECREAM_HOME_KEY, home.getAbsolutePath());
         if (System.getProperty(LOG_CONF_FILE_PATH_KEY) == null) {
             System.setProperty(LOG_CONF_FILE_PATH_KEY, logbackConf.getAbsolutePath());

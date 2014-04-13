@@ -24,7 +24,7 @@ import org.apache.camel.ExchangePattern;
 import org.apache.camel.Header;
 import org.apache.camel.Message;
 import org.apache.camel.Properties;
-import org.housecream.server.api.domain.outPoint.OutPoint;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +38,13 @@ public class OutDynamicRouter {
     private static final String ROUTED_FLAG = "invoked";
     private static final String OUT_URL = "outUrl";
 
-    public void fillRoutingHeaders(Message message, OutPoint outpoint, Consequence action) {
+    public void fillRoutingHeaders(Message message, Point point, Consequence action) {
         message.setHeader(OutEndProcessor.CONSEQUENCE_HEADER, action);
-        message.setHeader(OutDynamicRouter.OUT_URL, outpoint.getUri());
+        message.setHeader(OutDynamicRouter.OUT_URL, point.getUri());
     }
 
     public Object route(Exchange exchange, @Body Object body, @Properties Map<String, Object> properties,
-            @Header(OUT_URL) URI url) {
+                        @Header(OUT_URL) URI url) {
         exchange.setPattern(ExchangePattern.InOut);
         //        Object url = properties.get(OUT_URL);
         if (url == null) {

@@ -1,1 +1,1 @@
-class=org.housecream.camel.axmpp.AxmppComponent
+class=org.housecream.plugins.xmpp.AxmppComponent

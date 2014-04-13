@@ -20,23 +20,27 @@ import static org.housecream.server.Housecream.HOUSECREAM;
 import static org.housecream.server.Housecream.VERSION_MANIFEST_KEY;
 import static org.housecream.server.application.HousecreamHome.HOUSECREAM_HOME;
 import javax.servlet.ServletContextEvent;
+import org.housecream.server.api.domain.config.Config;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import fr.norad.servlet.sample.html.template.WarManifestUtils;
 
 public class HousecreamContextLoaderListener extends ContextLoaderListener {
 
+
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        Config.initTimeZone();
+
         HOUSECREAM.init();
         LoggerFactory.getLogger(getClass()).info("Housecream starting !!");
         try {
-        HOUSECREAM.discoveredVersion(WarManifestUtils.getWarManifestAttribute(event.getServletContext(),
-                VERSION_MANIFEST_KEY));
+            HOUSECREAM.discoveredVersion(WarManifestUtils.getWarManifestAttribute(event.getServletContext(),
+                    VERSION_MANIFEST_KEY));
 
-        HOUSECREAM_HOME.start();
-        super.contextInitialized(event);
-        LoggerFactory.getLogger(getClass()).info("Housecream server is ready !!");
+            HOUSECREAM_HOME.start();
+            super.contextInitialized(event);
+            LoggerFactory.getLogger(getClass()).info("Housecream server is ready !!");
         } catch (Exception e) {
             LoggerFactory.getLogger(getClass()).error("Failed to start Housecream Server", e);
             throw e;

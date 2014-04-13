@@ -19,45 +19,41 @@ package org.housecream.server.storage.updater;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.insertInto;
 import static com.google.common.collect.Sets.newHashSet;
 import static fr.norad.updater.Version.V;
-import static org.housecream.server.api.resource.Security.Scopes.toStrings;
-import static org.housecream.server.application.config.EncodingConfig.objectMapper;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.Security.Scopes;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.application.security.RandomStringGenerator;
-import org.housecream.server.storage.dao.HcPropertiesDao;
+import org.housecream.server.storage.dao.ConfigDao;
 import com.datastax.driver.core.Session;
-import fr.norad.jaxrs.oauth2.api.Group;
-import fr.norad.jaxrs.oauth2.core.service.PasswordHasher;
 import fr.norad.updater.ApplicationVersion;
 import fr.norad.updater.Update;
 
 public class V0 extends ApplicationVersion {
 
-    private static final HcProperties props = new HcProperties().setSecurityGlobalSaltSecret(new RandomStringGenerator().base64(42));
+    private static final Config props = new Config().setSecurityGlobalSaltSecret(new RandomStringGenerator().base64(42));
 
     public V0(final Session session) {
-        super(V(0), new Update("create config") {
+        super(V(0), new Update("Create config") {
                     @Override
                     public void runUpdate() {
                         session.execute("CREATE TABLE config(" +
                                 "id text PRIMARY KEY," +
-                                "properties map<text, text>)");
-                        new HcPropertiesDao(session).saveConfig(props); // todo using dao will cause pb
+                                "configs map<text, text>)");
+                        new ConfigDao(session).saveConfig(props); // todo using dao will cause pb
                     }
-                }, new Update("create outpoints CF") {
+                }, new Update("create business") {
                     @Override
                     public void runUpdate() {
-                        session.execute("CREATE TABLE inPoints(id UUID," //
+                        session.execute("CREATE TABLE points(id UUID," //
                                 + "name text," //
                                 + "uri text," //
                                 + " PRIMARY KEY(id));");
-                        session.execute("CREATE TABLE outPoints(id UUID," //
-                                + "name text," //
-                                + "uri text," //
-                                + " PRIMARY KEY(id));");
-                    }
-                }, new Update("create inpoints cf") {
-                    @Override
-                    public void runUpdate() {
+                        session.execute("CREATE TABLE values(" +
+                                "year int," +
+                                "month int," +
+                                "date timestamp," +
+                                "value blob," +
+                                "PRIMARY KEY ((year, month), date)");
+
                         session.execute("CREATE TABLE rules(" +
                                 "id UUID PRIMARY KEY," +
                                 "name text," +
@@ -110,17 +106,9 @@ public class V0 extends ApplicationVersion {
                         session.execute("CREATE TABLE groups(name text PRIMARY KEY, allowedScopes set<text>, usernames set<text>)");
 
                         session.execute(insertInto("groups")
-                                 .value("name", "administrators")
-                                .value("allowedScopes", toStrings())
+                                .value("name", "administrators")
+                                .value("allowedScopes", Scopes.toStrings())
                                 .value("usernames", newHashSet("admin")));
-
-                        String adminSalt = new RandomStringGenerator().base64(128);
-                        PasswordHasher passwordHasher = new PasswordHasher(props.getSecurityGlobalSaltSecret());
-                        session.execute(insertInto("users")
-                                .value("username", "admin")
-                                .value("hashedPassword", passwordHasher.hash("admin", adminSalt))
-                                .value("salt", adminSalt)
-                                .value("groups", newHashSet(objectMapper().writeValueAsString(new Group("administrators", toStrings())))));
                     }
                 }
         );

@@ -24,7 +24,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.RouteDefinition;
 import org.housecream.plugins.api.HousecreamPlugin;
-import org.housecream.server.api.domain.inpoint.InPoint;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.service.PluginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public class DynamicRouteManager extends RouteBuilder {
 
     private Map<URI, RouteDefinition> pointRoutes = Collections.synchronizedMap(new HashMap<URI, RouteDefinition>());
 
-    public void registerInRoute(InPoint point) {
+    public void registerInRoute(Point point) {
         try {
             URI uri = point.getUri();
             HousecreamPlugin plugin = pluginService.getPluginFromScheme(uri.getScheme());
@@ -74,7 +74,7 @@ public class DynamicRouteManager extends RouteBuilder {
         //        stateHolder.setState(point.getId(), currentValue);
     }
 
-    public void removeInRoute(InPoint point) {
+    public void removeInRoute(Point point) {
         RouteDefinition routeDefinition = pointRoutes.get(point.getUri());
         if (routeDefinition == null) {
             log.warn("trying to remove the route of a point that is not registered" + point);

@@ -34,7 +34,8 @@ import org.drools.runtime.ClassObjectFilter;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.FactHandle;
 import org.housecream.server.api.domain.Event;
-import org.housecream.server.api.domain.PointState;
+import org.housecream.server.api.domain.point.PointState;
+import org.housecream.server.api.exception.PointNotFoundException;
 import org.housecream.server.engine.builder.DroolsRuleBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,10 +140,10 @@ public class EngineProcessor implements Processor {
         logCurrentFacts("after add point state");
     }
 
-    public float getPointState(UUID pointId) throws NotFoundException {
+    public float getPointState(UUID pointId) throws PointNotFoundException {
         Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair == null) {
-            throw new NotFoundException("Point state not found for pointId : " + pointId);
+            throw new Exception("Point state not found for pointId : " + pointId);
         }
         return pair.getLeft().getValue();
     }

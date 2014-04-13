@@ -23,25 +23,16 @@ import javax.validation.ValidationException;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.housecream.plugins.api.InHousecreamPlugin;
-import org.housecream.plugins.api.OutHousecreamPlugin;
+import org.housecream.plugins.api.HousecreamPlugin;
 import org.housecream.restmcu.api.domain.line.RestMcuLineNotification;
-import org.housecream.server.api.domain.outPoint.OutPoint;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 import com.google.common.base.Preconditions;
 
-public class RestMcuHousecreamPlugin implements InHousecreamPlugin, OutHousecreamPlugin {
+public class RestMcuHousecreamPlugin implements HousecreamPlugin {
 
     private static final String SCHEME = "restmcu";
     public static final int DEFAULT_COMPONENT_PORT = 80;
-
-    @Override
-    public Float readInValue(Message in) throws Exception {
-        RestMcuLineNotification notif = in.getBody(RestMcuLineNotification.class);
-        Preconditions.checkNotNull(notif, "Notification cannot be null");
-        Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
-        return notif.getValue();
-    }
 
     @Override
     public String scheme() {
@@ -49,8 +40,16 @@ public class RestMcuHousecreamPlugin implements InHousecreamPlugin, OutHousecrea
     }
 
     @Override
-    public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, OutPoint outpoint) {
+    public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, Point point) {
         return new ImmutablePair<Object, Map<String, Object>>(action.getValue(), null);
+    }
+
+    @Override
+    public Float readValue(Message in) throws Exception {
+        RestMcuLineNotification notif = in.getBody(RestMcuLineNotification.class);
+        Preconditions.checkNotNull(notif, "Notification cannot be null");
+        Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
+        return notif.getValue();
     }
 
     @Override

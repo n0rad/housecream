@@ -1,7 +1,7 @@
 package org.housecream.server.resource;
 
 import org.housecream.server.api.exception.UsernameAlreadyExistException;
-import org.housecream.server.api.resource.generic.UsersResource;
+import org.housecream.server.api.resource.UsersResource;
 import org.housecream.server.application.JaxRsResource;
 import org.housecream.server.service.UserService;
 import org.housecream.server.storage.security.UserDao;

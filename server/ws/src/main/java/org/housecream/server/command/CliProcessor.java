@@ -22,15 +22,11 @@ import java.util.List;
 import java.util.UUID;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.housecream.server.api.domain.inpoint.InPoint;
-import org.housecream.server.api.domain.outPoint.OutPoint;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Rule;
-import org.housecream.server.api.domain.zone.Zone;
 import org.housecream.server.engine.OutEvent;
-import org.housecream.server.storage.dao.InPointDao;
-import org.housecream.server.storage.dao.OutPointDao;
+import org.housecream.server.storage.dao.PointDao;
 import org.housecream.server.storage.dao.RuleDao;
-import org.housecream.server.storage.dao.ZoneDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.google.common.base.Charsets;
@@ -44,13 +40,7 @@ public class CliProcessor implements Processor {
     private CommandArgumentManager argumentManager = new CommandArgumentManager();
 
     @Autowired
-    private InPointDao inPointDao;
-
-    @Autowired
-    private OutPointDao outPointDao;
-
-    @Autowired
-    private ZoneDao zoneDao;
+    private PointDao pointDao;
 
     @Autowired
     private RuleDao ruleDao;
@@ -66,16 +56,11 @@ public class CliProcessor implements Processor {
         argumentManager.setErrorStream(ps);
         try {
             if (argumentManager.parseWithSuccess(exchange.getIn().getBody(String.class).split(" "))) {
-                if (argumentManager.getInpoint().isSet()) {
-                    processInPoint(argumentManager.getInpoint(), argumentManager.getId(), ps);
-                } else if (argumentManager.getOutpoint().isSet()) {
-                    processOutPoint(argumentManager.getOutpoint(), argumentManager.getId(),
-                            argumentManager.getValue(), ps);
-                } else if (argumentManager.getZone().isSet()) {
-                    processZone(argumentManager.getZone(), argumentManager.getId(), ps);
-                } else if (argumentManager.getRule().isSet()) {
-                    processRule(argumentManager.getRule(), argumentManager.getId(), ps);
-                }
+            } else if (argumentManager.getPoint().isSet()) {
+                processOutPoint(argumentManager.getPoint(), argumentManager.getId(),
+                        argumentManager.getValue(), ps);
+            } else if (argumentManager.getRule().isSet()) {
+                processRule(argumentManager.getRule(), argumentManager.getId(), ps);
             }
         } catch (Exception e) {
             e.printStackTrace(ps);
@@ -94,30 +79,19 @@ public class CliProcessor implements Processor {
         }
     }
 
-    private void processZone(CliNoParamArgument zone, CliOneParamArgument<UUID> id, PrintStream ps)
-            throws NotFoundException {
-        if (id.isSet()) {
-            Zone find = zoneDao.find(id.getParamOneValue());
-            ps.print(find.toString());
-        } else {
-            List<Zone> findAll = zoneDao.findAll();
-            ps.print(findAll.toString());
-        }
-    }
-
-    private void processInPoint(CliNoParamArgument inpoint, CliOneParamArgument<UUID> id, PrintStream ps)
-            throws NotFoundException {
-        if (id.isSet()) {
-            InPoint find = inPointDao.find(id.getParamOneValue());
-            ps.print(find.toString());
-        } else {
-            List<InPoint> findAll = inPointDao.findAll();
-            ps.print(findAll.toString());
-        }
-    }
+//    private void processInPoint(CliNoParamArgument inpoint, CliOneParamArgument<UUID> id, PrintStream ps)
+//            throws NotFoundException {
+//        if (id.isSet()) {
+//            Point find = pointDao.find(id.getParamOneValue());
+//            ps.print(find.toString());
+//        } else {
+//            List<Point> findAll = pointDao.findAll();
+//            ps.print(findAll.toString());
+//        }
+//    }
 
     private void processOutPoint(CliNoParamArgument outpoint, CliOneParamArgument<UUID> id,
-            CliOneParamArgument<Float> value, PrintStream ps) throws NotFoundException {
+                                 CliOneParamArgument<Float> value, PrintStream ps) throws NotFoundException {
         if (id.isSet()) {
             if (value.isSet()) {
                 try {
@@ -127,11 +101,11 @@ public class CliProcessor implements Processor {
                     e.printStackTrace(ps);
                 }
             } else {
-                OutPoint find = outPointDao.find(id.getParamOneValue());
+                Point find = pointDao.find(id.getParamOneValue());
                 ps.print(find.toString());
             }
         } else {
-            List<OutPoint> findAll = outPointDao.findAll();
+            List<Point> findAll = pointDao.findAll();
             ps.print(findAll.toString());
         }
     }

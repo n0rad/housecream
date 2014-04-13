@@ -25,11 +25,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import org.housecream.server.api.Security;
+import org.housecream.server.api.Security.Scopes;
 import org.housecream.server.api.domain.Order;
 import org.housecream.server.api.domain.rule.Rule;
-import org.housecream.server.api.resource.Security.Scopes;
+import org.housecream.server.api.exception.RuleNotFoundException;
 import fr.norad.client.bean.validation.js.domain.ClientValidatorInfo;
-import fr.norad.core.lang.exception.NotFoundException;
 
 @Path("/rules")
 @Security(Scopes.RULE_READ)
@@ -64,7 +65,7 @@ public interface RulesResource {
         void deleteRule(@PathParam("id") UUID ruleId);
 
         @GET
-        Rule getRule(@PathParam("id") UUID ruleId) throws NotFoundException;
+        Rule getRule(@PathParam("id") UUID ruleId) throws RuleNotFoundException;
 
     }
 

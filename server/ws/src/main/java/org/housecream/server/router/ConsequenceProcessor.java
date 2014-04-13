@@ -20,13 +20,13 @@ import java.util.Map;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.commons.lang3.tuple.Pair;
-import org.housecream.plugins.api.OutHousecreamPlugin;
-import org.housecream.server.api.domain.outPoint.OutPoint;
+import org.housecream.plugins.api.HousecreamPlugin;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.TriggerType;
 import org.housecream.server.engine.Action;
 import org.housecream.server.engine.EngineProcessor;
 import org.housecream.server.service.PluginService;
-import org.housecream.server.storage.dao.OutPointDao;
+import org.housecream.server.storage.dao.PointDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class ConsequenceProcessor implements Processor {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private OutPointDao outputDao;
+    private PointDao pointDao;
 
     @Autowired
     private PluginService pluginService;
@@ -60,10 +60,10 @@ public class ConsequenceProcessor implements Processor {
             return;
         }
 
-        OutPoint outpoint = outputDao.find(action.getOutPointId());
-        OutHousecreamPlugin plugin = (OutHousecreamPlugin) pluginService.getPluginFromScheme(outpoint.getUri()
+        Point point = pointDao.find(action.getOutPointId());
+        HousecreamPlugin plugin = (HousecreamPlugin) pluginService.getPluginFromScheme(point.getUri()
                 .getScheme()); //TODO cast should not be necessary
-        Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, outpoint);
+        Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, point);
 
         if (bodyAndHeaders.getRight() != null) {
             for (String key : bodyAndHeaders.getRight().keySet()) {
@@ -71,6 +71,6 @@ public class ConsequenceProcessor implements Processor {
             }
         }
         exchange.getIn().setBody(bodyAndHeaders.getLeft());
-        outRouter.fillRoutingHeaders(exchange.getIn(), outpoint, action);
+        outRouter.fillRoutingHeaders(exchange.getIn(), point, action);
     }
 }

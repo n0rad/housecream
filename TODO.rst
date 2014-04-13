@@ -1,4 +1,19 @@
 
+
+### point creation process :
+- select endpoint (filtered by type)
+- fill name
+- description
+- endpoint params
+
+
+
+
+
+
+
+
+
 http://www.slideshare.net/ge0ffrey/20110329-london-drools
 
 

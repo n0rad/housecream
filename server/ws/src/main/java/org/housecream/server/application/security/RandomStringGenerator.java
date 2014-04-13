@@ -21,7 +21,7 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import javax.annotation.PostConstruct;
 import org.apache.commons.codec.binary.Base64;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class RandomStringGenerator {
     private final SecureRandom random;
 
     @Autowired
-    private HcProperties props;
+    private Config props;
 
     @PostConstruct
     @Scheduled(fixedDelay = 24 * 60 * 60 * 1000)

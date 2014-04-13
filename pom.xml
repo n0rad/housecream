@@ -55,6 +55,7 @@
         <jackson.version>2.1.4</jackson.version>
         <slf4j.version>1.7.5</slf4j.version>
         <jacoco.version>0.5.5.201112152213</jacoco.version>
+        <logback-prettier.version>0.5</logback-prettier.version>
     </properties>
 
 
@@ -309,7 +310,7 @@
             <dependency>
                 <groupId>fr.norad.logback.prettier</groupId>
                 <artifactId>logback-prettier</artifactId>
-                <version>0.5</version>
+                <version>${logback-prettier.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -495,6 +496,25 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.13</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.logback.prettier</groupId>
+            <artifactId>logback-prettier</artifactId>
+            <version>${logback-prettier.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

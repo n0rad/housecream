@@ -18,7 +18,7 @@ package org.housecream.server.application.security;
 
 
 import org.apache.cxf.message.Message;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import fr.norad.jaxrs.client.server.resource.mapper.ErrorExceptionMapper;
 import fr.norad.jaxrs.client.server.resource.mapper.WebApplicationExceptionMapper;
@@ -28,7 +28,7 @@ import fr.norad.jaxrs.oauth2.client.interception.resourceinput.SecuredAnnotation
 public class ToggleSecuredAnnotationInterceptor extends SecuredAnnotationInterceptor {
 
     @Autowired
-    HcProperties props;
+    Config props;
 
     public ToggleSecuredAnnotationInterceptor(TokenFetcher tokenFetcher) {
         super(tokenFetcher, new ErrorExceptionMapper(), new WebApplicationExceptionMapper());

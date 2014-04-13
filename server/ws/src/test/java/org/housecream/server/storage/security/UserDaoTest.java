@@ -18,7 +18,7 @@ package org.housecream.server.storage.security;
 
 
 import org.fest.assertions.api.Assertions;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.storage.CassandraDaoRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -32,7 +32,7 @@ public class UserDaoTest {
 
     @Before
     public void before() {
-        db.dao().props = new HcProperties().setValue("securityFailedLoginLifetimeSeconds", "1");
+        db.dao().props = new Config().setValue("securityFailedLoginLifetimeSeconds", "1");
     }
 
     @Test

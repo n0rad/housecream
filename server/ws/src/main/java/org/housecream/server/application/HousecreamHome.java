@@ -78,7 +78,7 @@ public enum HousecreamHome {
         log.info("## Version           : " + HOUSECREAM.getVersion());
         log.info("## Home              : " + HOUSECREAM.getHome());
         log.info("## Log conf          : " + HOUSECREAM.getLogbackConf());
-        log.info("## Plugins directory : " + HOUSECREAM.getPluginDirectory());
+//        log.info("## Plugins directory : " + HOUSECREAM.getPluginDirectory());
         log.info("######################################");
     }
 

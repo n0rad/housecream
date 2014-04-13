@@ -19,7 +19,7 @@ package org.housecream.server.storage.security;
 import static org.housecream.server.application.config.EncodingConfig.objectMapper;
 import java.io.IOException;
 import java.util.Date;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.api.exception.UsernameAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,7 +36,7 @@ import fr.norad.jaxrs.oauth2.core.persistence.UserRepository;
 public class UserDao implements UserRepository {
 
     @Autowired
-    HcProperties props;
+    Config props;
 
     private final Session session;
     private final PreparedStatement selectQuery;

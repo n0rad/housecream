@@ -19,7 +19,7 @@ package org.housecream.server.application.config;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.application.security.ToggleSecuredAnnotationInterceptor;
 import org.housecream.server.storage.security.ClientDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class SecurityConfig {
     private static final String HOUSECREAM_WEB_CLIENT_ID_NAME = "HousecreamWebClientId";
 
     @Autowired
-    HcProperties props;
+    Config props;
 
     @Bean
     SecureRandom secureRandom() throws NoSuchAlgorithmException, NoSuchProviderException {

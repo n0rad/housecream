@@ -26,35 +26,23 @@ import fr.norad.typed.command.line.parser.param.CliParamUuid;
 
 public class CommandArgumentManager extends CliArgumentManager {
 
-    private final CliNoParamArgument inpoint;
-    private final CliNoParamArgument outpoint;
+    private final CliNoParamArgument point;
     private final CliNoParamArgument rule;
-    private final CliNoParamArgument zone;
     private final CliOneParamArgument<Float> value;
     private final CliOneParamArgument<UUID> id;
 
     protected CommandArgumentManager() {
         super("");
 
-        inpoint = new CliNoParamArgument('i');
-        inpoint.setName("inpoint");
-        inpoint.setDescription("Display inpoint informations");
-        addArg(inpoint);
-
-        outpoint = new CliNoParamArgument('o');
-        outpoint.setName("outpoint");
-        outpoint.setDescription("Display outpoint informations");
-        addArg(outpoint);
+        point = new CliNoParamArgument('p');
+        point.setName("inpoint");
+        point.setDescription("Display point informations");
+        addArg(point);
 
         rule = new CliNoParamArgument('r');
         rule.setName("rule");
         rule.setDescription("Display rule informations");
         addArg(rule);
-
-        zone = new CliNoParamArgument('z');
-        zone.setName("zone");
-        zone.setDescription("Display zone informations");
-        addArg(zone);
 
         value = new CliOneParamArgument<>('v', new CliParamFloat("value"));
         value.setDescription("Set value of an outpoint");
@@ -64,48 +52,27 @@ public class CommandArgumentManager extends CliArgumentManager {
         id.setDescription("Display informations about a specific element");
         setDefaultArgument(id);
 
-        zone.addForbiddenArgument(rule);
-        zone.addForbiddenArgument(inpoint);
-        zone.addForbiddenArgument(outpoint);
-        zone.addForbiddenArgument(value);
-
-        rule.addForbiddenArgument(zone);
-        rule.addForbiddenArgument(inpoint);
-        rule.addForbiddenArgument(outpoint);
+        rule.addForbiddenArgument(point);
         rule.addForbiddenArgument(value);
 
-        inpoint.addForbiddenArgument(zone);
-        inpoint.addForbiddenArgument(rule);
-        inpoint.addForbiddenArgument(outpoint);
-        inpoint.addForbiddenArgument(value);
-
-        outpoint.addForbiddenArgument(zone);
-        outpoint.addForbiddenArgument(rule);
-        outpoint.addForbiddenArgument(inpoint);
+        point.addForbiddenArgument(rule);
+        point.addForbiddenArgument(value);
     }
 
     @Override
     protected void checkParse() throws CliArgumentParseException {
         super.checkParse();
-        if (outpoint.isSet() && value.isSet() && !getDefaultArgument().isSet()) {
-            throw new CliArgumentParseException("Setting a value require a selected outpoint", value);
+        if (point.isSet() && value.isSet() && !getDefaultArgument().isSet()) {
+            throw new CliArgumentParseException("Setting a value require a selected point", value);
         }
     }
 
-    public CliNoParamArgument getInpoint() {
-        return inpoint;
-    }
-
-    public CliNoParamArgument getOutpoint() {
-        return outpoint;
+    public CliNoParamArgument getPoint() {
+        return point;
     }
 
     public CliNoParamArgument getRule() {
         return rule;
-    }
-
-    public CliNoParamArgument getZone() {
-        return zone;
     }
 
     public CliOneParamArgument<UUID> getId() {

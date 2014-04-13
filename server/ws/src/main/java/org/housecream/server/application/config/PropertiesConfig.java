@@ -18,8 +18,8 @@ package org.housecream.server.application.config;
 
 
 import java.lang.reflect.Field;
-import org.housecream.server.api.domain.HcProperties;
-import org.housecream.server.storage.dao.HcPropertiesDao;
+import org.housecream.server.api.domain.config.Config;
+import org.housecream.server.storage.dao.ConfigDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -38,8 +38,8 @@ public class PropertiesConfig {
     }
 
     @Bean
-    public HcProperties properties(HcPropertiesDao propsDao) {
-        HcProperties properties = new HcProperties();
+    public Config properties(ConfigDao propsDao) {
+        Config properties = new Config();
         propsDao.loadConfig(properties);
         Field[] fields = properties.getClass().getDeclaredFields();
         log.info("########### Properties ############");

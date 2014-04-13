@@ -2,7 +2,6 @@ package org.housecream.server.resource;
 
 
 import java.util.List;
-import javax.ws.rs.PathParam;
 import org.housecream.server.api.resource.ClientsResource;
 import org.housecream.server.application.JaxRsResource;
 import org.housecream.server.storage.security.ClientDao;
@@ -18,10 +17,6 @@ public class ClientsResourceImpl implements ClientsResource {
 
     @Autowired
     private ClientDao clientDao;
-
-    @PathParam("id")
-    private String clientId42;
-
 
     @Override
     public List<Client> listClients() {

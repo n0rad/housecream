@@ -21,12 +21,11 @@ import java.util.Map;
 import javax.validation.ValidationException;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
-import org.housecream.plugins.api.InHousecreamPlugin;
-import org.housecream.plugins.api.OutHousecreamPlugin;
-import org.housecream.server.api.domain.outPoint.OutPoint;
+import org.housecream.plugins.api.HousecreamPlugin;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 
-public class MailHousecreamPlugin implements OutHousecreamPlugin, InHousecreamPlugin {
+public class MailHousecreamPlugin implements HousecreamPlugin {
 
     @Override
     public String scheme() {
@@ -35,8 +34,13 @@ public class MailHousecreamPlugin implements OutHousecreamPlugin, InHousecreamPl
     }
 
     @Override
-    public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, OutPoint outpoint) {
+    public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, Point point) {
         // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Float readValue(Message in) throws Exception {
         return null;
     }
 
@@ -50,10 +54,5 @@ public class MailHousecreamPlugin implements OutHousecreamPlugin, InHousecreamPl
         return null;
     }
 
-    @Override
-    public Float readInValue(Message in) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }

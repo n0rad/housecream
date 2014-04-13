@@ -6,7 +6,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import org.housecream.server.api.resource.Security.Scopes;
+import org.housecream.server.api.Security;
+import org.housecream.server.api.Security.Scopes;
 import fr.norad.jaxrs.oauth2.api.Client;
 import fr.norad.jaxrs.oauth2.api.ClientNotFoundException;
 

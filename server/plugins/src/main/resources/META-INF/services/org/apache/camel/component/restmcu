@@ -1,1 +1,1 @@
-class=org.housecream.camel.restmcu.RestMcuComponent
+class=org.housecream.plugins.restmcu.RestMcuComponent

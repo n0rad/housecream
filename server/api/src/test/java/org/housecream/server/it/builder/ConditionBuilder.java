@@ -16,7 +16,7 @@
  */
 package org.housecream.server.it.builder;
 
-import org.housecream.server.api.domain.Point;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Condition;
 import org.housecream.server.api.domain.rule.ConditionType;
 

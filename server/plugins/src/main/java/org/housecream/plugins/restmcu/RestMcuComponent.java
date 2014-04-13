@@ -20,6 +20,7 @@ import java.util.Map;
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultComponent;
 
+
 public class RestMcuComponent extends DefaultComponent {
 
     @Override

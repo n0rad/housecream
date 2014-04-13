@@ -1,1 +1,1 @@
-class=org.housecream.camel.solar.SolarComponent
+class=org.housecream.plugins.solar.SolarComponent

@@ -16,7 +16,7 @@
  */
 package org.housecream.server.service;
 
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import fr.norad.jaxrs.oauth2.core.service.TokenSpecService;
@@ -25,7 +25,7 @@ import fr.norad.jaxrs.oauth2.core.service.TokenSpecService;
 public class TokenService extends TokenSpecService {
 
     @Autowired
-    private HcProperties props;
+    private Config props;
 
     @Override
     protected int getDefaultRefreshTokenLifetimeSeconds() {

@@ -19,9 +19,8 @@ package org.housecream.server.router;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.housecream.plugins.api.HousecreamPlugin;
-import org.housecream.plugins.api.InHousecreamPlugin;
 import org.housecream.server.api.domain.Event;
-import org.housecream.server.api.domain.inpoint.InPoint;
+import org.housecream.server.api.domain.point.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -36,12 +35,12 @@ public class InEventTransformer implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         try {
-            InHousecreamPlugin plugin = (InHousecreamPlugin) exchange.getIn().getHeader(PLUGIN_HEADER_NAME,
+            HousecreamPlugin plugin = (HousecreamPlugin) exchange.getIn().getHeader(PLUGIN_HEADER_NAME,
                     HousecreamPlugin.class);
-            InPoint inpoint = exchange.getIn().getHeader(INPOINT_HEADER_NAME, InPoint.class);
-            Float readInValue = plugin.readInValue(exchange.getIn());
+            Point point = exchange.getIn().getHeader(INPOINT_HEADER_NAME, Point.class);
+            Float readInValue = plugin.readValue(exchange.getIn());
             Event event = new Event();
-            event.setPointId(inpoint.getId());
+            event.setPointId(point.getId());
             event.setValue(readInValue);
             exchange.getIn().setBody(event);
         } catch (Exception e) {

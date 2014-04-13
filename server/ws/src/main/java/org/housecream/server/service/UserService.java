@@ -17,7 +17,7 @@
 package org.housecream.server.service;
 
 import java.util.UUID;
-import org.housecream.server.api.domain.HcProperties;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.api.exception.UsernameAlreadyExistException;
 import org.housecream.server.storage.security.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import fr.norad.jaxrs.oauth2.core.service.UserSpecService;
 public class UserService extends UserSpecService {
 
     @Autowired
-    HcProperties props;
+    Config props;
 
     @Autowired
     UserDao userDao;

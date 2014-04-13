@@ -16,30 +16,30 @@
  */
 package org.housecream.server.it.builder;
 
-import org.housecream.server.api.domain.outPoint.OutPoint;
+import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 import org.housecream.server.api.domain.rule.TriggerType;
 
 public class ConsequenceBuilder {
 
-    public static Consequence consequence(OutPoint light, float value) {
+    public static Consequence consequence(Point point, float value) {
         Consequence consequence = new Consequence();
-        consequence.setOutPointId(light.getId());
+        consequence.setOutPointId(point.getId());
         consequence.setValue(value);
         return consequence;
     }
 
-    public static Consequence consequence(OutPoint light, int value, int delayMs) {
+    public static Consequence consequence(Point point, int value, int delayMs) {
         Consequence consequence = new Consequence();
-        consequence.setOutPointId(light.getId());
+        consequence.setOutPointId(point.getId());
         consequence.setValue(value);
         consequence.setDelayMili(delayMs);
         return consequence;
     }
 
-    public static Consequence consequence(OutPoint light, int value, int delayMs, TriggerType nonRetrigger) {
+    public static Consequence consequence(Point point, int value, int delayMs, TriggerType nonRetrigger) {
         Consequence consequence = new Consequence();
-        consequence.setOutPointId(light.getId());
+        consequence.setOutPointId(point.getId());
         consequence.setValue(value);
         consequence.setDelayMili(delayMs);
         consequence.setTriggerType(nonRetrigger);
