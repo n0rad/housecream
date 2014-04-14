@@ -1,5 +1,4 @@
 'use strict';
-
 housecream.factory('InPoints', function($resource, hcWsUrl) {
   // var res = $resource(hcWsUrl + '/inpoints/:id', {
   // id : '@id'

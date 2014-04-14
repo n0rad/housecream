@@ -1,0 +1,11 @@
+<div ng-controller="ChannelTableController">
+    <ul>
+        <li ng-repeat="plugin in plugins">
+            <a href="/admin/channel/available/{{plugin.id}}">
+                <img ng-src="{{hcWsUrl}}/channels/available/{{plugin.id}}/logo" width="100px">
+                <span class="name">{{plugin.name}}</span>
+            </a>
+        </li>
+    </ul>
+</div>
+        
