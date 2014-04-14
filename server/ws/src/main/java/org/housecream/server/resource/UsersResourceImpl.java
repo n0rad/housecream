@@ -2,14 +2,14 @@ package org.housecream.server.resource;
 
 import org.housecream.server.api.exception.UsernameAlreadyExistException;
 import org.housecream.server.api.resource.UsersResource;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.service.UserService;
 import org.housecream.server.storage.security.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import fr.norad.jaxrs.oauth2.api.User;
 import fr.norad.jaxrs.oauth2.api.UserNotFoundException;
 
-@JaxRsResource
+@JaxrsResource
 public class UsersResourceImpl implements UsersResource {
 
     @Autowired
@@ -28,7 +28,7 @@ public class UsersResourceImpl implements UsersResource {
         return userResource;
     }
 
-    @JaxRsResource
+    @JaxrsResource
     public static class UserResourceImpl implements UserResource {
 
         @Autowired

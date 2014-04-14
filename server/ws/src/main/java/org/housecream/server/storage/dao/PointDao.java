@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.housecream.server.api.domain.point.Point;
+import org.housecream.server.api.exception.PointNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
-import fr.norad.core.lang.exception.NotFoundException;
 
 @Repository
 public class PointDao {
@@ -51,10 +51,10 @@ public class PointDao {
         deleteQuery = session.prepare("DELETE FROM points WHERE id = ?");
     }
 
-    public Point find(UUID pointId) throws NotFoundException {
+    public Point find(UUID pointId) throws PointNotFoundException {
         ResultSet execute = session.execute(selectQuery.bind(pointId));
         if (execute.isExhausted()) {
-            throw new NotFoundException("Cannot found InPoint with id : " + pointId);
+            throw new PointNotFoundException("Cannot found InPoint with id : " + pointId);
         }
 
         return map(execute.one());

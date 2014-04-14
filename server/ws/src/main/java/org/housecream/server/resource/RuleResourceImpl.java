@@ -18,14 +18,14 @@ package org.housecream.server.resource;
 
 import java.util.UUID;
 import org.housecream.server.api.domain.rule.Rule;
+import org.housecream.server.api.exception.RuleNotFoundException;
 import org.housecream.server.api.resource.RulesResource.RuleResource;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.storage.dao.RuleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import fr.norad.core.lang.exception.NotFoundException;
 
-@JaxRsResource
+@JaxrsResource
 @Validated
 public class RuleResourceImpl implements RuleResource {
 
@@ -38,7 +38,7 @@ public class RuleResourceImpl implements RuleResource {
     }
 
     @Override
-    public Rule getRule(UUID ruleId) throws NotFoundException {
+    public Rule getRule(UUID ruleId) throws RuleNotFoundException {
         return ruleDao.find(ruleId);
     }
 }

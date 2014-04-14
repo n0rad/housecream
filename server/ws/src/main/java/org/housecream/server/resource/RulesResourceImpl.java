@@ -24,7 +24,7 @@ import org.drools.definition.KnowledgePackage;
 import org.housecream.server.api.domain.Order;
 import org.housecream.server.api.domain.rule.Rule;
 import org.housecream.server.api.resource.RulesResource;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.engine.EngineProcessor;
 import org.housecream.server.engine.builder.DroolsRuleBuilder;
 import org.housecream.server.storage.dao.RuleDao;
@@ -33,7 +33,7 @@ import org.springframework.validation.annotation.Validated;
 import fr.norad.client.bean.validation.js.domain.ClientValidatorInfo;
 import fr.norad.client.bean.validation.js.service.ValidationService;
 
-@JaxRsResource
+@JaxrsResource
 @Validated
 public class RulesResourceImpl implements RulesResource {
 

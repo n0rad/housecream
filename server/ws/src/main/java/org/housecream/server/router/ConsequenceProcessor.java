@@ -61,7 +61,7 @@ public class ConsequenceProcessor implements Processor {
         }
 
         Point point = pointDao.find(action.getOutPointId());
-        HousecreamPlugin plugin = (HousecreamPlugin) pluginService.getPluginFromScheme(point.getUri()
+        HousecreamPlugin plugin = (HousecreamPlugin) pluginService.getPlugin(point.getUri()
                 .getScheme()); //TODO cast should not be necessary
         Pair<Object, Map<String, Object>> bodyAndHeaders = plugin.prepareOutBodyAndHeaders(action, point);
 

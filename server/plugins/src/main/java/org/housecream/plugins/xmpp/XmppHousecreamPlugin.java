@@ -17,20 +17,19 @@
 package org.housecream.plugins.xmpp;
 
 import java.net.URI;
+import java.net.URL;
 import java.util.Map;
 import javax.validation.ValidationException;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
 import org.housecream.plugins.api.HousecreamPlugin;
+import org.housecream.server.api.domain.Plugin;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 
 public class XmppHousecreamPlugin implements HousecreamPlugin {
 
-    @Override
-    public String scheme() {
-        return "axmpp";
-    }
+    private Plugin plugin = Plugin.plugin("axmpp", "Xmpp", "desc");
 
     @Override
     public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, Point point) {
@@ -41,6 +40,16 @@ public class XmppHousecreamPlugin implements HousecreamPlugin {
     @Override
     public Float readValue(Message in) throws Exception {
         return null;
+    }
+
+    @Override
+    public Plugin plugin() {
+        return plugin;
+    }
+
+    @Override
+    public URL getLogo() {
+        return getClass().getResource("qq");
     }
 
     @Override

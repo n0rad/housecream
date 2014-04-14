@@ -14,7 +14,12 @@ Feature:
     Then a todo eat should be triggered
 
   Scenario:
+    Given an openweathermap point giving current rain
+    And a velux window closable engine
+    When current weather is raining
+    Then close velux window
 
+  Scenario:
 
 
 

@@ -23,8 +23,9 @@ import javax.annotation.PostConstruct;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.point.PointType;
 import org.housecream.server.api.exception.PluginNotFoundException;
+import org.housecream.server.api.exception.PointNotFoundException;
 import org.housecream.server.api.resource.PointsResource;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.engine.EngineProcessor;
 import org.housecream.server.router.DynamicRouteManager;
 import org.housecream.server.service.PluginService;
@@ -33,9 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import fr.norad.client.bean.validation.js.domain.ClientValidatorInfo;
 import fr.norad.client.bean.validation.js.service.ValidationService;
-import fr.norad.core.lang.exception.NotFoundException;
 
-@JaxRsResource
+@JaxrsResource
 @Validated
 public class PointsResourceImpl implements PointsResource {
 
@@ -75,7 +75,7 @@ public class PointsResourceImpl implements PointsResource {
             try {
                 Point previous = pointDao.find(inPoint.getId());
                 routeManager.removeInRoute(previous);
-            } catch (NotFoundException e) {
+            } catch (PointNotFoundException e) {
                 routeManager.removeInRoute(inPoint);
             }
         }
@@ -106,7 +106,7 @@ public class PointsResourceImpl implements PointsResource {
         for (Point inPoint : inPoints) {
             try {
                 inPoint.setValue(engine.getPointState(inPoint.getId()));
-            } catch (NotFoundException e) {
+            } catch (PointNotFoundException e) {
                 // nothing to do if we don't have the value in holder
             }
         }

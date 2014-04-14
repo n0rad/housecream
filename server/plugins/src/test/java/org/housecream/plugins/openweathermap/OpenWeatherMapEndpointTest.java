@@ -1,5 +1,6 @@
 package org.housecream.plugins.openweathermap;
 
+import java.net.URL;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -13,6 +14,12 @@ public class OpenWeatherMapEndpointTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:result2")
     protected MockEndpoint result2;
+
+    @Test
+    public void test() {
+        URL resource = getClass().getResource("openweathermap.webp");
+
+    }
 
     @Test
     public void should_send_new_line_value() throws Exception {

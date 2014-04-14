@@ -18,6 +18,7 @@ package org.housecream.plugins.restmcu;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Map;
 import javax.validation.ValidationException;
 import org.apache.camel.Message;
@@ -25,6 +26,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.housecream.plugins.api.HousecreamPlugin;
 import org.housecream.restmcu.api.domain.line.RestMcuLineNotification;
+import org.housecream.server.api.domain.Plugin;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 import com.google.common.base.Preconditions;
@@ -34,10 +36,7 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     private static final String SCHEME = "restmcu";
     public static final int DEFAULT_COMPONENT_PORT = 80;
 
-    @Override
-    public String scheme() {
-        return SCHEME;
-    }
+    private Plugin plugin = Plugin.plugin("restmcu", "RestMcu", "RestMcu is a generic program for micro-controllers with a TCP network interface.");
 
     @Override
     public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, Point point) {
@@ -50,6 +49,16 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
         Preconditions.checkNotNull(notif, "Notification cannot be null");
         Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
         return notif.getValue();
+    }
+
+    @Override
+    public Plugin plugin() {
+        return plugin;
+    }
+
+    @Override
+    public URL getLogo() {
+        return getClass().getResource("qq");
     }
 
     @Override

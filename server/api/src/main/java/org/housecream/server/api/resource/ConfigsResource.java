@@ -32,12 +32,12 @@ public interface ConfigsResource {
     @GET
     Config getConfigs();
 
-    @Path("{configName}")
-    ConfigResource config(@PathParam("configName") String name);
+    @Path("{propertyName}")
+    PropertyResource property(@PathParam("propertyName") String name);
 
-    interface ConfigResource {
+    interface PropertyResource {
         @PUT
         @Security(Scopes.CONFIG_WRITE)
-        void setConfig(@PathParam("configName") String name, String value);
+        void setProperty(@PathParam("propertyName") String name, String value);
     }
 }

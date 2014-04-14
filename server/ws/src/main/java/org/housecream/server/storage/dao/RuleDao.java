@@ -23,6 +23,7 @@ import java.util.UUID;
 import org.housecream.server.api.domain.rule.Condition;
 import org.housecream.server.api.domain.rule.Consequence;
 import org.housecream.server.api.domain.rule.Rule;
+import org.housecream.server.api.exception.RuleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.datastax.driver.core.PreparedStatement;
@@ -67,8 +68,12 @@ public class RuleDao {
                 toJson(rule.getConsequences())));
     }
 
-    public Rule find(UUID ruleId) {
-        return map(session.execute(selectStatement.bind(ruleId)).one());
+    public Rule find(UUID ruleId) throws RuleNotFoundException {
+        ResultSet execute = session.execute(selectStatement.bind(ruleId));
+        if (execute.isExhausted()) {
+            throw new RuleNotFoundException("Cannot found Rule with id : " + ruleId);
+        }
+        return map(execute.one());
     }
 
     public List<Rule> findAll() {

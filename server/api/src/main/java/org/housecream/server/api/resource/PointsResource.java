@@ -83,7 +83,7 @@ public interface PointsResource {
         @PUT
         @Path("/value")
         @Security(POINT_WRITE)
-        void setValue(UUID pointId, Object value) throws PointNotFoundException;
+        void setValue(UUID pointId, Object value) throws Exception;
 
     }
 

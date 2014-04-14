@@ -39,14 +39,14 @@ public class ConfigDao {
     @Autowired
     public ConfigDao(Session session) {
         this.session = session;
-        updateField = session.prepare("UPDATE config SET configs[?] = ? WHERE id = 'Housecream'");
-        update = session.prepare("UPDATE config SET configs = ? WHERE id = 'Housecream'");
+        updateField = session.prepare("UPDATE config SET properties[?] = ? WHERE id = 'Housecream'");
+        update = session.prepare("UPDATE config SET properties = ? WHERE id = 'Housecream'");
         select = session.prepare("SELECT * FROM config WHERE id = 'Housecream'");
     }
 
     public void loadConfig(Config props) {
         ResultSet execute = session.execute(select.bind());
-        Map<String, String> configs = execute.one().getMap("configs", String.class, String.class);
+        Map<String, String> configs = execute.one().getMap("properties", String.class, String.class);
         props.importMap(configs);
     }
 

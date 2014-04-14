@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import javax.annotation.PostConstruct;
 import org.housecream.plugins.api.HousecreamPlugin;
+import org.housecream.server.api.domain.Plugin;
 import org.housecream.server.api.exception.PluginNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +47,17 @@ public class PluginService {
         }
     }
 
-    public List<HousecreamPlugin> getPlugins() {
+    public List<Plugin> getDescriptions() {
+        List<Plugin> descriptions = new ArrayList<>();
+        for (HousecreamPlugin housecreamPlugin : getPlugins()) {
+            descriptions.add(housecreamPlugin.plugin());
+        }
+        return descriptions;
+    }
+
+    private List<HousecreamPlugin> getPlugins() {
         Iterator<HousecreamPlugin> pluginIt = pluginLoader.iterator();
-        List<HousecreamPlugin> result = new ArrayList<HousecreamPlugin>();
+        List<HousecreamPlugin> result = new ArrayList<>();
         while (pluginIt.hasNext()) {
             HousecreamPlugin plugin = pluginIt.next();
             result.add(plugin);
@@ -58,7 +67,7 @@ public class PluginService {
 
     public URI validateAndNormalizeURI(URI uri) throws PluginNotFoundException {
         Preconditions.checkNotNull(uri, "uri cannot be null");
-        HousecreamPlugin pluginFromScheme = getPluginFromScheme(uri.getScheme());
+        HousecreamPlugin pluginFromScheme = getPlugin(uri.getScheme());
         URI normalizedUri = pluginFromScheme.validateAndNormalizeUri(uri);
         if (normalizedUri == null) {
             return uri;
@@ -66,15 +75,15 @@ public class PluginService {
         return normalizedUri;
     }
 
-    public HousecreamPlugin getPluginFromScheme(String prefix) throws PluginNotFoundException {
-        Preconditions.checkNotNull(prefix, "prefix cannot be null");
+    public HousecreamPlugin getPlugin(String id) throws PluginNotFoundException {
+        Preconditions.checkNotNull(id, "id cannot be null");
         Iterator<HousecreamPlugin> pluginIt = pluginLoader.iterator();
         while (pluginIt.hasNext()) {
             HousecreamPlugin plugin = pluginIt.next();
-            if (prefix.equals(plugin.scheme())) {
+            if (id.equals(plugin.plugin().getId())) {
                 return plugin;
             }
         }
-        throw new PluginNotFoundException("Cannot found plugin for prefix : " + prefix);
+        throw new PluginNotFoundException("Cannot found plugin for id : " + id);
     }
 }

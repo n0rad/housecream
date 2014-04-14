@@ -3,13 +3,13 @@ package org.housecream.server.resource;
 
 import java.util.List;
 import org.housecream.server.api.resource.ClientsResource;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.storage.security.ClientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import fr.norad.jaxrs.oauth2.api.Client;
 import fr.norad.jaxrs.oauth2.api.ClientNotFoundException;
 
-@JaxRsResource
+@JaxrsResource
 public class ClientsResourceImpl implements ClientsResource {
 
     @Autowired
@@ -28,7 +28,7 @@ public class ClientsResourceImpl implements ClientsResource {
         return clientResource;
     }
 
-    @JaxRsResource
+    @JaxrsResource
     public static class ClientResourceImpl implements ClientResource {
         @Autowired
         private ClientDao clientDao;

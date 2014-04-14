@@ -27,5 +27,5 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier
 @Component
-public @interface JaxRsResource {
+public @interface JaxrsResource {
 }

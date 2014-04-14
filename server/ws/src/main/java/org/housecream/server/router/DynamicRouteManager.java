@@ -50,7 +50,7 @@ public class DynamicRouteManager extends RouteBuilder {
     public void registerInRoute(Point point) {
         try {
             URI uri = point.getUri();
-            HousecreamPlugin plugin = pluginService.getPluginFromScheme(uri.getScheme());
+            HousecreamPlugin plugin = pluginService.getPlugin(uri.getScheme());
             RouteDefinition routeDefinition;
             if (plugin.isCommand()) {
                 routeDefinition = from(point.getUri().toString()).to(StaticRouteManager.DIRECT_COMMAND);

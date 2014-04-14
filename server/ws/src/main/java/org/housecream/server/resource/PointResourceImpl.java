@@ -21,7 +21,7 @@ import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.exception.PluginNotFoundException;
 import org.housecream.server.api.exception.PointNotFoundException;
 import org.housecream.server.api.resource.PointsResource.PointResource;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.command.CommandService;
 import org.housecream.server.engine.EngineProcessor;
 import org.housecream.server.engine.OutEvent;
@@ -29,9 +29,8 @@ import org.housecream.server.router.DynamicRouteManager;
 import org.housecream.server.storage.dao.PointDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import fr.norad.core.lang.exception.NotFoundException;
 
-@JaxRsResource
+@JaxrsResource
 @Validated
 public class PointResourceImpl implements PointResource {
 
@@ -52,7 +51,7 @@ public class PointResourceImpl implements PointResource {
         Point point = pointDao.find(pointId);
         try {
             point.setValue(engine.getPointState(pointId));
-        } catch (NotFoundException e) {
+        } catch (PointNotFoundException e) {
             // no current value for point
         }
         return point;
@@ -84,7 +83,7 @@ public class PointResourceImpl implements PointResource {
     }
 
     @Override
-    public void setValue(UUID outPointId, Object value) throws PointNotFoundException {
-        commandService.processOutEvent(new OutEvent(outPointId, value));
+    public void setValue(UUID outPointId, Object value) throws Exception {
+        commandService.processOutEvent(new OutEvent(outPointId, (Float) value));
     }
 }

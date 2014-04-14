@@ -17,16 +17,20 @@
 package org.housecream.plugins.api;
 
 import java.net.URI;
+import java.net.URL;
 import java.util.Map;
 import javax.validation.ValidationException;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
+import org.housecream.server.api.domain.Plugin;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 
 public interface HousecreamPlugin {
 
-    String scheme();
+    Plugin plugin();
+
+    URL getLogo();
 
     //TODO MOVE
     //

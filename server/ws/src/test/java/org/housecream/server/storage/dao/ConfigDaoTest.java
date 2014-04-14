@@ -28,12 +28,11 @@ public class ConfigDaoTest {
     public CassandraDaoRule<ConfigDao> db = new CassandraDaoRule<>(ConfigDao.class);
 
     @Test
-    public void should_write_config() throws Exception {
+    public void should_override_config_with_db_values() throws Exception {
         Config props = new Config();
-//        db.dao().saveConfig(props);
-//
         Config otherProps = new Config();
         otherProps.setValue("securityDefaultRefreshTokenLifetimeSeconds", "424242433");
+
         db.dao().loadConfig(otherProps);
 
         Assertions.assertThat(otherProps).isEqualTo(props);

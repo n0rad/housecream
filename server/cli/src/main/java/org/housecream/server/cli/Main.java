@@ -116,7 +116,7 @@ public class Main {
         if (argManager.getHousecreamHost().isSet()) {
             connector.setHost(argManager.getHousecreamHost().getParamOneValue().getHostName());
         }
-        server.setConnectors(new Connector[] { connector });
+        server.setConnectors(new Connector[]{connector});
 
         WebAppContext context = new WebAppContext();
         context.setServer(server);

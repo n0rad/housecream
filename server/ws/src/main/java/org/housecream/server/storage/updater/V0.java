@@ -37,7 +37,7 @@ public class V0 extends ApplicationVersion {
                     public void runUpdate() {
                         session.execute("CREATE TABLE config(" +
                                 "id text PRIMARY KEY," +
-                                "configs map<text, text>)");
+                                "properties map<text, text>)");
                         new ConfigDao(session).saveConfig(props); // todo using dao will cause pb
                     }
                 }, new Update("create business") {
@@ -52,7 +52,7 @@ public class V0 extends ApplicationVersion {
                                 "month int," +
                                 "date timestamp," +
                                 "value blob," +
-                                "PRIMARY KEY ((year, month), date)");
+                                "PRIMARY KEY ((year, month), date))");
 
                         session.execute("CREATE TABLE rules(" +
                                 "id UUID PRIMARY KEY," +

@@ -24,13 +24,14 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Rule;
+import org.housecream.server.api.exception.PointNotFoundException;
+import org.housecream.server.api.exception.RuleNotFoundException;
 import org.housecream.server.engine.OutEvent;
 import org.housecream.server.storage.dao.PointDao;
 import org.housecream.server.storage.dao.RuleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.google.common.base.Charsets;
-import fr.norad.core.lang.exception.NotFoundException;
 import fr.norad.typed.command.line.parser.argument.args.CliNoParamArgument;
 import fr.norad.typed.command.line.parser.argument.args.CliOneParamArgument;
 
@@ -69,7 +70,7 @@ public class CliProcessor implements Processor {
     }
 
     private void processRule(CliNoParamArgument rule, CliOneParamArgument<UUID> id, PrintStream ps)
-            throws NotFoundException {
+            throws RuleNotFoundException {
         if (id.isSet()) {
             Rule find = ruleDao.find(id.getParamOneValue());
             ps.print(find.toString());
@@ -91,7 +92,7 @@ public class CliProcessor implements Processor {
 //    }
 
     private void processOutPoint(CliNoParamArgument outpoint, CliOneParamArgument<UUID> id,
-                                 CliOneParamArgument<Float> value, PrintStream ps) throws NotFoundException {
+                                 CliOneParamArgument<Float> value, PrintStream ps) throws PointNotFoundException {
         if (id.isSet()) {
             if (value.isSet()) {
                 try {

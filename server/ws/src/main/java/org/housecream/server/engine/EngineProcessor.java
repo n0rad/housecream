@@ -41,7 +41,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import fr.norad.core.lang.exception.NotFoundException;
 
 @Component
 public class EngineProcessor implements Processor {
@@ -103,7 +102,7 @@ public class EngineProcessor implements Processor {
                             ksession.retract(consequenceHandler);
                             continue;
                         }
-                    } catch (NotFoundException e) {
+                    } catch (PointNotFoundException e) {
                         // nothing to do if there is no point state
                     }
                 }
@@ -143,7 +142,7 @@ public class EngineProcessor implements Processor {
     public float getPointState(UUID pointId) throws PointNotFoundException {
         Pair<PointState, FactHandle> pair = stateService.get(pointId);
         if (pair == null) {
-            throw new Exception("Point state not found for pointId : " + pointId);
+            throw new PointNotFoundException("Point state not found for pointId : " + pointId);
         }
         return pair.getLeft().getValue();
     }

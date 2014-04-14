@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.housecream.server</groupId>
-	<artifactId>housecream-server-cli</artifactId>
-	<name>Housecream Server - Cli</name>
+    <groupId>org.housecream.server</groupId>
+    <artifactId>housecream-server-cli</artifactId>
+    <name>Housecream Server - Cli</name>
 
-	<parent>
-		<groupId>org.housecream</groupId>
-		<artifactId>housecream</artifactId>
-		<version>0.1-SNAPSHOT</version>
-		<relativePath>../../</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.housecream</groupId>
+        <artifactId>housecream</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../../</relativePath>
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>fr.norad.typed.command.line.parser</groupId>
-			<artifactId>typed-command-line-parser</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.norad.logback.prettier</groupId>
-			<artifactId>logback-prettier</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.norad.operating.system.specific</groupId>
-			<artifactId>operating-system-specific</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.typed.command.line.parser</groupId>
+            <artifactId>typed-command-line-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.logback.prettier</groupId>
+            <artifactId>logback-prettier</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.norad.operating.system.specific</groupId>
+            <artifactId>operating-system-specific</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<excludeScope>runtime</excludeScope>
-							<includeScope>compile</includeScope>
-							<outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <excludeScope>runtime</excludeScope>
+                            <includeScope>compile</includeScope>
+                            <outputDirectory>${project.build.directory}/classes/META-INF/lib/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 

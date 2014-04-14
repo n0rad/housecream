@@ -36,24 +36,24 @@ public class OpenWeatherMapConsumerRunner implements Runnable {
 
     public Object extractRequestedData(OpenWeatherMapResultForecast result) {
         switch (endpoint.getType()) {
-            case wind:
-                return result.getWind();
-            case temperature:
-                return result.getMain().getTemperature();
-            case max_temperature:
-                return result.getMain().getTemperatureMax();
-            case min_temperature:
-                return result.getMain().getTemperatureMin();
-            case sunrise:
-                return result.getSystem().getSunrise();
-            case sunset:
-                return result.getSystem().getSunset();
-            case condition:
-                ////////////////////////////////////////////////
-            case pressure:
-                return result.getMain().getPressure();
-            case humidity:
-                return result.getMain().getHumidity();
+//            case wind:
+//                return result.getWind();
+//            case temperature:
+//                return result.getMain().getTemperature();
+//            case max_temperature:
+//                return result.getMain().getTemperatureMax();
+//            case min_temperature:
+//                return result.getMain().getTemperatureMin();
+//            case sunrise:
+//                return result.getSystem().getSunrise();
+//            case sunset:
+//                return result.getSystem().getSunset();
+//            case condition:
+//                ////////////////////////////////////////////////
+//            case pressure:
+//                return result.getMain().getPressure();
+//            case humidity:
+//                return result.getMain().getHumidity();
             default:
                 throw new IllegalStateException("Don't know how to get value of type :" + endpoint.getType());
         }

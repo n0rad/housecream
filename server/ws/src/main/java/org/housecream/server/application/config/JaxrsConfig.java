@@ -28,7 +28,7 @@ import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.message.Message;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,7 +57,7 @@ public class JaxrsConfig {
 
     @Bean(name = "restRouter")
     @DependsOn(JaxrsConfig.CXF_BUS_BEAN)
-    public Server server(@JaxRsResource List<Object> resources) {
+    public Server server(@JaxrsResource List<Object> resources) {
         JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
         sf.setInInterceptors(messageInterceptors(securedAnnotationInterceptor));
         sf.getInInterceptors().add(new LoggingInInterceptor());

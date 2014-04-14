@@ -68,8 +68,15 @@ public class Config {
                 field.setInt(this, Integer.parseInt(value));
             } else if (type.equals(Boolean.class) || type.equals(Boolean.TYPE)) {
                 field.set(this, Boolean.parseBoolean(value));
+            } else if (type.equals(Locale.class)) {
+                String[] split = value.split("_");
+                field.set(this, new Locale(split[0], split[1]));
+            } else if (type.equals(TimeZone.class)) {
+                field.set(this, TimeZone.getTimeZone(value));
+            } else if (type.isEnum()) {
+                field.set(this, Enum.valueOf((Class<? extends Enum>) type, value));
             } else {
-                field.set(this, value.toString());
+                field.set(this, value);
             }
         } catch (Exception e) {
             throw new IllegalStateException(e);

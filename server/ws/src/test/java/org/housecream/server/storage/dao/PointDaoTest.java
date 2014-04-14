@@ -21,10 +21,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import org.housecream.server.api.domain.point.Point;
+import org.housecream.server.api.exception.PointNotFoundException;
 import org.housecream.server.storage.CassandraDaoRule;
 import org.junit.Rule;
 import org.junit.Test;
-import fr.norad.core.lang.exception.NotFoundException;
 
 public class PointDaoTest {
 
@@ -104,7 +104,7 @@ public class PointDaoTest {
         assertThat(db.dao().findAll()).isEmpty();
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = PointNotFoundException.class)
     public void should_throw_exception_on_not_found() throws Exception {
         db.dao().find(UUID.randomUUID());
     }

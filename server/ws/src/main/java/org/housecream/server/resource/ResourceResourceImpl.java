@@ -20,10 +20,10 @@ import java.io.InputStreamReader;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import org.housecream.server.application.JaxRsResource;
+import org.housecream.server.application.JaxrsResource;
 import com.google.common.io.CharStreams;
 
-@JaxRsResource
+@JaxrsResource
 @Path("/resources")
 public class ResourceResourceImpl {
 

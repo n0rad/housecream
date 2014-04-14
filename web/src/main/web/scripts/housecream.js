@@ -1,6 +1,6 @@
 'use strict';
 
-var housecream = angular.module('housecream', ['ui.select2', 'ngResource', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.tabs' ]);
+var housecream = angular.module('housecream', ['ngRoute', 'ui.select2', 'ngResource', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.tabs' ]);
 
 housecream.constant('hcWsUrl', hcWsUrl);
 housecream.constant('hcVersion', hcVersion);
