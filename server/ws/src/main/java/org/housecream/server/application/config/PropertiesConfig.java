@@ -17,8 +17,9 @@
 package org.housecream.server.application.config;
 
 
-import java.lang.reflect.Field;
+import java.util.Map;
 import org.housecream.server.api.domain.config.Config;
+import org.housecream.server.application.ConfigHolder;
 import org.housecream.server.storage.dao.ConfigDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,25 +39,9 @@ public class PropertiesConfig {
     }
 
     @Bean
-    public Config properties(ConfigDao propsDao) {
-        Config properties = new Config();
-        propsDao.loadConfig(properties);
-        Field[] fields = properties.getClass().getDeclaredFields();
-        log.info("########### Properties ############");
-        for (Field field : fields) {
-            try {
-                field.setAccessible(true);
-                if (field.getName().endsWith("Secret")) {
-                    log.info("## " + field.getName() + " = -> SECRET VALUE");
-                } else {
-                    log.info("## " + field.getName() + " = " + field.get(properties));
-                }
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException(e);
-            }
-        }
-        log.info("###################################");
-        return properties;
+    public Config config(ConfigDao configDao, ConfigHolder configHolder) {
+        Map<String, String> properties = configDao.loadConfig();
+        configHolder.setValues(properties);
+        return configHolder.getConfigObject(Config.class);
     }
-
 }

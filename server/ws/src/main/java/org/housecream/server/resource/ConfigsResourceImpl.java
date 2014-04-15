@@ -17,8 +17,10 @@
 package org.housecream.server.resource;
 
 
-import org.housecream.server.api.domain.config.Config;
+import java.util.Set;
+import org.housecream.server.api.domain.config.PropertyDefinition;
 import org.housecream.server.api.resource.ConfigsResource;
+import org.housecream.server.application.ConfigHolder;
 import org.housecream.server.application.JaxrsResource;
 import org.housecream.server.storage.dao.ConfigDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,13 @@ public class ConfigsResourceImpl implements ConfigsResource {
     @Autowired
     private PropertyResourceImpl configResource;
 
+
     @Autowired
-    private Config config;
+    private ConfigHolder configHolder;
 
     @Override
-    public Config getConfigs() {
-        return config;
+    public Set<PropertyDefinition> getProperties() {
+        return configHolder.getPropertiesDefinition();
     }
 
     @Override
@@ -47,12 +50,12 @@ public class ConfigsResourceImpl implements ConfigsResource {
         private ConfigDao configDao;
 
         @Autowired
-        private Config config;
+        private ConfigHolder configHolder;
 
         @Override
         public void setProperty(String name, String value) {
-            configDao.saveConfig(name, value);
-            config.setValue(name, value);
+            configDao.saveProperty(name, value);
+            configHolder.setValue(name, value);
         }
     }
 }

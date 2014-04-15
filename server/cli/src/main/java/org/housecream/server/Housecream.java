@@ -143,7 +143,7 @@ public enum Housecream {
             if (env != null) {
                 return new File(env.trim());
             }
-        } catch (Throwable _) {
+        } catch (Throwable e) {
         }
         return findDefaultOsHomeDirectory();
     }

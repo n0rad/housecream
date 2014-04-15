@@ -17,24 +17,11 @@
 package org.housecream.server.storage.dao;
 
 
-import org.fest.assertions.api.Assertions;
-import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.storage.CassandraDaoRule;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ConfigDaoTest {
     @Rule
     public CassandraDaoRule<ConfigDao> db = new CassandraDaoRule<>(ConfigDao.class);
 
-    @Test
-    public void should_override_config_with_db_values() throws Exception {
-        Config props = new Config();
-        Config otherProps = new Config();
-        otherProps.setValue("securityDefaultRefreshTokenLifetimeSeconds", "424242433");
-
-        db.dao().loadConfig(otherProps);
-
-        Assertions.assertThat(otherProps).isEqualTo(props);
-    }
 }

@@ -3,7 +3,8 @@
 var housecream = angular.module('housecream', ['ngRoute', 'ui.select2', 'ngResource', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.tabs' ]);
 
 housecream.constant('hcWsUrl', hcWsUrl);
-housecream.constant('hcVersion', hcVersion);
+housecream.constant('hcVersion', hcVersion)
+housecream.constant('webPath', fullWebPath);
 
 housecream.config(function ($routeProvider, $locationProvider) {
 
@@ -20,6 +21,9 @@ housecream.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'views/admin/Admin.html'
     }).when('/admin/:type/:id', {
         controller: 'AdminController',
+        templateUrl: 'views/admin/Admin.html'
+    }).when('/admin/channel/available/:id', {
+        controller: 'PluginController',
         templateUrl: 'views/admin/Admin.html'
     }).when('/zone/:zoneId', {
         controller: 'ZoneController',

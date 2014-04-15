@@ -20,16 +20,11 @@ import static com.datastax.driver.core.querybuilder.QueryBuilder.insertInto;
 import static com.google.common.collect.Sets.newHashSet;
 import static fr.norad.updater.Version.V;
 import org.housecream.server.api.Security.Scopes;
-import org.housecream.server.api.domain.config.Config;
-import org.housecream.server.application.security.RandomStringGenerator;
-import org.housecream.server.storage.dao.ConfigDao;
 import com.datastax.driver.core.Session;
 import fr.norad.updater.ApplicationVersion;
 import fr.norad.updater.Update;
 
 public class V0 extends ApplicationVersion {
-
-    private static final Config props = new Config().setSecurityGlobalSaltSecret(new RandomStringGenerator().base64(42));
 
     public V0(final Session session) {
         super(V(0), new Update("Create config") {
@@ -38,7 +33,6 @@ public class V0 extends ApplicationVersion {
                         session.execute("CREATE TABLE config(" +
                                 "id text PRIMARY KEY," +
                                 "properties map<text, text>)");
-                        new ConfigDao(session).saveConfig(props); // todo using dao will cause pb
                     }
                 }, new Update("create business") {
                     @Override

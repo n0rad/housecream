@@ -25,7 +25,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 public class SolarConsumer extends DefaultConsumer {
 
     private static TaskScheduler scheduler = new ConcurrentTaskScheduler();
-    private ScheduledFuture<SolarConsumerRunner> schedule;
+    private ScheduledFuture<?> schedule;
 
     public SolarConsumer(SolarEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
@@ -47,7 +47,7 @@ public class SolarConsumer extends DefaultConsumer {
         super.doStop();
     }
 
-    public ScheduledFuture<SolarConsumerRunner> getSchedule() {
+    public ScheduledFuture<?> getSchedule() {
         return schedule;
     }
 

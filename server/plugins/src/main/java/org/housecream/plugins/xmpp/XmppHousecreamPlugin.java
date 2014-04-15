@@ -23,13 +23,22 @@ import javax.validation.ValidationException;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
 import org.housecream.plugins.api.HousecreamPlugin;
-import org.housecream.server.api.domain.Plugin;
+import org.housecream.plugins.gmail.GoogleServiceConfig;
+import org.housecream.server.api.domain.PluginDescription;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 
 public class XmppHousecreamPlugin implements HousecreamPlugin {
 
-    private Plugin plugin = Plugin.plugin("axmpp", "Xmpp", "desc");
+    private final PluginDescription pluginDescription;
+
+    public XmppHousecreamPlugin() {
+        pluginDescription = new PluginDescription()
+                .setId("axmpp")
+                .setName("Xmpp")
+                .setDescription("desc")
+                .setConfigClass(GoogleServiceConfig.class);
+    }
 
     @Override
     public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, Point point) {
@@ -38,13 +47,13 @@ public class XmppHousecreamPlugin implements HousecreamPlugin {
     }
 
     @Override
-    public Float readValue(Message in) throws Exception {
+    public Float readValue(Message in) {
         return null;
     }
 
     @Override
-    public Plugin plugin() {
-        return plugin;
+    public PluginDescription description() {
+        return pluginDescription;
     }
 
     @Override

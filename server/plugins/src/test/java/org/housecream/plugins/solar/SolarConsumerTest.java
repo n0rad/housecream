@@ -47,7 +47,7 @@ public class SolarConsumerTest {
     public void should_stop_and_remove_schedule_on_stop() throws Exception {
         SolarConsumer solarConsumer = new SolarConsumer(endpoint, processor);
         solarConsumer.start();
-        ScheduledFuture<SolarConsumerRunner> schedule = solarConsumer.getSchedule();
+        ScheduledFuture<?> schedule = solarConsumer.getSchedule();
 
         solarConsumer.stop();
 

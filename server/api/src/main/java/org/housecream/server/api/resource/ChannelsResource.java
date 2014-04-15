@@ -2,12 +2,14 @@ package org.housecream.server.api.resource;
 
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import org.housecream.server.api.domain.Plugin;
+import org.housecream.server.api.domain.PluginDescription;
 import org.housecream.server.api.domain.channel.Channel;
 import org.housecream.server.api.domain.channel.ChannelNotFoundException;
 import org.housecream.server.api.exception.PluginNotFoundException;
@@ -28,23 +30,29 @@ public interface ChannelsResource {
 
     interface PluginsResource {
         @GET
-        List<Plugin> descriptions();
+        List<PluginDescription> descriptions();
 
         @Path("/{id}")
         PluginResource plugin(@PathParam("id") String id);
     }
 
     interface PluginResource {
-        @POST
+        @GET
         @Path("/activate")
-        void activate(@PathParam("id") String id) throws PluginNotFoundException;
+        void activate(@PathParam("id") String id,
+                      @Context HttpServletRequest request,
+                      @Context HttpServletResponse response) throws PluginNotFoundException;
+
+        @GET
+        @Path("/activate/callback")
+        void callback(@PathParam("id") String id) throws PluginNotFoundException;
 
         @GET
         @Path("/logo")
         Response getLogo(@PathParam("id") String id) throws IOException, PluginNotFoundException;
 
         @GET
-        Plugin getPlugin(@PathParam("id") String id) throws PluginNotFoundException;
+        PluginDescription getPlugin(@PathParam("id") String id) throws PluginNotFoundException;
     }
 
     interface ChannelResource {

@@ -1,6 +1,7 @@
 package org.housecream.server.it.core.api;
 
-import org.housecream.server.api.domain.config.Config;
+import java.util.Set;
+import org.housecream.server.api.domain.config.PropertyDefinition;
 import org.housecream.server.api.resource.ConfigsResource;
 import org.housecream.server.it.core.ItSession;
 
@@ -11,8 +12,8 @@ public class PropertiesApi {
         this.session = session;
     }
 
-    public Config getProperties() {
-        return session.getServer().getResource(ConfigsResource.class, session).getConfigs();
+    public Set<PropertyDefinition> getProperties() {
+        return session.getServer().getResource(ConfigsResource.class, session).getProperties();
     }
 
     public void setProperty(String name, Object value) {

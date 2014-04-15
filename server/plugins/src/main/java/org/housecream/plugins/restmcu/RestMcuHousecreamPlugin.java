@@ -25,8 +25,9 @@ import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.housecream.plugins.api.HousecreamPlugin;
+import org.housecream.plugins.gmail.GoogleServiceConfig;
 import org.housecream.restmcu.api.domain.line.RestMcuLineNotification;
-import org.housecream.server.api.domain.Plugin;
+import org.housecream.server.api.domain.PluginDescription;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 import com.google.common.base.Preconditions;
@@ -36,7 +37,15 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     private static final String SCHEME = "restmcu";
     public static final int DEFAULT_COMPONENT_PORT = 80;
 
-    private Plugin plugin = Plugin.plugin("restmcu", "RestMcu", "RestMcu is a generic program for micro-controllers with a TCP network interface.");
+    private final PluginDescription pluginDescription;
+
+    public RestMcuHousecreamPlugin() {
+        pluginDescription = new PluginDescription()
+                .setId("restmcu")
+                .setName("RestMcu")
+                .setDescription("RestMcu is a generic program for micro-controllers with a TCP network interface.")
+                .setConfigClass(GoogleServiceConfig.class);
+    }
 
     @Override
     public Pair<Object, Map<String, Object>> prepareOutBodyAndHeaders(Consequence action, Point point) {
@@ -44,7 +53,7 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     }
 
     @Override
-    public Float readValue(Message in) throws Exception {
+    public Float readValue(Message in) {
         RestMcuLineNotification notif = in.getBody(RestMcuLineNotification.class);
         Preconditions.checkNotNull(notif, "Notification cannot be null");
         Preconditions.checkNotNull(notif.getSource(), "Source of notification cannot be null");
@@ -52,8 +61,8 @@ public class RestMcuHousecreamPlugin implements HousecreamPlugin {
     }
 
     @Override
-    public Plugin plugin() {
-        return plugin;
+    public PluginDescription description() {
+        return pluginDescription;
     }
 
     @Override

@@ -20,15 +20,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import org.housecream.server.api.domain.config.Config;
+import org.housecream.server.application.HousecreamHome;
 import org.housecream.server.application.security.ToggleSecuredAnnotationInterceptor;
 import org.housecream.server.storage.security.ClientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import fr.norad.jaxrs.oauth2.api.TokenFetcher;
-import fr.norad.jaxrs.oauth2.client.interception.resourceinput.SecuredAnnotationInterceptor;
 import fr.norad.jaxrs.oauth2.api.Client;
 import fr.norad.jaxrs.oauth2.api.ClientNotFoundException;
+import fr.norad.jaxrs.oauth2.api.TokenFetcher;
+import fr.norad.jaxrs.oauth2.client.interception.resourceinput.SecuredAnnotationInterceptor;
 import fr.norad.jaxrs.oauth2.core.service.PasswordHasher;
 
 @Configuration
@@ -56,7 +57,7 @@ public class SecurityConfig {
 
     @Bean
     PasswordHasher passwordHasher() {
-        return new PasswordHasher(props.getSecurityGlobalSaltSecret());
+        return new PasswordHasher(HousecreamHome.HOUSECREAM_HOME.getGlobalSalt());
     }
 
     void provideWebClient(ClientDao clientDao) {

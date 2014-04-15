@@ -16,14 +16,9 @@
  */
 package org.housecream.server.storage.dao;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
 import java.util.Map;
-import org.housecream.server.api.domain.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.ReflectionUtils;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
@@ -44,35 +39,17 @@ public class ConfigDao {
         select = session.prepare("SELECT * FROM config WHERE id = 'Housecream'");
     }
 
-    public void loadConfig(Config props) {
+    public Map<String, String> loadConfig() {
         ResultSet execute = session.execute(select.bind());
-        Map<String, String> configs = execute.one().getMap("properties", String.class, String.class);
-        props.importMap(configs);
+        Map<String, String> properties = execute.one().getMap("properties", String.class, String.class);
+        return properties;
     }
 
-    public void saveConfig(Config props) {
-        session.execute(update.bind(toMap(props)));
+    public void saveConfig(Map<String, String> properties) {
+        session.execute(update.bind(properties));
     }
 
-    private Map<String, String> toMap(Config props) {
-        Map<String, String> propsMap = new HashMap<>();
-        Field[] fields = Config.class.getDeclaredFields();
-        for (Field field : fields) {
-            if (Modifier.isFinal(field.getModifiers())) {
-                continue;
-            }
-            try {
-                ReflectionUtils.makeAccessible(field);
-                propsMap.put(field.getName(), field.get(props).toString());
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException(e);
-            }
-        }
-        return propsMap;
-    }
-
-
-    public void saveConfig(String name, String value) {
+    public void saveProperty(String name, String value) {
         session.execute(updateField.bind(name, value));
     }
 }

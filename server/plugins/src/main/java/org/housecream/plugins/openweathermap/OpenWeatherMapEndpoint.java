@@ -15,6 +15,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import fr.norad.jaxrs.client.server.rest.RestBuilder;
 import fr.norad.jaxrs.client.server.rest.RestBuilder.Generic;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * openweathermap:wind/current?latitude=42&longitude=43
@@ -22,6 +23,7 @@ import lombok.Data;
  * openweathermap:wind/forecast/days/3?latitude=42&longitude=43
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class OpenWeatherMapEndpoint extends DefaultEndpoint {
 
     private static final long resultCacheRetention = 60 * 60 * 1000; // 1h

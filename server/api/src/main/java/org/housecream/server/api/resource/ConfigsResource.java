@@ -17,22 +17,23 @@
 package org.housecream.server.api.resource;
 
 
+import java.util.Set;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import org.housecream.server.api.Security;
 import org.housecream.server.api.Security.Scopes;
-import org.housecream.server.api.domain.config.Config;
+import org.housecream.server.api.domain.config.PropertyDefinition;
 
 @Security(Scopes.CONFIG_READ)
 @Path("/configs")
 public interface ConfigsResource {
 
     @GET
-    Config getConfigs();
+    Set<PropertyDefinition> getProperties();
 
-    @Path("{propertyName}")
+    @Path("/{propertyName}")
     PropertyResource property(@PathParam("propertyName") String name);
 
     interface PropertyResource {

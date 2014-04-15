@@ -17,18 +17,16 @@
 package org.housecream.server.api.domain.config;
 
 
-import java.lang.reflect.Field;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import lombok.Data;
+import fr.norad.jaxrs.doc.api.Description;
+import lombok.Getter;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
 @Accessors(chain = true)
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
@@ -40,58 +38,18 @@ public class Config {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
     }
 
+    @Description("Activate OAuth2 security globally on the server")
     private boolean securityEnabled = false;
     private int securitySeedLength = 50;
     private int securityDefaultTokenLifetimeSeconds = 60;
     private int securityDefaultRefreshTokenLifetimeSeconds = 60;
-    @XmlTransient
-    private String securityGlobalSaltSecret; //TODO should be in a file not in DB
     private int securityMaxFailedLoginAttempt = 3;
     private int securityFailedLoginLifetimeSeconds = 120;
     private int securityRandomStringLength = 128;
+
     private Locale locale = Locale.getDefault();
     private TimeZone timeZone = systemTimezone;
     private TemperatureUnit temperatureUnit = TemperatureUnit.Celcius;
     private SpeedUnit speedUnit = SpeedUnit.KmPerHour;
 
-    public void importMap(Map<String, String> map) {
-        for (String key : map.keySet()) {
-            setValue(key, map.get(key));
-        }
-    }
-
-    public Config setValue(String name, String value) {
-        try {
-            Field field = this.getClass().getDeclaredField(name);
-            Class<?> type = field.getType();
-            if (type.equals(Integer.class) || type.equals(Integer.TYPE)) {
-                field.setInt(this, Integer.parseInt(value));
-            } else if (type.equals(Boolean.class) || type.equals(Boolean.TYPE)) {
-                field.set(this, Boolean.parseBoolean(value));
-            } else if (type.equals(Locale.class)) {
-                String[] split = value.split("_");
-                field.set(this, new Locale(split[0], split[1]));
-            } else if (type.equals(TimeZone.class)) {
-                field.set(this, TimeZone.getTimeZone(value));
-            } else if (type.isEnum()) {
-                field.set(this, Enum.valueOf((Class<? extends Enum>) type, value));
-            } else {
-                field.set(this, value);
-            }
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-        return this;
-    }
-
-//    public void importProps(Config properties) {
-//        Field[] fields = this.getClass().getDeclaredFields();
-//        for (Field field : fields) {
-//            try {
-//                field.set(this, field.get(properties));
-//            } catch (IllegalAccessException e) {
-//                throw new IllegalStateException("Cannot read field of properties", e);
-//            }
-//        }
-//    }
 }

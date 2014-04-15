@@ -23,10 +23,13 @@ import java.util.List;
 import java.util.ServiceLoader;
 import javax.annotation.PostConstruct;
 import org.housecream.plugins.api.HousecreamPlugin;
-import org.housecream.server.api.domain.Plugin;
+import org.housecream.server.api.domain.PluginDescription;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.api.exception.PluginNotFoundException;
+import org.housecream.server.application.ConfigHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.common.base.Preconditions;
 
@@ -36,21 +39,29 @@ public class PluginService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private ServiceLoader<HousecreamPlugin> pluginLoader = ServiceLoader.load(HousecreamPlugin.class);
+    private List<HousecreamPlugin> plugins = new ArrayList<>();
+
+    @Autowired
+    private ConfigHolder configHolder;
 
     @PostConstruct
     protected void postConstruct() {
-        // Lazy load of SPI implementation cause multiple thread calling getPlugins() for the first
-        // time to return a not full list for one of the thread. We need to preload plugins 
-        List<HousecreamPlugin> plugins = getPlugins();
-        for (HousecreamPlugin housecreamPlugin : plugins) {
-            log.info("Housecream plugin found : " + housecreamPlugin);
+        Iterator<HousecreamPlugin> pluginIt = pluginLoader.iterator();
+        while (pluginIt.hasNext()) {
+            HousecreamPlugin plugin = pluginIt.next();
+            log.info("Housecream plugin found : " + plugin);
+            Class<? extends Config> configClass = plugin.description().getConfigClass();
+            if (configClass != null) {
+                plugin.setConfig(configHolder.getConfigObject(configClass));
+            }
+            plugins.add(plugin);
         }
     }
 
-    public List<Plugin> getDescriptions() {
-        List<Plugin> descriptions = new ArrayList<>();
+    public List<PluginDescription> getDescriptions() {
+        List<PluginDescription> descriptions = new ArrayList<>();
         for (HousecreamPlugin housecreamPlugin : getPlugins()) {
-            descriptions.add(housecreamPlugin.plugin());
+            descriptions.add(housecreamPlugin.description());
         }
         return descriptions;
     }
@@ -80,7 +91,7 @@ public class PluginService {
         Iterator<HousecreamPlugin> pluginIt = pluginLoader.iterator();
         while (pluginIt.hasNext()) {
             HousecreamPlugin plugin = pluginIt.next();
-            if (id.equals(plugin.plugin().getId())) {
+            if (id.equals(plugin.description().getId())) {
                 return plugin;
             }
         }

@@ -21,15 +21,17 @@ import static org.housecream.server.Housecream.HOUSECREAM;
 import static org.housecream.server.Housecream.VERSION_UNKNOWN;
 import static org.housecream.server.application.CassandraEmbedded.CASSANDRA_EMBEDDED;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import org.apache.commons.io.FileUtils;
 import org.housecream.server.Housecream;
+import org.housecream.server.application.security.RandomStringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import fr.norad.core.io.file.FileLocker;
+import lombok.Getter;
 
 public enum HousecreamHome {
     HOUSECREAM_HOME;
@@ -40,6 +42,8 @@ public enum HousecreamHome {
 
     private FileLocker lock;
     private boolean inited;
+    @Getter
+    private String globalSalt;
 
     private HousecreamHome() {
     }
@@ -50,12 +54,29 @@ public enum HousecreamHome {
         }
         logHousecreamInfo();
         lockHomeDirectory();
+        loadGlobalSalt();
         if (System.getProperty(CASSANDRA_HOST_KEY) == null) {
             log.info("No '" + CASSANDRA_HOST_KEY + "' system property set. Using Cassandra embedded");
             startCassandraEmbedded();
         }
         updateDbVersion();
         inited = true;
+    }
+
+    private void loadGlobalSalt() {
+        File saltFile = new File(HOUSECREAM.getHome(), "globalSalt");
+        if (!saltFile.exists()) {
+            try (PrintWriter printWriter = new PrintWriter(saltFile)) {
+                printWriter.print(new RandomStringGenerator().base64(42));
+            } catch (FileNotFoundException e) {
+                throw new IllegalStateException("Cannot write global salt file : " + saltFile);
+            }
+        }
+        try {
+            globalSalt = new String(Files.readAllBytes(saltFile.toPath()));
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read global salt file : " + saltFile);
+        }
     }
 
     private void startCassandraEmbedded() {
@@ -90,15 +111,15 @@ public enum HousecreamHome {
     }
 
     private void updateDbVersion() {
-        File versionFile = new File(HOUSECREAM.getHome() + "/version");
+        File versionFile = new File(HOUSECREAM.getHome(), "/version");
         if (VERSION_UNKNOWN.equals(HOUSECREAM.getVersion())) {
             return;
         }
 
         try {
-            List<String> lines = Files.readLines(versionFile, Charsets.UTF_8);
-            if (lines.size() > 0 && !lines.get(0).equals(HOUSECREAM.getVersion())) {
-                log.warn("Version of DB is " + lines.get(0) + " but currently running " + HOUSECREAM.getVersion()
+            String version = new String(Files.readAllBytes(versionFile.toPath()));
+            if (!HOUSECREAM.getVersion().equals(version)) {
+                log.warn("Version of DB is " + version + " but currently running " + HOUSECREAM.getVersion()
                         + ". DB will be dropped");
                 FileUtils.deleteDirectory(new File(HOUSECREAM.getHome() + "/db"));
             }
@@ -106,7 +127,7 @@ public enum HousecreamHome {
             // no file found will not do anything
         } finally {
             try {
-                Files.write(HOUSECREAM.getVersion().getBytes(), versionFile);
+                Files.write(versionFile.toPath(), HOUSECREAM.getVersion().getBytes());
             } catch (IOException e) {
                 System.err.println("cannot write housecream version to file" + versionFile);
             }

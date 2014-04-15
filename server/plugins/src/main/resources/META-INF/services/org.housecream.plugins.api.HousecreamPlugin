@@ -4,3 +4,4 @@ org.housecream.plugins.xmpp.XmppHousecreamPlugin
 org.housecream.plugins.openweathermap.OpenWeatherMapComponent
 #org.housecream.plugins.timer.TimerHousecreamPlugin
 #org.housecream.plugins.quartz.QuartzHousecreamPlugin
+org.housecream.plugins.gmail.GmailComponent

@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.housecream.parent</groupId>
         <artifactId>parent-java</artifactId>
-        <version>1.19</version>
+        <version>1.20-SNAPSHOT</version>
     </parent>
 
     <licenses>
@@ -49,7 +49,7 @@
         <jaxrs-doc.version>0.3-SNAPSHOT</jaxrs-doc.version>
 
         <jetty.version>8.1.7.v20120910</jetty.version>
-        <spring.version>3.2.8.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
         <camel.version>2.12.3</camel.version>
         <cxf.version>2.7.5</cxf.version>
         <jackson.version>2.1.4</jackson.version>
@@ -212,12 +212,12 @@
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
-                <version>1.1.0.Alpha1</version>
+                <version>1.1.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>4.2.0.Final</version>
+                <version>5.1.0.Final</version>
             </dependency>
 
             <!-- CORE -->
@@ -520,7 +520,6 @@
             <version>${logback-prettier.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

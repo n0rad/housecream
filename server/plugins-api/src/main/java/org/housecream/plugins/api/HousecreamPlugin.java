@@ -22,15 +22,26 @@ import java.util.Map;
 import javax.validation.ValidationException;
 import org.apache.camel.Message;
 import org.apache.commons.lang3.tuple.Pair;
-import org.housecream.server.api.domain.Plugin;
+import org.housecream.server.api.domain.PluginDescription;
+import org.housecream.server.api.domain.config.Config;
 import org.housecream.server.api.domain.point.Point;
 import org.housecream.server.api.domain.rule.Consequence;
 
 public interface HousecreamPlugin {
 
-    Plugin plugin();
+    URL DEFAULT_LOGO = HousecreamPlugin.class.getResource("/plugin-default-logo.png");
 
-    URL getLogo();
+    PluginDescription description();
+
+    default URL getLogo() {
+        return DEFAULT_LOGO;
+    }
+
+    /**
+     * config class for plugins may be needed for example for client_id & client_secret
+     */
+    default <T extends Config> void setConfig(T config) {
+    }
 
     //TODO MOVE
     //
@@ -48,6 +59,6 @@ public interface HousecreamPlugin {
 
     //    String getInFormDirective();
 
-    Float readValue(Message in) throws Exception;
+    Float readValue(Message in);
 
 }

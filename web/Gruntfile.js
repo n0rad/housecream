@@ -69,19 +69,19 @@ module.exports = function (grunt) {
                 options: {
                     replacements: [
                         {
-                            pattern: /\$\{contextPath\}/,
+                            pattern: /\$\{contextPath\}/g,
                             replacement: ''
                         },
                         {
-                            pattern: /\$\{hcWsUrl\}/,
-                            replacement: 'ws/'
+                            pattern: /\$\{hcWsUrl\}/g,
+                            replacement: 'ws'
                         },
                         {
-                            pattern: /\$\{version\}/,
+                            pattern: /\$\{version\}/g,
                             replacement: '0.0.0-DEV'
                         },
                         {
-                            pattern: /\$\{fullWebPath\}/,
+                            pattern: /\$\{fullWebPath\}/g,
                             replacement: 'http://localhost:<%= connect.options.port %>'
                         }
                     ]

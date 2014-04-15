@@ -11,7 +11,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 
 public class OpenWeatherMapConsumer extends DefaultConsumer {
     private static TaskScheduler scheduler = new ConcurrentTaskScheduler();
-    private ScheduledFuture<OpenWeatherMapConsumerRunner> schedule;
+    private ScheduledFuture<?> schedule;
 
     public OpenWeatherMapConsumer(Endpoint endpoint, Processor processor) {
         super(endpoint, processor);
@@ -33,7 +33,7 @@ public class OpenWeatherMapConsumer extends DefaultConsumer {
         super.doStop();
     }
 
-    public ScheduledFuture<OpenWeatherMapConsumerRunner> getSchedule() {
+    public ScheduledFuture<?> getSchedule() {
         return schedule;
     }
 
