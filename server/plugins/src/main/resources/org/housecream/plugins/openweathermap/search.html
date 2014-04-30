@@ -1,0 +1,165 @@
+<div class="container">
+
+    <div id="alert_body">
+    </div>
+
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript">
+
+        function GetWeatherIconDay(st, hr) {
+            if (hr == undefined || hr == 'day')
+                var day = 'd';
+            else
+                var day = 'n';
+            var cl = 0
+            if (st.clouds && st.clouds.all) cl = st.clouds.all;
+
+            var img = 'transparent';
+            if (cl < 1 && cl >= 0)     img = '01';
+            if (cl < 5 && cl >= 1)     img = '01';
+            if (cl < 25 && cl >= 5)  img = '01';
+            if (cl < 50 && cl >= 25) img = '02';
+            if (cl < 75 && cl >= 50) img = '03';
+            if (cl >= 75) img = '04';
+
+            if (st.rain && st.rain['3h']) {
+                img = '09';
+                if (cl < 30) img = '10';
+            }
+
+            return img + day + '.png';
+        }
+
+
+        function GetWeatherText2(st) {
+            var txt = '';
+            if (st.snow && st.snow['3h'])
+                txt = 'Snow ' + '( ' + st.snow['3h'] + 'мм )';
+
+            if (st.rain && st.rain['3h'])
+                txt = 'Rain:' + '(' + st.rain['3h'] + 'мм)';
+            return txt;
+        }
+
+
+    </script>
+
+    <div class="row">
+
+        <div class="span5">
+
+            <form id="searchform" action="#" method="get" style="display:inline" onsubmit="FindCity(); return false">
+                <div class="well form-inline">
+                    Find: <input type="text" id="q" name="q" value="grop"
+                                 onfocus="this.value = (this.value=='London, UK')? '' : this.value;">
+                    <button type="submit" class="btn btn-primary">Find</button>
+                </div>
+            </form>
+
+            <div id="pbar" class="progress progress-striped active" style="display: none;">
+                <div class="bar" style="width: 100%;"></div>
+            </div>
+
+        </div>
+
+        <div class="span7">
+            Search engine is very flexible. How it works:
+            <ul>
+                <li>Put the city's name or its part and get the list of the most proper cities in the world. Example -
+                    <b>Lon</b> or
+                    <b>Lond</b> or <b>London</b>. The more precise city name you put the more precise list you will get.
+                </li>
+                <li> To make it more precise put the city's name or its part, comma, the name of the county or 2-letter
+                    country code. You will get all proper cities in chosen county. The order is important - the first is
+                    city name than comma than county. Example - <b>Lon, UK</b> or <b>Lon, GB</b> or <b>London, GB</b> or
+                    <b>Lon, England</b>.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="tab-pane active" id="forecast-list">
+        <div id="forecast_list_ul">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td><img src="http://openweathermap.org/img/w/01n.png"></td>
+                    <td><b><a href="/city/0">Gamleby, Sweden</a></b> <img
+                            src="http://openweathermap.org/images/flags/sweden.png"> <b><i>Sky is Clear</i> </b>
+
+                        <p><span class="badge badge-info">3.7°С </span> temperature from 3.7 to 3.7°С, wind 0.95m/s.
+                            clouds 0%, 1034.61 hpa</p></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $("#pbar").hide("fast");
+
+        function getSearchData(JSONobject) {
+            //console.log( JSONobject  );
+            //JSONobject = ParseJson(JSONtext);
+
+            city = JSONobject.list;
+            if (city.length == 0) {
+                ShowAlertMess('not found');
+                return;
+            }
+
+            html = '';
+
+            for (var i = 0; i < JSONobject.list.length; i++) {
+
+
+                var name = JSONobject.list[i].name + ', ' + JSONobject.list[i].sys.country;
+
+                var temp = Math.round(10 * (JSONobject.list[i].main.temp - 273.15)) / 10;
+                var tmin = Math.round(10 * (JSONobject.list[i].main.temp_min - 273.15)) / 10;
+                var tmax = Math.round(10 * (JSONobject.list[i].main.temp_max - 273.15)) / 10;
+
+                var text = JSONobject.list[i].weather[0].description;
+                var img = "http://openweathermap.org/img/w/" + JSONobject.list[i].weather[0].icon + ".png";
+                var flag = "http://openweathermap.org/images/flags/" + JSONobject.list[i].sys.country.toLowerCase() + ".png";
+                var gust = JSONobject.list[i].wind.speed;
+                var pressure = JSONobject.list[i].main.pressure;
+                var cloud = JSONobject.list[i].clouds.all;
+
+                html = html + '<tr><td><img src="' + img + '" ></td><td><b><a href="/city/' + JSONobject.list[i].id + '">' + name + '</a></b>' +
+                        ' <img src="' + flag + '" >  <b><i>' + text + '</i> </b>' +
+                        '<p>  <span class="badge badge-info">' + temp + '&deg;С </span> ' +
+                        'temperature from ' + tmin + ' to ' + tmax + '&deg;С, wind ' + gust + 'm/s. clouds ' + cloud + '%, ' + pressure + ' hpa</p></td></tr>';
+
+            }
+
+            html = '<table class="table">' + html + '</table>';
+
+            $("#forecast_list_ul").html(html);
+            //ShowInfoMess(html);
+            $("#pbar").hide("fast");
+
+        }
+
+        function FindCity() {
+            // $("#pbar").style.visibility = 'visible';
+            $("#pbar").show("fast");
+            $("#forecast_list_ul").html('');
+            param = document.getElementById('q').value;
+
+            var jsonurl = "http://api.openweathermap.org/data/2.5/find?callback=?&q=" + param + "&type=like&sort=population&cnt=30";
+            $.getJSON(jsonurl, getSearchData).error(errorHandler);
+            return false;
+        }
+        var args = OpenLayers.Util.getParameters();
+        if (args.q) {
+            FindCity();
+        }
+
+    </script>
+
+</div>

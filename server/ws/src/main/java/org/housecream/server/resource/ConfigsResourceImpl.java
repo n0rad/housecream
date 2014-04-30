@@ -17,8 +17,8 @@
 package org.housecream.server.resource;
 
 
-import java.util.Set;
-import org.housecream.server.api.domain.config.PropertyDefinition;
+import java.util.Map;
+import org.housecream.server.api.domain.config.configDefinition;
 import org.housecream.server.api.resource.ConfigsResource;
 import org.housecream.server.application.ConfigHolder;
 import org.housecream.server.application.JaxrsResource;
@@ -30,13 +30,17 @@ public class ConfigsResourceImpl implements ConfigsResource {
     @Autowired
     private PropertyResourceImpl configResource;
 
-
     @Autowired
     private ConfigHolder configHolder;
 
     @Override
-    public Set<PropertyDefinition> getProperties() {
-        return configHolder.getPropertiesDefinition();
+    public configDefinition getConfigDefinition() {
+        return configHolder.getConfigDefinition();
+    }
+
+    @Override
+    public Map<String, Object> getConfig() {
+        return configHolder.getConfigValues();
     }
 
     @Override

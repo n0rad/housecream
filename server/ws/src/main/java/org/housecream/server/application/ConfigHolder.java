@@ -1,23 +1,22 @@
 package org.housecream.server.application;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import org.housecream.server.api.domain.config.Config;
-import org.housecream.server.api.domain.config.PropertyDefinition;
+import org.housecream.server.api.domain.config.configDefinition;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-import fr.norad.jaxrs.doc.api.Description;
-import fr.norad.jaxrs.doc.utils.DocUtils;
+import fr.norad.jaxrs.doc.ModelProcessorFactory;
+import fr.norad.jaxrs.doc.PropertyAccessor;
+import fr.norad.jaxrs.doc.api.domain.ProjectDefinition;
+import fr.norad.jaxrs.doc.api.domain.PropertyDefinition;
+import fr.norad.jaxrs.doc.parser.ModelJacksonParser;
 
 @Component
 public class ConfigHolder {
@@ -25,58 +24,51 @@ public class ConfigHolder {
     private Map<Class<?>, Object> configObjects = new ConcurrentHashMap<>();
     private Map<String, String> configData = new ConcurrentHashMap<>();
 
-    public Set<PropertyDefinition> getPropertiesDefinition() {
-        Set<PropertyDefinition> propertyDefinitions = new HashSet<>();
-        Map<Class<?>, Object> defaultConfigs = new HashMap<>();
+    private ModelProcessorFactory modelFactory = new ModelProcessorFactory();
+    private ModelJacksonParser modelParser = new ModelJacksonParser();
 
-        for (Object o : configObjects.values()) {
-            try {
-                BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
-                PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-                for (PropertyDescriptor descriptor : propertyDescriptors) {
-                    if ("class".equals(descriptor.getName())) {
-                        continue;
-                    }
-                    if (defaultConfigs.get(o.getClass()) == null) {
-                        defaultConfigs.put(o.getClass(), o.getClass().newInstance());
-                    }
-                    propertyDefinitions.add(buildDefinition(o, defaultConfigs.get(o.getClass()), descriptor));
+    private Object findValue(PropertyAccessor accessor, Object model) {
+        Object value = null;
+        try {
+            value = accessor.getGetter().invoke(model);
+        } catch (Exception e) {
+            if (accessor.getField() != null) {
+                accessor.getField().setAccessible(true);
+                try {
+                    value = accessor.getField().get(model);
+                } catch (IllegalAccessException e1) {
                 }
-            } catch (Exception e) {
-                throw new IllegalStateException("Cannot introspect configuration class", e);
             }
         }
-        return propertyDefinitions;
+        return value;
     }
 
-    public PropertyDefinition buildDefinition(Object object, Object defaultObject, PropertyDescriptor descriptor) throws Exception {
-        PropertyDefinition propertyDefinition = new PropertyDefinition();
-        propertyDefinition.setName(descriptor.getName());
-        propertyDefinition.setType(descriptor.getPropertyType());
-        Field field = ReflectionUtils.findField(object.getClass(), descriptor.getName());
-        String description = null;
-        if (field == null) {
-            Description declaredAnnotation = descriptor.getReadMethod().getDeclaredAnnotation(Description.class);
-            if (declaredAnnotation != null) {
-                description = DocUtils.getDescription(declaredAnnotation);
-            }
-        } else {
-            Description declaredAnnotation = field.getDeclaredAnnotation(Description.class);
-            if (declaredAnnotation != null) {
-                description = DocUtils.getDescription(declaredAnnotation);
+    public Map<String, Object> getConfigValues() {
+        Map<String, Object> values = new HashMap<>();
+        for (Object config : configObjects.values()) {
+            List<PropertyAccessor> properties = modelParser.findProperties(config.getClass());
+            for (PropertyAccessor accessor : properties) {
+                values.put(accessor.getName(), findValue(accessor, config));
             }
         }
-        propertyDefinition.setDescription(description);
-        Object value = descriptor.getReadMethod().invoke(object);
-        if (value != null) {
-            propertyDefinition.setValue(value.toString());
+        return values;
+    }
+
+    public configDefinition getConfigDefinition() {
+        configDefinition configDefinition = new configDefinition();
+
+        ProjectDefinition project = new ProjectDefinition();
+        for (Object configObject : configObjects.values()) {
+            modelFactory.getModelProcessor().process(project, configObject.getClass());
+            Map<String, PropertyDefinition> properties = project.getModels().get(configObject.getClass().getName()).getProperties();
+            for (String key : properties.keySet()) {
+                properties.get(key).createdExtras().put("Group", configObject.getClass());
+                configDefinition.getProperties().put(key, properties.get(key));
+            }
+            configDefinition.getModels().putAll(project.getModels());
+            configDefinition.getModels().remove(configObject.getClass().getName());
         }
-        Object defaultValue = descriptor.getReadMethod().invoke(defaultObject);
-        if (defaultValue != null) {
-            propertyDefinition.setDefaultValue(defaultValue.toString());
-        }
-        propertyDefinition.setGroup(object.getClass());
-        return propertyDefinition;
+        return configDefinition;
     }
 
     public <T extends Config> T getConfigObject(Class<T> resultClass) {

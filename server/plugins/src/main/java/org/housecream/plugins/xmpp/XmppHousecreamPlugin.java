@@ -17,7 +17,6 @@
 package org.housecream.plugins.xmpp;
 
 import java.net.URI;
-import java.net.URL;
 import java.util.Map;
 import javax.validation.ValidationException;
 import org.apache.camel.Message;
@@ -54,11 +53,6 @@ public class XmppHousecreamPlugin implements HousecreamPlugin {
     @Override
     public PluginDescription description() {
         return pluginDescription;
-    }
-
-    @Override
-    public URL getLogo() {
-        return getClass().getResource("qq");
     }
 
     @Override

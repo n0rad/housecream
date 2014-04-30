@@ -66,16 +66,17 @@ public enum HousecreamHome {
     private void loadGlobalSalt() {
         File saltFile = new File(HOUSECREAM.getHome(), "globalSalt");
         if (!saltFile.exists()) {
+            // TODO file should be created with restricted permissions (full home dir in fact)
             try (PrintWriter printWriter = new PrintWriter(saltFile)) {
                 printWriter.print(new RandomStringGenerator().base64(42));
             } catch (FileNotFoundException e) {
-                throw new IllegalStateException("Cannot write global salt file : " + saltFile);
+                throw new IllegalStateException("Cannot write global salt file : " + saltFile, e);
             }
         }
         try {
             globalSalt = new String(Files.readAllBytes(saltFile.toPath()));
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot read global salt file : " + saltFile);
+            throw new IllegalStateException("Cannot read global salt file : " + saltFile, e);
         }
     }
 

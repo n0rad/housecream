@@ -1,0 +1,31 @@
+<div ng-controller="ConfigController">
+
+    <h3 id="progress-animated">Housecream global configuration</h3>
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr ng-repeat="property in config">
+            <!--<td><img src="http://openweathermap.org/img/w/01n.png"></td>-->
+            <td><h4 class="media-heading">{{property.name}}</h4>
+
+                <p>{{property.description}}</p>
+                <input ng-model="property.value" class="form-control"/>
+                <!--<b><a href="/city/0">Gamleby, Sweden</a></b> <img-->
+                <!--src="http://openweathermap.org/images/flags/sweden.png"> <b><i>Sky is Clear</i> </b>-->
+
+                <!--<p><span class="badge badge-info">3.7°С </span> temperature from 3.7 to 3.7°С, wind 0.95m/s.-->
+                <!--clouds 0%, 1034.61 hpa</p></td>-->
+        </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li ng-repeat="property in config">
+            {{property.value}}
+
+            {{property.description}}
+            {{property.group}}
+            {{property.type}}
+        </li>
+    </ul>
+</div>

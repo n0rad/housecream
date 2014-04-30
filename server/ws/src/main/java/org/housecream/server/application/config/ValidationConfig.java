@@ -19,6 +19,7 @@ package org.housecream.server.application.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import fr.norad.client.bean.validation.js.service.ValidationService;
 
 @Configuration
@@ -29,12 +30,12 @@ public class ValidationConfig {
         return new LocalValidatorFactoryBean();
     }
 
-//    @Bean
-//    public MethodValidationPostProcessor methodValidationPostProcessor() {
-//        MethodValidationPostProcessor methodValidationPostProcessor = new MethodValidationPostProcessor();
-//        methodValidationPostProcessor.setValidatorFactory(localValidatorFactoryBean());
-//        return methodValidationPostProcessor;
-//    }
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+        MethodValidationPostProcessor methodValidationPostProcessor = new MethodValidationPostProcessor();
+        methodValidationPostProcessor.setValidatorFactory(localValidatorFactoryBean());
+        return methodValidationPostProcessor;
+    }
 
     @Bean
     public ValidationService validationService() {

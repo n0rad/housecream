@@ -16,6 +16,7 @@
  */
 package org.housecream.server.storage.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,6 +42,9 @@ public class ConfigDao {
 
     public Map<String, String> loadConfig() {
         ResultSet execute = session.execute(select.bind());
+        if (execute.isExhausted()) {
+            return new HashMap<>();
+        }
         Map<String, String> properties = execute.one().getMap("properties", String.class, String.class);
         return properties;
     }

@@ -24,10 +24,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import fr.norad.jaxrs.doc.api.Description;
 import lombok.Getter;
-import lombok.experimental.Accessors;
 
 @Getter
-@Accessors(chain = true)
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
 public class Config {
