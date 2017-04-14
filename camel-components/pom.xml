@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.housecream.camel</groupId>
+	<artifactId>camel-components</artifactId>
+	<name>Camel Components</name>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>Some camel components for home automation</description>
+
+    <parent>
+        <groupId>org.housecream.parent</groupId>
+        <artifactId>parent-java</artifactId>
+        <version>1.19-SNAPSHOT</version>
+    </parent>
+
+	<licenses>
+		<license>
+			<name>AGPL V3</name>
+			<url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<modules>
+		<module>axmpp</module>
+		<module>restmcu</module>
+		<module>solar</module>
+	</modules>
+
+	<properties>
+		<restmcu.version>0.1-SNAPSHOT</restmcu.version>
+
+		<camel.version>2.10.1</camel.version>
+		<spring.version>3.2.3.RELEASE</spring.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.11.8</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert-core</artifactId>
+			<version>2.0M8</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0-rc1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-test</artifactId>
+			<version>${camel.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>fr.norad.jaxrs.junit</groupId>
+			<artifactId>jaxrs-junit</artifactId>
+			<version>0.5-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>
+
+
