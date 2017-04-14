@@ -1,0 +1,33 @@
+hash: e73202f42d5a56dc9265aed05657ee08c7e5a39dcb61ca550d838ede655a44f7
+updated: 2017-04-14T20:04:29.417416379+02:00
+imports:
+- name: github.com/google/uuid
+  version: 064e2069ce9c359c118179501254f67d7d37ba24
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/mgutz/ansi
+  version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
+- name: github.com/mitchellh/go-homedir
+  version: b8bc1bf767474819792c23f32d8286a45736f1c6
+- name: github.com/n0rad/go-erlog
+  version: d2278035863763980c7e312c6b813293f2ba4892
+  subpackages:
+  - data
+  - errs
+  - logs
+  - register
+- name: github.com/oleksandr/conditions
+  version: c42fb667e1cd387439da485132cc59cb2f6be9e8
+- name: github.com/spf13/cobra
+  version: 385fc87e4343efec233811d3d933509e8975d11a
+- name: github.com/spf13/pflag
+  version: 9ff6c6923cfffbcd502984b8e0c80539a94968b7
+- name: golang.org/x/crypto
+  version: d172538b2cfce0c13cee31e647d0367aa8cd2486
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
+  subpackages:
+  - unix
+testImports: []
