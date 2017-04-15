@@ -11,11 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/mitchellh/go-homedir"
 	"github.com/n0rad/go-erlog/logs"
 	_ "github.com/n0rad/go-erlog/register"
 	_ "github.com/n0rad/housecream/server/channels/timer"
-	"github.com/n0rad/housecream/server/housecream"
+	"github.com/n0rad/housecream/server/hc"
 	"github.com/spf13/cobra"
 )
 
@@ -50,7 +49,7 @@ func main() {
 
 	var logLevel string
 	var version bool
-	var home string
+	var homePath string
 
 	rootCmd := &cobra.Command{
 		Use: "housecream",
@@ -76,26 +75,25 @@ func main() {
 				logs.Fatal("Housecrean has no argument")
 			}
 
-			//Housecream.loadHome()
-			h := housecream.Housecream{
-				BuildVersion: BuildVersion,
-				BuildCommit:  BuildCommit,
-				BuildTime:    BuildTime,
+			home, err := hc.NewHome(homePath)
+			if err != nil {
+				logs.WithE(err).Fatal("Failed to load home directory")
 			}
-			go h.Start()
+
+			h := hc.NewHousecream(hc.BuildVersion{
+				BuildVersion: BuildVersion,
+				CommitId:     BuildCommit,
+				BuildTime:    BuildTime,
+			})
+			go h.Start(*home)
 			defer h.Stop()
 			waitForSignal()
 		},
 	}
 
-	home, err := homedir.Dir()
-	if err != nil {
-		logs.Fatal("Cannot found home directly, please specify a home folder with -H")
-	}
-
 	rootCmd.PersistentFlags().StringVarP(&logLevel, "log-level", "L", "", "Set log level")
 	rootCmd.PersistentFlags().BoolVarP(&version, "version", "V", false, "Display version")
-	rootCmd.PersistentFlags().StringVarP(&home, "home", "H", home+"/.config/housecream", "Home folder")
+	rootCmd.PersistentFlags().StringVarP(&homePath, "home", "H", hc.DefaultHomeFolder(), "Home folder")
 
 	if err := rootCmd.Execute(); err != nil {
 		logs.WithE(err).Fatal("Failed to process args")

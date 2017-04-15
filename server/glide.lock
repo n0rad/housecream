@@ -1,6 +1,8 @@
 hash: e73202f42d5a56dc9265aed05657ee08c7e5a39dcb61ca550d838ede655a44f7
-updated: 2017-04-14T20:04:29.417416379+02:00
+updated: 2017-04-15T02:08:50.035649433+02:00
 imports:
+- name: github.com/ghodss/yaml
+  version: 73d445a93680fa1a78ae23a5839bad48f32ba1ee
 - name: github.com/google/uuid
   version: 064e2069ce9c359c118179501254f67d7d37ba24
 - name: github.com/inconshreveable/mousetrap
@@ -23,11 +25,13 @@ imports:
 - name: github.com/spf13/pflag
   version: 9ff6c6923cfffbcd502984b8e0c80539a94968b7
 - name: golang.org/x/crypto
-  version: d172538b2cfce0c13cee31e647d0367aa8cd2486
+  version: bed12803fa9663d7aa2c2346b0c634ad2dcd43b7
   subpackages:
   - ssh/terminal
 - name: golang.org/x/sys
-  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
+  version: 7a6e5648d140666db5d920909e082ca00a87ba2c
   subpackages:
   - unix
+- name: gopkg.in/yaml.v2
+  version: 4c78c975fe7c825c6d1466c42be594d1d6f3aba6
 testImports: []
