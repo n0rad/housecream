@@ -116,7 +116,7 @@ build() {
         echo_green "Building $e"
 
         binaryPath=$(targetBinaryPath ${e})
-        $(cd ${work_path} && GOOS="${e%-*}" GOARCH="${e#*-}" go build -ldflags "${ldflags}" -o ${target_name}/${binaryPath} ${build_packages})
+        $(cd ${work_path} && GOOS="${e%-*}" GOARCH="${e#*-}" go build -i -ldflags "${ldflags}" -o ${target_name}/${binaryPath} ${build_packages})
 
         if [ "$upx" = true ]; then
             echo_green "Compressing ${e}" # TODO compress on release only

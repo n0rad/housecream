@@ -13,7 +13,6 @@ import (
 
 	"github.com/n0rad/go-erlog/logs"
 	_ "github.com/n0rad/go-erlog/register"
-	_ "github.com/n0rad/housecream/server/channels/timer"
 	"github.com/n0rad/housecream/server/hc"
 	"github.com/spf13/cobra"
 )
@@ -85,6 +84,7 @@ func main() {
 				CommitId:     BuildCommit,
 				BuildTime:    BuildTime,
 			})
+			//TODO SIGHUP restart
 			go h.Start(*home)
 			defer h.Stop()
 			waitForSignal()
