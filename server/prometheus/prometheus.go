@@ -73,12 +73,20 @@ func LocalStorage() local.Storage {
 	return seriesStorage
 }
 
-// Main manages the startup and shutdown lifecycle of the entire Prometheus server.
-func Main(localStorage local.Storage) int {
-	if err := parse(os.Args[1:]); err != nil {
+func Parse(args []string) int {
+	if err := parse(args); err != nil {
 		log.Error(err)
 		return 2
 	}
+	return 0
+}
+
+// Main manages the startup and shutdown lifecycle of the entire Prometheus server.
+func Main(localStorage local.Storage) int {
+	//if err := parse(args); err != nil {
+	//	log.Error(err)
+	//	return 2
+	//}
 
 	if cfg.printVersion {
 		fmt.Fprintln(os.Stdout, version.Print("prometheus"))

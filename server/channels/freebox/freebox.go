@@ -4,16 +4,17 @@ import (
 	"fmt"
 	"time"
 
+	"os"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/moul/go-freebox"
 	"github.com/n0rad/go-erlog/logs"
 	"github.com/n0rad/housecream/server/channels"
-	"os"
 )
 
 type FreeboxLink struct {
 	channels.CommonLink
-	Host string
+	Host  string
 	Token string
 
 	Interval time.Duration
@@ -24,7 +25,7 @@ func (l *FreeboxLink) Init() error {
 		l.Interval = 1 * time.Minute
 	}
 	os.Setenv("GOFBX_TOKEN", l.Token)
- 	return nil
+	return nil
 }
 
 func (l *FreeboxLink) Watch(shutdown <-chan struct{}, events chan<- channels.Event) {

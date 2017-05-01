@@ -44,6 +44,8 @@ func (h *Housecream) Start(home HomeFolder) {
 	// TODO
 	logs.SetLevel(logs.DEBUG)
 
+	prometheus.Parse([]string{"--storage.local.path=" + home.path + "/metrics"})
+
 	localStorage := prometheus.LocalStorage()
 
 	go prometheus.Main(localStorage)

@@ -27,6 +27,9 @@ func (o *OpenWeatherMapLink) Init() error {
 	if o.Interval == 0 {
 		o.Interval = 10 * time.Minute
 	}
+	if o.ApiKey == "" {
+		return errs.WithF(o.Fields, "Api key is mandatory")
+	}
 	os.Setenv("OWM_API_KEY", o.ApiKey)
 	return nil
 }
