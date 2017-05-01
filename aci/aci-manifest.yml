@@ -1,0 +1,11 @@
+name: aci.awired.net/aci-housecream:{{.version}}-1
+
+builder:
+  mountPoints:
+    - {from: ../, to: /code}
+
+aci:
+  app:
+    exec: [/usr/bin/housecream]
+  dependencies:
+      - aci.awired.net/aci-glibc:2.21-1

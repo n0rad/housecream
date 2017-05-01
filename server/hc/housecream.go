@@ -102,7 +102,7 @@ func (h *Housecream) Start(home HomeFolder) {
 			Name:    "lardy",
 			Channel: "openweathermap",
 		},
-		ApiKey:    "",
+		ApiKey:    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 		Latitude:  48.52,
 		Longitude: 2.26,
 	}
