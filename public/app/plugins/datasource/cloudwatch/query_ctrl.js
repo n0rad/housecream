@@ -1,0 +1,4 @@
+/*! grafana - v4.2.0 - 2017-03-22
+ * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
+
+System.register(["./query_parameter_ctrl","app/plugins/sdk"],function(a,b){"use strict";var c,d,e=this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)};b&&b.id;return{setters:[function(a){},function(a){c=a}],execute:function(){d=function(a){function b(b,c){var d=a.call(this,b,c)||this;return d.aliasSyntax="{{metric}} {{stat}} {{namespace}} {{region}} {{<dimension name>}}",d}return e(b,a),b.$inject=["$scope","$injector"],b}(c.QueryCtrl),d.templateUrl="partials/query.editor.html",a("CloudWatchQueryCtrl",d)}}});

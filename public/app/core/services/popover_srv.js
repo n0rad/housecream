@@ -1,0 +1,4 @@
+/*! grafana - v4.2.0 - 2017-03-22
+ * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
+
+System.register(["lodash","app/core/core_module","tether-drop"],function(a,b){"use strict";function c(a,b){this.show=function(c){function e(){setTimeout(function(){g.tether&&g.destroy()})}var g,h=d.default.extend(b.$new(!0),c.model);h.dismiss=function(){h.$destroy(),e()};var i=document.createElement("div");i.innerHTML=c.template,a(i)(h),g=new f.default({target:c.element,content:i,position:c.position,classes:"drop-popover",openOn:c.openOn||"hover",hoverCloseDelay:200,tetherOptions:{constraints:[{to:"window",pin:!0,attachment:"both"}]}}),g.on("close",function(){h.dismiss({fromDropClose:!0}),e(),c.onClose&&c.onClose()}),setTimeout(function(){g.open()},10)}}c.$inject=["$compile","$rootScope"];var d,e,f;b&&b.id;return{setters:[function(a){d=a},function(a){e=a},function(a){f=a}],execute:function(){e.default.service("popoverSrv",c)}}});

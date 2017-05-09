@@ -1,0 +1,4 @@
+/*! grafana - v4.2.0 - 2017-03-22
+ * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
+
+System.register(["./datasource","app/plugins/sdk"],function(a,b){"use strict";var c,d,e,f,g=this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)};b&&b.id;return{setters:[function(a){c=a},function(a){d=a}],execute:function(){a("GrafanaDatasource",c.GrafanaDatasource),a("Datasource",c.GrafanaDatasource),e=function(a){function b(){return null!==a&&a.apply(this,arguments)||this}return g(b,a),b}(d.QueryCtrl),e.templateUrl="partials/query.editor.html",a("QueryCtrl",e),f=function(){function a(){this.annotation.type=this.annotation.type||"alert",this.annotation.limit=this.annotation.limit||100}return a}(),f.templateUrl="partials/annotations.editor.html",a("AnnotationsQueryCtrl",f)}}});
