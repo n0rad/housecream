@@ -90,6 +90,10 @@ func registerUnusedFlags(fs *flag.FlagSet, help string, flags []string) {
 	}
 }
 
+func ConfigFile(path string) {
+	cfg.configFile = path
+}
+
 func init() {
 	cfg.fs = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
 	cfg.fs.Usage = usage

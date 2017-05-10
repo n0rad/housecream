@@ -9,6 +9,8 @@ import (
 
 	"time"
 
+	"io/ioutil"
+
 	"github.com/n0rad/go-erlog/logs"
 	"github.com/n0rad/housecream/pkg/channels"
 	"github.com/n0rad/housecream/pkg/channels/openweathermap"
@@ -38,6 +40,15 @@ func NewHousecream(buildVersion BuildVersion) *Housecream {
 	}
 }
 
+const prom = `global:
+  evaluation_interval: 1m
+  scrape_interval:     1m
+  scrape_timeout:      10s
+
+
+scrape_configs:
+- job_name: 'prometheus'`
+
 func (h *Housecream) Start(home HomeFolder) {
 
 	server := NewGrafanaServer(&home)
@@ -48,6 +59,11 @@ func (h *Housecream) Start(home HomeFolder) {
 	// TODO
 	logs.SetLevel(logs.DEBUG)
 
+	if err := ioutil.WriteFile(home.Path+"/prometheus.yml", []byte(prom), 0644); err != nil {
+		logs.WithE(err).Fatal("Failed to write prometheus.yml")
+	}
+
+	prometheus.ConfigFile(home.Path + "/prometheus.yml")
 	prometheus.Parse([]string{"--storage.local.path=" + home.Path + "/prometheus"})
 
 	localStorage := prometheus.LocalStorage()
