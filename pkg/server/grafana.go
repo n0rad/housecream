@@ -8,6 +8,8 @@ import (
 	_ "github.com/grafana/grafana/pkg/services/alerting/notifiers"
 	_ "github.com/grafana/grafana/pkg/tsdb/prometheus"
 
+	"io/ioutil"
+
 	"github.com/go-ini/ini"
 	"github.com/grafana/grafana/pkg/api"
 	"github.com/grafana/grafana/pkg/log"
@@ -26,6 +28,8 @@ import (
 	"github.com/n0rad/go-erlog/data"
 	"github.com/n0rad/go-erlog/errs"
 	"github.com/n0rad/go-erlog/logs"
+	"github.com/n0rad/housecream/dist"
+	"github.com/n0rad/housecream/pkg/exec"
 	"golang.org/x/net/context"
 	"golang.org/x/sync/errgroup"
 )
@@ -53,17 +57,32 @@ func NewGrafanaServer(home *HomeFolder) models.GrafanaServer {
 	}
 }
 
+const pathPublicTarGz = "/public.tar.gz"
+
 func (g *GrafanaServerImpl) Start() {
 	if err := writeConfiguration(g.HomeFolder); err != nil {
 		logs.WithE(err).Fatal("Failed to write configuration")
 	}
 
-	err := setting.NewConfigContext(&setting.CommandLineArgs{
+	data, err := dist.Asset(pathPublicTarGz[1:])
+	if err != nil {
+		logs.WithE(err).Fatal("Failed to find public.tar.gz data")
+	}
+	if err := ioutil.WriteFile(g.HomeFolder.Path+pathPublicTarGz, data, 0644); err != nil {
+		logs.WithE(err).Fatal("Failed to write public.tar.gz")
+	}
+
+	if err := exec.ExecCommandFull([]string{"tar", "xzf", g.HomeFolder.Path + pathPublicTarGz, "-C", g.HomeFolder.Path + "/grafana"}, []string{}, 10*1000); err != nil {
+		logs.WithE(err).Fatal("Failed to untar public")
+	}
+
+	os.Remove(g.HomeFolder.Path + pathPublicTarGz)
+
+	if err := setting.NewConfigContext(&setting.CommandLineArgs{
 		Config:   g.HomeFolder.Path + "/grafana/config.ini",
 		HomePath: g.HomeFolder.Path + "/grafana",
 		Args:     flag.Args(),
-	})
-	if err != nil {
+	}); err != nil {
 		logs.WithE(err).Fatal("Failed to create grafana settings")
 	}
 	setting.LogConfigurationInfo()
