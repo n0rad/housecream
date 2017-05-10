@@ -1179,6 +1179,12 @@
 			"revisionTime": "2015-09-06T17:23:59Z"
 		},
 		{
+			"checksumSHA1": "zhFksZfSSW8vNYlNUkPLIg1JiYU=",
+			"path": "github.com/n0rad/go-bbox",
+			"revision": "8b8435b38ee0b89041d4becc8eb180cc2e5880d3",
+			"revisionTime": "2017-05-10T22:33:45Z"
+		},
+		{
 			"checksumSHA1": "Am96yTnt202cjvKRcIE4vsylhrU=",
 			"path": "github.com/n0rad/go-erlog",
 			"revision": "96f8382e6913e873f4068f2146ebecf398a8aa47",
@@ -1803,14 +1809,14 @@
 		{
 			"checksumSHA1": "S0DP7Pn7sZUmXc55IzZnNvERu6s=",
 			"path": "golang.org/x/sync/errgroup",
-			"revision": "316e794f7b5e3df4e95175a45a5fb8b12f85cb4f",
-			"revisionTime": "2016-07-15T18:54:39Z"
+			"revision": "305c7b3edb4364a58141b30686a61a87bdb79a3a",
+			"revisionTime": "2017-05-04T18:06:05Z"
 		},
 		{
 			"checksumSHA1": "S0DP7Pn7sZUmXc55IzZnNvERu6s=",
 			"path": "golang.org/x/sync/errgroup",
-			"revision": "305c7b3edb4364a58141b30686a61a87bdb79a3a",
-			"revisionTime": "2017-05-04T18:06:05Z"
+			"revision": "316e794f7b5e3df4e95175a45a5fb8b12f85cb4f",
+			"revisionTime": "2016-07-15T18:54:39Z"
 		},
 		{
 			"checksumSHA1": "aVgPDgwY3/t4J/JOw9H3FVMHqh0=",
@@ -1937,14 +1943,14 @@
 			"revisionTime": "2016-05-31T06:42:46Z"
 		},
 		{
-			"path": "google.golang.org/appengine",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "N3KZEuQ9O1QwJXcCJbe7Czwroo4=",
 			"path": "google.golang.org/appengine",
 			"revision": "267c27e7492265b84fc6719503b14a1e17975d79",
 			"revisionTime": "2016-06-21T05:59:22Z"
+		},
+		{
+			"path": "google.golang.org/appengine",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "G9Xp1ScdsfcKsw+PcWunivRRP3o=",
