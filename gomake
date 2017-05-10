@@ -13,6 +13,7 @@ set -efo pipefail # TODO u
  : ${build_packages:=}
  : ${build_ldflags:="-s -w -X main.BuildTime=`date -u '+%Y-%m-%d_%H:%M:%S_UTC'` -X main.BuildVersion=\${version} -X main.BuildCommit=`git rev-parse --short HEAD`"}
  : ${errcheck:=true}
+ : ${build_output:=true}}
 
 read -d '' helper <<EOF || true
 Usage: gomake [-v version][-t token] command...
@@ -113,10 +114,29 @@ build() {
     ldflags=$(eval echo ${build_ldflags})
     IFS=',' read -ra current <<< "$osarchi"
     for e in "${current[@]}"; do
-        echo_green "Building $e"
+        if [ -d ${work_path}/pkg/cmd ]; then
+            for i in $(find "${work_path}/pkg/cmd" -mindepth 1 -type d); do
+                current_app=${i##*/}
+                echo_green "Building '${current_app}' for $e"
+                binaryPath=$(targetBinaryPath ${e} ${current_app})
+                build_binary "${ldflags}" "${e}" "-o ${target_name}/${binaryPath}" "$i"
+            done
+        else
+                echo_green "Building $e"
+                binaryPath=$(targetBinaryPath ${e} ${app})
+                build_binary "${ldflags}" "${e}" "-o ${target_name}/${binaryPath}" "${build_packages}"
+        fi
+    done
+    echo_purple "Build duration : $((`date +%s`-${start}))s"
+}
 
-        binaryPath=$(targetBinaryPath ${e})
-        $(cd ${work_path} && GOOS="${e%-*}" GOARCH="${e#*-}" go build -i -ldflags "${ldflags}" -o ${target_name}/${binaryPath} ${build_packages})
+build_binary() {
+        local ldflags=$1
+        local e=$2
+        local binaryArg=$3
+        local packages=$4
+
+        $(cd ${work_path} && GOOS="${e%-*}" GOARCH="${e#*-}" go build -i -ldflags "${ldflags}" ${binaryArg} ${packages})
 
         if [ "$upx" = true ]; then
             if [ "${e%-*}" != "darwin" ]; then
@@ -129,15 +149,13 @@ build() {
         if [ "${e%-*}" == "windows" ]; then
             mv ${work_path}/${target_name}/${binaryPath} ${work_path}/${target_name}/${binaryPath}.exe
         fi
-    done
-    echo_purple "Build duration : $((`date +%s`-${start}))s"
 }
 
 targetBinaryPath() {
     if [ "${1%-*}" == "windows" ]; then
-        echo ${app}-v${version}-${1}/${app}.exe
+        echo ${app}-v${version}-${1}/${2}.exe
     else
-        echo ${app}-v${version}-${1}/${app}
+        echo ${app}-v${version}-${1}/${2}
     fi
 }
 
