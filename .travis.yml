@@ -2,4 +2,3 @@ language: go
 
 script:
   - ./gomake
-

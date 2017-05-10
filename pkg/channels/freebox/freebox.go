@@ -58,9 +58,10 @@ func (l *FreeboxLink) handleWatch(events chan<- channels.Event, fbx *freebox.Cli
 		logrus.Fatalf("fbx.Authorize(): %v", err)
 	}
 
-	if l.Token == "" {
-		fbx.App.Identifier
-	}
+	// TODO
+	//if l.Token == "" {
+	//	fbx.App.Identifier
+	//}
 
 	err = fbx.Login()
 	if err != nil {
