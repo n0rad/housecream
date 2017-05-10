@@ -59,6 +59,12 @@
 			"revisionTime": "2016-09-30T00:14:02Z"
 		},
 		{
+			"checksumSHA1": "m+iiamnbukzE8kFPfBche6D0FmQ=",
+			"path": "github.com/Sirupsen/logrus",
+			"revision": "5b60b3d3ee017ed00bcd0225fcca7acab767844b",
+			"revisionTime": "2017-05-04T07:10:19Z"
+		},
+		{
 			"checksumSHA1": "BdLdZP/C2uOO3lqk9X3NCKFpXa4=",
 			"path": "github.com/asaskevich/govalidator",
 			"revision": "7b3beb6df3c42abd3509abfc3bcacc0fbfb7c877",
@@ -290,7 +296,7 @@
 			"revisionTime": "2016-09-30T00:14:02Z"
 		},
 		{
-			"checksumSHA1": "SdSd7pyjONWWTHc5XE3AhglLo34=",
+			"checksumSHA1": "5rPfda8jFccr3A6heL+JAmi9K9g=",
 			"origin": "k8s.io/client-go/1.5/vendor/github.com/davecgh/go-spew/spew",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "c589d0c9f0d81640c518354c7bcae77d99820aa3",
@@ -379,7 +385,7 @@
 			"revisionTime": "2016-09-30T00:14:02Z"
 		},
 		{
-			"checksumSHA1": "BIyZQL97iG7mzZ2UMR3XpiXbZdc=",
+			"checksumSHA1": "iPi5JTch/8pSo0Wn20zARXpAz0c=",
 			"origin": "k8s.io/client-go/1.5/vendor/github.com/gogo/protobuf/proto",
 			"path": "github.com/gogo/protobuf/proto",
 			"revision": "c589d0c9f0d81640c518354c7bcae77d99820aa3",
@@ -400,13 +406,13 @@
 			"revisionTime": "2016-09-30T00:14:02Z"
 		},
 		{
-			"checksumSHA1": "yDh5kmmr0zEF1r+rvYqbZcR7iLs=",
+			"checksumSHA1": "SVXOQdpDBh0ihdZ5aIflgdA+Rpw=",
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "98fa357170587e470c5f27d3c3ea0947b71eb455",
 			"revisionTime": "2016-10-12T20:53:35Z"
 		},
 		{
-			"checksumSHA1": "2a/SsTUBMKtcM6VtpbdPGO+c6c8=",
+			"checksumSHA1": "W+E/2xXcE1GmJ0Qb784ald0Fn6I=",
 			"path": "github.com/golang/snappy",
 			"revision": "d9eb7a3d35ec988b8585d4a0068e462c27d28380",
 			"revisionTime": "2016-05-29T05:00:41Z"
@@ -443,16 +449,19 @@
 			"revisionTime": "2014-10-17T20:07:13Z"
 		},
 		{
+			"checksumSHA1": "1kVa89e/yk8L2liYiFuJrNWiXfU=",
 			"path": "github.com/influxdata/influxdb/client/v2",
 			"revision": "15e594fc09f112cb696c084a20beaca25538a5fa",
 			"revisionTime": "2017-03-31T16:09:02-05:00"
 		},
 		{
+			"checksumSHA1": "FF7fzjW7yWl/ObniSAlidx2eXUE=",
 			"path": "github.com/influxdata/influxdb/models",
 			"revision": "15e594fc09f112cb696c084a20beaca25538a5fa",
 			"revisionTime": "2017-03-31T16:09:02-05:00"
 		},
 		{
+			"checksumSHA1": "H/J/qLqzUONXIecHHKtVZmxJZZA=",
 			"path": "github.com/influxdata/influxdb/pkg/escape",
 			"revision": "15e594fc09f112cb696c084a20beaca25538a5fa",
 			"revisionTime": "2017-03-31T16:09:02-05:00"
@@ -1838,5 +1847,5 @@
 			"revisionTime": "2016-09-30T00:14:02Z"
 		}
 	],
-	"rootPath": "github.com/n0rad/housecream/server"
+	"rootPath": "github.com/n0rad/housecream"
 }
