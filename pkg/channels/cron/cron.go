@@ -40,6 +40,10 @@ type CronChannel struct {
 	channels.CommonChannel
 }
 
+func (c *CronChannel) NewLink() channels.Link {
+	return &CronLink{}
+}
+
 func init() {
 	f := CronChannel{CommonChannel: channels.CommonChannel{
 		Id:          "cron",

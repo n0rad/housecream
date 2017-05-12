@@ -4,6 +4,7 @@ type Channel interface {
 	GetId() string
 	GetName() string
 	GetDescription() string
+	NewLink() Link
 	// events
 	// actions
 }

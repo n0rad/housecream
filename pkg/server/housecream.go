@@ -11,24 +11,25 @@ import (
 
 	"io/ioutil"
 
+	"encoding/json"
+
+	"github.com/n0rad/go-erlog/errs"
 	"github.com/n0rad/go-erlog/logs"
 	"github.com/n0rad/housecream/pkg/channels"
-	"github.com/n0rad/housecream/pkg/channels/openweathermap"
 	"github.com/n0rad/housecream/pkg/prometheus"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/prometheus/promql"
+	"github.com/prometheus/prometheus/storage/local"
 )
 
-type Rule struct {
-}
+type housecream Housecream
 
 type Housecream struct {
-	Port   int
-	Points []channels.Link
-	//Rules  []Rule
+	Port  int
+	Links []json.RawMessage
 
+	typedLinks   []channels.Link
 	buildVersion BuildVersion
-	//HomeFolder string
 	shutdownCtx  context.Context
 	shutdownFunc context.CancelFunc
 }
@@ -38,6 +39,30 @@ func NewHousecream(buildVersion BuildVersion) *Housecream {
 		Port:         4242,
 		buildVersion: buildVersion,
 	}
+}
+
+func (h *Housecream) MarshalJSON() ([]byte, error) {
+	h.Links = []json.RawMessage{}
+	for _, link := range h.typedLinks {
+		jsonLink, err := json.Marshal(link)
+		if err != nil {
+			return []byte{}, errs.WithEF(err, link.GetFields(), "Failed to marshal link")
+		}
+		h.Links = append(h.Links, jsonLink)
+	}
+	return json.Marshal((*housecream)(h))
+}
+
+func (h *Housecream) Init() error {
+	for _, data := range h.Links {
+		link, err := channels.LinkFromJson(data)
+		if err != nil {
+			return errs.WithE(err, "Failed to load link")
+		}
+		print(">>>" + link.GetName())
+		h.typedLinks = append(h.typedLinks, link)
+	}
+	return nil
 }
 
 const prom = `global:
@@ -50,7 +75,6 @@ scrape_configs:
 - job_name: 'prometheus'`
 
 func (h *Housecream) Start(home HomeFolder) {
-
 	server := NewGrafanaServer(&home)
 	go server.Start()
 
@@ -70,113 +94,71 @@ func (h *Housecream) Start(home HomeFolder) {
 
 	go prometheus.Main(localStorage)
 
-	//h.shutdownCtx, h.shutdownFunc = context.WithCancel(context.Background())
-	home.LoadConfig(h)
+	h.shutdownCtx, h.shutdownFunc = context.WithCancel(context.Background())
 	if err := home.SaveVersion(&h.buildVersion); err != nil {
 		logs.WithE(err).Fatal("Cannot save version")
 	}
 
 	eventsIn := make(chan channels.Event)
-	go func() {
-		for {
-			select {
-			case event := <-eventsIn:
-				logs.WithField("event", event).Debug("Receiving an event")
+	go h.eventsToPrometheus(eventsIn, localStorage)
 
-				//value := reflect.ValueOf(event.Value).Float()
-				//fmt.Printf("%T %d", v, v)
-
-				//value, ok := event.Value.(float64)
-				//if ok {
-
-				var value float64
-				rv := reflect.ValueOf(event.Value)
-				switch rv.Kind() {
-				case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-					value = (float64(rv.Int()))
-				case reflect.Uint, reflect.Uintptr, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-					value = (float64(rv.Uint()))
-				case reflect.Float32, reflect.Float64:
-					value = rv.Float()
-					//default:
-					//	return "fmtNumber/fmtDecimal expects a numerical value to format"
-				}
-
-				sample := &model.Sample{
-					Metric: model.Metric{
-						model.MetricNameLabel: model.LabelValue("housecream_link_" + event.LinkName + "_" + event.PointName),
-						"link":                model.LabelValue(event.LinkName),
-					},
-					Timestamp: model.TimeFromUnixNano(event.Time.UnixNano()),
-					Value:     model.SampleValue(value),
-				}
-				localStorage.Append(sample)
-				logs.WithField("point", event.PointName).Debug("append metric")
-				//}
-			}
-		}
-	}()
-
-	owm := openweathermap.OpenWeatherMapLink{
-		CommonLink: channels.CommonLink{
-			Name:    "lardy",
-			Channel: "openweathermap",
-		},
-		ApiKey:    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		Latitude:  48.52,
-		Longitude: 2.26,
+	for _, link := range h.typedLinks {
+		logs.WithFields(link.GetFields()).Info("LOADING link")
+		lifeCycle := NewLinkLifecycle(link)
+		go lifeCycle.Start(eventsIn)
 	}
-
-	h.Points = append(h.Points, &owm)
-	owm.CommonLink.Init()
-	owm.Init()
-
-	lifeCycle := NewLinkLifecycle(&owm)
-	lifeCycle.Start(eventsIn)
-
-	//cc := cron.CronLink{
-	//	Rule:       "@every 1s",
-	//	CommonLink: channels.CommonLink{Channel: "cron"},
-	//}
-	//h.Points = append(h.Points, &cc)
-	//cc.Init()
-	//lifecycle := NewPointLifecycle(&cc)
-	//go lifecycle.Start(eventsIn)
-	//time.AfterFunc(40*time.Second, func() {
-	//	lifecycle.Stop()
-	//})
-
-	//c := slack.SlackLink{
-	//	ApiKey: "",
-	//}
-	//h.Points = append(h.Points, &c)
-	//
-	//if err := c.CommonLink.Init(); err != nil {
-	//	logs.WithE(err).Warn("failed to init slack")
-	//}
-	//if err := c.Init(); err != nil {
-	//	logs.WithE(err).Warn("failed to init slack")
-	//}
-	//background := context.Background()
-	//
-	//lifecycle2 := NewPointLifecycle(&c)
-	//go lifecycle2.Start(eventsIn)
-
-	//time.AfterFunc(30+time.Second, func() {
-	//	lifecycle2.Stop()
-	//})
 
 	////go c.Watch(background, eventsIn)
 	//if err := c.Trigger(background, channels.Action{}); err != nil {
 	//	logs.WithE(err).Warn("failed to trigger")
 	//}
 
-	home.SaveConfig(h)
+	//home.SaveConfig(h)
 
 	for _, channel := range channels.ChannelByIds {
 		fmt.Println("->", channel)
 	}
 	//housecream.StartEngine()
+}
+
+func (h *Housecream) eventsToPrometheus(eventsIn <-chan channels.Event, localStorage local.Storage) {
+	for {
+		select {
+		case event := <-eventsIn:
+			logs.WithField("event", event).Debug("Receiving an event")
+
+			//value := reflect.ValueOf(event.Value).Float()
+			//fmt.Printf("%T %d", v, v)
+
+			//value, ok := event.Value.(float64)
+			//if ok {
+
+			var value float64
+			rv := reflect.ValueOf(event.Value)
+			switch rv.Kind() {
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+				value = (float64(rv.Int()))
+			case reflect.Uint, reflect.Uintptr, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+				value = (float64(rv.Uint()))
+			case reflect.Float32, reflect.Float64:
+				value = rv.Float()
+				//default:
+				//	return "fmtNumber/fmtDecimal expects a numerical value to format"
+			}
+
+			sample := &model.Sample{
+				Metric: model.Metric{
+					model.MetricNameLabel: model.LabelValue("housecream_link_" + event.LinkName + "_" + event.PointName),
+					"link":                model.LabelValue(event.LinkName),
+				},
+				Timestamp: model.TimeFromUnixNano(event.Time.UnixNano()),
+				Value:     model.SampleValue(value),
+			}
+			localStorage.Append(sample)
+			logs.WithField("event", event).Debug("append metric")
+			//}
+		}
+	}
 }
 
 func (h Housecream) Stop() {

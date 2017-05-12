@@ -58,5 +58,5 @@ func (p *LinkLifecycle) Stop() {
 	p.waitGroup.Wait()
 	p.running = false
 
-	logs.WithField("name", p.link.GetName()).Debug("Point stopped")
+	logs.WithField("name", p.link.GetName()).Debug("Link stopped")
 }

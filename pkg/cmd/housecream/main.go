@@ -11,10 +11,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/n0rad/go-erlog/logs"
-	_ "github.com/n0rad/go-erlog/register"
+	_ "github.com/n0rad/housecream/pkg/channels/bbox"
+	_ "github.com/n0rad/housecream/pkg/channels/cron"
+	_ "github.com/n0rad/housecream/pkg/channels/freebox"
+	_ "github.com/n0rad/housecream/pkg/channels/openweathermap"
+	_ "github.com/n0rad/housecream/pkg/channels/slack"
 	"github.com/n0rad/housecream/pkg/server"
 	"github.com/spf13/cobra"
+
+	"github.com/n0rad/go-erlog/logs"
+	_ "github.com/n0rad/go-erlog/register"
 )
 
 var BuildVersion = ""
@@ -84,6 +90,15 @@ func main() {
 				CommitId:     BuildCommit,
 				BuildTime:    BuildTime,
 			})
+
+			if err := home.LoadConfig(h); err != nil {
+				logs.WithE(err).Fatal("Failed to read configuration file")
+			}
+
+			if err := h.Init(); err != nil {
+				logs.WithE(err).Fatal("Failed to init housecream")
+			}
+
 			//TODO SIGHUP restart
 			go h.Start(*home)
 			defer h.Stop()

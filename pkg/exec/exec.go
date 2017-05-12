@@ -35,9 +35,9 @@ func ExecCommandFull(cmd []string, env []string, timeoutInMilli int) error {
 
 	var after *errs.EntryError
 	timer := time.AfterFunc(time.Duration(timeoutInMilli)*time.Millisecond, func() {
-		data := data.WithField("command", strings.Join(cmd, " ")).WithField("timeout", timeoutInMilli)
-		logs.WithF(data).Debug("Command timeout")
-		after = errs.WithF(data, "Exec command timeout")
+		field := data.WithField("command", strings.Join(cmd, " ")).WithField("timeout", timeoutInMilli)
+		logs.WithF(field).Debug("Command timeout")
+		after = errs.WithF(field, "Exec command timeout")
 		command.Process.Kill()
 	})
 

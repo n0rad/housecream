@@ -22,20 +22,34 @@ func (l *BboxLink) Init() error {
 	}
 
 	l.bbox = gobbox.New()
+	l.bbox.Host = l.Host
 	return nil
 }
 
 func (l *BboxLink) Watch(shutdown <-chan struct{}, events chan<- channels.Event) {
-	l.getDevice(events)
+	l.getAll(events)
 	for {
 		select {
 		case <-shutdown:
 			return
 		case <-time.After(l.Interval):
-			if err := l.getDevice(events); err != nil {
-				logs.WithEF(err, l.Fields).Error("Cannot get bbox device info")
-			}
+			l.getAll(events)
 		}
+	}
+}
+
+func (l *BboxLink) getAll(events chan<- channels.Event) {
+	if err := l.getDevice(events); err != nil {
+		logs.WithEF(err, l.GetFields()).Error("Cannot get device stats")
+	}
+	if err := l.getWanIp(events); err != nil {
+		logs.WithEF(err, l.GetFields()).Error("Cannot get ip stats")
+	}
+	if err := l.getWanIpStats(events); err != nil {
+		logs.WithEF(err, l.GetFields()).Error("Cannot get wan stats")
+	}
+	if err := l.getWanXdsl(events); err != nil {
+		logs.WithEF(err, l.GetFields()).Error("Cannot get xdsl stats")
 	}
 }
 
@@ -123,15 +137,19 @@ func (l *BboxLink) newEvent(pointName string, value interface{}) channels.Event 
 
 ///////////////////////////////////
 
-type CronChannel struct {
+type BboxChannel struct {
 	channels.CommonChannel
 }
 
+func (c *BboxChannel) NewLink() channels.Link {
+	return &BboxLink{}
+}
+
 func init() {
-	f := CronChannel{CommonChannel: channels.CommonChannel{
-		Id:          "freebox",
-		Name:        "Freebox",
-		Description: "Connect to freebox",
+	f := BboxChannel{CommonChannel: channels.CommonChannel{
+		Id:          "bbox",
+		Name:        "bbox",
+		Description: "Connect to bbox",
 	}}
 	channels.RegisterChannel(&f)
 }

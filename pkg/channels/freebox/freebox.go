@@ -41,7 +41,7 @@ func (l *FreeboxLink) Watch(shutdown <-chan struct{}, events chan<- channels.Eve
 			return
 		case <-time.After(l.Interval):
 			if err := l.handleWatch(events, fbx); err != nil {
-				logs.WithEF(err, l.Fields).Error("Cannot get freebox status")
+				logs.WithEF(err, l.GetFields()).Error("Cannot get freebox status")
 			}
 		}
 	}
@@ -90,12 +90,16 @@ func (l *FreeboxLink) newEvent(pointName string, value interface{}) channels.Eve
 
 ///////////////////////////////////
 
-type CronChannel struct {
+type FreeboxChannel struct {
 	channels.CommonChannel
 }
 
+func (c *FreeboxChannel) NewLink() channels.Link {
+	return &FreeboxLink{}
+}
+
 func init() {
-	f := CronChannel{CommonChannel: channels.CommonChannel{
+	f := FreeboxChannel{CommonChannel: channels.CommonChannel{
 		Id:          "freebox",
 		Name:        "Freebox",
 		Description: "Connect to freebox",

@@ -45,7 +45,7 @@ func (s *SlackLink) Trigger(cxt context.Context, action channels.Action) error {
 	msgParams := slack.NewPostMessageParameters()
 	msgParams.LinkNames = 1
 	if _, _, err := s.client.PostMessage("mytest", "`coucou` @alemaire toi", msgParams); err != nil {
-		return errs.WithEF(err, s.Fields, "Failed to post message to slack")
+		return errs.WithEF(err, s.GetFields(), "Failed to post message to slack")
 	}
 
 	return nil
@@ -55,6 +55,10 @@ func (s *SlackLink) Trigger(cxt context.Context, action channels.Action) error {
 
 type SlackChannel struct {
 	channels.CommonChannel
+}
+
+func (c *SlackChannel) NewLink() channels.Link {
+	return &SlackLink{}
 }
 
 func init() {

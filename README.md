@@ -8,7 +8,9 @@
 
 # Build
 
-
+```
+./gomake clean build && dist/housecream-v0-linux-amd64/housecream -H data
+```
 
 # channels
 mail
@@ -37,16 +39,13 @@ delay
 split
 reorder
 
-
 lardy : 48.52,2.26
-
 
 http://api.openweathermap.org/pollution/v1/co/{location}/{datetime}.json?appid={api_key}
 http://api.openweathermap.org/pollution/v1/co/48.5206306,2.2651702/current.json?appid=
 
 type
 format
-
 
 housecream_link_todo_count[name=] = 10
 housecream_link_slack[direction=input] 
