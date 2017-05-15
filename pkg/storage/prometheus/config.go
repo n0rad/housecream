@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package prometheus
+package prom
 
 import (
 	"flag"
@@ -26,7 +26,7 @@ import (
 	"unicode"
 
 	"github.com/asaskevich/govalidator"
-	p "github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/prometheus/config"
@@ -62,7 +62,7 @@ var cfg = struct {
 }{
 	alertmanagerURLs: stringset{},
 	notifier: notifier.Options{
-		Registerer: p.DefaultRegisterer,
+		Registerer: prometheus.DefaultRegisterer,
 	},
 }
 
@@ -88,10 +88,6 @@ func registerUnusedFlags(fs *flag.FlagSet, help string, flags []string) {
 	for _, name := range flags {
 		fs.Var(&unusedFlag{name: name, help: help}, name, help)
 	}
-}
-
-func ConfigFile(path string) {
-	cfg.configFile = path
 }
 
 func init() {

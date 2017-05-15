@@ -13,8 +13,8 @@ type Event struct {
 type Placeholders []Placeholder
 
 type Placeholder struct {
-	Name  string
-	Type  string
+	Name string
+	//Type  string
 	Value interface{}
 }
 

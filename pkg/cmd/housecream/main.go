@@ -16,45 +16,30 @@ import (
 	_ "github.com/n0rad/housecream/pkg/channels/freebox"
 	_ "github.com/n0rad/housecream/pkg/channels/openweathermap"
 	_ "github.com/n0rad/housecream/pkg/channels/slack"
-	"github.com/n0rad/housecream/pkg/server"
 	"github.com/spf13/cobra"
 
+	"github.com/mitchellh/go-homedir"
+	"github.com/n0rad/go-erlog/errs"
 	"github.com/n0rad/go-erlog/logs"
 	_ "github.com/n0rad/go-erlog/register"
+	"github.com/n0rad/housecream/pkg/channels"
+	"github.com/n0rad/housecream/pkg/home"
+	"github.com/n0rad/housecream/pkg/storage"
+	"github.com/n0rad/housecream/pkg/storage/prometheus"
+	"github.com/n0rad/housecream/pkg/ui/grafana"
 )
 
 var BuildVersion = ""
 var BuildTime = ""
 var BuildCommit = ""
 
-func waitForSignal() {
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)
-	<-sigs
-	logs.Debug("Stop signal received")
-}
-
-func sigQuitThreadDump() {
-	sigChan := make(chan os.Signal)
-	go func() {
-		for range sigChan {
-			stacktrace := make([]byte, 10<<10)
-			length := runtime.Stack(stacktrace, true)
-			fmt.Println(string(stacktrace[:length]))
-
-			ioutil.WriteFile("/tmp/"+strconv.Itoa(os.Getpid())+".dump", stacktrace[:length], 0644)
-		}
-	}()
-	signal.Notify(sigChan, syscall.SIGQUIT)
-}
+var logLevel string
+var version bool
+var homePath string
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 	sigQuitThreadDump()
-
-	var logLevel string
-	var version bool
-	var homePath string
 
 	rootCmd := &cobra.Command{
 		Use: "housecream",
@@ -79,39 +64,89 @@ func main() {
 			if len(args) != 0 {
 				logs.Fatal("Housecrean has no argument")
 			}
-
-			home, err := server.NewHome(homePath)
-			if err != nil {
-				logs.WithE(err).Fatal("Failed to load home directory")
-			}
-
-			h := server.NewHousecream(server.BuildVersion{
-				BuildVersion: BuildVersion,
-				CommitId:     BuildCommit,
-				BuildTime:    BuildTime,
-			})
-
-			if err := home.LoadConfig(h); err != nil {
-				logs.WithE(err).Fatal("Failed to read configuration file")
-			}
-
-			if err := h.Init(); err != nil {
-				logs.WithE(err).Fatal("Failed to init housecream")
-			}
-
-			//TODO SIGHUP restart
-			go h.Start(*home)
-			defer h.Stop()
-			waitForSignal()
+			run()
 		},
 	}
 
 	rootCmd.PersistentFlags().StringVarP(&logLevel, "log-level", "L", "", "Set log level")
 	rootCmd.PersistentFlags().BoolVarP(&version, "version", "V", false, "Display version")
-	rootCmd.PersistentFlags().StringVarP(&homePath, "home", "H", server.DefaultHomeFolder(), "Home folder")
+	rootCmd.PersistentFlags().StringVarP(&homePath, "home", "H", DefaultHomeFolder(), "Home folder")
 
 	if err := rootCmd.Execute(); err != nil {
 		logs.WithE(err).Fatal("Failed to process args")
 	}
 
+}
+
+func waitForSignal() {
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)
+	<-sigs
+	logs.Debug("Stop signal received")
+}
+
+func sigQuitThreadDump() {
+	sigChan := make(chan os.Signal)
+	go func() {
+		for range sigChan {
+			stacktrace := make([]byte, 10<<10)
+			length := runtime.Stack(stacktrace, true)
+			fmt.Println(string(stacktrace[:length]))
+
+			ioutil.WriteFile("/tmp/"+strconv.Itoa(os.Getpid())+".dump", stacktrace[:length], 0644)
+		}
+	}()
+	signal.Notify(sigChan, syscall.SIGQUIT)
+}
+
+func run() {
+	home, err := home.NewHome(homePath)
+	if err != nil {
+		logs.WithE(err).Fatal("Failed to load home directory")
+	}
+
+	eventsIn := make(chan channels.Event)
+
+	// grafana
+	grafana := grafana.NewGrafanaServer(home.Path + "/grafana")
+	go grafana.Start()
+
+	// prometheus
+	if err := prom.Start(home.Path + "/prometheus"); err != nil {
+		logs.WithE(err).Fatal("Failed to start prometheus")
+	}
+
+	// storage
+	storage := storage.Storage{}
+	storage.Init(eventsIn, prom.LocalStorage)
+	go storage.Start()
+
+	// links
+	cfg, err := home.LoadConfig()
+	if err != nil {
+		logs.WithE(err).Fatal("Failed to start housecream")
+	}
+	if err := cfg.Channels.Init(); err != nil {
+		logs.WithE(err).Fatal("Cannot start lings")
+	}
+	cfg.Channels.Start(eventsIn)
+
+	////TODO SIGHUP restart
+	waitForSignal()
+}
+
+func DefaultHomeFolder() string {
+	homeDir, err := homedir.Dir()
+	if err != nil {
+		home2, err2 := ioutil.TempDir(os.TempDir(), "housecream")
+		if err2 != nil {
+			fullErr := errs.WithE(err2, "Cannot create temp directory")
+			logs.WithE(fullErr).Warn("Cannot prepare default home folder. please specify home folder")
+			return ""
+		}
+		homeDir = home2
+		logs.WithField("folder", homeDir).Warn("Cannot found default home directly, using temp folder")
+		return homeDir
+	}
+	return homeDir + "/.config/housecream"
 }

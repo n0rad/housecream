@@ -1,4 +1,4 @@
-package server
+package grafana
 
 import (
 	"flag"
@@ -29,7 +29,7 @@ import (
 	"github.com/n0rad/go-erlog/errs"
 	"github.com/n0rad/go-erlog/logs"
 	"github.com/n0rad/housecream/dist"
-	"github.com/n0rad/housecream/pkg/exec"
+	"github.com/n0rad/housecream/pkg/util"
 	"golang.org/x/net/context"
 	"golang.org/x/sync/errgroup"
 )
@@ -39,12 +39,12 @@ type GrafanaServerImpl struct {
 	shutdownFn    context.CancelFunc
 	childRoutines *errgroup.Group
 	log           log.Logger
-	HomeFolder    *HomeFolder
+	dataDir       string
 
 	httpServer *api.HttpServer
 }
 
-func NewGrafanaServer(home *HomeFolder) models.GrafanaServer {
+func NewGrafanaServer(dataDir string) models.GrafanaServer {
 	rootCtx, shutdownFn := context.WithCancel(context.Background())
 	childRoutines, childCtx := errgroup.WithContext(rootCtx)
 
@@ -53,14 +53,14 @@ func NewGrafanaServer(home *HomeFolder) models.GrafanaServer {
 		shutdownFn:    shutdownFn,
 		childRoutines: childRoutines,
 		log:           log.New("server"),
-		HomeFolder:    home,
+		dataDir:       dataDir,
 	}
 }
 
 const pathPublicTarGz = "/public.tar.gz"
 
 func (g *GrafanaServerImpl) Start() {
-	if err := writeConfiguration(g.HomeFolder); err != nil {
+	if err := writeConfiguration(g.dataDir); err != nil {
 		logs.WithE(err).Fatal("Failed to write configuration")
 	}
 
@@ -68,19 +68,19 @@ func (g *GrafanaServerImpl) Start() {
 	if err != nil {
 		logs.WithE(err).Fatal("Failed to find public.tar.gz data")
 	}
-	if err := ioutil.WriteFile(g.HomeFolder.Path+pathPublicTarGz, data, 0644); err != nil {
+	if err := ioutil.WriteFile(g.dataDir+pathPublicTarGz, data, 0644); err != nil {
 		logs.WithE(err).Fatal("Failed to write public.tar.gz")
 	}
 
-	if err := exec.ExecCommandFull([]string{"tar", "xzf", g.HomeFolder.Path + pathPublicTarGz, "-C", g.HomeFolder.Path + "/grafana"}, []string{}, 10*1000); err != nil {
+	if err := util.ExecCommandFull([]string{"tar", "xzf", g.dataDir + pathPublicTarGz, "-C", g.dataDir}, []string{}, 10*1000); err != nil {
 		logs.WithE(err).Fatal("Failed to untar public")
 	}
 
-	os.Remove(g.HomeFolder.Path + pathPublicTarGz)
+	os.Remove(g.dataDir + pathPublicTarGz)
 
 	if err := setting.NewConfigContext(&setting.CommandLineArgs{
-		Config:   g.HomeFolder.Path + "/grafana/config.ini",
-		HomePath: g.HomeFolder.Path + "/grafana",
+		Config:   g.dataDir + "/config.ini",
+		HomePath: g.dataDir,
 		Args:     flag.Args(),
 	}); err != nil {
 		logs.WithE(err).Fatal("Failed to create grafana settings")
@@ -149,8 +149,8 @@ func (g *GrafanaServerImpl) Shutdown(code int, reason string) {
 	os.Exit(code)
 }
 
-func writeConfiguration(home *HomeFolder) error {
-	homeDir := home.Path + "/grafana/conf"
+func writeConfiguration(dataDir string) error {
+	homeDir := dataDir + "/conf"
 	if err := os.MkdirAll(homeDir, 0755); err != nil {
 		return errs.WithEF(err, data.WithField("path", homeDir), "Failed to create grafana home directory")
 	}
@@ -158,18 +158,18 @@ func writeConfiguration(home *HomeFolder) error {
 	config := ini.Empty()
 	config.BlockMode = false
 	paths, _ := config.NewSection("paths")
-	paths.NewKey("data", home.Path+"/grafana/data")
-	paths.NewKey("logs", home.Path+"/grafana/datalogs")
-	paths.NewKey("plugins", home.Path+"/grafana/dataplugins")
+	paths.NewKey("data", dataDir+"/data")
+	paths.NewKey("logs", dataDir+"/datalogs")
+	paths.NewKey("plugins", dataDir+"/dataplugins")
 
-	f, err := os.Create(home.Path + "/grafana/config.ini")
+	f, err := os.Create(dataDir + "/config.ini")
 	if err != nil {
 		return errs.WithE(err, "Failed to create grafana config file")
 	}
 	defer f.Close()
 	config.WriteTo(f)
 
-	defaultConfig, err := os.Create(home.Path + "/grafana/conf/defaults.ini")
+	defaultConfig, err := os.Create(dataDir + "/conf/defaults.ini")
 	if err != nil {
 		return errs.WithE(err, "Failed to create grafana config file")
 	}

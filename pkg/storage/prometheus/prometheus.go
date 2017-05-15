@@ -12,7 +12,7 @@
 // limitations under the License.
 
 // The main package for the Prometheus server executable.
-package prometheus
+package prom
 
 import (
 	"flag"
@@ -24,7 +24,7 @@ import (
 	"syscall"
 	"time"
 
-	p "github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
 	"github.com/prometheus/common/version"
 	"golang.org/x/net/context"
@@ -41,6 +41,10 @@ import (
 	"github.com/prometheus/prometheus/web"
 )
 
+//func main() {
+//	os.Exit(Main())
+//}
+
 // defaultGCPercent is the value used to to call SetGCPercent if the GOGC
 // environment variable is not set or empty. The value here is intended to hit
 // the sweet spot between memory utilization and GC effort. It is lower than the
@@ -49,12 +53,12 @@ import (
 const defaultGCPercent = 40
 
 var (
-	configSuccess = p.NewGauge(p.GaugeOpts{
+	configSuccess = prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: "prometheus",
 		Name:      "config_last_reload_successful",
 		Help:      "Whether the last configuration reload attempt was successful.",
 	})
-	configSuccessTime = p.NewGauge(p.GaugeOpts{
+	configSuccessTime = prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: "prometheus",
 		Name:      "config_last_reload_success_timestamp_seconds",
 		Help:      "Timestamp of the last successful configuration reload.",
@@ -62,15 +66,7 @@ var (
 )
 
 func init() {
-	p.MustRegister(version.NewCollector("prometheus"))
-}
-
-func LocalStorage() local.Storage {
-	seriesStorage := local.NewMemorySeriesStorage(&cfg.storage)
-	if err := seriesStorage.Start(); err != nil {
-		log.Errorln("Error opening memory series storage:", err)
-	}
-	return seriesStorage
+	prometheus.MustRegister(version.NewCollector("prometheus"))
 }
 
 func Parse(args []string) int {
@@ -212,11 +208,11 @@ func Main(localStorage local.Storage) int {
 	defer remoteAppender.Stop()
 
 	// The storage has to be fully initialized before registering.
-	if instrumentedStorage, ok := localStorage.(p.Collector); ok {
-		p.MustRegister(instrumentedStorage)
+	if instrumentedStorage, ok := localStorage.(prometheus.Collector); ok {
+		prometheus.MustRegister(instrumentedStorage)
 	}
-	p.MustRegister(configSuccess)
-	p.MustRegister(configSuccessTime)
+	prometheus.MustRegister(configSuccess)
+	prometheus.MustRegister(configSuccessTime)
 
 	// The notifier is a dependency of the rule manager. It has to be
 	// started before and torn down afterwards.

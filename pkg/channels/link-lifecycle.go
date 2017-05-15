@@ -1,16 +1,15 @@
-package server
+package channels
 
 import (
 	"sync"
 
 	"github.com/n0rad/go-erlog/data"
 	"github.com/n0rad/go-erlog/logs"
-	"github.com/n0rad/housecream/pkg/channels"
 )
 
 type LinkLifecycle struct {
 	running   bool
-	link      channels.Link
+	link      Link
 	shutdown  chan struct{}
 	waitGroup sync.WaitGroup
 
@@ -20,7 +19,7 @@ type LinkLifecycle struct {
 	// lastAction
 }
 
-func NewLinkLifecycle(link channels.Link) LinkLifecycle {
+func NewLinkLifecycle(link Link) LinkLifecycle {
 	return LinkLifecycle{
 		link: link,
 	}
@@ -30,7 +29,7 @@ func (p *LinkLifecycle) IsRunning() bool {
 	return p.running
 }
 
-func (p *LinkLifecycle) Start(events chan<- channels.Event) {
+func (p *LinkLifecycle) Start(events chan<- Event) {
 	p.running = true
 	p.shutdown = make(chan struct{})
 

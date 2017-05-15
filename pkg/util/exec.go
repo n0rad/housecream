@@ -1,4 +1,4 @@
-package exec
+package util
 
 import (
 	"bytes"
@@ -9,18 +9,7 @@ import (
 	"github.com/n0rad/go-erlog/data"
 	"github.com/n0rad/go-erlog/errs"
 	"github.com/n0rad/go-erlog/logs"
-	"github.com/n0rad/housecream/pkg/channels"
 )
-
-type ExecPoint struct {
-	channels.CommonLink
-	TimeoutInMilli int
-	Command        []string
-}
-
-func (e *ExecPoint) Init() error {
-	return nil
-}
 
 func ExecCommandFull(cmd []string, env []string, timeoutInMilli int) error {
 	command := exec.Command(cmd[0], cmd[1:]...)
