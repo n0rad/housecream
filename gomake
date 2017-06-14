@@ -280,12 +280,12 @@ release() {
     done
     cd -
 
-    comment=$(quickedit)
+    comment=$(quickedit | sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g')
 
     git tag v${version} -a -m "Version $version"
     git push origin v${version}
 
-    sleep 5
+    sleep 5 # give time to github to ingest tag
 
     posturl=$(curl --data "{\"tag_name\": \"v${version}\",\"target_commitish\": \"master\",\"name\": \"v${version}\",\"body\": \"${comment}\",\"draft\": false,\"prerelease\": false}" https://api.github.com/repos/${github_repo}/releases?access_token=${token} | grep "\"upload_url\"" | sed -ne 's/.*\(http[^"]*\).*/\1/p')
 
