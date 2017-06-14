@@ -34,6 +34,11 @@ http
 android push
 
 
+manual
+simple
+counter
+internal
+
 # EIP
 delay
 split

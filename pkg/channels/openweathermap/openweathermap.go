@@ -67,14 +67,13 @@ func (l *OpenWeatherMapLink) handleWatch(events chan<- channels.Event) {
 
 	events <- l.newEvent(w.Dt, "clouds", w.Clouds.All)
 	events <- l.newEvent(w.Dt, "temperature", w.Main.Temp)
-	events <- l.newEvent(w.Dt, "temperature_max", w.Main.TempMax)
-	events <- l.newEvent(w.Dt, "temperature_min", w.Main.TempMin)
+	//	events <- l.newEvent(w.Dt, "temperature_max", w.Main.TempMax) // this is useless
+	//	events <- l.newEvent(w.Dt, "temperature_min", w.Main.TempMin) //
 	events <- l.newEvent(w.Dt, "pressure", w.Main.Pressure)
 	events <- l.newEvent(w.Dt, "humidity", w.Main.Humidity)
 
-	// TODO if > 0
-	events <- l.newEvent(w.Dt, "sea_level", w.Main.SeaLevel)
-	events <- l.newEvent(w.Dt, "ground_level", w.Main.GrndLevel)
+	//events <- l.newEvent(w.Dt, "sea_level", w.Main.SeaLevel) // this is useless
+	//events <- l.newEvent(w.Dt, "ground_level", w.Main.GrndLevel)
 
 	events <- l.newEvent(w.Dt, "wind_degree", w.Wind.Deg)
 	events <- l.newEvent(w.Dt, "wind_speed", w.Wind.Speed)

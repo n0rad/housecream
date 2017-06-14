@@ -73,8 +73,8 @@ func (l *FreeboxLink) handleWatch(events chan<- channels.Event) error {
 		return err
 	}
 
-	linkUp := channels.Placeholder{"link", "up"}
-	linkDown := channels.Placeholder{"link", "down"}
+	linkUp := channels.Placeholder{Name: "link", Value: "up"}
+	linkDown := channels.Placeholder{Name: "link", Value: "down"}
 
 	events <- l.newEvent("bandwith", stats.BandwidthUp, linkUp)
 	events <- l.newEvent("bandwith", stats.BandwidthDown, linkDown)
