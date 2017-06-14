@@ -14,6 +14,7 @@ set -efo pipefail # TODO u
  : ${build_ldflags:="-s -w -X main.BuildTime=`date -u '+%Y-%m-%d_%H:%M:%S_UTC'` -X main.BuildVersion=\${version} -X main.BuildCommit=`git rev-parse --short HEAD`"}
  : ${errcheck:=true}
  : ${build_output:=true}}
+ : ${cgo:=}
 
 read -d '' helper <<EOF || true
 Usage: gomake [-v version][-t token] command...
@@ -68,6 +69,15 @@ echo_yellow() {
 err_count() {
     c=$(echo -e "${1}" | wc -l)
     ((err_count+=${c}))
+}
+
+quickedit() {
+    echo -e "Release of version ${version}\n\n#Please write down release page text" > /tmp/release$$
+    echo -e "#Here is commits since last tag :\n" >> /tmp/release$$
+    git log `git describe --tags --abbrev=0`..HEAD --oneline >> /tmp/release$$
+    trap 'rm -f /tmp/release$$' EXIT;
+    vim /tmp/release$$ >/dev/tty;
+    cat /tmp/release$$ | awk '{$1=$1};1' | grep -v ^#
 }
 
 gomake_update() {
@@ -136,10 +146,19 @@ build_binary() {
         local binaryArg=$3
         local packages=$4
 
-        $(cd ${work_path} && GOOS="${e%-*}" GOARCH="${e#*-}" go build -i -ldflags "${ldflags}" ${binaryArg} ${packages})
+        local install=""
+        if [ ${e} == "$(go env GOHOSTOS)-$(go env GOHOSTARCH)" ]; then
+            install="-i"
+        fi
+        cgo_enable=""
+        if [ ! -z ${cgo} ]; then
+            cgo_enable="CGO_ENABLED=${cgo}"
+        fi
+
+        $(cd ${work_path} && GOOS="${e%-*}" GOARCH="${e#*-}" ${cgo_enable} go build ${install} -ldflags "${ldflags}" ${binaryArg} ${packages})
 
         if [ "$upx" = true ]; then
-            if [ "${e%-*}" != "darwin" ]; then
+            if [ "${e%-*}" != "darwin" ]; then # no upx on darwin it sux
                 echo_green "Compressing ${e}" # TODO compress on release only
                 command -v upx > /dev/null || (echo "upx is required to compress" && exit 1)
                 upx ${work_path}/${target_name}/${binaryPath} &> /dev/null
@@ -261,12 +280,14 @@ release() {
     done
     cd -
 
+    comment=$(quickedit)
+
     git tag v${version} -a -m "Version $version"
     git push origin v${version}
 
     sleep 5
 
-    posturl=$(curl --data "{\"tag_name\": \"v${version}\",\"target_commitish\": \"master\",\"name\": \"v${version}\",\"body\": \"Release of version ${version}\",\"draft\": false,\"prerelease\": false}" https://api.github.com/repos/${github_repo}/releases?access_token=${token} | grep "\"upload_url\"" | sed -ne 's/.*\(http[^"]*\).*/\1/p')
+    posturl=$(curl --data "{\"tag_name\": \"v${version}\",\"target_commitish\": \"master\",\"name\": \"v${version}\",\"body\": \"${comment}\",\"draft\": false,\"prerelease\": false}" https://api.github.com/repos/${github_repo}/releases?access_token=${token} | grep "\"upload_url\"" | sed -ne 's/.*\(http[^"]*\).*/\1/p')
 
     for i in $(find ${work_path}/${target_name} -type f -name "*.tar.gz") ; do
         fullpath=$(ls ${i})
