@@ -10,6 +10,9 @@ install:
 build:
 	./gomake build
 
+test-short:
+	./gomake test -short
+
 test:
 	./gomake test
 
