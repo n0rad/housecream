@@ -6,11 +6,17 @@
 
 
 
-# Build
+# Build / Run
+
+Having go installed and $GOPATH set :
 
 ```
-./gomake clean build && dist/housecream-v0-linux-amd64/housecream -H data
+# go get github.com/n0rad/housecream
+# cd $GOPATH/src/github.com/n0rad/housecream
+# ./gomake clean build
+# ./dist/housecream-v0-$(go env GOHOSTOS)-$(go env GOHOSTARCH)/housecream -H data
 ```
+
 
 # channels
 mail
