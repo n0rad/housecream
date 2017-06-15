@@ -1,9 +1,22 @@
-# Housecream
+# Housecream - home automation
+<!-- ![housecream logo](http://housecream.org/img/logo/Housecream.jpg)-->
 
+![logo](https://raw.githubusercontent.com/n0rad/housecream/master/docs/img/housecream32.png)
 [![Build Status](https://img.shields.io/travis/n0rad/housecream/master.svg)](https://travis-ci.org/n0rad/housecream)
+[![Go Report Card](https://goreportcard.com/badge/github.com/n0rad/housecream)](https://goreportcard.com/report/github.com/n0rad/housecream)
+<!--[![GoDoc](https://img.shields.io/badge/godoc-reference-5874B0.svg)](https://godoc.org/github.com/n0rad/housecream)-->
 
-![housecream logo](http://housecream.org/img/logo/Housecream.jpg)
+Housecream is an advanced home automation server aiming to give you unlimited control over your house.
 
+
+
+# Features
+
+# Architecture
+
+# Download
+
+See [github release page](https://github.com/n0rad/housecream/releases)
 
 
 # Build / Run
@@ -16,6 +29,8 @@ Having go installed and $GOPATH set :
 # ./gomake clean build
 # ./dist/housecream-v0-$(go env GOHOSTOS)-$(go env GOHOSTARCH)/housecream -H data
 ```
+
+
 
 
 # channels
