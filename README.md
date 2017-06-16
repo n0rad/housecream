@@ -26,9 +26,31 @@ Having go installed and $GOPATH set :
 ```
 # go get github.com/n0rad/housecream
 # cd $GOPATH/src/github.com/n0rad/housecream
-# ./gomake clean build
+# ./gomake
 # ./dist/housecream-v0-$(go env GOHOSTOS)-$(go env GOHOSTARCH)/housecream -H data
 ```
+
+# what to do ?
+
+- how to handle manual data set directly by hand ?
+  it has to trigger the rue engine and so have to processed like any other channel
+  but at the same time we have to be able to set a channel endpoint directly too
+  also this output set have to go to the rule engine too...
+  
+  
+- should we linked directly triggered from board to board ? 
+  this sohuld be better since it can work without housecream, but have to be codded direcrlt in the board
+  strong board could be able to update code internalry to handle rules direclty...
+
+  
+- restmcu
+- counter -> outpoint
+- X10 -> outpoint
+
+IN : Have to store the value on event to remember current state
+OUT : Have to store the value on action to remember what was set
+//INOUT : Can get value to know where it is
+
 
 
 

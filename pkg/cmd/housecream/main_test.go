@@ -10,11 +10,9 @@ func TestSomething(t *testing.T) {
 		t.Skip("short run")
 	}
 	println("Running long test")
-	time.Sleep(10*time.Second)
-
+	time.Sleep(10 * time.Second)
 
 	//net/http/httptest
-
 
 	//main();
 	//setupDatabase()

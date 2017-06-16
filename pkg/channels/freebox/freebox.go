@@ -7,7 +7,6 @@ import (
 
 	"encoding/json"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/moul/go-freebox"
 	"github.com/n0rad/go-erlog/errs"
 	"github.com/n0rad/go-erlog/logs"
@@ -32,29 +31,19 @@ func (l *FreeboxLink) Init() error {
 
 	l.client = freebox.New()
 	if l.Host != "" {
-		l.client.URL = "http://" + l.Host + "/"
-	}
-
-	err := l.client.Connect()
-	if err != nil {
-		logrus.Fatalf("fbx.Connect(): %v", err)
-	}
-
-	err = l.client.Authorize()
-	if err != nil {
-		logrus.Fatalf("fbx.Authorize(): %v", err)
-	}
-
-	err = l.client.Login()
-	if err != nil {
-		logrus.Fatalf("fbx.Login(): %v", err)
+		l.client.URL = l.Host
+		if l.client.URL[len(l.client.URL)-1] != '/' {
+			l.client.URL += "/"
+		}
 	}
 
 	return nil
 }
 
 func (l *FreeboxLink) Watch(shutdown <-chan struct{}, events chan<- channels.Event) {
-	l.handleWatch(events)
+	if err := l.handleWatch(events); err != nil {
+		logs.WithEF(err, l.GetFields()).Error("Cannot get freebox status")
+	}
 	for {
 		select {
 		case <-shutdown:
@@ -68,6 +57,18 @@ func (l *FreeboxLink) Watch(shutdown <-chan struct{}, events chan<- channels.Eve
 }
 
 func (l *FreeboxLink) handleWatch(events chan<- channels.Event) error {
+	if err := l.client.Connect(); err != nil {
+		return errs.WithEF(err, l.GetFields(), "Failed to connect to freebox")
+	}
+
+	if err := l.client.Authorize(); err != nil {
+		return errs.WithEF(err, l.GetFields(), "Failed to autorize to freebox")
+	}
+
+	if err := l.client.Login(); err != nil {
+		return errs.WithEF(err, l.GetFields(), "Failed to login to freebox")
+	}
+
 	stats, err := l.connectionStats()
 	if err != nil {
 		return err
