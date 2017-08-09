@@ -1,4 +1,4 @@
-package housecream
+package rules
 
 import "github.com/google/uuid"
 

@@ -72,8 +72,10 @@ func (h HomeFolder) SaveConfig(cfg *Config) error {
 func (h *HomeFolder) LoadConfig() (*Config, error) {
 	configPath := h.Path + pathConfig
 	cfg := Config{}
-	if err := util.ReadYamlStruct(&cfg, configPath); err != nil {
-		return nil, errs.WithE(err, "Failed to read configuration")
+	if _, err := os.Stat(configPath); err == nil {
+		if err := util.ReadYamlStruct(&cfg, configPath); err != nil {
+			return nil, errs.WithE(err, "Failed to read configuration")
+		}
 	}
 	return &cfg, nil
 }

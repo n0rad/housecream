@@ -17,6 +17,10 @@ type Channels struct {
 	typedLinks []Link
 }
 
+func (c *Channels) GetLinks() []Link {
+	return c.typedLinks
+}
+
 func (c *Channels) MarshalJSON() ([]byte, error) {
 	c.Links = []json.RawMessage{}
 	for _, link := range c.typedLinks {
@@ -35,7 +39,6 @@ func (c *Channels) Init() error {
 		if err != nil {
 			return errs.WithE(err, "Failed to load link")
 		}
-		println(">>>" + link.GetName())
 		c.typedLinks = append(c.typedLinks, link)
 	}
 	return nil
@@ -43,7 +46,7 @@ func (c *Channels) Init() error {
 
 func (c *Channels) Start(eventsIn chan<- Event) {
 	for _, link := range c.typedLinks {
-		logs.WithFields(link.GetFields()).Info("LOADING link")
+		logs.WithFields(link.GetFields()).Info("Loading link")
 		lifeCycle := NewLinkLifecycle(link)
 		go lifeCycle.Start(eventsIn)
 	}

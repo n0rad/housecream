@@ -1,4 +1,4 @@
-package housecream
+package rules
 
 ////go c.Watch(background, eventsIn)
 //if err := c.Trigger(background, channels.Action{}); err != nil {
