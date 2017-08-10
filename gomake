@@ -20,7 +20,7 @@ set -efo pipefail # TODO u
  : ${short_test:=}
 
 read -d '' helper <<EOF || true
-Usage: gomake [-v version][-t token] command...
+Usage: [var=val] gomake command...
   gomake is a script to build go apps
 
   command
@@ -29,15 +29,22 @@ Usage: gomake [-v version][-t token] command...
       quality               Format, Fix, check error handled, lint, vet, misspell, ineffassign, Gocyclo
       test                  run go tests
       install               install release to \$GOPATH/bin
-      release               clean, build all platform, test, check git is clean, tag, push tag & build ZIPs
-      gomake_update         self updating by downloading and replacing with latest version
+      release               clean, build all platform, test, check git is clean, tag, push tag, zip, push to github releases
+      gomake_update         self updating by downloading and replacing with latest version from github.com/n0rad/gomake
+      -h, --help            this helper
 
          default is 'clean build test quality'
 
-  -v, --version=version     version of the app
-  -h, --help                this helper
-  -t, --token=token         token to push releases
-  -W, --work-path=path      set working path, default is ./
+  var=val   you can persist them to gomake.cfg file
+      work_path          root of project to build   (=${work_path})
+      version            version to build/release   (=${version})
+      token              github token to upload releases    (=${token})
+      release_osarchi    versions to release        (=${release_osarchi})
+      app                application name           (=${app})
+
+  func
+
+
 EOF
 
 go_files=`find ${work_path} -name '*.go' 2> /dev/null | grep -v ${work_path}/build/ | grep -v ${target_name}/ | grep -v vendor/ | grep -v .git`
@@ -314,7 +321,7 @@ test() {
 
 ensure_tool() {
     command -v $1 > /dev/null || {
-        echo_purple "Preparing $1"
+        echo_yellow "Preparing $1"
 
         mkdir -p ${work_path}/build/src
         [ -L ${work_path}/build/vendor ] || ln -s src ${work_path}/build/vendor
@@ -341,13 +348,7 @@ commands=()
 while [ $# -gt 0 ]; do
     case "${1}" in
         -h|--help)  echo "${helper}"; exit 0;;
-#        --version=*)version="${1#*=}"; shift;;
-#        --token=*)  token="${1#*=}"; shift;;
-#        --work-path=*) work_path="${1#*=}"; shift;;
         -short)     short_test="-short"; shift;;
-#        -v)         version="${2}"; [ $# -gt 1 ] || (echo_red "Missing argument for ${1}"; exit 1); shift 2;;
-#        -t)         token="${2}"; [ $# -gt 1 ] || (echo_red "Missing argument for ${1}"; exit 1); shift 2;;
-#        -W)         work_path="${2}"; [ $# -gt 1 ] || (echo_red "Missing argument for ${1}"; exit 1); shift 2;;
         --)         shift; commands+=("${@}"); break;;
         *)          commands+=("${1}"); shift;;
     esac
