@@ -1,4 +1,42 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["angular","app/core/core_module","./exporter"],function(a,b){"use strict";function c(){return{restrict:"E",templateUrl:"public/app/features/dashboard/export/export_modal.html",controller:g,bindToController:!0,controllerAs:"ctrl"}}b&&b.id;a("dashExportDirective",c);var d,e,f,g;return{setters:[function(a){d=a},function(a){e=a},function(a){f=a}],execute:function(){g=function(){function a(a,b,c,d){var e=this;this.backendSrv=a,this.exporter=new f.DashboardExporter(c),this.exporter.makeExportable(b.getCurrent()).then(function(a){d.$apply(function(){e.dash=a})})}return a.$inject=["backendSrv","dashboardSrv","datasourceSrv","$scope"],a.prototype.save=function(){var a=new Blob([d.default.toJson(this.dash,!0)],{type:"application/json;charset=utf-8"}),b=window;b.saveAs(a,this.dash.title+"-"+(new Date).getTime()+".json")},a.prototype.saveJson=function(){var a=d.default.toJson(this.dash,!0),b="data:application/json,"+encodeURIComponent(a);window.open(b)},a}(),a("DashExportCtrl",g),e.default.directive("dashExportModal",c)}}});
+"use strict";
+///<reference path="../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var angular_1 = require("angular");
+var core_module_1 = require("app/core/core_module");
+var exporter_1 = require("./exporter");
+var DashExportCtrl = (function () {
+    /** @ngInject */
+    function DashExportCtrl(backendSrv, dashboardSrv, datasourceSrv, $scope) {
+        var _this = this;
+        this.backendSrv = backendSrv;
+        this.exporter = new exporter_1.DashboardExporter(datasourceSrv);
+        this.exporter.makeExportable(dashboardSrv.getCurrent()).then(function (dash) {
+            $scope.$apply(function () {
+                _this.dash = dash;
+            });
+        });
+    }
+    DashExportCtrl.prototype.save = function () {
+        var blob = new Blob([angular_1.default.toJson(this.dash, true)], { type: "application/json;charset=utf-8" });
+        var wnd = window;
+        wnd.saveAs(blob, this.dash.title + '-' + new Date().getTime() + '.json');
+    };
+    DashExportCtrl.prototype.saveJson = function () {
+        var html = angular_1.default.toJson(this.dash, true);
+        var uri = "data:application/json," + encodeURIComponent(html);
+        var newWindow = window.open(uri);
+    };
+    return DashExportCtrl;
+}());
+exports.DashExportCtrl = DashExportCtrl;
+function dashExportDirective() {
+    return {
+        restrict: 'E',
+        templateUrl: 'public/app/features/dashboard/export/export_modal.html',
+        controller: DashExportCtrl,
+        bindToController: true,
+        controllerAs: 'ctrl',
+    };
+}
+exports.dashExportDirective = dashExportDirective;
+core_module_1.default.directive('dashExportModal', dashExportDirective);

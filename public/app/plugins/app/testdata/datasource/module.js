@@ -1,4 +1,15 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["./datasource","./query_ctrl"],function(a,b){"use strict";var c,d,e;b&&b.id;return{setters:[function(a){c=a},function(a){d=a}],execute:function(){a("TestDataDatasource",c.TestDataDatasource),a("Datasource",c.TestDataDatasource),a("QueryCtrl",d.TestDataQueryCtrl),e=function(){function a(){}return a}(),e.template="<h2>test data</h2>",a("AnnotationsQueryCtrl",e)}}});
+"use strict";
+///<reference path="../../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var datasource_1 = require("./datasource");
+exports.TestDataDatasource = datasource_1.TestDataDatasource;
+exports.Datasource = datasource_1.TestDataDatasource;
+var query_ctrl_1 = require("./query_ctrl");
+exports.QueryCtrl = query_ctrl_1.TestDataQueryCtrl;
+var TestDataAnnotationsQueryCtrl = (function () {
+    function TestDataAnnotationsQueryCtrl() {
+    }
+    TestDataAnnotationsQueryCtrl.template = '<h2>test data</h2>';
+    return TestDataAnnotationsQueryCtrl;
+}());
+exports.AnnotationsQueryCtrl = TestDataAnnotationsQueryCtrl;

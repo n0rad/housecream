@@ -1,4 +1,49 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","../variable"],function(a,b){"use strict";var c,d;b&&b.id;return{setters:[function(a){c=a},function(a){d=a}],execute:function(){c.describe("containsVariable",function(){c.describe("when checking if a string contains a variable",function(){c.it("should find it with $var syntax",function(){var a=d.containsVariable("this.$test.filters","test");c.expect(a).to.be(!0)}),c.it("should not find it if only part matches with $var syntax",function(){var a=d.containsVariable("this.$serverDomain.filters","server");c.expect(a).to.be(!1)}),c.it("should find it if it ends with variable and passing multiple test strings",function(){var a=d.containsVariable("show field keys from $pgmetric","test string2","pgmetric");c.expect(a).to.be(!0)}),c.it("should find it with [[var]] syntax",function(){var a=d.containsVariable("this.[[test]].filters","test");c.expect(a).to.be(!0)}),c.it("should find it when part of segment",function(){var a=d.containsVariable("metrics.$env.$group-*","group");c.expect(a).to.be(!0)}),c.it("should find it its the only thing",function(){var a=d.containsVariable("$env","env");c.expect(a).to.be(!0)}),c.it("should be able to pass in multiple test strings",function(){var a=d.containsVariable("asd","asd2.$env","env");c.expect(a).to.be(!0)})})}),c.describe("assignModelProperties",function(){c.it("only set properties defined in defaults",function(){var a={test:"asd"};d.assignModelProperties(a,{propA:1,propB:2},{propB:0}),c.expect(a.propB).to.be(2),c.expect(a.test).to.be("asd")}),c.it("use default value if not found on source",function(){var a={test:"asd"};d.assignModelProperties(a,{propA:1,propB:2},{propC:10}),c.expect(a.propC).to.be(10)})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var variable_1 = require("../variable");
+common_1.describe('containsVariable', function () {
+    common_1.describe('when checking if a string contains a variable', function () {
+        common_1.it('should find it with $var syntax', function () {
+            var contains = variable_1.containsVariable('this.$test.filters', 'test');
+            common_1.expect(contains).to.be(true);
+        });
+        common_1.it('should not find it if only part matches with $var syntax', function () {
+            var contains = variable_1.containsVariable('this.$serverDomain.filters', 'server');
+            common_1.expect(contains).to.be(false);
+        });
+        common_1.it('should find it if it ends with variable and passing multiple test strings', function () {
+            var contains = variable_1.containsVariable('show field keys from $pgmetric', 'test string2', 'pgmetric');
+            common_1.expect(contains).to.be(true);
+        });
+        common_1.it('should find it with [[var]] syntax', function () {
+            var contains = variable_1.containsVariable('this.[[test]].filters', 'test');
+            common_1.expect(contains).to.be(true);
+        });
+        common_1.it('should find it when part of segment', function () {
+            var contains = variable_1.containsVariable('metrics.$env.$group-*', 'group');
+            common_1.expect(contains).to.be(true);
+        });
+        common_1.it('should find it its the only thing', function () {
+            var contains = variable_1.containsVariable('$env', 'env');
+            common_1.expect(contains).to.be(true);
+        });
+        common_1.it('should be able to pass in multiple test strings', function () {
+            var contains = variable_1.containsVariable('asd', 'asd2.$env', 'env');
+            common_1.expect(contains).to.be(true);
+        });
+    });
+});
+common_1.describe('assignModelProperties', function () {
+    common_1.it('only set properties defined in defaults', function () {
+        var target = { test: 'asd' };
+        variable_1.assignModelProperties(target, { propA: 1, propB: 2 }, { propB: 0 });
+        common_1.expect(target.propB).to.be(2);
+        common_1.expect(target.test).to.be('asd');
+    });
+    common_1.it('use default value if not found on source', function () {
+        var target = { test: 'asd' };
+        variable_1.assignModelProperties(target, { propA: 1, propB: 2 }, { propC: 10 });
+        common_1.expect(target.propC).to.be(10);
+    });
+});

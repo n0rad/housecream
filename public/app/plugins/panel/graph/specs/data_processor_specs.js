@@ -1,4 +1,55 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["../../../../../test/lib/common","../data_processor"],function(a,b){"use strict";var c,d;b&&b.id;return{setters:[function(a){c=a},function(a){d=a}],execute:function(){c.describe("Graph DataProcessor",function(){var a,b={xaxis:{}},e=new d.DataProcessor(b);c.describe("Given default xaxis options and query that returns docs",function(){c.beforeEach(function(){b.xaxis.mode="time",b.xaxis.name="hostname",b.xaxis.values=[],a=e.getSeriesList({dataList:[{type:"docs",datapoints:[{hostname:"server1",avg:10}]}]})}),c.it("Should automatically set xaxis mode to field",function(){c.expect(b.xaxis.mode).to.be("field")})}),c.describe("getDataFieldNames(",function(){var a=[{type:"docs",datapoints:[{hostname:"server1",valueField:11,nested:{prop1:"server2",value2:23}}]}];c.it("Should return all field names",function(){var b=e.getDataFieldNames(a,!1);c.expect(b).to.contain("hostname"),c.expect(b).to.contain("valueField"),c.expect(b).to.contain("nested.prop1"),c.expect(b).to.contain("nested.value2")}),c.it("Should return all number fields",function(){var b=e.getDataFieldNames(a,!0);c.expect(b).to.contain("valueField"),c.expect(b).to.contain("nested.value2")})})})}}});
+"use strict";
+///<reference path="../../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("../../../../../test/lib/common");
+var data_processor_1 = require("../data_processor");
+common_1.describe('Graph DataProcessor', function () {
+    var panel = {
+        xaxis: {}
+    };
+    var processor = new data_processor_1.DataProcessor(panel);
+    var seriesList;
+    common_1.describe('Given default xaxis options and query that returns docs', function () {
+        common_1.beforeEach(function () {
+            panel.xaxis.mode = 'time';
+            panel.xaxis.name = 'hostname';
+            panel.xaxis.values = [];
+            seriesList = processor.getSeriesList({
+                dataList: [
+                    {
+                        type: 'docs',
+                        datapoints: [{ hostname: "server1", avg: 10 }]
+                    }
+                ]
+            });
+        });
+        common_1.it('Should automatically set xaxis mode to field', function () {
+            common_1.expect(panel.xaxis.mode).to.be('field');
+        });
+    });
+    common_1.describe('getDataFieldNames(', function () {
+        var dataList = [{
+                type: 'docs', datapoints: [
+                    {
+                        hostname: "server1",
+                        valueField: 11,
+                        nested: {
+                            prop1: 'server2', value2: 23
+                        }
+                    }
+                ]
+            }];
+        common_1.it('Should return all field names', function () {
+            var fields = processor.getDataFieldNames(dataList, false);
+            common_1.expect(fields).to.contain('hostname');
+            common_1.expect(fields).to.contain('valueField');
+            common_1.expect(fields).to.contain('nested.prop1');
+            common_1.expect(fields).to.contain('nested.value2');
+        });
+        common_1.it('Should return all number fields', function () {
+            var fields = processor.getDataFieldNames(dataList, true);
+            common_1.expect(fields).to.contain('valueField');
+            common_1.expect(fields).to.contain('nested.value2');
+        });
+    });
+});

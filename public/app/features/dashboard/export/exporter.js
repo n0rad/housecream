@@ -1,4 +1,150 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["app/core/config","lodash","../dynamic_dashboard_srv"],function(a,b){"use strict";var c,d,e,f;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a}],execute:function(){f=function(){function a(a){this.datasourceSrv=a}return a.prototype.makeExportable=function(a){var b=this,f=new e.DynamicDashboardSrv;f.init(a),f.process({cleanUpOnly:!0});var g=a.getSaveModelClone();g.id=null,f.process();for(var h=[],i={},j={},k=[],l={},m=0,n=g.templating.list;m<n.length;m++){var o=n[m];l[o.name]=o}for(var p=function(a){a.datasource&&0===a.datasource.indexOf("$")&&l[a.datasource.substring(1)]||k.push(b.datasourceSrv.get(a.datasource).then(function(b){if(!b.meta.builtIn){var c="DS_"+b.name.replace(" ","_").toUpperCase();j[c]={name:c,label:b.name,description:"",type:"datasource",pluginId:b.meta.id,pluginName:b.meta.name},a.datasource="${"+c+"}",i["datasource"+b.meta.id]={type:"datasource",id:b.meta.id,name:b.meta.name,version:b.meta.info.version||"1.0.0"}}}))},q=0,r=g.rows;q<r.length;q++)for(var s=r[q],t=0,u=s.panels;t<u.length;t++){var v=u[t];if(void 0!==v.datasource&&p(v),v.targets)for(var w=0,x=v.targets;w<x.length;w++){var y=x[w];void 0!==y.datasource&&p(y)}var z=c.default.panels[v.type];z&&(i["panel"+z.id]={type:"panel",id:z.id,name:z.name,version:z.info.version})}for(var A=0,B=g.templating.list;A<B.length;A++){var o=B[A];"query"===o.type&&(p(o),o.options=[],o.current={},o.refresh=1)}for(var C=0,D=g.annotations.list;C<D.length;C++){var E=D[C];p(E)}return i.grafana={type:"grafana",id:"grafana",name:"Grafana",version:c.default.buildInfo.version},Promise.all(k).then(function(){d.default.each(j,function(a,b){h.push(a)});for(var a=0,b=g.templating.list;a<b.length;a++){var c=b[a];if("constant"===c.type){var e="VAR_"+c.name.replace(" ","_").toUpperCase();h.push({name:e,type:"constant",label:c.label||c.name,value:c.current.value,description:""}),c.query="${"+e+"}",c.options[0]=c.current={value:c.query,text:c.query}}}var f={};return f.__inputs=h,f.__requires=d.default.sortBy(i,["id"]),d.default.defaults(f,g),f}).catch(function(a){return console.log("Export failed:",a),{error:a}})},a}(),a("DashboardExporter",f)}}});
+"use strict";
+///<reference path="../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var config_1 = require("app/core/config");
+var lodash_1 = require("lodash");
+var dynamic_dashboard_srv_1 = require("../dynamic_dashboard_srv");
+var DashboardExporter = (function () {
+    function DashboardExporter(datasourceSrv) {
+        this.datasourceSrv = datasourceSrv;
+    }
+    DashboardExporter.prototype.makeExportable = function (dashboard) {
+        var _this = this;
+        var dynSrv = new dynamic_dashboard_srv_1.DynamicDashboardSrv();
+        // clean up repeated rows and panels,
+        // this is done on the live real dashboard instance, not on a clone
+        // so we need to undo this
+        // this is pretty hacky and needs to be changed
+        dynSrv.init(dashboard);
+        dynSrv.process({ cleanUpOnly: true });
+        var saveModel = dashboard.getSaveModelClone();
+        saveModel.id = null;
+        // undo repeat cleanup
+        dynSrv.process();
+        var inputs = [];
+        var requires = {};
+        var datasources = {};
+        var promises = [];
+        var variableLookup = {};
+        for (var _i = 0, _a = saveModel.templating.list; _i < _a.length; _i++) {
+            var variable = _a[_i];
+            variableLookup[variable.name] = variable;
+        }
+        var templateizeDatasourceUsage = function (obj) {
+            // ignore data source properties that contain a variable
+            if (obj.datasource && obj.datasource.indexOf('$') === 0) {
+                if (variableLookup[obj.datasource.substring(1)]) {
+                    return;
+                }
+            }
+            promises.push(_this.datasourceSrv.get(obj.datasource).then(function (ds) {
+                if (ds.meta.builtIn) {
+                    return;
+                }
+                var refName = 'DS_' + ds.name.replace(' ', '_').toUpperCase();
+                datasources[refName] = {
+                    name: refName,
+                    label: ds.name,
+                    description: '',
+                    type: 'datasource',
+                    pluginId: ds.meta.id,
+                    pluginName: ds.meta.name,
+                };
+                obj.datasource = '${' + refName + '}';
+                requires['datasource' + ds.meta.id] = {
+                    type: 'datasource',
+                    id: ds.meta.id,
+                    name: ds.meta.name,
+                    version: ds.meta.info.version || "1.0.0",
+                };
+            }));
+        };
+        // check up panel data sources
+        for (var _b = 0, _c = saveModel.rows; _b < _c.length; _b++) {
+            var row = _c[_b];
+            for (var _d = 0, _e = row.panels; _d < _e.length; _d++) {
+                var panel = _e[_d];
+                if (panel.datasource !== undefined) {
+                    templateizeDatasourceUsage(panel);
+                }
+                if (panel.targets) {
+                    for (var _f = 0, _g = panel.targets; _f < _g.length; _f++) {
+                        var target = _g[_f];
+                        if (target.datasource !== undefined) {
+                            templateizeDatasourceUsage(target);
+                        }
+                    }
+                }
+                var panelDef = config_1.default.panels[panel.type];
+                if (panelDef) {
+                    requires['panel' + panelDef.id] = {
+                        type: 'panel',
+                        id: panelDef.id,
+                        name: panelDef.name,
+                        version: panelDef.info.version,
+                    };
+                }
+            }
+        }
+        // templatize template vars
+        for (var _h = 0, _j = saveModel.templating.list; _h < _j.length; _h++) {
+            var variable = _j[_h];
+            if (variable.type === 'query') {
+                templateizeDatasourceUsage(variable);
+                variable.options = [];
+                variable.current = {};
+                variable.refresh = 1;
+            }
+        }
+        // templatize annotations vars
+        for (var _k = 0, _l = saveModel.annotations.list; _k < _l.length; _k++) {
+            var annotationDef = _l[_k];
+            templateizeDatasourceUsage(annotationDef);
+        }
+        // add grafana version
+        requires['grafana'] = {
+            type: 'grafana',
+            id: 'grafana',
+            name: 'Grafana',
+            version: config_1.default.buildInfo.version
+        };
+        return Promise.all(promises).then(function () {
+            lodash_1.default.each(datasources, function (value, key) {
+                inputs.push(value);
+            });
+            // templatize constants
+            for (var _i = 0, _a = saveModel.templating.list; _i < _a.length; _i++) {
+                var variable = _a[_i];
+                if (variable.type === 'constant') {
+                    var refName = 'VAR_' + variable.name.replace(' ', '_').toUpperCase();
+                    inputs.push({
+                        name: refName,
+                        type: 'constant',
+                        label: variable.label || variable.name,
+                        value: variable.current.value,
+                        description: '',
+                    });
+                    // update current and option
+                    variable.query = '${' + refName + '}';
+                    variable.options[0] = variable.current = {
+                        value: variable.query,
+                        text: variable.query,
+                    };
+                }
+            }
+            // make inputs and requires a top thing
+            var newObj = {};
+            newObj["__inputs"] = inputs;
+            newObj["__requires"] = lodash_1.default.sortBy(requires, ['id']);
+            lodash_1.default.defaults(newObj, saveModel);
+            return newObj;
+        }).catch(function (err) {
+            console.log('Export failed:', err);
+            return {
+                error: err
+            };
+        });
+    };
+    return DashboardExporter;
+}());
+exports.DashboardExporter = DashboardExporter;

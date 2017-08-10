@@ -1,4 +1,61 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["../../../../../test/lib/common","moment","../module","../../../../../test/specs/helpers"],function(a,b){"use strict";var c,d,e,f;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a},function(a){f=a}],execute:function(){c.describe("GraphCtrl",function(){var a=new f.default.ControllerTestContext;c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(c.angularMocks.module("grafana.controllers")),c.beforeEach(c.angularMocks.module(function(a){a.preAssignBindingsEnabled(!0)})),c.beforeEach(a.providePhase()),c.beforeEach(a.createPanelController(e.GraphCtrl)),c.beforeEach(function(){a.ctrl.annotationsPromise=Promise.resolve({}),a.ctrl.updateTimeRange()}),c.describe("when time series are outside range",function(){c.beforeEach(function(){var b=[{target:"test.cpu1",datapoints:[[45,1234567890],[60,1234567899]]}];a.ctrl.range={from:d.default().valueOf(),to:d.default().valueOf()},a.ctrl.onDataReceived(b)}),c.it("should set datapointsOutside",function(){c.expect(a.ctrl.dataWarning.title).to.be("Data points outside time range")})}),c.describe("when time series are inside range",function(){c.beforeEach(function(){var b={from:d.default().subtract(1,"days").valueOf(),to:d.default().valueOf()},c=[{target:"test.cpu1",datapoints:[[45,b.from+1e3],[60,b.from+1e4]]}];a.ctrl.range=b,a.ctrl.onDataReceived(c)}),c.it("should set datapointsOutside",function(){c.expect(a.ctrl.dataWarning).to.be(null)})}),c.describe("datapointsCount given 2 series",function(){c.beforeEach(function(){var b=[{target:"test.cpu1",datapoints:[]},{target:"test.cpu2",datapoints:[]}];a.ctrl.onDataReceived(b)}),c.it("should set datapointsCount warning",function(){c.expect(a.ctrl.dataWarning.title).to.be("No data points")})})})}}});
+"use strict";
+///<reference path="../../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("../../../../../test/lib/common");
+var moment_1 = require("moment");
+var module_1 = require("../module");
+var helpers_1 = require("../../../../../test/specs/helpers");
+common_1.describe('GraphCtrl', function () {
+    var ctx = new helpers_1.default.ControllerTestContext();
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.controllers'));
+    common_1.beforeEach(common_1.angularMocks.module(function ($compileProvider) {
+        $compileProvider.preAssignBindingsEnabled(true);
+    }));
+    common_1.beforeEach(ctx.providePhase());
+    common_1.beforeEach(ctx.createPanelController(module_1.GraphCtrl));
+    common_1.beforeEach(function () {
+        ctx.ctrl.annotationsPromise = Promise.resolve({});
+        ctx.ctrl.updateTimeRange();
+    });
+    common_1.describe('when time series are outside range', function () {
+        common_1.beforeEach(function () {
+            var data = [
+                { target: 'test.cpu1', datapoints: [[45, 1234567890], [60, 1234567899]] },
+            ];
+            ctx.ctrl.range = { from: moment_1.default().valueOf(), to: moment_1.default().valueOf() };
+            ctx.ctrl.onDataReceived(data);
+        });
+        common_1.it('should set datapointsOutside', function () {
+            common_1.expect(ctx.ctrl.dataWarning.title).to.be('Data points outside time range');
+        });
+    });
+    common_1.describe('when time series are inside range', function () {
+        common_1.beforeEach(function () {
+            var range = {
+                from: moment_1.default().subtract(1, 'days').valueOf(),
+                to: moment_1.default().valueOf()
+            };
+            var data = [
+                { target: 'test.cpu1', datapoints: [[45, range.from + 1000], [60, range.from + 10000]] },
+            ];
+            ctx.ctrl.range = range;
+            ctx.ctrl.onDataReceived(data);
+        });
+        common_1.it('should set datapointsOutside', function () {
+            common_1.expect(ctx.ctrl.dataWarning).to.be(null);
+        });
+    });
+    common_1.describe('datapointsCount given 2 series', function () {
+        common_1.beforeEach(function () {
+            var data = [
+                { target: 'test.cpu1', datapoints: [] },
+                { target: 'test.cpu2', datapoints: [] },
+            ];
+            ctx.ctrl.onDataReceived(data);
+        });
+        common_1.it('should set datapointsCount warning', function () {
+            common_1.expect(ctx.ctrl.dataWarning.title).to.be('No data points');
+        });
+    });
+});

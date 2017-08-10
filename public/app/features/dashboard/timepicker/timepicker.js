@@ -1,4 +1,154 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["lodash","angular","moment","app/core/utils/rangeutil","./input_date"],function(a,b){"use strict";function c(){return{restrict:"E",templateUrl:"public/app/features/dashboard/timepicker/settings.html",controller:i,bindToController:!0,controllerAs:"ctrl",scope:{dashboard:"="}}}function d(){return{restrict:"E",templateUrl:"public/app/features/dashboard/timepicker/timepicker.html",controller:i,bindToController:!0,controllerAs:"ctrl",scope:{dashboard:"="}}}b&&b.id;a("settingsDirective",c),a("timePickerDirective",d);var e,f,g,h,i,j;return{setters:[function(a){e=a},function(a){f=a},function(a){g=a},function(a){h=a},function(a){j=a}],execute:function(){i=function(){function a(a,b,c){var d=this;this.$scope=a,this.$rootScope=b,this.timeSrv=c,a.ctrl=this,b.onAppEvent("shift-time-forward",function(){return d.move(1)},a),b.onAppEvent("shift-time-backward",function(){return d.move(-1)},a),b.onAppEvent("refresh",function(){return d.init()},a),b.onAppEvent("dash-editor-hidden",function(){return d.isOpen=!1},a),this.init()}return a.$inject=["$scope","$rootScope","timeSrv"],a.prototype.init=function(){this.panel=this.dashboard.timepicker,e.default.defaults(this.panel,a.defaults),this.firstDayOfWeek=g.default.localeData().firstDayOfWeek();var b=f.default.copy(this.timeSrv.timeRange()),c=f.default.copy(b.raw);this.dashboard.isTimezoneUtc()?this.isUtc=!0:(b.from.local(),b.to.local(),g.default.isMoment(c.from)&&c.from.local(),g.default.isMoment(c.to)&&c.to.local()),this.rangeString=h.describeTimeRange(c),this.absolute={fromJs:b.from.toDate(),toJs:b.to.toDate()},this.tooltip=this.dashboard.formatDate(b.from)+" <br>to<br>",this.tooltip+=this.dashboard.formatDate(b.to),this.isOpen||(this.timeRaw=c)},a.prototype.zoom=function(a){this.$rootScope.appEvent("zoom-out",2)},a.prototype.move=function(a){var b,c,d=this.timeSrv.timeRange(),e=(d.to.valueOf()-d.from.valueOf())/2;a===-1?(b=d.to.valueOf()-e,c=d.from.valueOf()-e):1===a?(b=d.to.valueOf()+e,c=d.from.valueOf()+e,b>Date.now()&&d.to<Date.now()&&(b=Date.now(),c=d.from.valueOf())):(b=d.to.valueOf(),c=d.from.valueOf()),this.timeSrv.setTime({from:g.default.utc(c),to:g.default.utc(b)})},a.prototype.openDropdown=function(){this.init(),this.isOpen=!0,this.timeOptions=h.getRelativeTimesList(this.panel,this.rangeString),this.refresh={value:this.dashboard.refresh,options:e.default.map(this.panel.refresh_intervals,function(a){return{text:a,value:a}})},this.refresh.options.unshift({text:"off"}),this.$rootScope.appEvent("show-dash-editor",{src:"public/app/features/dashboard/timepicker/dropdown.html",scope:this.$scope,cssClass:"gf-timepicker-dropdown"})},a.prototype.applyCustom=function(){this.refresh.value!==this.dashboard.refresh&&this.timeSrv.setAutoRefresh(this.refresh.value),this.timeSrv.setTime(this.timeRaw),this.$rootScope.appEvent("hide-dash-editor")},a.prototype.absoluteFromChanged=function(){this.timeRaw.from=this.getAbsoluteMomentForTimezone(this.absolute.fromJs)},a.prototype.absoluteToChanged=function(){this.timeRaw.to=this.getAbsoluteMomentForTimezone(this.absolute.toJs)},a.prototype.getAbsoluteMomentForTimezone=function(a){return this.dashboard.isTimezoneUtc()?g.default(a).utc():g.default(a)},a.prototype.setRelativeFilter=function(a){var b={from:a.from,to:a.to};this.panel.nowDelay&&"now"===b.to&&(b.to="now-"+this.panel.nowDelay),this.timeSrv.setTime(b),this.$rootScope.appEvent("hide-dash-editor")},a}(),i.tooltipFormat="MMM D, YYYY HH:mm:ss",i.defaults={time_options:["5m","15m","1h","6h","12h","24h","2d","7d","30d"],refresh_intervals:["5s","10s","30s","1m","5m","15m","30m","1h","2h","1d"]},a("TimePickerCtrl",i),f.default.module("grafana.directives").directive("gfTimePickerSettings",c),f.default.module("grafana.directives").directive("gfTimePicker",d),f.default.module("grafana.directives").directive("inputDatetime",j.inputDateDirective)}}});
+"use strict";
+///<reference path="../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = require("lodash");
+var angular_1 = require("angular");
+var moment_1 = require("moment");
+var rangeUtil = require("app/core/utils/rangeutil");
+var TimePickerCtrl = (function () {
+    /** @ngInject */
+    function TimePickerCtrl($scope, $rootScope, timeSrv) {
+        var _this = this;
+        this.$scope = $scope;
+        this.$rootScope = $rootScope;
+        this.timeSrv = timeSrv;
+        $scope.ctrl = this;
+        $rootScope.onAppEvent('shift-time-forward', function () { return _this.move(1); }, $scope);
+        $rootScope.onAppEvent('shift-time-backward', function () { return _this.move(-1); }, $scope);
+        $rootScope.onAppEvent('refresh', function () { return _this.init(); }, $scope);
+        $rootScope.onAppEvent('dash-editor-hidden', function () { return _this.isOpen = false; }, $scope);
+        this.init();
+    }
+    TimePickerCtrl.prototype.init = function () {
+        this.panel = this.dashboard.timepicker;
+        lodash_1.default.defaults(this.panel, TimePickerCtrl.defaults);
+        this.firstDayOfWeek = moment_1.default.localeData().firstDayOfWeek();
+        var time = angular_1.default.copy(this.timeSrv.timeRange());
+        var timeRaw = angular_1.default.copy(time.raw);
+        if (!this.dashboard.isTimezoneUtc()) {
+            time.from.local();
+            time.to.local();
+            if (moment_1.default.isMoment(timeRaw.from)) {
+                timeRaw.from.local();
+            }
+            if (moment_1.default.isMoment(timeRaw.to)) {
+                timeRaw.to.local();
+            }
+        }
+        else {
+            this.isUtc = true;
+        }
+        this.rangeString = rangeUtil.describeTimeRange(timeRaw);
+        this.absolute = { fromJs: time.from.toDate(), toJs: time.to.toDate() };
+        this.tooltip = this.dashboard.formatDate(time.from) + ' <br>to<br>';
+        this.tooltip += this.dashboard.formatDate(time.to);
+        // do not update time raw when dropdown is open
+        // as auto refresh will reset the from/to input fields
+        if (!this.isOpen) {
+            this.timeRaw = timeRaw;
+        }
+    };
+    TimePickerCtrl.prototype.zoom = function (factor) {
+        this.$rootScope.appEvent('zoom-out', 2);
+    };
+    TimePickerCtrl.prototype.move = function (direction) {
+        var range = this.timeSrv.timeRange();
+        var timespan = (range.to.valueOf() - range.from.valueOf()) / 2;
+        var to, from;
+        if (direction === -1) {
+            to = range.to.valueOf() - timespan;
+            from = range.from.valueOf() - timespan;
+        }
+        else if (direction === 1) {
+            to = range.to.valueOf() + timespan;
+            from = range.from.valueOf() + timespan;
+            if (to > Date.now() && range.to < Date.now()) {
+                to = Date.now();
+                from = range.from.valueOf();
+            }
+        }
+        else {
+            to = range.to.valueOf();
+            from = range.from.valueOf();
+        }
+        this.timeSrv.setTime({ from: moment_1.default.utc(from), to: moment_1.default.utc(to) });
+    };
+    TimePickerCtrl.prototype.openDropdown = function () {
+        this.init();
+        this.isOpen = true;
+        this.timeOptions = rangeUtil.getRelativeTimesList(this.panel, this.rangeString);
+        this.refresh = {
+            value: this.dashboard.refresh,
+            options: lodash_1.default.map(this.panel.refresh_intervals, function (interval) {
+                return { text: interval, value: interval };
+            })
+        };
+        this.refresh.options.unshift({ text: 'off' });
+        this.$rootScope.appEvent('show-dash-editor', {
+            src: 'public/app/features/dashboard/timepicker/dropdown.html',
+            scope: this.$scope,
+            cssClass: 'gf-timepicker-dropdown',
+        });
+    };
+    TimePickerCtrl.prototype.applyCustom = function () {
+        if (this.refresh.value !== this.dashboard.refresh) {
+            this.timeSrv.setAutoRefresh(this.refresh.value);
+        }
+        this.timeSrv.setTime(this.timeRaw);
+        this.$rootScope.appEvent('hide-dash-editor');
+    };
+    TimePickerCtrl.prototype.absoluteFromChanged = function () {
+        this.timeRaw.from = this.getAbsoluteMomentForTimezone(this.absolute.fromJs);
+    };
+    TimePickerCtrl.prototype.absoluteToChanged = function () {
+        this.timeRaw.to = this.getAbsoluteMomentForTimezone(this.absolute.toJs);
+    };
+    TimePickerCtrl.prototype.getAbsoluteMomentForTimezone = function (jsDate) {
+        return this.dashboard.isTimezoneUtc() ? moment_1.default(jsDate).utc() : moment_1.default(jsDate);
+    };
+    TimePickerCtrl.prototype.setRelativeFilter = function (timespan) {
+        var range = { from: timespan.from, to: timespan.to };
+        if (this.panel.nowDelay && range.to === 'now') {
+            range.to = 'now-' + this.panel.nowDelay;
+        }
+        this.timeSrv.setTime(range);
+        this.$rootScope.appEvent('hide-dash-editor');
+    };
+    TimePickerCtrl.tooltipFormat = 'MMM D, YYYY HH:mm:ss';
+    TimePickerCtrl.defaults = {
+        time_options: ['5m', '15m', '1h', '6h', '12h', '24h', '2d', '7d', '30d'],
+        refresh_intervals: ['5s', '10s', '30s', '1m', '5m', '15m', '30m', '1h', '2h', '1d'],
+    };
+    return TimePickerCtrl;
+}());
+exports.TimePickerCtrl = TimePickerCtrl;
+function settingsDirective() {
+    return {
+        restrict: 'E',
+        templateUrl: 'public/app/features/dashboard/timepicker/settings.html',
+        controller: TimePickerCtrl,
+        bindToController: true,
+        controllerAs: 'ctrl',
+        scope: {
+            dashboard: "="
+        }
+    };
+}
+exports.settingsDirective = settingsDirective;
+function timePickerDirective() {
+    return {
+        restrict: 'E',
+        templateUrl: 'public/app/features/dashboard/timepicker/timepicker.html',
+        controller: TimePickerCtrl,
+        bindToController: true,
+        controllerAs: 'ctrl',
+        scope: {
+            dashboard: "="
+        }
+    };
+}
+exports.timePickerDirective = timePickerDirective;
+angular_1.default.module('grafana.directives').directive('gfTimePickerSettings', settingsDirective);
+angular_1.default.module('grafana.directives').directive('gfTimePicker', timePickerDirective);
+var input_date_1 = require("./input_date");
+angular_1.default.module("grafana.directives").directive('inputDatetime', input_date_1.inputDateDirective);

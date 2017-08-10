@@ -1,4 +1,107 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","moment","test/specs/helpers","../datasource","../metric_find_query"],function(a,b){"use strict";var c,d,e,f,g;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a},function(a){f=a},function(a){g=a}],execute:function(){c.describe("PrometheusMetricFindQuery",function(){var a=new e.default.ServiceTestContext,b={url:"proxied",directUrl:"direct",user:"test",password:"mupp"};c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(c.angularMocks.inject(function(c,d,e,g){a.$q=c,a.$httpBackend=e,a.$rootScope=d,a.ds=g.instantiate(f.PrometheusDatasource,{instanceSettings:b}),e.when("GET",/\.html$/).respond("")})),c.describe("When performing metricFindQuery",function(){var b,e;c.it("label_values(resource) should generate label search query",function(){e={status:"success",data:["value1","value2","value3"]},a.$httpBackend.expect("GET","proxied/api/v1/label/resource/values").respond(e);var d=new g.default(a.ds,"label_values(resource)",a.timeSrv);d.process().then(function(a){b=a}),a.$httpBackend.flush(),a.$rootScope.$apply(),c.expect(b.length).to.be(3)}),c.it("label_values(metric, resource) should generate series query",function(){e={status:"success",data:[{__name__:"metric",resource:"value1"},{__name__:"metric",resource:"value2"},{__name__:"metric",resource:"value3"}]},a.$httpBackend.expect("GET",/proxied\/api\/v1\/series\?match\[\]=metric&start=.*&end=.*/).respond(e);var d=new g.default(a.ds,"label_values(metric, resource)",a.timeSrv);d.process().then(function(a){b=a}),a.$httpBackend.flush(),a.$rootScope.$apply(),c.expect(b.length).to.be(3)}),c.it("label_values(metric, resource) should pass correct time",function(){a.timeSrv.setTime({from:d.default.utc("2011-01-01"),to:d.default.utc("2015-01-01")}),a.$httpBackend.expect("GET",/proxied\/api\/v1\/series\?match\[\]=metric&start=1293840000&end=1420070400/).respond(e);var c=new g.default(a.ds,"label_values(metric, resource)",a.timeSrv);c.process().then(function(a){b=a}),a.$httpBackend.flush(),a.$rootScope.$apply()}),c.it('label_values(metric{label1="foo", label2="bar", label3="baz"}, resource) should generate series query',function(){e={status:"success",data:[{__name__:"metric",resource:"value1"},{__name__:"metric",resource:"value2"},{__name__:"metric",resource:"value3"}]},a.$httpBackend.expect("GET",/proxied\/api\/v1\/series\?match\[\]=metric&start=.*&end=.*/).respond(e);var d=new g.default(a.ds,"label_values(metric, resource)",a.timeSrv);d.process().then(function(a){b=a}),a.$httpBackend.flush(),a.$rootScope.$apply(),c.expect(b.length).to.be(3)}),c.it("metrics(metric.*) should generate metric name query",function(){e={status:"success",data:["metric1","metric2","metric3","nomatch"]},a.$httpBackend.expect("GET","proxied/api/v1/label/__name__/values").respond(e);var d=new g.default(a.ds,"metrics(metric.*)",a.timeSrv);d.process().then(function(a){b=a}),a.$httpBackend.flush(),a.$rootScope.$apply(),c.expect(b.length).to.be(3)}),c.it("query_result(metric) should generate metric name query",function(){e={status:"success",data:{resultType:"vector",result:[{metric:{__name__:"metric",job:"testjob"},value:[1443454528,"3846"]}]}},a.$httpBackend.expect("GET",/proxied\/api\/v1\/query\?query=metric&time=.*/).respond(e);var d=new g.default(a.ds,"query_result(metric)",a.timeSrv);d.process().then(function(a){b=a}),a.$httpBackend.flush(),a.$rootScope.$apply(),c.expect(b.length).to.be(1),c.expect(b[0].text).to.be('metric{job="testjob"} 3846 1443454528000')})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var moment_1 = require("moment");
+var helpers_1 = require("test/specs/helpers");
+var datasource_1 = require("../datasource");
+var metric_find_query_1 = require("../metric_find_query");
+common_1.describe('PrometheusMetricFindQuery', function () {
+    var ctx = new helpers_1.default.ServiceTestContext();
+    var instanceSettings = { url: 'proxied', directUrl: 'direct', user: 'test', password: 'mupp' };
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(common_1.angularMocks.inject(function ($q, $rootScope, $httpBackend, $injector) {
+        ctx.$q = $q;
+        ctx.$httpBackend = $httpBackend;
+        ctx.$rootScope = $rootScope;
+        ctx.ds = $injector.instantiate(datasource_1.PrometheusDatasource, { instanceSettings: instanceSettings });
+        $httpBackend.when('GET', /\.html$/).respond('');
+    }));
+    common_1.describe('When performing metricFindQuery', function () {
+        var results;
+        var response;
+        common_1.it('label_values(resource) should generate label search query', function () {
+            response = {
+                status: "success",
+                data: ["value1", "value2", "value3"]
+            };
+            ctx.$httpBackend.expect('GET', 'proxied/api/v1/label/resource/values').respond(response);
+            var pm = new metric_find_query_1.default(ctx.ds, 'label_values(resource)', ctx.timeSrv);
+            pm.process().then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+            ctx.$rootScope.$apply();
+            common_1.expect(results.length).to.be(3);
+        });
+        common_1.it('label_values(metric, resource) should generate series query', function () {
+            response = {
+                status: "success",
+                data: [
+                    { __name__: "metric", resource: "value1" },
+                    { __name__: "metric", resource: "value2" },
+                    { __name__: "metric", resource: "value3" }
+                ]
+            };
+            ctx.$httpBackend.expect('GET', /proxied\/api\/v1\/series\?match\[\]=metric&start=.*&end=.*/).respond(response);
+            var pm = new metric_find_query_1.default(ctx.ds, 'label_values(metric, resource)', ctx.timeSrv);
+            pm.process().then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+            ctx.$rootScope.$apply();
+            common_1.expect(results.length).to.be(3);
+        });
+        common_1.it('label_values(metric, resource) should pass correct time', function () {
+            ctx.timeSrv.setTime({ from: moment_1.default.utc('2011-01-01'), to: moment_1.default.utc('2015-01-01') });
+            ctx.$httpBackend.expect('GET', /proxied\/api\/v1\/series\?match\[\]=metric&start=1293840000&end=1420070400/).respond(response);
+            var pm = new metric_find_query_1.default(ctx.ds, 'label_values(metric, resource)', ctx.timeSrv);
+            pm.process().then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+            ctx.$rootScope.$apply();
+        });
+        common_1.it('label_values(metric{label1="foo", label2="bar", label3="baz"}, resource) should generate series query', function () {
+            response = {
+                status: "success",
+                data: [
+                    { __name__: "metric", resource: "value1" },
+                    { __name__: "metric", resource: "value2" },
+                    { __name__: "metric", resource: "value3" }
+                ]
+            };
+            ctx.$httpBackend.expect('GET', /proxied\/api\/v1\/series\?match\[\]=metric&start=.*&end=.*/).respond(response);
+            var pm = new metric_find_query_1.default(ctx.ds, 'label_values(metric, resource)', ctx.timeSrv);
+            pm.process().then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+            ctx.$rootScope.$apply();
+            common_1.expect(results.length).to.be(3);
+        });
+        common_1.it('metrics(metric.*) should generate metric name query', function () {
+            response = {
+                status: "success",
+                data: ["metric1", "metric2", "metric3", "nomatch"]
+            };
+            ctx.$httpBackend.expect('GET', 'proxied/api/v1/label/__name__/values').respond(response);
+            var pm = new metric_find_query_1.default(ctx.ds, 'metrics(metric.*)', ctx.timeSrv);
+            pm.process().then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+            ctx.$rootScope.$apply();
+            common_1.expect(results.length).to.be(3);
+        });
+        common_1.it('query_result(metric) should generate metric name query', function () {
+            response = {
+                status: "success",
+                data: {
+                    resultType: "vector",
+                    result: [{
+                            metric: { "__name__": "metric", job: "testjob" },
+                            value: [1443454528.000, "3846"]
+                        }]
+                }
+            };
+            ctx.$httpBackend.expect('GET', /proxied\/api\/v1\/query\?query=metric&time=.*/).respond(response);
+            var pm = new metric_find_query_1.default(ctx.ds, 'query_result(metric)', ctx.timeSrv);
+            pm.process().then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+            ctx.$rootScope.$apply();
+            common_1.expect(results.length).to.be(1);
+            common_1.expect(results[0].text).to.be('metric{job="testjob"} 3846 1443454528000');
+        });
+    });
+});

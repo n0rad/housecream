@@ -1,4 +1,73 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","test/specs/helpers","../query_ctrl"],function(a,b){"use strict";var c,d,e;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a}],execute:function(){c.describe("OpenTsQueryCtrl",function(){var a=new d.default.ControllerTestContext;c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(c.angularMocks.module(function(a){a.preAssignBindingsEnabled(!0)})),c.beforeEach(a.providePhase(["backendSrv","templateSrv"])),c.beforeEach(a.providePhase()),c.beforeEach(c.angularMocks.inject(function(b,d,f){a.$q=f,a.scope=b.$new(),a.target={target:""},a.panelCtrl={panel:{}},a.panelCtrl.refresh=c.sinon.spy(),a.datasource.getAggregators=c.sinon.stub().returns(a.$q.when([])),a.datasource.getFilterTypes=c.sinon.stub().returns(a.$q.when([])),a.ctrl=d(e.OpenTsQueryCtrl,{$scope:a.scope},{panelCtrl:a.panelCtrl,datasource:a.datasource,target:a.target}),a.scope.$digest()})),c.describe("init query_ctrl variables",function(){c.it("filter types should be initialized",function(){c.expect(a.ctrl.filterTypes.length).to.be(7)}),c.it("aggregators should be initialized",function(){c.expect(a.ctrl.aggregators.length).to.be(8)}),c.it("fill policy options should be initialized",function(){c.expect(a.ctrl.fillPolicies.length).to.be(4)})}),c.describe("when adding filters and tags",function(){c.it("addTagMode should be false when closed",function(){a.ctrl.addTagMode=!0,a.ctrl.closeAddTagMode(),c.expect(a.ctrl.addTagMode).to.be(!1)}),c.it("addFilterMode should be false when closed",function(){a.ctrl.addFilterMode=!0,a.ctrl.closeAddFilterMode(),c.expect(a.ctrl.addFilterMode).to.be(!1)}),c.it("removing a tag from the tags list",function(){a.ctrl.target.tags={tagk:"tag_key",tagk2:"tag_value2"},a.ctrl.removeTag("tagk"),c.expect(Object.keys(a.ctrl.target.tags).length).to.be(1)}),c.it("removing a filter from the filters list",function(){a.ctrl.target.filters=[{tagk:"tag_key",filter:"tag_value2",type:"wildcard",groupBy:!0}],a.ctrl.removeFilter(0),c.expect(a.ctrl.target.filters.length).to.be(0)}),c.it("adding a filter when tags exist should generate error",function(){a.ctrl.target.tags={tagk:"tag_key",tagk2:"tag_value2"},a.ctrl.addFilter(),c.expect(a.ctrl.errors.filters).to.be("Please remove tags to use filters, tags and filters are mutually exclusive.")}),c.it("adding a tag when filters exist should generate error",function(){a.ctrl.target.filters=[{tagk:"tag_key",filter:"tag_value2",type:"wildcard",groupBy:!0}],a.ctrl.addTag(),c.expect(a.ctrl.errors.tags).to.be("Please remove filters to use tags, tags and filters are mutually exclusive.")})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var helpers_1 = require("test/specs/helpers");
+var query_ctrl_1 = require("../query_ctrl");
+common_1.describe('OpenTsQueryCtrl', function () {
+    var ctx = new helpers_1.default.ControllerTestContext();
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(common_1.angularMocks.module(function ($compileProvider) {
+        $compileProvider.preAssignBindingsEnabled(true);
+    }));
+    common_1.beforeEach(ctx.providePhase(['backendSrv', 'templateSrv']));
+    common_1.beforeEach(ctx.providePhase());
+    common_1.beforeEach(common_1.angularMocks.inject(function ($rootScope, $controller, $q) {
+        ctx.$q = $q;
+        ctx.scope = $rootScope.$new();
+        ctx.target = { target: '' };
+        ctx.panelCtrl = { panel: {} };
+        ctx.panelCtrl.refresh = common_1.sinon.spy();
+        ctx.datasource.getAggregators = common_1.sinon.stub().returns(ctx.$q.when([]));
+        ctx.datasource.getFilterTypes = common_1.sinon.stub().returns(ctx.$q.when([]));
+        ctx.ctrl = $controller(query_ctrl_1.OpenTsQueryCtrl, { $scope: ctx.scope }, {
+            panelCtrl: ctx.panelCtrl,
+            datasource: ctx.datasource,
+            target: ctx.target,
+        });
+        ctx.scope.$digest();
+    }));
+    common_1.describe('init query_ctrl variables', function () {
+        common_1.it('filter types should be initialized', function () {
+            common_1.expect(ctx.ctrl.filterTypes.length).to.be(7);
+        });
+        common_1.it('aggregators should be initialized', function () {
+            common_1.expect(ctx.ctrl.aggregators.length).to.be(8);
+        });
+        common_1.it('fill policy options should be initialized', function () {
+            common_1.expect(ctx.ctrl.fillPolicies.length).to.be(4);
+        });
+    });
+    common_1.describe('when adding filters and tags', function () {
+        common_1.it('addTagMode should be false when closed', function () {
+            ctx.ctrl.addTagMode = true;
+            ctx.ctrl.closeAddTagMode();
+            common_1.expect(ctx.ctrl.addTagMode).to.be(false);
+        });
+        common_1.it('addFilterMode should be false when closed', function () {
+            ctx.ctrl.addFilterMode = true;
+            ctx.ctrl.closeAddFilterMode();
+            common_1.expect(ctx.ctrl.addFilterMode).to.be(false);
+        });
+        common_1.it('removing a tag from the tags list', function () {
+            ctx.ctrl.target.tags = { "tagk": "tag_key", "tagk2": "tag_value2" };
+            ctx.ctrl.removeTag("tagk");
+            common_1.expect(Object.keys(ctx.ctrl.target.tags).length).to.be(1);
+        });
+        common_1.it('removing a filter from the filters list', function () {
+            ctx.ctrl.target.filters = [{ "tagk": "tag_key", "filter": "tag_value2", "type": "wildcard", "groupBy": true }];
+            ctx.ctrl.removeFilter(0);
+            common_1.expect(ctx.ctrl.target.filters.length).to.be(0);
+        });
+        common_1.it('adding a filter when tags exist should generate error', function () {
+            ctx.ctrl.target.tags = { "tagk": "tag_key", "tagk2": "tag_value2" };
+            ctx.ctrl.addFilter();
+            common_1.expect(ctx.ctrl.errors.filters).to.be('Please remove tags to use filters, tags and filters are mutually exclusive.');
+        });
+        common_1.it('adding a tag when filters exist should generate error', function () {
+            ctx.ctrl.target.filters = [{ "tagk": "tag_key", "filter": "tag_value2", "type": "wildcard", "groupBy": true }];
+            ctx.ctrl.addTag();
+            common_1.expect(ctx.ctrl.errors.tags).to.be('Please remove filters to use tags, tags and filters are mutually exclusive.');
+        });
+    });
+});

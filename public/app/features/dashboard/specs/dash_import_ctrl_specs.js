@@ -1,4 +1,69 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","app/features/dashboard/import/dash_import","app/core/config"],function(a,b){"use strict";var c,d,e;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a}],execute:function(){c.describe("DashImportCtrl",function(){var a={},b={search:c.sinon.stub().returns(Promise.resolve([])),get:c.sinon.stub()};c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.inject(function(c,e,f){a.$q=f,a.scope=c.$new(),a.ctrl=e(d.DashImportCtrl,{$scope:a.scope,backendSrv:b})})),c.describe("when uploading json",function(){c.beforeEach(function(){e.default.datasources={ds:{type:"test-db"}},a.ctrl.onUpload({__inputs:[{name:"ds",pluginId:"test-db",type:"datasource",pluginName:"Test DB"}]})}),c.it("should build input model",function(){c.expect(a.ctrl.inputs.length).to.eql(1),c.expect(a.ctrl.inputs[0].name).to.eql("ds"),c.expect(a.ctrl.inputs[0].info).to.eql("Select a Test DB data source")}),c.it("should set inputValid to false",function(){c.expect(a.ctrl.inputsValid).to.eql(!1)})}),c.describe("when specifing grafana.net url",function(){c.beforeEach(function(){a.ctrl.gnetUrl="http://grafana.net/dashboards/123",b.get=c.sinon.spy(function(){return Promise.resolve({})}),a.ctrl.checkGnetDashboard()}),c.it("should call gnet api with correct dashboard id",function(){c.expect(b.get.getCall(0).args[0]).to.eql("api/gnet/dashboards/123")})}),c.describe("when specifing dashbord id",function(){c.beforeEach(function(){a.ctrl.gnetUrl="2342",b.get=c.sinon.spy(function(){return Promise.resolve({})}),a.ctrl.checkGnetDashboard()}),c.it("should call gnet api with correct dashboard id",function(){c.expect(b.get.getCall(0).args[0]).to.eql("api/gnet/dashboards/2342")})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var dash_import_1 = require("app/features/dashboard/import/dash_import");
+var config_1 = require("app/core/config");
+common_1.describe('DashImportCtrl', function () {
+    var ctx = {};
+    var backendSrv = {
+        search: common_1.sinon.stub().returns(Promise.resolve([])),
+        get: common_1.sinon.stub()
+    };
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.inject(function ($rootScope, $controller, $q) {
+        ctx.$q = $q;
+        ctx.scope = $rootScope.$new();
+        ctx.ctrl = $controller(dash_import_1.DashImportCtrl, {
+            $scope: ctx.scope,
+            backendSrv: backendSrv,
+        });
+    }));
+    common_1.describe('when uploading json', function () {
+        common_1.beforeEach(function () {
+            config_1.default.datasources = {
+                ds: {
+                    type: 'test-db',
+                }
+            };
+            ctx.ctrl.onUpload({
+                '__inputs': [
+                    { name: 'ds', pluginId: 'test-db', type: 'datasource', pluginName: 'Test DB' }
+                ]
+            });
+        });
+        common_1.it('should build input model', function () {
+            common_1.expect(ctx.ctrl.inputs.length).to.eql(1);
+            common_1.expect(ctx.ctrl.inputs[0].name).to.eql('ds');
+            common_1.expect(ctx.ctrl.inputs[0].info).to.eql('Select a Test DB data source');
+        });
+        common_1.it('should set inputValid to false', function () {
+            common_1.expect(ctx.ctrl.inputsValid).to.eql(false);
+        });
+    });
+    common_1.describe('when specifing grafana.net url', function () {
+        common_1.beforeEach(function () {
+            ctx.ctrl.gnetUrl = 'http://grafana.net/dashboards/123';
+            // setup api mock
+            backendSrv.get = common_1.sinon.spy(function () {
+                return Promise.resolve({});
+            });
+            ctx.ctrl.checkGnetDashboard();
+        });
+        common_1.it('should call gnet api with correct dashboard id', function () {
+            common_1.expect(backendSrv.get.getCall(0).args[0]).to.eql('api/gnet/dashboards/123');
+        });
+    });
+    common_1.describe('when specifing dashbord id', function () {
+        common_1.beforeEach(function () {
+            ctx.ctrl.gnetUrl = '2342';
+            // setup api mock
+            backendSrv.get = common_1.sinon.spy(function () {
+                return Promise.resolve({});
+            });
+            ctx.ctrl.checkGnetDashboard();
+        });
+        common_1.it('should call gnet api with correct dashboard id', function () {
+            common_1.expect(backendSrv.get.getCall(0).args[0]).to.eql('api/gnet/dashboards/2342');
+        });
+    });
+});

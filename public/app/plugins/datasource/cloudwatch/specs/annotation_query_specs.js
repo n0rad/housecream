@@ -1,4 +1,79 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["../datasource","test/lib/common","moment","test/specs/helpers","../annotation_query"],function(a,b){"use strict";var c,d,e,f,g;b&&b.id;return{setters:[function(a){f=a},function(a){c=a},function(a){d=a},function(a){e=a},function(a){g=a}],execute:function(){c.describe("CloudWatchAnnotationQuery",function(){var a=new e.default.ServiceTestContext,b={jsonData:{defaultRegion:"us-east-1",access:"proxy"}};c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(c.angularMocks.module("grafana.controllers")),c.beforeEach(a.providePhase(["templateSrv","backendSrv"])),c.beforeEach(c.angularMocks.inject(function(c,d,e,g){a.$q=c,a.$httpBackend=e,a.$rootScope=d,a.ds=g.instantiate(f.CloudWatchDatasource,{instanceSettings:b})})),c.describe("When performing annotationQuery",function(){var b={annotation:{region:"us-east-1",namespace:"AWS/EC2",metricName:"CPUUtilization",dimensions:{InstanceId:"i-12345678"},statistics:["Average"],period:300},range:{from:d.default(1443438674760),to:d.default(1443460274760)}},e={MetricAlarms:[{AlarmName:"test_alarm_name"}]},f={AlarmHistoryItems:[{Timestamp:"2015-01-01T00:00:00.000Z",HistoryItemType:"StateUpdate",AlarmName:"test_alarm_name",HistoryData:"{}",HistorySummary:"test_history_summary"}]};c.beforeEach(function(){a.backendSrv.datasourceRequest=function(b){switch(b.data.action){case"DescribeAlarmsForMetric":return a.$q.when({data:e});case"DescribeAlarmHistory":return a.$q.when({data:f})}}}),c.it("should return annotation list",function(d){var e=new g.default(a.ds,b.annotation,a.$q,a.templateSrv);e.process(b.range.from,b.range.to).then(function(a){c.expect(a[0].title).to.be("test_alarm_name"),c.expect(a[0].text).to.be("test_history_summary"),d()}),a.$rootScope.$apply()})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("../datasource");
+var common_1 = require("test/lib/common");
+var moment_1 = require("moment");
+var helpers_1 = require("test/specs/helpers");
+var datasource_1 = require("../datasource");
+var annotation_query_1 = require("../annotation_query");
+common_1.describe('CloudWatchAnnotationQuery', function () {
+    var ctx = new helpers_1.default.ServiceTestContext();
+    var instanceSettings = {
+        jsonData: { defaultRegion: 'us-east-1', access: 'proxy' },
+    };
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.controllers'));
+    common_1.beforeEach(ctx.providePhase(['templateSrv', 'backendSrv']));
+    common_1.beforeEach(common_1.angularMocks.inject(function ($q, $rootScope, $httpBackend, $injector) {
+        ctx.$q = $q;
+        ctx.$httpBackend = $httpBackend;
+        ctx.$rootScope = $rootScope;
+        ctx.ds = $injector.instantiate(datasource_1.CloudWatchDatasource, { instanceSettings: instanceSettings });
+    }));
+    common_1.describe('When performing annotationQuery', function () {
+        var parameter = {
+            annotation: {
+                region: 'us-east-1',
+                namespace: 'AWS/EC2',
+                metricName: 'CPUUtilization',
+                dimensions: {
+                    InstanceId: 'i-12345678'
+                },
+                statistics: ['Average'],
+                period: 300
+            },
+            range: {
+                from: moment_1.default(1443438674760),
+                to: moment_1.default(1443460274760)
+            }
+        };
+        var alarmResponse = {
+            MetricAlarms: [
+                {
+                    AlarmName: 'test_alarm_name'
+                }
+            ]
+        };
+        var historyResponse = {
+            AlarmHistoryItems: [
+                {
+                    Timestamp: '2015-01-01T00:00:00.000Z',
+                    HistoryItemType: 'StateUpdate',
+                    AlarmName: 'test_alarm_name',
+                    HistoryData: '{}',
+                    HistorySummary: 'test_history_summary'
+                }
+            ]
+        };
+        common_1.beforeEach(function () {
+            ctx.backendSrv.datasourceRequest = function (params) {
+                switch (params.data.action) {
+                    case 'DescribeAlarmsForMetric':
+                        return ctx.$q.when({ data: alarmResponse });
+                    case 'DescribeAlarmHistory':
+                        return ctx.$q.when({ data: historyResponse });
+                }
+            };
+        });
+        common_1.it('should return annotation list', function (done) {
+            var annotationQuery = new annotation_query_1.default(ctx.ds, parameter.annotation, ctx.$q, ctx.templateSrv);
+            annotationQuery.process(parameter.range.from, parameter.range.to).then(function (result) {
+                common_1.expect(result[0].title).to.be('test_alarm_name');
+                common_1.expect(result[0].text).to.be('test_history_summary');
+                done();
+            });
+            ctx.$rootScope.$apply();
+        });
+    });
+});

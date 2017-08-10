@@ -1,4 +1,161 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","moment","test/specs/helpers","../datasource"],function(a,b){"use strict";var c,d,e,f;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a},function(a){f=a}],execute:function(){c.describe("PrometheusDatasource",function(){var a=new e.default.ServiceTestContext,b={url:"proxied",directUrl:"direct",user:"test",password:"mupp"};c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(a.providePhase(["timeSrv"])),c.beforeEach(c.angularMocks.inject(function(c,d,e,g){a.$q=c,a.$httpBackend=e,a.$rootScope=d,a.ds=g.instantiate(f.PrometheusDatasource,{instanceSettings:b}),e.when("GET",/\.html$/).respond("")})),c.describe("When querying prometheus with one target using query editor target spec",function(){var b,e="proxied/api/v1/query_range?query="+encodeURIComponent('test{job="testjob"}')+"&start=1443438675&end=1443460275&step=60",f={range:{from:d.default(1443438674760),to:d.default(1443460274760)},targets:[{expr:'test{job="testjob"}'}],interval:"60s"},g={status:"success",data:{resultType:"matrix",result:[{metric:{__name__:"test",job:"testjob"},values:[[1443454528,"3846"]]}]}};c.beforeEach(function(){a.$httpBackend.expect("GET",e).respond(g),a.ds.query(f).then(function(a){b=a}),a.$httpBackend.flush()}),c.it("should generate the correct query",function(){a.$httpBackend.verifyNoOutstandingExpectation()}),c.it("should return series list",function(){c.expect(b.data.length).to.be(1),c.expect(b.data[0].target).to.be('test{job="testjob"}')})}),c.describe("When querying prometheus with one target which return multiple series",function(){var b,e=1443438675,f=1443460275,g=60,h="proxied/api/v1/query_range?query="+encodeURIComponent('test{job="testjob"}')+"&start="+e+"&end="+f+"&step="+g,i={range:{from:d.default(1443438674760),to:d.default(1443460274760)},targets:[{expr:'test{job="testjob"}'}],interval:"60s"},j={status:"success",data:{resultType:"matrix",result:[{metric:{__name__:"test",job:"testjob",series:"series 1"},values:[[e+1*g,"3846"],[e+3*g,"3847"],[f-1*g,"3848"]]},{metric:{__name__:"test",job:"testjob",series:"series 2"},values:[[e+2*g,"4846"]]}]}};c.beforeEach(function(){a.$httpBackend.expect("GET",h).respond(j),a.ds.query(i).then(function(a){b=a}),a.$httpBackend.flush()}),c.it("should be same length",function(){c.expect(b.data.length).to.be(2),c.expect(b.data[0].datapoints.length).to.be((f-e)/g+1),c.expect(b.data[1].datapoints.length).to.be((f-e)/g+1)}),c.it("should fill null until first datapoint in response",function(){c.expect(b.data[0].datapoints[0][1]).to.be(1e3*e),c.expect(b.data[0].datapoints[0][0]).to.be(null),c.expect(b.data[0].datapoints[1][1]).to.be(1e3*(e+1*g)),c.expect(b.data[0].datapoints[1][0]).to.be(3846)}),c.it("should fill null after last datapoint in response",function(){var a=(f-e)/g+1;c.expect(b.data[0].datapoints[a-2][1]).to.be(1e3*(f-1*g)),c.expect(b.data[0].datapoints[a-2][0]).to.be(3848),c.expect(b.data[0].datapoints[a-1][1]).to.be(1e3*f),c.expect(b.data[0].datapoints[a-1][0]).to.be(null)}),c.it("should fill null at gap between series",function(){c.expect(b.data[0].datapoints[2][1]).to.be(1e3*(e+2*g)),c.expect(b.data[0].datapoints[2][0]).to.be(null),c.expect(b.data[1].datapoints[1][1]).to.be(1e3*(e+1*g)),c.expect(b.data[1].datapoints[1][0]).to.be(null),c.expect(b.data[1].datapoints[3][1]).to.be(1e3*(e+3*g)),c.expect(b.data[1].datapoints[3][0]).to.be(null)})}),c.describe("When performing annotationQuery",function(){var b,e="proxied/api/v1/query_range?query="+encodeURIComponent('ALERTS{alertstate="firing"}')+"&start=1443438675&end=1443460275&step=60s",f={annotation:{expr:'ALERTS{alertstate="firing"}',tagKeys:"job",titleFormat:"{{alertname}}",textFormat:"{{instance}}"},range:{from:d.default(1443438674760),to:d.default(1443460274760)}},g={status:"success",data:{resultType:"matrix",result:[{metric:{__name__:"ALERTS",alertname:"InstanceDown",alertstate:"firing",instance:"testinstance",job:"testjob"},values:[[1443454528,"1"]]}]}};c.beforeEach(function(){a.$httpBackend.expect("GET",e).respond(g),a.ds.annotationQuery(f).then(function(a){b=a}),a.$httpBackend.flush()}),c.it("should return annotation list",function(){a.$rootScope.$apply(),c.expect(b.length).to.be(1),c.expect(b[0].tags).to.contain("testjob"),c.expect(b[0].title).to.be("InstanceDown"),c.expect(b[0].text).to.be("testinstance"),c.expect(b[0].time).to.be(1443454528e3)})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var moment_1 = require("moment");
+var helpers_1 = require("test/specs/helpers");
+var datasource_1 = require("../datasource");
+common_1.describe('PrometheusDatasource', function () {
+    var ctx = new helpers_1.default.ServiceTestContext();
+    var instanceSettings = { url: 'proxied', directUrl: 'direct', user: 'test', password: 'mupp' };
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(ctx.providePhase(['timeSrv']));
+    common_1.beforeEach(common_1.angularMocks.inject(function ($q, $rootScope, $httpBackend, $injector) {
+        ctx.$q = $q;
+        ctx.$httpBackend = $httpBackend;
+        ctx.$rootScope = $rootScope;
+        ctx.ds = $injector.instantiate(datasource_1.PrometheusDatasource, { instanceSettings: instanceSettings });
+        $httpBackend.when('GET', /\.html$/).respond('');
+    }));
+    common_1.describe('When querying prometheus with one target using query editor target spec', function () {
+        var results;
+        var urlExpected = 'proxied/api/v1/query_range?query=' +
+            encodeURIComponent('test{job="testjob"}') +
+            '&start=1443438675&end=1443460275&step=60';
+        var query = {
+            range: { from: moment_1.default(1443438674760), to: moment_1.default(1443460274760) },
+            targets: [{ expr: 'test{job="testjob"}' }],
+            interval: '60s'
+        };
+        var response = {
+            status: "success",
+            data: {
+                resultType: "matrix",
+                result: [{
+                        metric: { "__name__": "test", job: "testjob" },
+                        values: [[1443454528, "3846"]]
+                    }]
+            }
+        };
+        common_1.beforeEach(function () {
+            ctx.$httpBackend.expect('GET', urlExpected).respond(response);
+            ctx.ds.query(query).then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+        });
+        common_1.it('should generate the correct query', function () {
+            ctx.$httpBackend.verifyNoOutstandingExpectation();
+        });
+        common_1.it('should return series list', function () {
+            common_1.expect(results.data.length).to.be(1);
+            common_1.expect(results.data[0].target).to.be('test{job="testjob"}');
+        });
+    });
+    common_1.describe('When querying prometheus with one target which return multiple series', function () {
+        var results;
+        var start = 1443438675;
+        var end = 1443460275;
+        var step = 60;
+        var urlExpected = 'proxied/api/v1/query_range?query=' +
+            encodeURIComponent('test{job="testjob"}') +
+            '&start=' + start + '&end=' + end + '&step=' + step;
+        var query = {
+            range: { from: moment_1.default(1443438674760), to: moment_1.default(1443460274760) },
+            targets: [{ expr: 'test{job="testjob"}' }],
+            interval: '60s'
+        };
+        var response = {
+            status: "success",
+            data: {
+                resultType: "matrix",
+                result: [
+                    {
+                        metric: { "__name__": "test", job: "testjob", series: 'series 1' },
+                        values: [
+                            [start + step * 1, "3846"],
+                            [start + step * 3, "3847"],
+                            [end - step * 1, "3848"],
+                        ]
+                    },
+                    {
+                        metric: { "__name__": "test", job: "testjob", series: 'series 2' },
+                        values: [
+                            [start + step * 2, "4846"]
+                        ]
+                    },
+                ]
+            }
+        };
+        common_1.beforeEach(function () {
+            ctx.$httpBackend.expect('GET', urlExpected).respond(response);
+            ctx.ds.query(query).then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+        });
+        common_1.it('should be same length', function () {
+            common_1.expect(results.data.length).to.be(2);
+            common_1.expect(results.data[0].datapoints.length).to.be((end - start) / step + 1);
+            common_1.expect(results.data[1].datapoints.length).to.be((end - start) / step + 1);
+        });
+        common_1.it('should fill null until first datapoint in response', function () {
+            common_1.expect(results.data[0].datapoints[0][1]).to.be(start * 1000);
+            common_1.expect(results.data[0].datapoints[0][0]).to.be(null);
+            common_1.expect(results.data[0].datapoints[1][1]).to.be((start + step * 1) * 1000);
+            common_1.expect(results.data[0].datapoints[1][0]).to.be(3846);
+        });
+        common_1.it('should fill null after last datapoint in response', function () {
+            var length = (end - start) / step + 1;
+            common_1.expect(results.data[0].datapoints[length - 2][1]).to.be((end - step * 1) * 1000);
+            common_1.expect(results.data[0].datapoints[length - 2][0]).to.be(3848);
+            common_1.expect(results.data[0].datapoints[length - 1][1]).to.be(end * 1000);
+            common_1.expect(results.data[0].datapoints[length - 1][0]).to.be(null);
+        });
+        common_1.it('should fill null at gap between series', function () {
+            common_1.expect(results.data[0].datapoints[2][1]).to.be((start + step * 2) * 1000);
+            common_1.expect(results.data[0].datapoints[2][0]).to.be(null);
+            common_1.expect(results.data[1].datapoints[1][1]).to.be((start + step * 1) * 1000);
+            common_1.expect(results.data[1].datapoints[1][0]).to.be(null);
+            common_1.expect(results.data[1].datapoints[3][1]).to.be((start + step * 3) * 1000);
+            common_1.expect(results.data[1].datapoints[3][0]).to.be(null);
+        });
+    });
+    common_1.describe('When performing annotationQuery', function () {
+        var results;
+        var urlExpected = 'proxied/api/v1/query_range?query=' +
+            encodeURIComponent('ALERTS{alertstate="firing"}') +
+            '&start=1443438675&end=1443460275&step=60s';
+        var options = {
+            annotation: {
+                expr: 'ALERTS{alertstate="firing"}',
+                tagKeys: 'job',
+                titleFormat: '{{alertname}}',
+                textFormat: '{{instance}}'
+            },
+            range: {
+                from: moment_1.default(1443438674760),
+                to: moment_1.default(1443460274760)
+            }
+        };
+        var response = {
+            status: "success",
+            data: {
+                resultType: "matrix",
+                result: [{
+                        metric: { "__name__": "ALERTS", alertname: "InstanceDown", alertstate: "firing", instance: "testinstance", job: "testjob" },
+                        values: [[1443454528, "1"]]
+                    }]
+            }
+        };
+        common_1.beforeEach(function () {
+            ctx.$httpBackend.expect('GET', urlExpected).respond(response);
+            ctx.ds.annotationQuery(options).then(function (data) { results = data; });
+            ctx.$httpBackend.flush();
+        });
+        common_1.it('should return annotation list', function () {
+            ctx.$rootScope.$apply();
+            common_1.expect(results.length).to.be(1);
+            common_1.expect(results[0].tags).to.contain('testjob');
+            common_1.expect(results[0].title).to.be('InstanceDown');
+            common_1.expect(results[0].text).to.be('testinstance');
+            common_1.expect(results[0].time).to.be(1443454528 * 1000);
+        });
+    });
+});

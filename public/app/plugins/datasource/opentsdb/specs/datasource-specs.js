@@ -1,4 +1,74 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","test/specs/helpers","../datasource"],function(a,b){"use strict";var c,d,e;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a}],execute:function(){c.describe("opentsdb",function(){var a=new d.default.ServiceTestContext,b={url:"",jsonData:{tsdbVersion:1}};c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(a.providePhase(["backendSrv"])),c.beforeEach(c.angularMocks.inject(function(c,d,f,g){a.$q=c,a.$httpBackend=f,a.$rootScope=d,a.ds=g.instantiate(e.OpenTsDatasource,{instanceSettings:b}),f.when("GET",/\.html$/).respond("")})),c.describe("When performing metricFindQuery",function(){var b,d;c.beforeEach(function(){a.backendSrv.datasourceRequest=function(b){return d=b,a.$q.when({data:[{target:"prod1.count",datapoints:[[10,1],[12,1]]}]})}}),c.it("metrics() should generate api suggest query",function(){a.ds.metricFindQuery("metrics(pew)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/suggest"),c.expect(d.params.type).to.be("metrics"),c.expect(d.params.q).to.be("pew")}),c.it("tag_names(cpu) should generate lookup query",function(){a.ds.metricFindQuery("tag_names(cpu)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/search/lookup"),c.expect(d.params.m).to.be("cpu")}),c.it("tag_values(cpu, test) should generate lookup query",function(){a.ds.metricFindQuery("tag_values(cpu, hostname)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/search/lookup"),c.expect(d.params.m).to.be("cpu{hostname=*}")}),c.it("tag_values(cpu, test) should generate lookup query",function(){a.ds.metricFindQuery("tag_values(cpu, hostname, env=$env)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/search/lookup"),c.expect(d.params.m).to.be("cpu{hostname=*,env=$env}")}),c.it("tag_values(cpu, test) should generate lookup query",function(){a.ds.metricFindQuery("tag_values(cpu, hostname, env=$env, region=$region)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/search/lookup"),c.expect(d.params.m).to.be("cpu{hostname=*,env=$env,region=$region}")}),c.it("suggest_tagk() should generate api suggest query",function(){a.ds.metricFindQuery("suggest_tagk(foo)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/suggest"),c.expect(d.params.type).to.be("tagk"),c.expect(d.params.q).to.be("foo")}),c.it("suggest_tagv() should generate api suggest query",function(){a.ds.metricFindQuery("suggest_tagv(bar)").then(function(a){b=a}),a.$rootScope.$apply(),c.expect(d.url).to.be("/api/suggest"),c.expect(d.params.type).to.be("tagv"),c.expect(d.params.q).to.be("bar")})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var helpers_1 = require("test/specs/helpers");
+var datasource_1 = require("../datasource");
+common_1.describe('opentsdb', function () {
+    var ctx = new helpers_1.default.ServiceTestContext();
+    var instanceSettings = { url: '', jsonData: { tsdbVersion: 1 } };
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(ctx.providePhase(['backendSrv']));
+    common_1.beforeEach(common_1.angularMocks.inject(function ($q, $rootScope, $httpBackend, $injector) {
+        ctx.$q = $q;
+        ctx.$httpBackend = $httpBackend;
+        ctx.$rootScope = $rootScope;
+        ctx.ds = $injector.instantiate(datasource_1.OpenTsDatasource, { instanceSettings: instanceSettings });
+        $httpBackend.when('GET', /\.html$/).respond('');
+    }));
+    common_1.describe('When performing metricFindQuery', function () {
+        var results;
+        var requestOptions;
+        common_1.beforeEach(function () {
+            ctx.backendSrv.datasourceRequest = function (options) {
+                requestOptions = options;
+                return ctx.$q.when({ data: [{ target: 'prod1.count', datapoints: [[10, 1], [12, 1]] }] });
+            };
+        });
+        common_1.it('metrics() should generate api suggest query', function () {
+            ctx.ds.metricFindQuery('metrics(pew)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/suggest');
+            common_1.expect(requestOptions.params.type).to.be('metrics');
+            common_1.expect(requestOptions.params.q).to.be('pew');
+        });
+        common_1.it('tag_names(cpu) should generate lookup query', function () {
+            ctx.ds.metricFindQuery('tag_names(cpu)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/search/lookup');
+            common_1.expect(requestOptions.params.m).to.be('cpu');
+        });
+        common_1.it('tag_values(cpu, test) should generate lookup query', function () {
+            ctx.ds.metricFindQuery('tag_values(cpu, hostname)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/search/lookup');
+            common_1.expect(requestOptions.params.m).to.be('cpu{hostname=*}');
+        });
+        common_1.it('tag_values(cpu, test) should generate lookup query', function () {
+            ctx.ds.metricFindQuery('tag_values(cpu, hostname, env=$env)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/search/lookup');
+            common_1.expect(requestOptions.params.m).to.be('cpu{hostname=*,env=$env}');
+        });
+        common_1.it('tag_values(cpu, test) should generate lookup query', function () {
+            ctx.ds.metricFindQuery('tag_values(cpu, hostname, env=$env, region=$region)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/search/lookup');
+            common_1.expect(requestOptions.params.m).to.be('cpu{hostname=*,env=$env,region=$region}');
+        });
+        common_1.it('suggest_tagk() should generate api suggest query', function () {
+            ctx.ds.metricFindQuery('suggest_tagk(foo)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/suggest');
+            common_1.expect(requestOptions.params.type).to.be('tagk');
+            common_1.expect(requestOptions.params.q).to.be('foo');
+        });
+        common_1.it('suggest_tagv() should generate api suggest query', function () {
+            ctx.ds.metricFindQuery('suggest_tagv(bar)').then(function (data) { results = data; });
+            ctx.$rootScope.$apply();
+            common_1.expect(requestOptions.url).to.be('/api/suggest');
+            common_1.expect(requestOptions.params.type).to.be('tagv');
+            common_1.expect(requestOptions.params.q).to.be('bar');
+        });
+    });
+});

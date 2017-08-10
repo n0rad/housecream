@@ -1,4 +1,71 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","../query_variable"],function(a,b){"use strict";var c,d;b&&b.id;return{setters:[function(a){c=a},function(a){d=a}],execute:function(){c.describe("QueryVariable",function(){c.describe("when creating from model",function(){c.it("should set defaults",function(){var a=new d.QueryVariable({},null,null,null,null);c.expect(a.datasource).to.be(null),c.expect(a.refresh).to.be(0),c.expect(a.sort).to.be(0),c.expect(a.name).to.be(""),c.expect(a.hide).to.be(0),c.expect(a.options.length).to.be(0),c.expect(a.multi).to.be(!1),c.expect(a.includeAll).to.be(!1)}),c.it("get model should copy changes back to model",function(){var a=new d.QueryVariable({},null,null,null,null);a.options=[{text:"test"}],a.datasource="google",a.regex="asd",a.sort=50;var b=a.getSaveModel();c.expect(b.options.length).to.be(1),c.expect(b.options[0].text).to.be("test"),c.expect(b.datasource).to.be("google"),c.expect(b.regex).to.be("asd"),c.expect(b.sort).to.be(50)}),c.it("if refresh != 0 then remove options in presisted mode",function(){var a=new d.QueryVariable({},null,null,null,null);a.options=[{text:"test"}],a.refresh=1;var b=a.getSaveModel();c.expect(b.options.length).to.be(0)})}),c.describe("can convert and sort metric names",function(){var a=new d.QueryVariable({},null,null,null,null);a.sort=3,c.describe("can sort a mixed array of metric variables",function(){var b=[{text:"0",value:"0"},{text:"1",value:"1"},{text:null,value:3},{text:void 0,value:4},{text:"5",value:null},{text:"6",value:void 0},{text:null,value:"7"},{text:void 0,value:"8"},{text:9,value:null},{text:10,value:void 0},{text:"",value:void 0},{text:void 0,value:""}],d=a.metricNamesToVariableValues(b);c.it("should return in same order",function(){var a=0;c.expect(d.length).to.be(11),c.expect(d[a++].text).to.be(""),c.expect(d[a++].text).to.be("0"),c.expect(d[a++].text).to.be("1"),c.expect(d[a++].text).to.be("3"),c.expect(d[a++].text).to.be("4"),c.expect(d[a++].text).to.be("5"),c.expect(d[a++].text).to.be("6")})})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var query_variable_1 = require("../query_variable");
+common_1.describe('QueryVariable', function () {
+    common_1.describe('when creating from model', function () {
+        common_1.it('should set defaults', function () {
+            var variable = new query_variable_1.QueryVariable({}, null, null, null, null);
+            common_1.expect(variable.datasource).to.be(null);
+            common_1.expect(variable.refresh).to.be(0);
+            common_1.expect(variable.sort).to.be(0);
+            common_1.expect(variable.name).to.be('');
+            common_1.expect(variable.hide).to.be(0);
+            common_1.expect(variable.options.length).to.be(0);
+            common_1.expect(variable.multi).to.be(false);
+            common_1.expect(variable.includeAll).to.be(false);
+        });
+        common_1.it('get model should copy changes back to model', function () {
+            var variable = new query_variable_1.QueryVariable({}, null, null, null, null);
+            variable.options = [{ text: 'test' }];
+            variable.datasource = 'google';
+            variable.regex = 'asd';
+            variable.sort = 50;
+            var model = variable.getSaveModel();
+            common_1.expect(model.options.length).to.be(1);
+            common_1.expect(model.options[0].text).to.be('test');
+            common_1.expect(model.datasource).to.be('google');
+            common_1.expect(model.regex).to.be('asd');
+            common_1.expect(model.sort).to.be(50);
+        });
+        common_1.it('if refresh != 0 then remove options in presisted mode', function () {
+            var variable = new query_variable_1.QueryVariable({}, null, null, null, null);
+            variable.options = [{ text: 'test' }];
+            variable.refresh = 1;
+            var model = variable.getSaveModel();
+            common_1.expect(model.options.length).to.be(0);
+        });
+    });
+    common_1.describe('can convert and sort metric names', function () {
+        var variable = new query_variable_1.QueryVariable({}, null, null, null, null);
+        variable.sort = 3; // Numerical (asc)
+        common_1.describe('can sort a mixed array of metric variables', function () {
+            var input = [
+                { text: '0', value: '0' },
+                { text: '1', value: '1' },
+                { text: null, value: 3 },
+                { text: undefined, value: 4 },
+                { text: '5', value: null },
+                { text: '6', value: undefined },
+                { text: null, value: '7' },
+                { text: undefined, value: '8' },
+                { text: 9, value: null },
+                { text: 10, value: undefined },
+                { text: '', value: undefined },
+                { text: undefined, value: '' },
+            ];
+            var result = variable.metricNamesToVariableValues(input);
+            common_1.it('should return in same order', function () {
+                var i = 0;
+                common_1.expect(result.length).to.be(11);
+                common_1.expect(result[i++].text).to.be('');
+                common_1.expect(result[i++].text).to.be('0');
+                common_1.expect(result[i++].text).to.be('1');
+                common_1.expect(result[i++].text).to.be('3');
+                common_1.expect(result[i++].text).to.be('4');
+                common_1.expect(result[i++].text).to.be('5');
+                common_1.expect(result[i++].text).to.be('6');
+            });
+        });
+    });
+});

@@ -1,4 +1,119 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","app/core/table_model","../renderer"],function(a,b){"use strict";var c,d,e;b&&b.id;return{setters:[function(a){c=a},function(a){d=a},function(a){e=a}],execute:function(){c.describe("when rendering table",function(){c.describe("given 2 columns",function(){var a=new d.default;a.columns=[{text:"Time"},{text:"Value"},{text:"Colored"},{text:"Undefined"},{text:"String"},{text:"United",unit:"bps"},{text:"Sanitized"}];var b={pageSize:10,styles:[{pattern:"Time",type:"date",format:"LLL"},{pattern:"Value",type:"number",unit:"ms",decimals:3},{pattern:"Colored",type:"number",unit:"none",decimals:1,colorMode:"value",thresholds:[50,80],colors:["green","orange","red"]},{pattern:"String",type:"string"},{pattern:"United",type:"number",unit:"ms",decimals:2},{pattern:"Sanitized",type:"string",sanitize:!0}]},f=function(a){return"sanitized"},g=new e.TableRenderer(b,a,"utc",f);c.it("time column should be formated",function(){var a=g.renderCell(0,1388556366666);c.expect(a).to.be("<td>2014-01-01T06:06:06Z</td>")}),c.it("undefined time column should be rendered as -",function(){var a=g.renderCell(0,void 0);c.expect(a).to.be("<td>-</td>")}),c.it("null time column should be rendered as -",function(){var a=g.renderCell(0,null);c.expect(a).to.be("<td>-</td>")}),c.it("number column with unit specified should ignore style unit",function(){var a=g.renderCell(5,1230);c.expect(a).to.be("<td>1.23 kbps</td>")}),c.it("number column should be formated",function(){var a=g.renderCell(1,1230);c.expect(a).to.be("<td>1.230 s</td>")}),c.it("number style should ignore string values",function(){var a=g.renderCell(1,"asd");c.expect(a).to.be("<td>asd</td>")}),c.it("colored cell should have style",function(){var a=g.renderCell(2,40);c.expect(a).to.be('<td style="color:green">40.0</td>')}),c.it("colored cell should have style",function(){var a=g.renderCell(2,55);c.expect(a).to.be('<td style="color:orange">55.0</td>')}),c.it("colored cell should have style",function(){var a=g.renderCell(2,85);c.expect(a).to.be('<td style="color:red">85.0</td>')}),c.it("unformated undefined should be rendered as string",function(){var a=g.renderCell(3,"value");c.expect(a).to.be("<td>value</td>")}),c.it("string style with escape html should return escaped html",function(){var a=g.renderCell(4,"&breaking <br /> the <br /> row");c.expect(a).to.be("<td>&amp;breaking &lt;br /&gt; the &lt;br /&gt; row</td>")}),c.it("undefined formater should return escaped html",function(){var a=g.renderCell(3,"&breaking <br /> the <br /> row");c.expect(a).to.be("<td>&amp;breaking &lt;br /&gt; the &lt;br /&gt; row</td>")}),c.it("undefined value should render as -",function(){var a=g.renderCell(3,void 0);c.expect(a).to.be("<td></td>")}),c.it("sanitized value should render as",function(){var a=g.renderCell(6,'text <a href="http://google.com">link</a>');c.expect(a).to.be("<td>sanitized</td>")})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var table_model_1 = require("app/core/table_model");
+var renderer_1 = require("../renderer");
+common_1.describe('when rendering table', function () {
+    common_1.describe('given 2 columns', function () {
+        var table = new table_model_1.default();
+        table.columns = [
+            { text: 'Time' },
+            { text: 'Value' },
+            { text: 'Colored' },
+            { text: 'Undefined' },
+            { text: 'String' },
+            { text: 'United', unit: 'bps' },
+            { text: 'Sanitized' },
+        ];
+        var panel = {
+            pageSize: 10,
+            styles: [
+                {
+                    pattern: 'Time',
+                    type: 'date',
+                    format: 'LLL'
+                },
+                {
+                    pattern: 'Value',
+                    type: 'number',
+                    unit: 'ms',
+                    decimals: 3,
+                },
+                {
+                    pattern: 'Colored',
+                    type: 'number',
+                    unit: 'none',
+                    decimals: 1,
+                    colorMode: 'value',
+                    thresholds: [50, 80],
+                    colors: ['green', 'orange', 'red']
+                },
+                {
+                    pattern: 'String',
+                    type: 'string',
+                },
+                {
+                    pattern: 'United',
+                    type: 'number',
+                    unit: 'ms',
+                    decimals: 2,
+                },
+                {
+                    pattern: 'Sanitized',
+                    type: 'string',
+                    sanitize: true,
+                }
+            ]
+        };
+        var sanitize = function (value) {
+            return 'sanitized';
+        };
+        var renderer = new renderer_1.TableRenderer(panel, table, 'utc', sanitize);
+        common_1.it('time column should be formated', function () {
+            var html = renderer.renderCell(0, 1388556366666);
+            common_1.expect(html).to.be('<td>2014-01-01T06:06:06Z</td>');
+        });
+        common_1.it('undefined time column should be rendered as -', function () {
+            var html = renderer.renderCell(0, undefined);
+            common_1.expect(html).to.be('<td>-</td>');
+        });
+        common_1.it('null time column should be rendered as -', function () {
+            var html = renderer.renderCell(0, null);
+            common_1.expect(html).to.be('<td>-</td>');
+        });
+        common_1.it('number column with unit specified should ignore style unit', function () {
+            var html = renderer.renderCell(5, 1230);
+            common_1.expect(html).to.be('<td>1.23 kbps</td>');
+        });
+        common_1.it('number column should be formated', function () {
+            var html = renderer.renderCell(1, 1230);
+            common_1.expect(html).to.be('<td>1.230 s</td>');
+        });
+        common_1.it('number style should ignore string values', function () {
+            var html = renderer.renderCell(1, 'asd');
+            common_1.expect(html).to.be('<td>asd</td>');
+        });
+        common_1.it('colored cell should have style', function () {
+            var html = renderer.renderCell(2, 40);
+            common_1.expect(html).to.be('<td style="color:green">40.0</td>');
+        });
+        common_1.it('colored cell should have style', function () {
+            var html = renderer.renderCell(2, 55);
+            common_1.expect(html).to.be('<td style="color:orange">55.0</td>');
+        });
+        common_1.it('colored cell should have style', function () {
+            var html = renderer.renderCell(2, 85);
+            common_1.expect(html).to.be('<td style="color:red">85.0</td>');
+        });
+        common_1.it('unformated undefined should be rendered as string', function () {
+            var html = renderer.renderCell(3, 'value');
+            common_1.expect(html).to.be('<td>value</td>');
+        });
+        common_1.it('string style with escape html should return escaped html', function () {
+            var html = renderer.renderCell(4, "&breaking <br /> the <br /> row");
+            common_1.expect(html).to.be('<td>&amp;breaking &lt;br /&gt; the &lt;br /&gt; row</td>');
+        });
+        common_1.it('undefined formater should return escaped html', function () {
+            var html = renderer.renderCell(3, "&breaking <br /> the <br /> row");
+            common_1.expect(html).to.be('<td>&amp;breaking &lt;br /&gt; the &lt;br /&gt; row</td>');
+        });
+        common_1.it('undefined value should render as -', function () {
+            var html = renderer.renderCell(3, undefined);
+            common_1.expect(html).to.be('<td></td>');
+        });
+        common_1.it('sanitized value should render as', function () {
+            var html = renderer.renderCell(6, 'text <a href="http://google.com">link</a>');
+            common_1.expect(html).to.be('<td>sanitized</td>');
+        });
+    });
+});

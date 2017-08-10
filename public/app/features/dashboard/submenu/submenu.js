@@ -1,4 +1,49 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["angular","lodash"],function(a,b){"use strict";function c(){return{restrict:"E",templateUrl:"public/app/features/dashboard/submenu/submenu.html",controller:f,bindToController:!0,controllerAs:"ctrl",scope:{dashboard:"="}}}b&&b.id;a("submenuDirective",c);var d,e,f;return{setters:[function(a){d=a},function(a){e=a}],execute:function(){f=function(){function a(a,b,c,d){this.$rootScope=a,this.variableSrv=b,this.templateSrv=c,this.$location=d,this.annotations=this.dashboard.templating.list,this.variables=this.variableSrv.variables}return a.$inject=["$rootScope","variableSrv","templateSrv","$location"],a.prototype.annotationStateChanged=function(){this.$rootScope.$broadcast("refresh")},a.prototype.variableUpdated=function(a){var b=this;this.variableSrv.variableUpdated(a).then(function(){b.$rootScope.$emit("template-variable-value-updated"),b.$rootScope.$broadcast("refresh")})},a.prototype.openEditView=function(a){var b=e.default.extend(this.$location.search(),{editview:a});this.$location.search(b)},a.prototype.exitBuildMode=function(){this.dashboard.toggleEditMode()},a}(),a("SubmenuCtrl",f),d.default.module("grafana.directives").directive("dashboardSubmenu",c)}}});
+"use strict";
+///<reference path="../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var angular_1 = require("angular");
+var lodash_1 = require("lodash");
+var SubmenuCtrl = (function () {
+    /** @ngInject */
+    function SubmenuCtrl($rootScope, variableSrv, templateSrv, $location) {
+        this.$rootScope = $rootScope;
+        this.variableSrv = variableSrv;
+        this.templateSrv = templateSrv;
+        this.$location = $location;
+        this.annotations = this.dashboard.templating.list;
+        this.variables = this.variableSrv.variables;
+    }
+    SubmenuCtrl.prototype.annotationStateChanged = function () {
+        this.$rootScope.$broadcast('refresh');
+    };
+    SubmenuCtrl.prototype.variableUpdated = function (variable) {
+        var _this = this;
+        this.variableSrv.variableUpdated(variable).then(function () {
+            _this.$rootScope.$emit('template-variable-value-updated');
+            _this.$rootScope.$broadcast('refresh');
+        });
+    };
+    SubmenuCtrl.prototype.openEditView = function (editview) {
+        var search = lodash_1.default.extend(this.$location.search(), { editview: editview });
+        this.$location.search(search);
+    };
+    SubmenuCtrl.prototype.exitBuildMode = function () {
+        this.dashboard.toggleEditMode();
+    };
+    return SubmenuCtrl;
+}());
+exports.SubmenuCtrl = SubmenuCtrl;
+function submenuDirective() {
+    return {
+        restrict: 'E',
+        templateUrl: 'public/app/features/dashboard/submenu/submenu.html',
+        controller: SubmenuCtrl,
+        bindToController: true,
+        controllerAs: 'ctrl',
+        scope: {
+            dashboard: "=",
+        }
+    };
+}
+exports.submenuDirective = submenuDirective;
+angular_1.default.module('grafana.directives').directive('dashboardSubmenu', submenuDirective);

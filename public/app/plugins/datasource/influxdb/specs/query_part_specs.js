@@ -1,4 +1,39 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","../query_part"],function(a,b){"use strict";var c,d;b&&b.id;return{setters:[function(a){c=a},function(a){d=a}],execute:function(){c.describe("InfluxQueryPart",function(){c.describe("series with mesurement only",function(){c.it("should handle nested function parts",function(){var a=d.default.create({type:"derivative",params:["10s"]});c.expect(a.text).to.be("derivative(10s)"),c.expect(a.render("mean(value)")).to.be("derivative(mean(value), 10s)")}),c.it("should nest spread function",function(){var a=d.default.create({type:"spread"});c.expect(a.text).to.be("spread()"),c.expect(a.render("value")).to.be("spread(value)")}),c.it("should handle suffirx parts",function(){var a=d.default.create({type:"math",params:["/ 100"]});c.expect(a.text).to.be("math(/ 100)"),c.expect(a.render("mean(value)")).to.be("mean(value) / 100")}),c.it("should handle alias parts",function(){var a=d.default.create({type:"alias",params:["test"]});c.expect(a.text).to.be("alias(test)"),c.expect(a.render("mean(value)")).to.be('mean(value) AS "test"')})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+var query_part_1 = require("../query_part");
+common_1.describe('InfluxQueryPart', function () {
+    common_1.describe('series with mesurement only', function () {
+        common_1.it('should handle nested function parts', function () {
+            var part = query_part_1.default.create({
+                type: 'derivative',
+                params: ['10s'],
+            });
+            common_1.expect(part.text).to.be('derivative(10s)');
+            common_1.expect(part.render('mean(value)')).to.be('derivative(mean(value), 10s)');
+        });
+        common_1.it('should nest spread function', function () {
+            var part = query_part_1.default.create({
+                type: 'spread'
+            });
+            common_1.expect(part.text).to.be('spread()');
+            common_1.expect(part.render('value')).to.be('spread(value)');
+        });
+        common_1.it('should handle suffirx parts', function () {
+            var part = query_part_1.default.create({
+                type: 'math',
+                params: ['/ 100'],
+            });
+            common_1.expect(part.text).to.be('math(/ 100)');
+            common_1.expect(part.render('mean(value)')).to.be('mean(value) / 100');
+        });
+        common_1.it('should handle alias parts', function () {
+            var part = query_part_1.default.create({
+                type: 'alias',
+                params: ['test'],
+            });
+            common_1.expect(part.text).to.be('alias(test)');
+            common_1.expect(part.render('mean(value)')).to.be('mean(value) AS "test"');
+        });
+    });
+});

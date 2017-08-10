@@ -1,4 +1,161 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["app/core/core_module","app/core/config","lodash"],function(a,b){"use strict";function c(){return{restrict:"E",templateUrl:"public/app/features/dashboard/import/dash_import.html",controller:g,bindToController:!0,controllerAs:"ctrl"}}b&&b.id;a("dashImportDirective",c);var d,e,f,g;return{setters:[function(a){d=a},function(a){e=a},function(a){f=a}],execute:function(){g=function(){function a(a,b,c,d){this.backendSrv=a,this.$location=b,this.$scope=c,this.$routeParams=d,this.step=1,this.nameExists=!1,d.gnetId&&(this.gnetUrl=d.gnetId,this.checkGnetDashboard())}return a.$inject=["backendSrv","$location","$scope","$routeParams"],a.prototype.onUpload=function(a){if(this.dash=a,this.dash.id=null,this.step=2,this.inputs=[],this.dash.__inputs)for(var b=0,c=this.dash.__inputs;b<c.length;b++){var d=c[b],e={name:d.name,label:d.label,info:d.description,value:d.value,type:d.type,pluginId:d.pluginId,options:[]};"datasource"===d.type?this.setDatasourceOptions(d,e):e.info||(e.info="Specify a string constant"),this.inputs.push(e)}this.inputsValid=0===this.inputs.length,this.titleChanged()},a.prototype.setDatasourceOptions=function(a,b){var c=f.default.filter(e.default.datasources,function(b){return b.type===a.pluginId});0===c.length?b.info="No data sources of type "+a.pluginName+" found":b.info||(b.info="Select a "+a.pluginName+" data source"),b.options=c.map(function(a){return{text:a.name,value:a.name}})},a.prototype.inputValueChanged=function(){this.inputsValid=!0;for(var a=0,b=this.inputs;a<b.length;a++){var c=b[a];c.value||(this.inputsValid=!1)}},a.prototype.titleChanged=function(){var a=this;this.backendSrv.search({query:this.dash.title}).then(function(b){a.nameExists=!1;for(var c=0,d=b;c<d.length;c++){var e=d[c];if(a.dash.title===e.title){a.nameExists=!0;break}}})},a.prototype.saveDashboard=function(){var a=this,b=this.inputs.map(function(a){return{name:a.name,type:a.type,pluginId:a.pluginId,value:a.value}});return this.backendSrv.post("api/dashboards/import",{dashboard:this.dash,overwrite:!0,inputs:b}).then(function(b){a.$location.url("dashboard/"+b.importedUri),a.$scope.dismiss()})},a.prototype.loadJsonText=function(){try{this.parseError="";var a=JSON.parse(this.jsonText);this.onUpload(a)}catch(a){return console.log(a),void(this.parseError=a.message)}},a.prototype.checkGnetDashboard=function(){var a=this;this.gnetError="";var b,c=/(^\d+$)|dashboards\/(\d+)/.exec(this.gnetUrl);return c&&c[1]?b=c[1]:c&&c[2]?b=c[2]:this.gnetError="Could not find dashboard",this.backendSrv.get("api/gnet/dashboards/"+b).then(function(b){a.gnetInfo=b,b.json.gnetId=b.id,a.onUpload(b.json)}).catch(function(b){b.isHandled=!0,a.gnetError=b.data.message||b})},a.prototype.back=function(){this.gnetUrl="",this.step=1,this.gnetError="",this.gnetInfo=""},a}(),a("DashImportCtrl",g),d.default.directive("dashImport",c)}}});
+"use strict";
+///<reference path="../../../headers/common.d.ts" />
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_module_1 = require("app/core/core_module");
+var config_1 = require("app/core/config");
+var lodash_1 = require("lodash");
+var DashImportCtrl = (function () {
+    /** @ngInject */
+    function DashImportCtrl(backendSrv, $location, $scope, $routeParams) {
+        this.backendSrv = backendSrv;
+        this.$location = $location;
+        this.$scope = $scope;
+        this.$routeParams = $routeParams;
+        this.step = 1;
+        this.nameExists = false;
+        // check gnetId in url
+        if ($routeParams.gnetId) {
+            this.gnetUrl = $routeParams.gnetId;
+            this.checkGnetDashboard();
+        }
+    }
+    DashImportCtrl.prototype.onUpload = function (dash) {
+        this.dash = dash;
+        this.dash.id = null;
+        this.step = 2;
+        this.inputs = [];
+        if (this.dash.__inputs) {
+            for (var _i = 0, _a = this.dash.__inputs; _i < _a.length; _i++) {
+                var input = _a[_i];
+                var inputModel = {
+                    name: input.name,
+                    label: input.label,
+                    info: input.description,
+                    value: input.value,
+                    type: input.type,
+                    pluginId: input.pluginId,
+                    options: []
+                };
+                if (input.type === 'datasource') {
+                    this.setDatasourceOptions(input, inputModel);
+                }
+                else if (!inputModel.info) {
+                    inputModel.info = 'Specify a string constant';
+                }
+                this.inputs.push(inputModel);
+            }
+        }
+        this.inputsValid = this.inputs.length === 0;
+        this.titleChanged();
+    };
+    DashImportCtrl.prototype.setDatasourceOptions = function (input, inputModel) {
+        var sources = lodash_1.default.filter(config_1.default.datasources, function (val) {
+            return val.type === input.pluginId;
+        });
+        if (sources.length === 0) {
+            inputModel.info = "No data sources of type " + input.pluginName + " found";
+        }
+        else if (!inputModel.info) {
+            inputModel.info = "Select a " + input.pluginName + " data source";
+        }
+        inputModel.options = sources.map(function (val) {
+            return { text: val.name, value: val.name };
+        });
+    };
+    DashImportCtrl.prototype.inputValueChanged = function () {
+        this.inputsValid = true;
+        for (var _i = 0, _a = this.inputs; _i < _a.length; _i++) {
+            var input = _a[_i];
+            if (!input.value) {
+                this.inputsValid = false;
+            }
+        }
+    };
+    DashImportCtrl.prototype.titleChanged = function () {
+        var _this = this;
+        this.backendSrv.search({ query: this.dash.title }).then(function (res) {
+            _this.nameExists = false;
+            for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
+                var hit = res_1[_i];
+                if (_this.dash.title === hit.title) {
+                    _this.nameExists = true;
+                    break;
+                }
+            }
+        });
+    };
+    DashImportCtrl.prototype.saveDashboard = function () {
+        var _this = this;
+        var inputs = this.inputs.map(function (input) {
+            return {
+                name: input.name,
+                type: input.type,
+                pluginId: input.pluginId,
+                value: input.value
+            };
+        });
+        return this.backendSrv.post('api/dashboards/import', {
+            dashboard: this.dash,
+            overwrite: true,
+            inputs: inputs
+        }).then(function (res) {
+            _this.$location.url('dashboard/' + res.importedUri);
+            _this.$scope.dismiss();
+        });
+    };
+    DashImportCtrl.prototype.loadJsonText = function () {
+        try {
+            this.parseError = '';
+            var dash = JSON.parse(this.jsonText);
+            this.onUpload(dash);
+        }
+        catch (err) {
+            console.log(err);
+            this.parseError = err.message;
+            return;
+        }
+    };
+    DashImportCtrl.prototype.checkGnetDashboard = function () {
+        var _this = this;
+        this.gnetError = '';
+        var match = /(^\d+$)|dashboards\/(\d+)/.exec(this.gnetUrl);
+        var dashboardId;
+        if (match && match[1]) {
+            dashboardId = match[1];
+        }
+        else if (match && match[2]) {
+            dashboardId = match[2];
+        }
+        else {
+            this.gnetError = 'Could not find dashboard';
+        }
+        return this.backendSrv.get('api/gnet/dashboards/' + dashboardId).then(function (res) {
+            _this.gnetInfo = res;
+            // store reference to grafana.net
+            res.json.gnetId = res.id;
+            _this.onUpload(res.json);
+        }).catch(function (err) {
+            err.isHandled = true;
+            _this.gnetError = err.data.message || err;
+        });
+    };
+    DashImportCtrl.prototype.back = function () {
+        this.gnetUrl = '';
+        this.step = 1;
+        this.gnetError = '';
+        this.gnetInfo = '';
+    };
+    return DashImportCtrl;
+}());
+exports.DashImportCtrl = DashImportCtrl;
+function dashImportDirective() {
+    return {
+        restrict: 'E',
+        templateUrl: 'public/app/features/dashboard/import/dash_import.html',
+        controller: DashImportCtrl,
+        bindToController: true,
+        controllerAs: 'ctrl',
+    };
+}
+exports.dashImportDirective = dashImportDirective;
+core_module_1.default.directive('dashImport', dashImportDirective);

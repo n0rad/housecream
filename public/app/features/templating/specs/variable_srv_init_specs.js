@@ -1,4 +1,145 @@
-/*! grafana - v4.2.0 - 2017-03-22
- * Copyright (c) 2017 Torkel Ödegaard; Licensed Apache-2.0 */
-
-System.register(["test/lib/common","../all","lodash","test/specs/helpers","app/core/core"],function(a,b){"use strict";var c,d,e,f;b&&b.id;return{setters:[function(a){c=a},function(a){},function(a){d=a},function(a){e=a},function(a){f=a}],execute:function(){c.describe("VariableSrv init",function(){function a(a,d){c.describe(a,function(){var a={urlParams:{},setup:function(b){a.setupFn=b}};c.beforeEach(function(){a.setupFn(),b.datasource={},b.datasource.metricFindQuery=c.sinon.stub().returns(b.$q.when(a.queryResult)),b.datasourceSrv.get=c.sinon.stub().returns(b.$q.when(b.datasource)),b.datasourceSrv.getMetricSources=c.sinon.stub().returns(a.metricSources),b.$location.search=c.sinon.stub().returns(a.urlParams),b.dashboard={templating:{list:a.variables},events:new f.Emitter},b.variableSrv.init(b.dashboard),b.$rootScope.$digest(),a.variables=b.variableSrv.variables}),d(a)})}var b=new e.default.ControllerTestContext;c.beforeEach(c.angularMocks.module("grafana.core")),c.beforeEach(c.angularMocks.module("grafana.controllers")),c.beforeEach(c.angularMocks.module("grafana.services")),c.beforeEach(c.angularMocks.module(function(a){a.preAssignBindingsEnabled(!0)})),c.beforeEach(b.providePhase(["datasourceSrv","timeSrv","templateSrv","$location"])),c.beforeEach(c.angularMocks.inject(function(a,c,d,e){b.$q=c,b.$rootScope=a,b.$location=d,b.variableSrv=e.get("variableSrv"),b.$rootScope.$digest()})),["query","interval","custom","datasource"].forEach(function(b){a("when setting "+b+" variable via url",function(a){a.setup(function(){a.variables=[{name:"apps",type:b,current:{text:"test",value:"test"},options:[{text:"test",value:"test"}]}],a.urlParams["var-apps"]="new",a.metricSources=[]}),c.it("should update current value",function(){c.expect(a.variables[0].current.value).to.be("new"),c.expect(a.variables[0].current.text).to.be("new")})})}),c.describe("given dependent variables",function(){var e=[{name:"app",type:"query",query:"",current:{text:"app1",value:"app1"},options:[{text:"app1",value:"app1"}]},{name:"server",type:"query",refresh:1,query:"$app.*",current:{text:"server1",value:"server1"},options:[{text:"server1",value:"server1"}]}];a("when setting parent var from url",function(a){a.setup(function(){a.variables=d.default.cloneDeep(e),a.urlParams["var-app"]="google",a.queryResult=[{text:"google-server1"},{text:"google-server2"}]}),c.it("should update child variable",function(){c.expect(a.variables[1].options.length).to.be(2),c.expect(a.variables[1].current.text).to.be("google-server1")}),c.it("should only update it once",function(){c.expect(b.datasource.metricFindQuery.callCount).to.be(1)})})}),a("when datasource variable is initialized",function(a){a.setup(function(){a.variables=[{type:"datasource",query:"graphite",name:"test",current:{value:"backend4_pee",text:"backend4_pee"},regex:"/pee$/"}],a.metricSources=[{name:"backend1",meta:{id:"influx"}},{name:"backend2_pee",meta:{id:"graphite"}},{name:"backend3",meta:{id:"graphite"}},{name:"backend4_pee",meta:{id:"graphite"}}]}),c.it("should update current value",function(){var a=b.variableSrv.variables[0];c.expect(a.options.length).to.be(2)})}),a("when template variable is present in url multiple times",function(a){a.setup(function(){a.variables=[{name:"apps",type:"query",multi:!0,current:{text:"val1",value:"val1"},options:[{text:"val1",value:"val1"},{text:"val2",value:"val2"},{text:"val3",value:"val3",selected:!0}]}],a.urlParams["var-apps"]=["val2","val1"]}),c.it("should update current value",function(){var a=b.variableSrv.variables[0];c.expect(a.current.value.length).to.be(2),c.expect(a.current.value[0]).to.be("val2"),c.expect(a.current.value[1]).to.be("val1"),c.expect(a.current.text).to.be("val2 + val1"),c.expect(a.options[0].selected).to.be(!0),c.expect(a.options[1].selected).to.be(!0)}),c.it("should set options that are not in value to selected false",function(){var a=b.variableSrv.variables[0];c.expect(a.options[2].selected).to.be(!1)})})})}}});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("test/lib/common");
+require("../all");
+var lodash_1 = require("lodash");
+var helpers_1 = require("test/specs/helpers");
+var core_1 = require("app/core/core");
+common_1.describe('VariableSrv init', function () {
+    var ctx = new helpers_1.default.ControllerTestContext();
+    common_1.beforeEach(common_1.angularMocks.module('grafana.core'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.controllers'));
+    common_1.beforeEach(common_1.angularMocks.module('grafana.services'));
+    common_1.beforeEach(common_1.angularMocks.module(function ($compileProvider) {
+        $compileProvider.preAssignBindingsEnabled(true);
+    }));
+    common_1.beforeEach(ctx.providePhase(['datasourceSrv', 'timeSrv', 'templateSrv', '$location']));
+    common_1.beforeEach(common_1.angularMocks.inject(function ($rootScope, $q, $location, $injector) {
+        ctx.$q = $q;
+        ctx.$rootScope = $rootScope;
+        ctx.$location = $location;
+        ctx.variableSrv = $injector.get('variableSrv');
+        ctx.$rootScope.$digest();
+    }));
+    function describeInitScenario(desc, fn) {
+        common_1.describe(desc, function () {
+            var scenario = {
+                urlParams: {},
+                setup: function (setupFn) {
+                    scenario.setupFn = setupFn;
+                }
+            };
+            common_1.beforeEach(function () {
+                scenario.setupFn();
+                ctx.datasource = {};
+                ctx.datasource.metricFindQuery = common_1.sinon.stub().returns(ctx.$q.when(scenario.queryResult));
+                ctx.datasourceSrv.get = common_1.sinon.stub().returns(ctx.$q.when(ctx.datasource));
+                ctx.datasourceSrv.getMetricSources = common_1.sinon.stub().returns(scenario.metricSources);
+                ctx.$location.search = common_1.sinon.stub().returns(scenario.urlParams);
+                ctx.dashboard = { templating: { list: scenario.variables }, events: new core_1.Emitter() };
+                ctx.variableSrv.init(ctx.dashboard);
+                ctx.$rootScope.$digest();
+                scenario.variables = ctx.variableSrv.variables;
+            });
+            fn(scenario);
+        });
+    }
+    ['query', 'interval', 'custom', 'datasource'].forEach(function (type) {
+        describeInitScenario('when setting ' + type + ' variable via url', function (scenario) {
+            scenario.setup(function () {
+                scenario.variables = [{
+                        name: 'apps',
+                        type: type,
+                        current: { text: "test", value: "test" },
+                        options: [{ text: "test", value: "test" }]
+                    }];
+                scenario.urlParams["var-apps"] = "new";
+                scenario.metricSources = [];
+            });
+            common_1.it('should update current value', function () {
+                common_1.expect(scenario.variables[0].current.value).to.be("new");
+                common_1.expect(scenario.variables[0].current.text).to.be("new");
+            });
+        });
+    });
+    common_1.describe('given dependent variables', function () {
+        var variableList = [
+            {
+                name: 'app',
+                type: 'query',
+                query: '',
+                current: { text: "app1", value: "app1" },
+                options: [{ text: "app1", value: "app1" }]
+            },
+            {
+                name: 'server',
+                type: 'query',
+                refresh: 1,
+                query: '$app.*',
+                current: { text: "server1", value: "server1" },
+                options: [{ text: "server1", value: "server1" }]
+            },
+        ];
+        describeInitScenario('when setting parent var from url', function (scenario) {
+            scenario.setup(function () {
+                scenario.variables = lodash_1.default.cloneDeep(variableList);
+                scenario.urlParams["var-app"] = "google";
+                scenario.queryResult = [{ text: 'google-server1' }, { text: 'google-server2' }];
+            });
+            common_1.it('should update child variable', function () {
+                common_1.expect(scenario.variables[1].options.length).to.be(2);
+                common_1.expect(scenario.variables[1].current.text).to.be("google-server1");
+            });
+            common_1.it('should only update it once', function () {
+                common_1.expect(ctx.datasource.metricFindQuery.callCount).to.be(1);
+            });
+        });
+    });
+    describeInitScenario('when datasource variable is initialized', function (scenario) {
+        scenario.setup(function () {
+            scenario.variables = [{
+                    type: 'datasource',
+                    query: 'graphite',
+                    name: 'test',
+                    current: { value: 'backend4_pee', text: 'backend4_pee' },
+                    regex: '/pee$/'
+                }
+            ];
+            scenario.metricSources = [
+                { name: 'backend1', meta: { id: 'influx' } },
+                { name: 'backend2_pee', meta: { id: 'graphite' } },
+                { name: 'backend3', meta: { id: 'graphite' } },
+                { name: 'backend4_pee', meta: { id: 'graphite' } },
+            ];
+        });
+        common_1.it('should update current value', function () {
+            var variable = ctx.variableSrv.variables[0];
+            common_1.expect(variable.options.length).to.be(2);
+        });
+    });
+    describeInitScenario('when template variable is present in url multiple times', function (scenario) {
+        scenario.setup(function () {
+            scenario.variables = [{
+                    name: 'apps',
+                    type: 'query',
+                    multi: true,
+                    current: { text: "val1", value: "val1" },
+                    options: [{ text: "val1", value: "val1" }, { text: 'val2', value: 'val2' }, { text: 'val3', value: 'val3', selected: true }]
+                }];
+            scenario.urlParams["var-apps"] = ["val2", "val1"];
+        });
+        common_1.it('should update current value', function () {
+            var variable = ctx.variableSrv.variables[0];
+            common_1.expect(variable.current.value.length).to.be(2);
+            common_1.expect(variable.current.value[0]).to.be("val2");
+            common_1.expect(variable.current.value[1]).to.be("val1");
+            common_1.expect(variable.current.text).to.be("val2 + val1");
+            common_1.expect(variable.options[0].selected).to.be(true);
+            common_1.expect(variable.options[1].selected).to.be(true);
+        });
+        common_1.it('should set options that are not in value to selected false', function () {
+            var variable = ctx.variableSrv.variables[0];
+            common_1.expect(variable.options[2].selected).to.be(false);
+        });
+    });
+});
